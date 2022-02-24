@@ -1564,4 +1564,10 @@
   'berakhir_dalam' => 'Berakhir dalam',
   'temukan_penyewaan_Kos,_Apartemen_dan_Ruko_di_Kota_lain' => 'Temukan penyewaan Kos  Apartemen dan Ruko di Kota lain',
   'Cari_kos_di_kota_lain' => 'Cari kos di kota lain',
+  '' => '',
+  'KABUPATEN TAPANULI UTARA' => 'KABUPATEN TAPANULI UTARA',
+  'Kab TAPANULI UTARA' => 'Kab TAPANULI UTARA',
+  'Kab. TAPANULI UTARA' => 'Kab. TAPANULI UTARA',
+  'PADANG' => 'PADANG',
+  'Kab. SOLOK' => 'Kab. SOLOK',
 );

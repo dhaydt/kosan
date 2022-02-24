@@ -480,6 +480,11 @@ class WebController extends Controller
             foreach ($details as $detail) {
                 array_push($product_ids, $detail['id']);
             }
+            $kota = ['KOTA ', 'KABUPATEN'];
+            $rpl = ['', 'Kab.'];
+
+            $cit = str_replace($kota, $rpl, $city_name);
+            session()->put('search_name', $cit);
             // dd($details);
             $query = $porduct_data->whereIn('id', $product_ids);
         }

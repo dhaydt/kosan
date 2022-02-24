@@ -17,232 +17,234 @@
 
 <link rel="stylesheet" href="{{asset('public/assets/front-end')}}/css/home.css" />
 <style>
-
-#navbarCollapse > ul.navbar-nav.mega-nav.pr-2.pl-2.mr-2.d-none.d-xl-block > li > a {
+    #navbarCollapse > ul.navbar-nav.mega-nav.pr-2.pl-2.mr-2.d-none.d-xl-block > li > a {
         pointer-events: none;
     }
     #navbarCollapse > ul.navbar-nav.mega-nav.pr-2.pl-2.mr-2.d-none.d-xl-block > li > ul {
         display: block !important;
     }
-        .media {
-            background: white;
+    .container {
+        max-width: 1138px;
+    }
+    .media {
+        background: white;
+    }
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .label-kost{
+        background-color: {{ $web_config['primary_color'] }};
+    }
+    .feature_header span.capitalize{
+        text-transform: capitalize;
+        background-color: transparent !important;
+    }
+    .cz-countdown {
+        display: inline-block;
+        flex-wrap: wrap;
+        margin-top: 0 !important;
+        font-weight: normal;
+        font-size: smaller;
         }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-        }
-        .label-kost{
-            background-color: {{ $web_config['primary_color'] }};
-        }
-        .feature_header span.capitalize{
-            text-transform: capitalize;
-            background-color: transparent !important;
-        }
+    .cz-countdown-days {
+        color: white !important;
+        background-color: #f15151;
+        padding: 3px 6px;
+        border-radius: 3px;
+        margin-right: 3px !important;
+        font-weight: 700;
+    }
+
+    .cz-countdown-hours {
+        color: white !important;
+        background-color: #f15151;
+        padding: 3px 6px;
+        border-radius: 3px;
+        margin-right: 3px !important;
+    }
+
+    .cz-countdown-minutes {
+        color: white !important;
+        background-color: #f15151;
+        padding: 3px 6px;
+        border-radius: 3px;
+        margin-right: 3px !important;
+    }
+
+    .cz-countdown-seconds {
+        color: #f15151;
+        border: 1px solid #f15151;
+        padding: 3px 6px;
+        border-radius: 3px !important;
+    }
+    .flash_deal_product_details .flash-product-price {
+        font-weight: 700;
+        font-size: 18px;
+        color: {{$web_config['primary_color']}};
+    }
+    .featured_deal_left {
+        height: 130px;
+        background: {{$web_config['primary_color']}} 0% 0% no-repeat padding-box;
+        padding: 10px 100px;
+        text-align: center;
+    }
+    .featured_deal {
+        min-height: 130px;
+    }
+    .category_div:hover {
+        color: {{$web_config['secondary_color']}};
+    }
+    .deal_of_the_day {
+        /* filter: grayscale(0.5); */
+        opacity: .8;
+        background: {{$web_config['secondary_color']}};
+        border-radius: 3px;
+    }
+    .deal-title {
+        font-size: 12px;
+    }
+    .for-flash-deal-img img {
+        max-width: none;
+    }
+
+    @media (max-width: 375px) {
         .cz-countdown {
-            display: inline-block;
-            flex-wrap: wrap;
-            margin-top: 0 !important;
-            font-weight: normal;
-            font-size: smaller;
-            }
-        .cz-countdown-days {
-            color: white !important;
-            background-color: #f15151;
-            padding: 3px 6px;
-            border-radius: 3px;
-            margin-right: 3px !important;
-            font-weight: 700;
+        display: flex !important;
         }
+        .cz-countdown .cz-countdown-seconds {
+        margin-top: -5px !important;
+        }
+        .for-feature-title {
+        font-size: 20px !important;
+        }
+    }
 
-        .cz-countdown-hours {
-            color: white !important;
-            background-color: #f15151;
-            padding: 3px 6px;
-            border-radius: 3px;
-            margin-right: 3px !important;
+    @media (max-width: 600px) {
+        .flash_deal_title {
+        font-weight: 600;
+        font-size: 18px;
+        text-transform: uppercase;
         }
-
-        .cz-countdown-minutes {
-            color: white !important;
-            background-color: #f15151;
-            padding: 3px 6px;
-            border-radius: 3px;
-            margin-right: 3px !important;
-        }
-
-        .cz-countdown-seconds {
-            color: #f15151;
-            border: 1px solid #f15151;
-            padding: 3px 6px;
-            border-radius: 3px !important;
-        }
-        .flash_deal_product_details .flash-product-price {
-            font-weight: 700;
-            font-size: 18px;
-            color: {{$web_config['primary_color']}};
-        }
-        .featured_deal_left {
-            height: 130px;
-            background: {{$web_config['primary_color']}} 0% 0% no-repeat padding-box;
-            padding: 10px 100px;
-            text-align: center;
+        .cz-countdown .cz-countdown-value {
+        font-family: "Roboto", sans-serif;
+        font-size: 11px !important;
+        font-weight: 700 !important;
         }
         .featured_deal {
-            min-height: 130px;
+        opacity: 1 !important;
         }
-        .category_div:hover {
-            color: {{$web_config['secondary_color']}};
+        .cz-countdown {
+        display: inline-block;
+        flex-wrap: wrap;
+        margin-top: 0;
+        font-weight: normal;
+        font-size: smaller;
         }
-        .deal_of_the_day {
-            /* filter: grayscale(0.5); */
-            opacity: .8;
-            background: {{$web_config['secondary_color']}};
-            border-radius: 3px;
+        .view-btn-div-f {
+        /* margin-top: 6px; */
+        float: right;
         }
-        .deal-title {
-            font-size: 12px;
+        .view-btn-div {
+        float: right;
         }
-        .for-flash-deal-img img {
-            max-width: none;
+        .viw-btn-a {
+        font-size: 10px;
+        font-weight: 600;
         }
+        .for-mobile {
+        display: none;
+        }
+        .featured_for_mobile {
+        max-width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        }
+    }
 
-        @media (max-width: 375px) {
-            .cz-countdown {
-            display: flex !important;
-            }
-            .cz-countdown .cz-countdown-seconds {
-            margin-top: -5px !important;
-            }
-            .for-feature-title {
-            font-size: 20px !important;
-            }
+    @media (max-width: 360px) {
+        .featured_for_mobile {
+        max-width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
         }
+        .featured_deal {
+        opacity: 1 !important;
+        }
+    }
 
-        @media (max-width: 600px) {
-            .flash_deal_title {
-            font-weight: 600;
-            font-size: 18px;
-            text-transform: uppercase;
-            }
-            .cz-countdown .cz-countdown-value {
-            font-family: "Roboto", sans-serif;
-            font-size: 11px !important;
-            font-weight: 700 !important;
-            }
-            .featured_deal {
-            opacity: 1 !important;
-            }
-            .cz-countdown {
-            display: inline-block;
-            flex-wrap: wrap;
-            margin-top: 0;
-            font-weight: normal;
-            font-size: smaller;
-            }
-            .view-btn-div-f {
-            /* margin-top: 6px; */
-            float: right;
-            }
-            .view-btn-div {
-            float: right;
-            }
-            .viw-btn-a {
-            font-size: 10px;
-            font-weight: 600;
-            }
-            .for-mobile {
-            display: none;
-            }
-            .featured_for_mobile {
-            max-width: 100%;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            }
+    @media (max-width: 375px) {
+        .featured_for_mobile {
+        max-width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
         }
+        .featured_deal {
+        opacity: 1 !important;
+        }
+    }
 
-        @media (max-width: 360px) {
-            .featured_for_mobile {
-            max-width: 100%;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            }
-            .featured_deal {
-            opacity: 1 !important;
-            }
+    @media (max-width: 992px) {
+        .navbar-collapse {
+        position: fixed;
+        top: 69px;
+        left: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 15px;
+        width: 89%;
+        height: 100%;
+        z-index: 99;
         }
+        .navbar-collapse.collapsing {
+        left: -75%;
+        transition: height 0s ease;
+        }
+        .navbar-collapse.show {
+        left: 0;
+        background-color: #fff;
+        transition: left 300ms ease-in-out;
+        }
+        .navbar-toggler.collapsed~.navbar-collapse {
+        transition: left 500ms ease-in-out;
+        }
+    }
 
-        @media (max-width: 375px) {
-            .featured_for_mobile {
-            max-width: 100%;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            }
-            .featured_deal {
-            opacity: 1 !important;
-            }
+    @media (min-width: 768px) {
+        .nav-item.dropdown.ml-auto {
+            margin-left: 0px !important;
         }
+        .timer {
+            margin: 0 auto;
+        }
+        .timer .view_all .px-2 .cz-countdown {
+            margin-left: 0 !important;
+        }
+        .displayTab {
+        display: block !important;
+        }
+    }
 
-        @media (max-width: 992px) {
-            .navbar-collapse {
-            position: fixed;
-            top: 69px;
-            left: 0;
-            padding-left: 15px;
-            padding-right: 15px;
-            padding-bottom: 15px;
-            width: 89%;
-            height: 100%;
-            z-index: 99;
-            }
-            .navbar-collapse.collapsing {
-            left: -75%;
-            transition: height 0s ease;
-            }
-            .navbar-collapse.show {
-            left: 0;
-            background-color: #fff;
-            transition: left 300ms ease-in-out;
-            }
-            .navbar-toggler.collapsed~.navbar-collapse {
-            transition: left 500ms ease-in-out;
-            }
+    @media (max-width: 800px) {
+        .for-tab-view-img {
+        width: 40%;
         }
+        .for-tab-view-img {
+        width: 105px;
+        }
+        .widget-title {
+        font-size: 19px !important;
+        }
+    }
 
-        @media (min-width: 768px) {
-            .nav-item.dropdown.ml-auto {
-                margin-left: 0px !important;
-            }
-            .timer {
-                margin: 0 auto;
-            }
-            .timer .view_all .px-2 .cz-countdown {
-                margin-left: 0 !important;
-            }
-            .displayTab {
-            display: block !important;
-            }
-        }
-
-        @media (max-width: 800px) {
-            .for-tab-view-img {
-            width: 40%;
-            }
-            .for-tab-view-img {
-            width: 105px;
-            }
-            .widget-title {
-            font-size: 19px !important;
-            }
-        }
-
-        .featured_deal_carosel .carousel-inner {
-            width: 100% !important;
-        }
-        .badge-style2 {
-            color: black !important;
-            background: transparent !important;
-            font-size: 11px;
-        }
+    .featured_deal_carosel .carousel-inner {
+        width: 100% !important;
+    }
+    .badge-style2 {
+        color: black !important;
+        background: transparent !important;
+        font-size: 11px;
+    }
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"

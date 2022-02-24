@@ -82,7 +82,7 @@ span.stock-label {
 
 .label-kost {
     position: absolute;
-    left: 4px;
+    left: 0px;
     top: 28px;
     padding: 3px 10px;
     border-radius: 0 15px 15px 0;

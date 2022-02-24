@@ -38,7 +38,7 @@
             style="cursor: pointer;">
             <div class="rating-show d-flex">
                 <div class="rc-overview__label bg-c-label capitalize">{{ $product->kost->penghuni }}</div>
-                @if ($product->current_stock <= 3)
+                @if ($product->current_stock <= 3 && $product->current_stock != 0 && $product->current_stock != 'null' )
                 <span class="stock-label ml-1 text-danger bg-c-text--label-1">
                     {{\App\CPU\translate('Sisa')}} {{ $product->current_stock }} {{\App\CPU\translate('kamar')}}
                 </span>

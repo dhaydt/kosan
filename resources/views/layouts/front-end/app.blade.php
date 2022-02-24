@@ -51,9 +51,6 @@
             background-color: #f7f8fa94;
             font-family: 'Poppins', sans-serif;
         }
-        .container {
-            max-width: 1138px;
-        }
         .rtl {
             direction: {{ Session::get('direction') }};
         }
@@ -507,7 +504,7 @@
         }
 
         .feature_header span {
-            background-color: #fafafc !important
+            background-color: transparent !important
         }
 
         .discount-top-f {
