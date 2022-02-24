@@ -1,0 +1,369 @@
+/* search home */
+.home-top-search-section .home-top-search-title {
+    color: #000000;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.home-top-search-section .home-top-search-subtitle {
+    color: #484848;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 50px;
+}
+.search-icon{
+    background-color: transparent;
+    border: none;
+}
+
+.search-icon i {
+    color: #757575 !important;
+    font-weight: 900;
+}
+.search-icon span {
+    padding: 12px 10px !important;
+}
+/* Flash timer */
+.flashdeal-header {
+    justify-content: start;
+}
+.flash-view {
+    justify-content: end;
+}
+.flashsale-label {
+    color: #949494 !important;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    text-align: right;
+}
+/* Banner Slide */
+.carousel-inner.banner {
+    border-radius: 20px;
+}
+
+.label-city {
+    background-color: #da3438;
+    font-weight: 600;
+    border-radius: 15px;
+    padding: 8px 13px;
+    margin-top: 5px;
+    color: #fff;
+    letter-spacing: 0.6px;
+}
+.subtitle-city small {
+    color: #737373;
+}
+/* Featured single */
+.card-header.single-product {
+    cursor: pointer;
+    height: 168px;
+}
+.img-box {
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+span.stock-label {
+    line-height: 29px;
+    margin-left: 10px;
+}
+
+.label-kost {
+    position: absolute;
+    left: 4px;
+    top: 28px;
+    padding: 3px 10px;
+    border-radius: 0 15px 15px 0;
+    font-weight: 400;
+    z-index: 5;
+}
+
+.kost-rc__info {
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0 0;
+}
+
+.rc-info {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+    white-space: nowrap;
+}
+
+.rc-info .rc-info__name {
+    display: block;
+    color: #000;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rc-info .rc-info__location {
+    color: #404040;
+    margin: 2px 0 0;
+}
+
+.bg-c-text--body-4 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-transform: capitalize !important;
+    font-family: "Poppins", sans-serif;
+}
+
+.bg-c-text--body-3 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize !important;
+    line-height: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+.kost-rc__facilities {
+    color: #949494;
+    display: flex;
+    height: 18px;
+    margin: 2px 0 0;
+}
+
+.rc-facilities {
+    color: #949494;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.rc-facilities .rc-facilities_divider {
+    padding: 0 2px;
+}
+
+/* Detail card */
+.kost-rc__price {
+    display: flex;
+    flex: 1;
+    margin: 8px 0 0;
+}
+
+.rc-price {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.price-discount {
+    background-color: #dc0000;
+    padding: 0 10px;
+    border-radius: 20px;
+    display: flex;
+}
+.price-discount .rc-price__additional-discount {
+    line-height: 17px;
+    margin-left: 3px;
+}
+.rc-price .rc-price__additional-data {
+    align-items: center;
+    display: flex;
+}
+.rc-price .rc-price__additional-data .rc-price__discount-icon {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+}
+.rc-price .rc-price__additional-data .rc-price__additional-discount {
+    color: #fff;
+}
+.rc-price .rc-price__additional-data .rc-price__additional-discount-price {
+    color: #757575;
+    margin: 0 0 0 4px;
+    overflow: hidden;
+    text-decoration: line-through;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bg-c-text--label-2 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+.rc-overview .rc-overview__availability {
+    color: #da3438;
+    margin: 0 0 0 8px;
+}
+.bg-c-text--italic {
+    font-style: italic;
+}
+
+.rc-price .rc-price__section {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 2px 0 0;
+}
+.rc-price .rc-price__section .rc-price__real {
+    color: #303030;
+    display: flex;
+}
+
+.bg-c-text--body-1 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    font-family: "Poppins", sans-serif;
+}
+
+.bg-c-text--label-3 {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
+    font-family: "Poppins", sans-serif;
+}
+
+.bg-c-text--label-4 {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    font-family: "Poppins", sans-serif;
+}
+
+.rc-price .rc-price__section .rc-price__type {
+    font-weight: 400;
+    margin: 0 0 0 4px;
+}
+
+@media (max-width: 767px) {
+    .label-kost {
+        font-size: 12px;
+        left: 0;
+        padding: 3px 7px;
+    }
+    span.stock-label {
+        margin-left: 2px;
+    }
+    .flashdeal-header {
+        justify-content: space-between;
+    }
+    .flash-view {
+        justify-content: start;
+    }
+    .card-header.single-product {
+        height: 130px;
+    }
+    .product-card.single-card .card-body.single-product {
+        padding: 5px !important;
+    }
+    .rc-overview .rc-overview__label {
+        font-size: 12px;
+    }
+    .rc-price .rc-price__additional-data .rc-price__discount-icon {
+        color: #fff;
+        font-size: 10px;
+    }
+    .label-kost.flash-label {
+        left: 0;
+    }
+    .price-discount {
+        padding: 0 8px;
+    }
+    .rc-price .rc-price__additional-data .rc-price__additional-discount {
+        color: #fff;
+        font-size: 11px;
+        line-height: 15px;
+        font-size: 12px;
+    }
+    .bg-c-text--body-1 {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+        font-family: "Poppins", sans-serif;
+    }
+    .bg-c-text--body-2 {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        font-family: "Poppins", sans-serif;
+    }
+    .bg-c-text--body-4 {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 11px;
+        text-transform: capitalize !important;
+        font-family: "Poppins", sans-serif;
+    }
+    .bg-c-text--body-3 {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: capitalize !important;
+        line-height: 15px;
+        font-family: "Poppins", sans-serif;
+    }
+    span.bg-c-text--label-1 {
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .rating-show .rc-overview__label {
+        font-size: 12px;
+        max-height: 25px;
+    }
+    .rc-facilities {
+        font-weight: 400;
+        line-height: 12px;
+    }
+}
+@media (max-width: 450px) {
+    .bg-transparent {
+        margin-top: 110px;
+    }
+    .label-city {
+        padding: 6px 8px;
+        letter-spacing: 0px;
+    }
+    .subtitle-city small {
+        letter-spacing: -1px;
+    }
+
+    /* search */
+    .bottom-nav {
+        background-color: #f2f3f7;
+    }
+    .search-form-mobile{
+        position: relative;
+    }
+    .form-control.appended-form-control.search-bar-input {
+        border: 2px solid #c9c9c9;
+        border-radius: 50px;
+        border-top-right-radius: 50px !important;
+        border-bottom-right-radius: 50px !important;
+        padding-left: 2.5rem;
+    }
+    .search_button.mobile-search-button{
+        border-radius: 0px 50px 50px 0px;
+        left: 0;
+        right: unset;
+    }
+    .search_button.mobile-search-button span{
+        padding: 13px 8px;
+    }
+    .search_button.mobile-search-button span i{
+        color: #979797 !important;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    /* category */
+    .feature_header span.capitalize, .displayTab .flash_deal_title, .feature_header span.for-feature-title {
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
