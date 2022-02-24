@@ -44,7 +44,7 @@ a {
 }
 
 .page-footer {
-    background: #121d2c;
+    background: #ffffff;
     color: white;
 }
 
@@ -68,7 +68,7 @@ a {
 }
 
 .footer-heder {
-    color: #FFFFFF;
+    color: #383746;
 }
 
 .widget-list-link {
@@ -76,7 +76,7 @@ a {
 }
 
 .page-footer hr {
-    border: 0.001px solid #2d3542;
+    border: 1px solid hsla(0,0%,60%,.5);
 }
 
 .btn-secondary{
