@@ -270,12 +270,12 @@
 
         <!-- Toolbar-->
         <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
-          <a class="navbar-tool navbar-stuck-toggler" href="#">
+          {{-- <a class="navbar-tool navbar-stuck-toggler" href="#">
             <span class="navbar-tool-tooltip">Expand menu</span>
             <div class="navbar-tool-icon-box">
               <i class="navbar-tool-icon czi-menu"></i>
             </div>
-          </a>
+          </a> --}}
           <div class="nav-list d-flex">
               <div class="navbar-tool {{Session::get('direction') === " rtl" ? 'mr-3' : 'ml-3' }}">
                 <a class="nav-item-list" href="{{route('wishlists')}}">

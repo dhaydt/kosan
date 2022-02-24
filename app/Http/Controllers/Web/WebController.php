@@ -30,6 +30,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Laravolt\Indonesia\Models\City;
 
 class WebController extends Controller
 {
@@ -67,13 +68,18 @@ class WebController extends Controller
 
         $city = [];
         foreach ($cities as $c => $key) {
+            $id = City::where('name', $c)->first();
             $str = ['kabupaten', 'kota '];
             $rpl = ['Kab.', ''];
             $low = strtolower($c);
             $cit = str_replace($str, $rpl, $low);
-            array_push($city, $cit);
+
+            $data = [
+                'id' => $id->id,
+                'name' => $cit,
+            ];
+            array_push($city, $data);
         }
-        // dd($city);
 
         $latest_products = Product::with(['reviews', 'kost'])->active()->orderBy('id', 'desc')->take(8)->get();
         $categories = Category::where('position', 0)->take(12)->get();
@@ -459,9 +465,24 @@ class WebController extends Controller
 
     public function products(Request $request)
     {
+        // dd($request);
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
-        $porduct_data = Product::active()->with(['reviews']);
+        $porduct_data = Product::active()->with(['reviews', 'kost']);
+
+        if ($request['data-from'] == 'city-filter') {
+            $city = City::where('id', $request['city_id'])->first();
+            $city_name = $city->name;
+            $details = Product::with('kost')->whereHas('kost', function ($q) use ($city_name) {
+                $q->where('city', '=', $city_name);
+            })->get();
+            $product_ids = [];
+            foreach ($details as $detail) {
+                array_push($product_ids, $detail['id']);
+            }
+            // dd($details);
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
 
         if ($request['data_from'] == 'category') {
             $products = $porduct_data->get();

@@ -393,9 +393,16 @@
             <small class="text-grey">Temukan penyewaan Kos, Apartemen dan Ruko di Kota lain</small>
         </div>
         <div class="mt-2 mb-3">
-                @foreach($city as $c)
-                    <span class="badge label-city capitalize">{{ $c }}</span>
-                @endforeach
+            @foreach($city as $c)
+            <div class="badge label-city capitalize">
+                <form id="form-{{ $c['id'] }}" action="{{route('products')}}" type="submit" class="d-flex w-100">
+                    <input type="hidden" name="data-from" value="city-filter" >
+                    <input type="hidden" name="page" value="1" >
+                    <input type="hidden" name="city_id" value="{{ $c['id'] }}">
+                    <input type="submit" class="submit-city" value="{{ $c['name'] }}" />
+                </form>
+            </div>
+            @endforeach
         </div>
     </section>
 <!-- end Filter city -->

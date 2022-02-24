@@ -70,7 +70,7 @@
                                     <th class="text-center">{{\App\CPU\translate('Image')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Class')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('price_/_month')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate(' ')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Total_rooms')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Active')}} {{\App\CPU\translate('status')}}</th>
                                     <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
                                 </tr>
