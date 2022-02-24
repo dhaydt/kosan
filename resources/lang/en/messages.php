@@ -1570,4 +1570,9 @@
   'Kab. TAPANULI UTARA' => 'Kab. TAPANULI UTARA',
   'PADANG' => 'PADANG',
   'Kab. SOLOK' => 'Kab. SOLOK',
+  'rooms_found' => 'Rooms found',
+  'Article_config' => 'Article config',
+  'Article' => 'Article',
+  'Article_footer' => 'Article footer',
+  'Article footer updated successfully!' => 'Article footer updated successfully!',
 );

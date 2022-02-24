@@ -81,6 +81,8 @@ class WebController extends Controller
             array_push($city, $data);
         }
 
+        $article = BusinessSetting::where('type', 'article_footer')->first();
+
         $latest_products = Product::with(['reviews', 'kost'])->active()->orderBy('id', 'desc')->take(8)->get();
         $categories = Category::where('position', 0)->take(12)->get();
         $brands = Brand::take(15)->get();
@@ -115,7 +117,7 @@ class WebController extends Controller
 
         $deal_of_the_day = DealOfTheDay::join('products', 'products.id', '=', 'deal_of_the_days.product_id')->select('deal_of_the_days.*', 'products.unit_price')->where('deal_of_the_days.status', 1)->first();
 
-        return view('web-views.home', compact('city', 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands', 'deal_of_the_day', 'top_sellers', 'home_categories'));
+        return view('web-views.home', compact('article', 'city', 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands', 'deal_of_the_day', 'top_sellers', 'home_categories'));
     }
 
     public function flash_deals($id)

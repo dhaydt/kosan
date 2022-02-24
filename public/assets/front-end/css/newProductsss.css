@@ -257,13 +257,9 @@ section.article{
     background-color: #f2f2f2;
     padding-bottom: 3rem;
     padding-top: 3rem;
-}
-.article__section{
-    margin-bottom: 36px;
-    color: #383746;
-}
-.article__section-title{
-    margin-bottom: 16px;
+    -moz-column-count: 3;
+    column-count: 2;
+    width: 100%;
 }
 .bg-c-text--title-4 {
     font-size: 18px;
@@ -284,12 +280,6 @@ section.article{
     font-weight: 400;
     line-height: 24px;
 }
-.article .feature-section__content-item{
-    font-size: 16px;
-    font-weight: 600;
-    padding-left: 16px;
-}
-
 
 @media (max-width: 767px) {
     .label-kost {

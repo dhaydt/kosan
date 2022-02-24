@@ -162,15 +162,16 @@
         }
     </style>
     <style>
+        thead {
+            background: {{$web_config['primary_color']}}                         !important;
+            color: white;
+        }
         th, td {
             border-bottom: 1px solid #ddd;
             padding: 5px;
         }
 
-        thead {
-            background: {{$web_config['primary_color']}}                         !important;
-            color: white;
-        }
+
     </style>
 @endpush
 

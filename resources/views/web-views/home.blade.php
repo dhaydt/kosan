@@ -632,51 +632,10 @@
   @endforeach
 
 <section class="article mt-5 d-none d-md-block"><div class="container-fluid row">
-    <div class="col-md-6 article__column">
-        <div class="article__section about-section">
-            <p class="article__section-title bg-c-text bg-c-text--title-4 ">
-                Mamikos - Aplikasi Anak Kos No. 1 di Indonesia
-            </p>
-            <p class="article__section-content about-section__content bg-c-text bg-c-text--body-2 ">
-                Mamikos memanfaatkan teknologi untuk berkembang dari aplikasi cari kos menjadi aplikasi yang memudahkan calon anak kos untuk booking properti kos dan juga melakukan pembayaran kos. Saat ini kami memiliki lebih dari 2 juta kamar kos yang tersebar di lebih dari 140 kota di seluruh Indonesia. Mamikos juga menyediakan layanan manajemen properti, bernama Singgahsini dan Apik, untuk menjawab kebutuhan calon penghuni yang menginginkan kos eksklusif atau kos murah. Mamikos berusaha untuk bisa terus menyajikan daftar rumah kos dengan data ketersediaan kamar yang akurat, fasilitas kos terperinci, dilengkapi dengan foto serta detail harga kos, dan kemudahan survei via fitur virtual tour agar calon penghuni mendapatkan kenyamanan dalam proses pencarian dan booking kos.<br><br>Untuk memberikan perlindungan bagi para anak kos selama pandemi, Mamikos menghadirkan <strong>Kos Higienis</strong>. Kos Higienis merupakan kos dengan konsep yang menerapkan pelaksanaan standar protokol kesehatan, seperti disinfeksi kamar, jaga jarak, penggunaan masker, dan swab antigen untuk kamu saat akan mulai ngekos nanti.</p></div> <div class="article__section feature-section"><p class="article__section-title bg-c-text bg-c-text--title-4 ">
-                Fitur yang dapat dimanfaatkan di Mamikos
-</p> <ol type="a" start="1" class="article__section-content feature-section__content"><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Fitur Pencarian
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Di kolom pencarian, kamu bisa cari kos di sekitarmu atau kos di seluruh daerah di Indonesia dengan memasukkan keyword, seperti kos dekat Kampus/Universitas di masing-masing kota, cari kos di Jogja, Depok, Jakarta, Surabaya, Bandung, dan kota besar lainnya atau cari kos di sekitar lokasi saya saat ini.
-        </p></li><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Filter Pencarian
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Cari kos berdasarkan fasilitas kos yang kamu mau, lebih mudah dengan filter berdasarkan Kos AC, Kos Kamar mandi dalam, Kos Wifi. Bisa juga pilih kos dengan tipe kos, mulai dari Kos Harian, Kos Bulanan hingga Kos Tahunan. Mau cari Kos Bebas, Kos Pasutri, Kos Putra, Kos Putri, Kos Campur juga bisa.
-        </p></li><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Chat dengan Penyewa
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Terhubung langsung dengan pemilik kos dan bisa bertanya lebih lanjut mengenai info kos melalui fitur chat di Mamikos.
-        </p></li></ol></div></div> <div class="col-md-6 article__column"><div class="article__section feature-section"><ol type="a" start="4" class="article__section-content feature-section__content"><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Booking Langsung
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Bisa langsung mengajukan sewa kos di aplikasi atau website Mamikos. Bahkan, kamu bisa mulai sewa kos dari 3 bulan sebelum masuk kosan. Transaksi lebih aman, tanpa takut kamarnya penuh keduluan orang lain.
-        </p></li><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Virtual Tour
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Virtual Tour Mamikos adalah media foto lingkungan kos dalam 360° yang diperuntukkan untuk kamu, para pencari kos, agar dapat mengetahui kondisi lingkungan kos secara detail tanpa harus survei langsung. Fitur ini cocok jadi andalanmu yang butuh kosan tapi tidak punya waktu untuk survei langsung, karena fitur ini menampilkan keadaan kos secara lengkap dari berbagai sudut.
-        </p></li><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Pembayaran via Mamikos
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Bayar kosan anti ribet, cashless, dan jaminan aman, dengan beragam pilihan metode pembayaran. Nikmati promo-promo menarik yang diselenggarakan secara berkala untuk membantu kamu ngekos lebih hemat.
-        </p></li><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            MamiPoin
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Sebagai wujud terima kasih, Mamikos menghadirkan program loyalti melalui MamiPoin. Anak kos bisa mendapatkan poin sebagai cashback setiap melakukan pembayaran kos dan dapat dikumpulkan untuk digunakan sebagai tambahan diskon di pembayaran kos selanjutnya. Pemilik kos juga akan mendapatkan MamiPoin setiap melakukan aktivitas di Mamikos dan dapat dikumpulkan untuk ditukar menjadi beragam hadiah menarik atau tambahan diskon di pembayaran paket Mamikos GoldPlus.
-        </p></li><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Kos Review
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Lihat review dari para penghuni kos agar kamu semakin yakin untuk sewa kos. Kamu juga bisa tulis pengalaman kamu selama ngekos untuk menambah info kos tersebut.
-        </p></li><li class="feature-section__content-item"><p class="feature-section__content-item-title bg-c-text bg-c-text--title-5 ">
-            Favorit
-        </p> <p class="feature-section__content-item-description bg-c-text bg-c-text--body-2 ">
-            Ketemu dengan kos idaman, bisa disimpan dulu melalui fitur favorit kos. Kos yang sudah kamu simpan, dapat kamu booking di kemudian hari.
-        </p></li></ol></div></div></div> <div class="clearfix"></div></section>
+    <div class="article-footer">
+        {!! $article['value'] !!}
+    </div>
+</section>
   @endsection
 
   @push('script')
