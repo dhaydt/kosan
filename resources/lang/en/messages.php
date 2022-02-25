@@ -1575,4 +1575,5 @@
   'Article' => 'Article',
   'Article_footer' => 'Article footer',
   'Article footer updated successfully!' => 'Article footer updated successfully!',
+  'Promo_di' => 'Promo di',
 );

@@ -44,8 +44,9 @@ class WebController extends Controller
         return redirect()->route('home');
     }
 
-    public function home()
+    public function home(Request $request)
     {
+        // dd($request);
         $home_categories = Category::where('home_status', true)->get();
         $home_categories->map(function ($data) {
             $data['products'] = Product::active()->whereJsonContains('category_ids', ['id' => (string) $data['id']])->inRandomOrder()->take(12)->get();
@@ -81,6 +82,8 @@ class WebController extends Controller
             array_push($city, $data);
         }
 
+        // flash-deal sortby
+
         $article = BusinessSetting::where('type', 'article_footer')->first();
 
         $latest_products = Product::with(['reviews', 'kost'])->active()->orderBy('id', 'desc')->take(8)->get();
@@ -114,10 +117,21 @@ class WebController extends Controller
         if ($topRated->count() == 0) {
             $topRated = $bestSellProduct;
         }
+        $products = [];
+        $filter = '';
+        if ($request['sort'] == 'flash') {
+            $kota = City::where('id', $request['city'])->first()->name;
+            $flash_deals = FlashDeal::with(['products.product.reviews'])->where(['status' => 1])->where(['deal_type' => 'flash_deal'])->whereDate('start_date', '
+                        <=', date('Y-m-d'))->whereDate('end_date', '>=', date('Y-m-d'))->first();
+            $filter = $kota;
+        } else {
+            $flash_deals = FlashDeal::with(['products.product.reviews'])->where(['status' => 1])->where(['deal_type' => 'flash_deal'])->whereDate('start_date', '
+                        <=', date('Y-m-d'))->whereDate('end_date', '>=', date('Y-m-d'))->first();
+        }
 
         $deal_of_the_day = DealOfTheDay::join('products', 'products.id', '=', 'deal_of_the_days.product_id')->select('deal_of_the_days.*', 'products.unit_price')->where('deal_of_the_days.status', 1)->first();
 
-        return view('web-views.home', compact('article', 'city', 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands', 'deal_of_the_day', 'top_sellers', 'home_categories'));
+        return view('web-views.home', compact('filter', 'flash_deals', 'article', 'city', 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands', 'deal_of_the_day', 'top_sellers', 'home_categories'));
     }
 
     public function flash_deals($id)

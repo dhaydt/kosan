@@ -335,9 +335,8 @@
 <!--end categries-->
 
 <!--flash deal-->
-@php($flash_deals=\App\Model\FlashDeal::with(['products.product.reviews'])->where(['status'=>1])->where(['deal_type'=>'flash_deal'])->whereDate('start_date','
-<=',date('Y-m-d'))->whereDate('end_date','>=',date('Y-m-d'))->first())
 
+{{-- {{ dd(request()->route()->parameters) }} --}}
   @if (isset($flash_deals))
   <div class="container">
     <div class="row">
@@ -350,39 +349,71 @@
               </span>
             </div>
           </div>
-          <div class="col-12 timer" style="padding-{{Session::get('direction') === " rtl"
+          <div class="col-12 timer row" style="padding-{{Session::get('direction') === " rtl"
             ? 'left' : 'right' }}: 0">
-            <div class="view-btn-div-f w-100 flash-view">
-              <div class="d-md-flex align-items-center">
-                <span class="flashsale-label mb-0 mr-2 my-auto">{{\App\CPU\translate('berakhir_dalam')}} :</span>
-                <span class="cz-countdown"
-                  data-countdown="{{isset($flash_deals)?date('m/d/Y',strtotime($flash_deals['end_date'])):''}} 11:59:00 PM">
-                  <span class="cz-countdown-days">
-                    <span class="cz-countdown-value"></span> {{ \App\CPU\translate('hari') }}
-                  </span>
-                  <span class="cz-countdown-value">:</span>
-                  <span class="cz-countdown-hours">
-                    <span class="cz-countdown-value"></span>
-                  </span>
-                  <span class="cz-countdown-value">:</span>
-                  <span class="cz-countdown-minutes">
-                    <span class="cz-countdown-value"></span>
-                  </span>
-                  <span class="cz-countdown-value">:</span>
-                  <span class="cz-countdown-seconds">
-                    <span class="cz-countdown-value"></span>
-                  </span>
-                </span>
-              </div>
+            <div class="col-md-6 my-auto">
+                <div class="view-btn-div-f w-100 flash-view">
+                    <div class="d-md-flex align-items-center">
+                      <span class="flashsale-label mb-0 mr-2 my-auto">{{\App\CPU\translate('berakhir_dalam')}} :</span>
+                      <span class="cz-countdown"
+                        data-countdown="{{isset($flash_deals)?date('m/d/Y',strtotime($flash_deals['end_date'])):''}} 11:59:00 PM">
+                        <span class="cz-countdown-days">
+                          <span class="cz-countdown-value"></span> {{ \App\CPU\translate('hari') }}
+                        </span>
+                        <span class="cz-countdown-value">:</span>
+                        <span class="cz-countdown-hours">
+                          <span class="cz-countdown-value"></span>
+                        </span>
+                        <span class="cz-countdown-value">:</span>
+                        <span class="cz-countdown-minutes">
+                          <span class="cz-countdown-value"></span>
+                        </span>
+                        <span class="cz-countdown-value">:</span>
+                        <span class="cz-countdown-seconds">
+                          <span class="cz-countdown-value"></span>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+            </div>
+            {{-- {{ dd($city) }} --}}
+            <div class="col-md-6">
+                <div class="d-flex flex-wrap float-right for-shoting-mobile">
+                    <form id="flash-form" action="{{ route('home') }}" method="GET">
+                        {{-- <input hidden name="data_from" value="{{$data['data_from']}}"> --}}
+                        <div class="form-inline flex-nowrap for-mobile">
+                            <label
+                                class="opacity-75 text-nowrap {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}} for-shoting"
+                                for="sorting">
+                                <span
+                                class="{{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}">{{\App\CPU\translate('Promo_di')}}</span></label>
+                                <form action="{{ route('home') }}" method="get">
+                                    <input type="hidden" value="flash" name="sort">
+                                <select class="form-control custom-select" onchange="flashSubmit()" name="city" style="border: none;
+                                    background: transparent;
+                                    color: red;
+                                    padding: 5px;">
+                                    <option class="text-dark" value="home">Semua Daerah</option>
+                                    @foreach ($city as $c)
+                                        <option class="text-dark capitalize" value="{{ $c['id'] }}">{{ $c['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                </form>
+                        </div>
+                    </form>
+                </div>
             </div>
           </div>
         </div>
-        @include('web-views.partials._flash-deal')
+        <div id="flash-card">
+            @include('web-views.partials._flash-deal')
+        </div>
       </div>
     </div>
   </div>
   @endif
   <!-- end flash deal -->
+
 
 <!-- Filter city -->
     <section class="container rtl mt-3">
@@ -409,7 +440,7 @@
     </section>
 <!-- end Filter city -->
 
-
+<!--
   {{--deal of the day--}}
   <div class="new-section my-4">
     <div class="container">
@@ -508,8 +539,6 @@
                     <a class="btn btn-sm viw-btn-a"
                       href="{{route('products',['data_from'=>'latest'])}}">
                       {{ \App\CPU\translate('view_all')}}
-                      {{-- <i class="czi-arrow-{{Session::get('direction') === " rtl" ? 'left mr-1 ml-n1'
-                        : 'right ml-1 mr-n1' }}"></i> --}}
                     </a>
                   </div>
                 </div>
@@ -531,6 +560,7 @@
       </div>
     </div>
   </div>
+-->
 
   @php($featured_deals=\App\Model\FlashDeal::with(['products.product.reviews'])->where(['status'=>1])->where(['deal_type'=>'feature_deal'])->first())
 
@@ -643,11 +673,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
     integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function flashSubmit(){
+            $('#flash-form').submit();
+        }
+    </script>
 
   <script>
     $('#flash-deal-slider').owlCarousel({
-            loop: true,
-            autoplay: true,
+            loop: false,
+            autoplay: false,
             margin: 20,
             nav: false,
             //navText: ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
