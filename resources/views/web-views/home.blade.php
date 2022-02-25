@@ -23,6 +23,18 @@
     #navbarCollapse > ul.navbar-nav.mega-nav.pr-2.pl-2.mr-2.d-none.d-xl-block > li > ul {
         display: block !important;
     }
+    .manual-nav.nav-manual .owl-carousel .owl-nav  {
+        display: flex;
+        position: absolute;
+        top: -84px;
+        color: {{ $web_config['primary_color'] }};
+        right: -25px;
+    }
+    .manual-nav.nav-manual .owl-carousel .owl-nav button {
+        background-color: #cbcbcb;
+        padding: 5px 11px !important;
+        border-radius: 50%;
+    }
     .container {
         max-width: 1138px;
     }
@@ -376,12 +388,10 @@
                     </div>
                   </div>
             </div>
-            {{-- {{ dd($city) }} --}}
             <div class="col-md-6">
                 <div class="d-flex flex-wrap float-right for-shoting-mobile">
                     <form id="flash-form" action="{{ route('home') }}" method="GET">
-                        {{-- <input hidden name="data_from" value="{{$data['data_from']}}"> --}}
-                        <div class="form-inline flex-nowrap for-mobile">
+                        <div class="form-inline flex-nowrap for-mobile" style="margin-right: 70px;">
                             <label
                                 class="opacity-75 text-nowrap {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}} for-shoting"
                                 for="sorting">
@@ -389,13 +399,16 @@
                                 class="{{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}">{{\App\CPU\translate('Promo_di')}}</span></label>
                                 <form action="{{ route('home') }}" method="get">
                                     <input type="hidden" value="flash" name="sort">
-                                <select class="form-control custom-select" onchange="flashSubmit()" name="city" style="border: none;
-                                    background: transparent;
-                                    color: red;
-                                    padding: 5px;">
-                                    <option class="text-dark" value="home">Semua Daerah</option>
+                                <select class="form-control custom-select capitalize" onchange="flashSubmit()" name="city" style="border: none;
+                                background: transparent;
+                                color: red;
+                                padding: 5px;
+                                width: 110px;
+                                text-overflow: ellipsis;
+                                flex-wrap: nowrap;">
+                                    <option class="text-dark" value="">Semua</option>
                                     @foreach ($city as $c)
-                                        <option class="text-dark capitalize" value="{{ $c['id'] }}">{{ $c['name'] }}</option>
+                                        <option class="text-dark capitalize" value="{{ $c['id'] }}"{{ request()->city == $c['id'] ? 'selected' : '' }}>{{ $c['name'] }}</option>
                                     @endforeach
                                 </select>
                                 </form>
@@ -405,7 +418,7 @@
             </div>
           </div>
         </div>
-        <div id="flash-card">
+        <div id="flash-card" class="manual-nav nav-manual">
             @include('web-views.partials._flash-deal')
         </div>
       </div>
@@ -681,11 +694,11 @@
 
   <script>
     $('#flash-deal-slider').owlCarousel({
-            loop: false,
+            loop: true,
             autoplay: false,
             margin: 20,
             nav: false,
-            //navText: ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
+            navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
             dots: true,
             autoplayHoverPause: true,
             // center: true,
@@ -730,11 +743,11 @@
             loop: true,
             autoplay: false,
             margin: 5,
-            nav: false,
-            //navText: ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
+            nav: true,
+            navText: ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
             dots: false,
             autoplayHoverPause: false,
-            // center: true,
+            center: true,
             responsive: {
                 //X-Small
                 0: {

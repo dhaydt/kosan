@@ -119,7 +119,7 @@ class WebController extends Controller
         }
         $products = [];
         $filter = '';
-        if ($request['sort'] == 'flash') {
+        if ($request['sort'] == 'flash' && $request['city'] != '') {
             $kota = City::where('id', $request['city'])->first()->name;
             $flash_deals = FlashDeal::with(['products.product.reviews'])->where(['status' => 1])->where(['deal_type' => 'flash_deal'])->whereDate('start_date', '
                         <=', date('Y-m-d'))->whereDate('end_date', '>=', date('Y-m-d'))->first();
