@@ -80,12 +80,18 @@
                                         <label class="input-label label-name mb-0"
                                             for="cat">{{\App\CPU\translate('Dekat_dengan_perguruan_tinggi_apa')}} ?</label>
                                         <small>Jika ada, property anda dekat dengan kampus apa? (optional)</small>
-                                        <select class="form-control" id="ptn" name="ptn">
+                                        <select id="select-beast" class="form-select text-left" name="ptn" autocomplete="off">
+                                            <option value="">-- Pilih kampus terdekat --</option>
+                                            @foreach ($ptn as $p)
+                                            <option value="{{ $p->id }}" {{ ($p->id == $product->ptn_id)? 'selected' : '' }}>{{ $p->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- <select class="form-control" id="ptn" name="ptn">
                                             <option value="">-- Pilih kampus terdekat --</option>
                                             @foreach ($ptn as $p)
                                             <option value="{{ $p->id }}"{{ ($p->id == $product->ptn_id)? 'selected' : '' }}>{{ $p->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                             </div>
@@ -277,6 +283,15 @@
 <script src="{{asset('public/assets/back-end')}}/js/tags-input.min.js"></script>
 <script src="{{ asset('public/assets/select2/js/select2.min.js')}}"></script>
 <script src="{{asset('public/assets/back-end/js/spartan-multi-image-picker.js')}}"></script>
+<script>
+    new TomSelect("#select-beast",{
+        create: true,
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+    });
+</script>
 <script>
      $(document).ready(function(){
         var $prov = $('select[name=province] option').filter(':selected').val()
