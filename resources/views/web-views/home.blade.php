@@ -707,6 +707,34 @@
   @endif
   @endforeach
 
+  <!--categries-->
+    <section class="container rtl" style="margin-top: -16px;">
+        <!-- Heading-->
+        <div class="section-header">
+            <div class="feature_header">
+                <span class="capitalize">{{ \App\CPU\translate('Mau_cari_apa')}} ?</span>
+            </div>
+        </div>
+
+        <div class="mt-2 mb-3">
+            <div class="owl-carousel owl-theme " id="category-slider">
+                @foreach($ptn as $p)
+                    <div class="category_div p-0" style="height: 132px; width: 100%;">
+                        <a href="{{route('products',['id'=> $p['id'],'data_from'=>'category','page'=>1])}}">
+                            <img style="vertical-align: middle; height: 88px"
+                                onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                src="{{asset("storage/category/")}}"
+                                alt="{{$p->name}}">
+                                    <p class="text-center small mt-2"
+                                        style="">{{Str::limit($p->name, 17)}}</p>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!--end categries-->
+
 <section class="article mt-5 d-none d-md-block"><div class="container-fluid row">
     <div class="article-footer">
         {!! $article['value'] !!}

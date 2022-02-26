@@ -18,6 +18,7 @@ use App\Model\DealOfTheDay;
 use App\Model\FlashDeal;
 use App\Model\FlashDealProduct;
 use App\Model\HelpTopic;
+use App\Model\Kampus;
 use App\Model\Order;
 use App\Model\OrderDetail;
 use App\Model\Product;
@@ -66,7 +67,6 @@ class WebController extends Controller
 
         // pluck value with different value in relations
         $cities = Product::with('kost')->get()->pluck('kost.city', 'kost.city');
-
         $city = [];
         foreach ($cities as $c => $key) {
             $id = City::where('name', $c)->first();
@@ -81,6 +81,14 @@ class WebController extends Controller
             ];
             array_push($city, $data);
         }
+
+        $kampus = Product::with('kost')->get();
+        $ptnIds = [];
+        foreach ($kampus as $k) {
+            array_push($ptnIds, $k->kost->ptn_id);
+        }
+        $ptn = Kampus::whereIn('id', array_unique($ptnIds))->get();
+        // dd($ptn->get());
 
         // flash-deal sortby
 
@@ -131,7 +139,7 @@ class WebController extends Controller
 
         $deal_of_the_day = DealOfTheDay::join('products', 'products.id', '=', 'deal_of_the_days.product_id')->select('deal_of_the_days.*', 'products.unit_price')->where('deal_of_the_days.status', 1)->first();
 
-        return view('web-views.home', compact('filter', 'flash_deals', 'article', 'city', 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands', 'deal_of_the_day', 'top_sellers', 'home_categories'));
+        return view('web-views.home', compact('ptn', 'filter', 'flash_deals', 'article', 'city', 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands', 'deal_of_the_day', 'top_sellers', 'home_categories'));
     }
 
     public function flash_deals($id)

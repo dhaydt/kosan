@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Kampus;
 use App\Model\Product;
 use Illuminate\Database\Eloquent\Model;
 use Laravolt\Indonesia\Models\City;
@@ -22,5 +23,10 @@ class Kost extends Model
     public function dis()
     {
         return $this->belongsTo(District::class, 'district', 'name');
+    }
+
+    public function kampus()
+    {
+        return $this->belongsTo(Kampus::class, 'ptn_id');
     }
 }
