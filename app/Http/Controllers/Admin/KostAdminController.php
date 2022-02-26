@@ -10,6 +10,7 @@ use App\Model\Category;
 use App\Model\DealOfTheDay;
 use App\Model\Fasilitas;
 use App\Model\FlashDealProduct;
+use App\Model\Kampus;
 use App\Model\Product;
 use App\Model\Rule;
 use Brian2694\Toastr\Facades\Toastr;
@@ -61,8 +62,9 @@ class KostAdminController extends Controller
         $rule = Rule::get();
         $fas = Fasilitas::where('tipe', 'umum')->get();
         $cat = Category::get();
+        $ptn = Kampus::get();
 
-        return view('admin-views.kost.add-new', compact('fas', 'rule', 'cat'));
+        return view('admin-views.kost.add-new', compact('ptn', 'fas', 'rule', 'cat'));
     }
 
     /**
@@ -72,7 +74,6 @@ class KostAdminController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $auth = 0;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -108,6 +109,7 @@ class KostAdminController extends Controller
         $kost->seller_id = $auth;
         $kost->added_by = 'admin';
         $kost->category_id = $request['category'];
+        $kost->ptn_id = $request['ptn'];
         $kost->name = $request['name'];
         $kost->penghuni = $request['penghuni'];
         $kost->deskripsi = $request['description'];
@@ -151,6 +153,7 @@ class KostAdminController extends Controller
         $rules = Rule::get();
         $fas = Fasilitas::where('tipe', 'umum')->get();
         $cat = Category::get();
+        $ptn = Kampus::get();
 
         $img = json_decode($product->images);
         $depan = $img->depan;
@@ -159,7 +162,7 @@ class KostAdminController extends Controller
         $rule = json_decode($product->aturan_id);
         $fasilitas = json_decode($product->fasilitas_id);
 
-        return view('admin-views.kost.edit', compact('product', 'depan', 'dalam', 'jalan', 'rule', 'fasilitas', 'rules', 'fas', 'cat'));
+        return view('admin-views.kost.edit', compact('ptn', 'product', 'depan', 'dalam', 'jalan', 'rule', 'fasilitas', 'rules', 'fas', 'cat'));
     }
 
     /**
@@ -189,6 +192,7 @@ class KostAdminController extends Controller
         $product->name = $request->name;
         $product->province = $prov->name;
         $product->city = $city->name;
+        $product->ptn_id = $request['ptn'];
         $product->district = $request['district'];
         $product->note_address = $request['noteAddress'];
 
@@ -224,7 +228,7 @@ class KostAdminController extends Controller
             $product->save();
             Toastr::success('Property berhasil diupdate.');
 
-            return back();
+            return redirect()->route('admin.property.list', ['type' => 'in_house']);
         }
     }
 

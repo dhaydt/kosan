@@ -1581,4 +1581,5 @@
   'Kamar Kost' => 'Kamar Kost',
   'Kamar Kost KABUPATEN SOLOK' => 'Kamar Kost KABUPATEN SOLOK',
   'Apartemen KABUPATEN TAPANULI UTARA' => 'Apartemen KABUPATEN TAPANULI UTARA',
+  'Dekat_dengan_perguruan_tinggi_apa' => 'Dekat dengan perguruan tinggi apa',
 );

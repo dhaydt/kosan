@@ -62,17 +62,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="input-label label-name mb-0"
-                                    for="cat">{{\App\CPU\translate('Jenis_properti')}}</label>
-                                <small>Pilih jenis property anda</small>
-                                <select class="form-control" id="cat" name="category">
-                                    <option value="">-- Pilih jenis properti --</option>
-                                    @foreach ($cat as $c)
-                                    <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Jenis_properti')}}</label>
+                                        <small>Pilih jenis property anda</small>
+                                        <select class="form-control" id="cat" name="category">
+                                            <option value="">-- Pilih jenis properti --</option>
+                                            @foreach ($cat as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Dekat_dengan_perguruan_tinggi_apa')}} ?</label>
+                                        <small>Jika ada, property anda dekat dengan kampus apa? (optional)</small>
+                                        <select class="form-control" id="ptn" name="ptn">
+                                            <option value="">-- Pilih kampus terdekat --</option>
+                                            @foreach ($ptn as $p)
+                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
                             <input type="hidden" name="lang[]" value="en">
                             <div class="form-group">
                                 <label class="input-label label-name mb-0"

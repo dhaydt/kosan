@@ -21,9 +21,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a
-                    href="{{route('seller.dashboard.index')}}">{{\App\CPU\translate('Dashboard')}}</a></li>
+                    href="{{route('admin.dashboard')}}">{{\App\CPU\translate('Dashboard')}}</a></li>
             <li class="breadcrumb-item" aria-current="page"><a
-                    href="{{route('seller.property.list')}}">{{\App\CPU\translate('Property')}}</a>
+                    href="{{route('admin.product.list',['seller', 'status'=>'1'])}}">{{\App\CPU\translate('Property')}}</a>
             </li>
             <li class="breadcrumb-item" aria-current="page">{{ \App\CPU\translate('Edit')}}</li>
         </ol>
@@ -71,17 +71,31 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="input-label label-name mb-0"
-                                    for="cat">{{\App\CPU\translate('Jenis_properti')}}</label>
-                                <small>Pilih jenis property anda</small>
-                                <select class="form-control" id="cat" name="category">
-                                    @foreach ($cat as $c)
-                                    <option value="{{ $c->id }}" {{ ($c->id == $product->category_id)? 'selected' : '' }}>{{ $c->name }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Jenis_properti')}}</label>
+                                        <small>Pilih jenis property anda</small>
+                                        <select class="form-control" id="cat" name="category">
+                                            @foreach ($cat as $c)
+                                            <option value="{{ $c->id }}" {{ ($c->id == $product->category_id)? 'selected' : '' }}>{{ $c->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Dekat_dengan_perguruan_tinggi_apa')}} ?</label>
+                                        <small>Jika ada, property anda dekat dengan kampus apa? (optional)</small>
+                                        <select class="form-control" id="ptn" name="ptn">
+                                            <option value="">-- Pilih kampus terdekat --</option>
+                                            @foreach ($ptn as $p)
+                                            <option value="{{ $p->id }}"{{ ($p->id == $product->ptn_id)? 'selected' : '' }}>{{ $p->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="input-label label-name mb-0"

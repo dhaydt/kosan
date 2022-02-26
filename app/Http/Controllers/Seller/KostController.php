@@ -10,6 +10,7 @@ use App\Model\Category;
 use App\Model\DealOfTheDay;
 use App\Model\Fasilitas;
 use App\Model\FlashDealProduct;
+use App\Model\Kampus;
 use App\Model\Product;
 use App\Model\Rule;
 use Brian2694\Toastr\Facades\Toastr;
@@ -149,6 +150,7 @@ class KostController extends Controller
         $rules = Rule::get();
         $fas = Fasilitas::where('tipe', 'umum')->get();
         $cat = Category::get();
+        $ptn = Kampus::get();
 
         $img = json_decode($product->images);
         $depan = $img->depan;
@@ -157,7 +159,7 @@ class KostController extends Controller
         $rule = json_decode($product->aturan_id);
         $fasilitas = json_decode($product->fasilitas_id);
 
-        return view('seller-views.kost.edit', compact('product', 'cat', 'depan', 'dalam', 'jalan', 'rule', 'fasilitas', 'rules', 'fas'));
+        return view('seller-views.kost.edit', compact('ptn', 'product', 'cat', 'depan', 'dalam', 'jalan', 'rule', 'fasilitas', 'rules', 'fas'));
     }
 
     /**
@@ -188,6 +190,7 @@ class KostController extends Controller
         $product->province = $prov->name;
         $product->city = $city->name;
         $product->district = $request['district'];
+        $product->ptn_id = $request['ptn'];
         $product->note_address = $request['noteAddress'];
 
         if ($product->category_id != $request->category) {
