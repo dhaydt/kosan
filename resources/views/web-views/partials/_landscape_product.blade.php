@@ -26,7 +26,7 @@
 </style>
 <div class="product-card search-card card {{$product['current_stock']==0?'stock-card':''}}"
     style="margin-bottom: 10px; box-shadow: none;">
-    <label class="label-kost text-white">{{ $product->kost['name'] }}</label>
+    <label class="label-kost text-white" style="background-color: {{ $web_config['primary_color'] }};">{{ $product->kost['name'] }}</label>
 
         <div class="card-header inline_product clickable p-0 pb-1" style="cursor: pointer;">
             <div class="d-flex align-items-center justify-content-center d-block img-box-search">
@@ -103,12 +103,12 @@
                         <div class="rc-price__section">
                             <div class="room-card_overview">
                                 <span class="d-inline-block font-size-sm text-body">
-                                        {{-- @for($inc=0;$inc<1;$inc++)
-                                        @if($inc<$overallRating[0]) --}}
+                                        @for($inc=0;$inc<1;$inc++)
+                                        @if($inc<$overallRating[0])
                                         <i class="sr-star czi-star-filled active"></i>
                                         <label class="badge-style rc-label bg-c-text--label-1 text-bold"></label>{{$product->reviews()->count()}}</label>
-                                        {{-- @endif
-                                        @endfor --}}
+                                        @endif
+                                        @endfor
                                 </span>
                             </div>
                             <div class="rc-price__real">
