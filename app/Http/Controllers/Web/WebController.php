@@ -87,7 +87,7 @@ class WebController extends Controller
         foreach ($kampus as $k) {
             array_push($ptnIds, $k->kost->ptn_id);
         }
-        $ptn = Kampus::whereIn('id', array_unique($ptnIds))->get();
+        $ptn = Kampus::with('city')->whereIn('id', array_unique($ptnIds))->get();
         // dd($ptn->get());
 
         // flash-deal sortby

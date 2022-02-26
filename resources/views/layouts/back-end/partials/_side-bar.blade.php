@@ -356,6 +356,13 @@
                                 <small class="nav-subtitle" title="">{{\App\CPU\translate('business_section')}}</small>
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                             </li>
+                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/collage*')?'active':''}}">
+                                <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                   href="{{route('admin.collage.list')}}">
+                                   <i class="fa fa-th-large nav-icon"></i>
+                                    <span class="text-truncate">{{\App\CPU\translate('collage')}}</span>
+                                </a>
+                            </li>
 
                             {{-- seller withdraw --}}
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/stock/product-stock')?'active':''}}">
@@ -398,6 +405,7 @@
                     <!--business section ends here-->
 
                         @if(\App\CPU\Helpers::module_permission_check('user_section'))
+
                             <li class="nav-item {{(Request::is('admin/customer/list') || Request::is('admin/sellers/seller-list'))?'scroll-here':''}}">
                                 <small class="nav-subtitle" title="">{{\App\CPU\translate('user_section')}}</small>
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>

@@ -36,6 +36,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::post('update', 'ArticleController@update')->name('updateArticle');
         });
 
+        Route::group(['prefix' => 'collage', 'as' => 'collage.', 'middleware' => ['module:user_section']], function () {
+            Route::get('list', 'CollageController@index')->name('list');
+            Route::get('fetch', 'CollageController@fetch')->name('fetch');
+            Route::post('store', 'CollageController@store')->name('store');
+            Route::get('edit/{id}', 'CollageController@edit')->name('edit');
+            Route::post('update/{id}', 'CollageController@update')->name('update');
+            Route::post('delete', 'CollageController@delete')->name('delete');
+            Route::get('status/{id}/{home_status}', 'CollageController@status')->name('status');
+        });
+
         Route::group(['prefix' => 'custom-role', 'as' => 'custom-role.', 'middleware' => ['module:employee_section']], function () {
             Route::get('create', 'CustomRoleController@create')->name('create');
             Route::post('create', 'CustomRoleController@store');

@@ -707,33 +707,51 @@
   @endif
   @endforeach
 
-  <!--categries-->
-    <section class="container rtl" style="margin-top: -16px;">
+  <!--kampus-->
+    <section class="container rtl">
         <!-- Heading-->
         <div class="section-header">
             <div class="feature_header">
-                <span class="capitalize">{{ \App\CPU\translate('Mau_cari_apa')}} ?</span>
+                <span class="capitalize">{{ \App\CPU\translate('Kos_sekitar_kampus')}}</span>
             </div>
         </div>
 
-        <div class="mt-2 mb-3">
-            <div class="owl-carousel owl-theme " id="category-slider">
+        <div class="mt-2 mb-3 row">
                 @foreach($ptn as $p)
-                    <div class="category_div p-0" style="height: 132px; width: 100%;">
+                <div class="col-md-3 col-6">
+                    <div class="card p-2">
+                        <div class="row no-gutters">
+                          <div class="col-md-4" style="height: 100px;">
+                            <img onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                            src="{{asset("storage/collage/$p->logo")}}"
+                            alt="{{$p->id}}">
+                          </div>
+                          {{-- {{ dd($p->city->name) }} --}}
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 class="card-title" style="font-size: 16px; font-weight: 600;">{{ $p->short }}</h5>
+                              @if (isset($p->city))
+                              <span class="card-text" style="font-size: 12px; font-weight: 500;">{{ $p->city->name }}</span>
+                              @endif
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                    {{-- <div class="kampus_div p-0" style="height: 132px; width: 100%;">
                         <a href="{{route('products',['id'=> $p['id'],'data_from'=>'category','page'=>1])}}">
                             <img style="vertical-align: middle; height: 88px"
                                 onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                src="{{asset("storage/category/")}}"
+                                src="{{asset("storage/collage/$p->logo")}}"
                                 alt="{{$p->name}}">
                                     <p class="text-center small mt-2"
-                                        style="">{{Str::limit($p->name, 17)}}</p>
+                                        style="">{{Str::limit($p->short, 17)}}</p>
                         </a>
-                    </div>
+                    </div> --}}
                 @endforeach
-            </div>
         </div>
     </section>
-    <!--end categries-->
+    <!--end kampus-->
 
 <section class="article mt-5 d-none d-md-block"><div class="container-fluid row">
     <div class="article-footer">
@@ -788,6 +806,52 @@
                 //Medium
                 768: {
                     items: 3
+                },
+                //Large
+                992: {
+                    items: 4
+                },
+                //Extra large
+                1200: {
+                    items: 4
+                },
+                //Extra extra large
+                1400: {
+                    items: 4
+                }
+            }
+        })
+
+        $('#kampus-slider').owlCarousel({
+            loop: true,
+            autoplay: false,
+            margin: 20,
+            nav: false,
+            // navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+            dots: true,
+            autoplayHoverPause: true,
+            // center: true,
+            responsive: {
+                //X-Small
+                0: {
+                    items: 1
+                },
+                360: {
+                    items: 1
+                },
+                375: {
+                    items: 1
+                },
+                540: {
+                    items: 2
+                },
+                //Small
+                576: {
+                    items: 2
+                },
+                //Medium
+                768: {
+                    items: 2
                 },
                 //Large
                 992: {
