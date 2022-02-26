@@ -1,3 +1,11 @@
+/* Kampus section */
+.kampus-card .img-frame{
+    height: 52px;
+    /* width: 52px; */
+}
+.kampus-card span.card-text{
+    color: #737373;
+}
 /* search home */
 .home-top-search-section .home-top-search-title {
     color: #000000;

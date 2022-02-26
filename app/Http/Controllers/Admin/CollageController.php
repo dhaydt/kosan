@@ -9,6 +9,7 @@ use App\Model\Kampus;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\Province;
 use Laravolt\Indonesia\Models\Provinsi as ModelsProvinsi;
 
 class CollageController extends Controller
@@ -34,7 +35,7 @@ class CollageController extends Controller
             $ptn = new Kampus();
         }
         $city = City::pluck('name', 'id');
-        $provs = ModelsProvinsi::pluck('name', 'id');
+        $provs = Province::pluck('name', 'id');
         $ptn = $ptn->latest()->paginate(Helpers::pagination_limit())->appends($query_param);
 
         return view('admin-views.collage.view', compact('city', 'provs', 'ptn', 'search'));

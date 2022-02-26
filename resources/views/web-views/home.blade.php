@@ -718,24 +718,29 @@
 
         <div class="mt-2 mb-3 row">
                 @foreach($ptn as $p)
-                <div class="col-md-3 col-6">
-                    <div class="card p-2">
-                        <div class="row no-gutters">
-                          <div class="col-md-4" style="height: 100px;">
-                            <img onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                            src="{{asset("storage/collage/$p->logo")}}"
-                            alt="{{$p->id}}">
+                <div class="col-md-3 col-6 mb-2">
+                    <div class="card px-2 py-4 kampus-card">
+                        <a href="{{ route('products', ['data-from' => 'collage', 'collage_id' => $p->id ]) }}" class="row no-gutters">
+                          <div class="col-md-4 d-flex justify-content-center align-items-center">
+                              <div class="img-frame">
+                                  <img onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                  src="{{asset("storage/collage/$p->logo")}}" class="h-100"
+                                  alt="{{$p->id}}">
+                              </div>
                           </div>
+                          @php($word = ['KOTA ', 'KABUPATEN'])
+                          @php($rpl = ['', 'Kab.'])
                           {{-- {{ dd($p->city->name) }} --}}
                           <div class="col-md-8">
-                            <div class="card-body">
-                              <h5 class="card-title" style="font-size: 16px; font-weight: 600;">{{ $p->short }}</h5>
-                              @if (isset($p->city))
-                              <span class="card-text" style="font-size: 12px; font-weight: 500;">{{ $p->city->name }}</span>
-                              @endif
+                              <div class="card-body p-0">
+                                <h5 class="card-title my-1" style="font-size: 16px; font-weight: 600;">{{ $p->short }}</h5>
+                                @if (isset($p->city))
+                                @php($city = str_replace($word, $rpl, $p->city->name))
+                                <span class="card-text capitalize" style="font-size: 16px; font-weight: 500;">{{ strtoLower($city) }}</span>
+                                @endif
                             </div>
                           </div>
-                        </div>
+                        </a>
                       </div>
                 </div>
                     {{-- <div class="kampus_div p-0" style="height: 132px; width: 100%;">

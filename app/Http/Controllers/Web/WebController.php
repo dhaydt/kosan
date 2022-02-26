@@ -511,6 +511,27 @@ class WebController extends Controller
             $query = $porduct_data->whereIn('id', $product_ids);
         }
 
+        if ($request['data-from'] == 'collage') {
+            $city = $request['collage_id'];
+            $collage = Kampus::where('id', $city)->first()->name;
+
+            $details = Product::with('kost')->whereHas('kost', function ($q) use ($city) {
+                $q->where('ptn_id', '=', $city);
+            })->get();
+            // dd($details);
+            $product_ids = [];
+            foreach ($details as $detail) {
+                array_push($product_ids, $detail['id']);
+            }
+            // $kota = ['KOTA ', 'KABUPATEN'];
+            // $rpl = ['', 'Kab.'];
+
+            // $cit = str_replace($kota, $rpl, $city_name);
+            session()->put('search_name', $collage);
+            // dd($details);
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
         if ($request['data-from'] == 'city-filter') {
             $city = City::where('id', $request['city_id'])->first();
             $city_name = $city->name;

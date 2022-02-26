@@ -1597,4 +1597,7 @@
   'Kota' => 'Kota',
   'collage_deleted_Successfully.' => 'Collage deleted Successfully.',
   'Kos_sekitar_kampus' => 'Kos sekitar kampus',
+  'Nearest_collage' => 'Nearest collage',
+  'Universitas Andalas, Padang' => 'Universitas Andalas  Padang',
+  'Universitas Negeri Padang, Padang' => 'Universitas Negeri Padang  Padang',
 );
