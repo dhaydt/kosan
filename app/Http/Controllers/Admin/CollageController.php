@@ -145,6 +145,7 @@ class CollageController extends Controller
         $categories = Kampus::where('id', $request->id)->get();
         if (!empty($categories)) {
             foreach ($categories as $category) {
+                ImageManager::delete('/collage/'.$category['logo']);
                 Kampus::destroy($category->id);
             }
         }

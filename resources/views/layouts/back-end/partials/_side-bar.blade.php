@@ -359,7 +359,7 @@
                             <li class="navbar-vertical-aside-has-menu {{Request::is('admin/collage*')?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.collage.list')}}">
-                                   <i class="fa fa-th-large nav-icon"></i>
+                                   <i class="fa fa-graduation-cap nav-icon" aria-hidden="true"></i>
                                     <span class="text-truncate">{{\App\CPU\translate('collage')}}</span>
                                 </a>
                             </li>
