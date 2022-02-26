@@ -1576,4 +1576,9 @@
   'Article_footer' => 'Article footer',
   'Article footer updated successfully!' => 'Article footer updated successfully!',
   'Promo_di' => 'Promo di',
+  'di' => 'Di',
+  'lihat_semua' => 'Lihat semua',
+  'Kamar Kost' => 'Kamar Kost',
+  'Kamar Kost KABUPATEN SOLOK' => 'Kamar Kost KABUPATEN SOLOK',
+  'Apartemen KABUPATEN TAPANULI UTARA' => 'Apartemen KABUPATEN TAPANULI UTARA',
 );

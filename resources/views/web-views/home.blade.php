@@ -403,6 +403,7 @@
                                 background: transparent;
                                 color: red;
                                 padding: 5px;
+                                cursor: pointer;
                                 width: 110px;
                                 text-overflow: ellipsis;
                                 flex-wrap: nowrap;">
@@ -642,16 +643,48 @@
   @if(App\CPU\CategoryManager::products($category['id'])->count()>0)
   <section class="container rtl">
     <div class="section-header">
-      <div class="feature_header">
-        <span class="for-feature-title">{{$category['name']}}</span>
-      </div>
-      <div>
-        <a class="btn btn-sm viw-btn-a"
-          href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
-          {{ \App\CPU\translate('view_all')}}
-        </a>
-      </div>
-    </div>
+        <div class="feature_header d-flex align-items-center">
+            <span class="for-feature-title">{{$category['name']}}</span>
+        </div>
+        <div class="d-flex col-md-10 justify-content-between">
+            <div class="d-flex float-right for-shoting-mobile">
+                <form id="{{ $category['id'] }}-form" action="{{ route('products') }}" method="GET">
+                    <div class="form-inline flex-nowrap for-mobile">
+                        <label class="opacity-75 text-nowrap {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}} for-shoting"
+                            for="sorting">
+                            <span style="text-transform: lowercase;" class="{{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}">di</span>
+                        </label>
+                        <form action="{{ route('products') }}" method="get">
+                            <input type="hidden" value="{{ $category['name'] }}" name="data_from">
+                            <input type="hidden" value="catHome" name="type">
+                            <input type="hidden" value="{{ $category['id'] }}" name="catId">
+                            <input type="hidden" value="1" name="page">
+                            @php($cate = $category['name'])
+                        <select class="form-control custom-select capitalize" name="city" onchange="catSubmit({{ $category['id'] }})" style="border: none;
+                        background: transparent;
+                        color: red;
+                        padding: 5px;
+                        cursor: pointer;
+                        text-overflow: ellipsis;
+                        flex-wrap: nowrap;">
+                            <option class="text-dark" value="">Semua lokasi</option>
+                            @foreach ($city as $c)
+                                <option class="text-dark capitalize" value="{{ $c['id'] }}"{{ request()->city == $c['id'] ? 'selected' : '' }}>{{ $c['name'] }}</option>
+                            @endforeach
+                        </select>
+                        </form>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <a class="btn btn-sm viw-btn-a"
+                href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
+                {{ \App\CPU\translate('lihat_semua')}}
+                </a>
+            </div>
+            </div>
+        </div>
+
     <div class="row mt-2 mb-3 w-100">
         @foreach(\App\CPU\CategoryManager::products($category['id']) as $key=>$product)
         @if($key<12)
@@ -689,6 +722,10 @@
     <script>
         function flashSubmit(){
             $('#flash-form').submit();
+        }
+
+        function catSubmit(val){
+            $('#'+val+'-form').submit()
         }
     </script>
 

@@ -485,6 +485,23 @@ class WebController extends Controller
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
         $porduct_data = Product::active()->with(['reviews', 'kost']);
+        $catId = $request['catId'];
+
+        if ($request['type'] == 'catHome') {
+            $cit = City::where('id', $request['city'])->first()->name;
+            $products = $porduct_data->whereHas('kost', function ($q) use ($catId, $cit) {
+                $q->where('category_id', '=', $catId)->where('city', '=', $cit);
+            })->get();
+            $product_ids = [];
+            foreach ($products as $product) {
+                // dd(json_decode($product['category_ids'], true));
+                foreach (json_decode($product['category_ids'], true) as $category) {
+                    array_push($product_ids, $product['id']);
+                }
+            }
+            session()->put('search_name', $request['data_from'].' '.$cit);
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
 
         if ($request['data-from'] == 'city-filter') {
             $city = City::where('id', $request['city_id'])->first();
@@ -509,8 +526,9 @@ class WebController extends Controller
             $products = $porduct_data->get();
             $product_ids = [];
             foreach ($products as $product) {
+                // dd(json_decode($product['category_ids'], true));
                 foreach (json_decode($product['category_ids'], true) as $category) {
-                    if ($category['id'] == $request['id']) {
+                    if ($category == $request['id']) {
                         array_push($product_ids, $product['id']);
                     }
                 }
