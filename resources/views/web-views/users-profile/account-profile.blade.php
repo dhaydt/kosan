@@ -123,7 +123,7 @@
             <section class="col-lg-9 col-md-9">
                 <div class="card box-shadow-sm">
                     <div class="card-header">
-                        <form class="mt-3" action="{{route('user-update')}}" method="post"
+                        <form class="mt-3" action="{{route('user-update')}}" method="post" autocomplete="off"
                             enctype="multipart/form-data">
                             <div class="row photoHeader">
                                 @csrf
@@ -131,7 +131,7 @@
                                     style=" border-radius: 50px; margin-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 30px; width: 50px!important;height: 50px!important;"
                                     class="rounded-circle border"
                                     onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                    src="{{asset('storage/app/public/profile')}}/{{$customerDetail['image']}}">
+                                    src="{{asset('storage/profile')}}/{{$customerDetail['image']}}">
 
                                 <div class="col-md-10">
                                     <h5 class="font-name">{{$customerDetail->f_name. ' '.$customerDetail->l_name}}</h5>
@@ -181,9 +181,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="si-password">{{\App\CPU\translate('new_password')}}</label>
                                             <div class="password-toggle">
-                                                <input class="form-control" name="password" type="password"
-                                                    id="password"
-                                                >
+                                                <input class="form-control" autocomplete="off" name="new_password" type="password" id="new_password">
                                                 <label class="password-toggle-btn">
                                                     <input class="custom-control-input" type="checkbox"
                                                         style="display: none">
@@ -194,7 +192,6 @@
                                                 </label>
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-6">
                                             <label for="newPass">{{\App\CPU\translate('confirm_password')}} </label>
                                             <div class="password-toggle">
@@ -216,8 +213,26 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="firstName">{{\App\CPU\translate('gender')}} </label>
-                                            <input type="text" class="form-control" name="kelamin"
-                                                value="{{$customerDetail['kelamin']}}" required>
+                                            <div class="row pl-4">
+                                                <div class="col-4">
+                                                    <div class="form-check user-account">
+                                                        <input class="form-check-input" type="radio" name="kelamin" id="kel" value="laki-laki" {{ ($customerDetail['kelamin'] == 'laki-laki') ? 'checked' : ''  }}>
+                                                        <label class="form-check-label ml-1" for="kel">
+                                                            {{\App\CPU\translate('pria')}}
+                                                        </label>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-check user-account">
+                                                        <input class="form-check-input" type="radio" name="kelamin" id="kel2" value="perempuan" {{ ($customerDetail['pekerjaan'] == 'perempuan') ? 'checked' : ''  }}>
+                                                        <label class="form-check-label ml-1" for="kel2">
+                                                            {{\App\CPU\translate('wanita')}}
+                                                        </label>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="lastName"> {{\App\CPU\translate('date_of_birth')}} </label>
@@ -228,19 +243,37 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="asal">{{\App\CPU\translate('hometown')}} </label>
-                                            <input type="text" class="form-control" name="asal"
-                                                value="{{$customerDetail['asal']}}">
+                                            <select name="asal" class="form-control">
+                                                <option value="">-- Pilih kota asal --</option>
+                                                @foreach ($city as $c)
+                                                    <option value="{{ $c->id }}" {{ ($customerDetail['asal'] == $c->id) ? 'selected' : '' }}>{{ $c->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="phone">{{\App\CPU\translate('marital_status')}} </label>
-                                            <input type="text" class="form-control" name="pernikahan" value="{{$customerDetail['status_pernikahan']}}" required>
+                                            <select name="pernikahan" class="form-control">
+                                                <option value="">-- Pilih status pernikahan --</option>
+                                                <option value="belum kawin" {{ ($customerDetail['status_pernikahan'] == 'belum kawin') ? 'selected' : '' }}>Belum kawin</option>
+                                                <option value="kawin" {{ ($customerDetail['status_pernikahan'] == 'kawin') ? 'selected' : '' }}>Kawin</option>
+                                                <option value="memiliki anak" {{ ($customerDetail['status_pernikahan'] == 'memiliki anak') ? 'selected' : '' }}>Memiliki anak</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="si-password">{{\App\CPU\translate('last_education')}}</label>
-                                            <input type="text" class="form-control" name="pendidikan"
-                                                   value="{{$customerDetail['pendidikan']}}">
+                                            <select name="pendidikan" class="form-control">
+                                                <option value="">-- Pilih pendidikan terakhir --</option>
+                                                <option value="SD/MI" {{ ($customerDetail['pendidikan'] == "SD/MI") ? 'selected' : '' }}>SD/ MI</option>
+                                                <option value="SMP/MTS" {{ ($customerDetail['pendidikan'] == "SMP/MTS") ? 'selected' : '' }}>SMP/ MTS</option>
+                                                <option value="SMA/MA" {{ ($customerDetail['pendidikan'] == "SMA/MA") ? 'selected' : '' }}>SMA/ MA</option>
+                                                <option value="SMK/MAK" {{ ($customerDetail['pendidikan'] == "SMK/MAK") ? 'selected' : '' }}>SMK/ MAK</option>
+                                                <option value="Diploma" {{ ($customerDetail['pendidikan'] == "Diploma") ? 'selected' : '' }}>Diploma</option>
+                                                <option value="S1" {{ ($customerDetail['pendidikan'] == "S1") ? 'selected' : '' }}>S1</option>
+                                                <option value="S2" {{ ($customerDetail['pendidikan'] == "S2") ? 'selected' : '' }}>S2</option>
+                                                <option value="S3" {{ ($customerDetail['pendidikan'] == "S3") ? 'selected' : '' }}>S3</option>
+                                            </select>
                                         </div>
 
                                         <div class="form-group col-md-6">
@@ -251,7 +284,7 @@
                                                     </div>
                                                 <input type="number" class="form-control"
                                                         name="darurat" aria-describedby="basic-addon2"
-                                                        value="{{$customerDetail['hp_darurat']}}" required>
+                                                        value="{{$customerDetail['hp_darurat']}}">
                                             </div>
                                         </div>
                                     </div>
@@ -264,8 +297,8 @@
                                             <div class="row pl-4">
                                                 <div class="col-4">
                                                     <div class="form-check user-account">
-                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
-                                                        <label class="form-check-label ml-1" for="exampleRadios1">
+                                                        <input class="form-check-input" type="radio" name="pekerjaan" id="mhs" value="mahasiswa" {{ ($customerDetail['pekerjaan'] == 'mahasiswa') ? 'checked' : ''  }}>
+                                                        <label class="form-check-label ml-1" for="mhs">
                                                             {{\App\CPU\translate('mahasiswa')}}
                                                         </label>
                                                         </input>
@@ -273,8 +306,8 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-check user-account">
-                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1">
-                                                        <label class="form-check-label ml-1" for="exampleRadios2">
+                                                        <input class="form-check-input" type="radio" name="pekerjaan" id="krywn" value="karyawan" {{ ($customerDetail['pekerjaan'] == 'karyawan') ? 'checked' : ''  }}>
+                                                        <label class="form-check-label ml-1" for="krywn">
                                                             {{\App\CPU\translate('karyawan')}}
                                                         </label>
                                                         </input>
@@ -282,8 +315,8 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-check user-account">
-                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option1">
-                                                        <label class="form-check-label ml-1" for="exampleRadios3">
+                                                        <input class="form-check-input" type="radio" name="pekerjaan" id="other" value="lainnya" {{ ($customerDetail['pekerjaan'] == 'lainnya') ? 'checked' : ''  }}>
+                                                        <label class="form-check-label ml-1" for="other">
                                                             {{\App\CPU\translate('lainnya')}}
                                                         </label>
                                                         </input>
@@ -293,9 +326,23 @@
                                             {{-- <input type="text" class="form-control" name="pekerjaan"
                                                 value="{{$customerDetail['pekerjaan']}}" required> --}}
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12 d-none" id="univ">
                                             <label for="lastName"> {{\App\CPU\translate('university_name')}} </label>
-                                            <input type="text" class="form-control" name="tempat_kerja"
+                                            <select name="univ" class="form-control">
+                                                <option value="">-- Pilih universitas --</option>
+                                                @foreach ($ptn as $p)
+                                                    <option value="{{ $p->name }}" {{ ($customerDetail['kampus'] == $p->name) ? 'selected' : '' }}>{{ $p->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-12 d-none" id="office">
+                                            <label for="lastName"> {{\App\CPU\translate('office_name')}} </label>
+                                            <input type="text" class="form-control" name="office"
+                                                value="{{$customerDetail['tempat_kerja']}}">
+                                        </div>
+                                        <div class="form-group col-md-12 d-none" id="desc">
+                                            <label for="lastName"> {{\App\CPU\translate('description')}} </label>
+                                            <input type="text" class="form-control" name="other"
                                                 value="{{$customerDetail['tempat_kerja']}}">
                                         </div>
                                     </div>
@@ -393,8 +440,42 @@
     <script src="{{asset('public/assets/front-end')}}/vendor/nouislider/distribute/nouislider.min.js"></script>
     <script src="{{asset('public/assets/back-end/js/croppie.js')}}"></script>
     <script>
+        $(document).ready(function(){
+            var mhs = $('#mhs').is(":checked")
+            var krywn = $('#krywn').is(":checked")
+            var other = $('#other').is(":checked")
+
+            if(mhs){
+                $('#univ').removeClass('d-none');
+            }if(krywn){
+                $('#office').removeClass('d-none');
+            }if(other){
+                $('#desc').removeClass('d-none');
+            }
+
+            $('#mhs').on('change', function(){
+                $('#univ').removeClass('d-none');
+                $('#office').addClass('d-none');
+                $('#desc').addClass('d-none');
+            })
+
+            $('#krywn').on('change', function(){
+                $('#univ').addClass('d-none');
+                $('#office').removeClass('d-none');
+                $('#desc').addClass('d-none');
+            })
+
+            $('#other').on('change', function(){
+                $('#univ').addClass('d-none');
+                $('#office').addClass('d-none');
+                $('#desc').removeClass('d-none');
+            })
+        })
+
+    </script>
+    <script>
         function checkPasswordMatch() {
-            var password = $("#password").val();
+            var password = $("#new_password").val();
             var confirmPassword = $("#confirm_password").val();
             $("#message").removeAttr("style");
             $("#message").html("");

@@ -1611,4 +1611,7 @@
   'profession' => 'Profession',
   'karyawan' => 'Karyawan',
   'mahasiswa' => 'Mahasiswa',
+  'wanita' => 'Wanita',
+  'pria' => 'Pria',
+  'office_name' => 'Office name',
 );
