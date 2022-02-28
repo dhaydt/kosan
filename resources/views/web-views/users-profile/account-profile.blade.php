@@ -9,41 +9,43 @@
             font-weight: 600;
             margin-top: 1rem;
         }
-
         .border:hover {
             border: 3px solid{{$web_config['primary_color']}};
             margin-bottom: 5px;
             margin-top: -6px;
         }
-
         body {
             font-family: 'Titillium Web', sans-serif
         }
-
-
+        .form-check.user-account [type="radio"] {
+            border: 0;
+            clip: auto !important;
+            height: 15px;
+            margin: -1px;
+            left: 0;
+            top: 7px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 15px;
+        }
         .footer span {
             font-size: 12px
         }
-
         .product-qty span {
             font-size: 12px;
             color: #6A6A6A;
         }
-
         .spandHeadO {
             color: {{$web_config['primary_color']}};
             font-weight: 400;
             font-size: 13px;
-
         }
-
         .spandHeadO:hover {
             color: {{$web_config['primary_color']}};
             font-weight: 400;
             font-size: 13px;
-
         }
-
         .font-name {
             font-weight: 600;
             margin-top: 0px !important;
@@ -51,7 +53,6 @@
             font-size: 15px;
             color: #030303;
         }
-
         .font-nameA {
             font-weight: 600;
             margin-top: 0px;
@@ -59,33 +60,27 @@
             font-size: 17px;
             color: #030303;
         }
-
         label {
             font-size: 16px;
         }
-
         .photoHeader {
             margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 1rem;
             margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 2rem;
             padding: 13px;
         }
-
         .card-header {
             border-bottom: none;
         }
-
         .sidebarL h3:hover + .divider-role {
             border-bottom: 3px solid {{$web_config['primary_color']}}          !important;
             transition: .2s ease-in-out;
         }
 
         @media (max-width: 350px) {
-
             .photoHeader {
                 margin-left: 0.1px !important;
                 margin-right: 0.1px !important;
                 padding: 0.1px !important;
-
             }
         }
 
@@ -93,18 +88,16 @@
             .sidebar_heading {
                 background: {{$web_config['primary_color']}};
             }
-
+            .photoHeader {
+                margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 2px !important;
+                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 1px !important;
+                padding: 13px;
+            }
             .sidebar_heading h1 {
                 text-align: center;
                 color: aliceblue;
                 padding-bottom: 17px;
                 font-size: 19px;
-            }
-
-            .photoHeader {
-                margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 2px !important;
-                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 1px !important;
-                padding: 13px;
             }
         }
     </style>
@@ -122,7 +115,7 @@
     </div>
     <!-- Page Content-->
     <div class="container pb-5 mb-2 mb-md-4 mt-3 rtl"
-         style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
+        style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
         <div class="row">
             <!-- Sidebar-->
         @include('web-views.partials._profile-aside')
@@ -131,56 +124,57 @@
                 <div class="card box-shadow-sm">
                     <div class="card-header">
                         <form class="mt-3" action="{{route('user-update')}}" method="post"
-                              enctype="multipart/form-data">
+                            enctype="multipart/form-data">
                             <div class="row photoHeader">
                                 @csrf
                                 <img id="blah"
-                                     style=" border-radius: 50px; margin-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 30px; width: 50px!important;height: 50px!important;"
-                                     class="rounded-circle border"
-                                     onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                     src="{{asset('storage/app/public/profile')}}/{{$customerDetail['image']}}">
+                                    style=" border-radius: 50px; margin-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 30px; width: 50px!important;height: 50px!important;"
+                                    class="rounded-circle border"
+                                    onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                    src="{{asset('storage/app/public/profile')}}/{{$customerDetail['image']}}">
 
                                 <div class="col-md-10">
                                     <h5 class="font-name">{{$customerDetail->f_name. ' '.$customerDetail->l_name}}</h5>
                                     <label for="files"
-                                           style="cursor: pointer; color:{{$web_config['primary_color']}};"
-                                           class="spandHeadO">
+                                        style="cursor: pointer; color:{{$web_config['primary_color']}};"
+                                        class="spandHeadO">
                                         {{\App\CPU\translate('change_your_profile')}}
                                     </label>
                                     <span style="color: red;font-size: 10px">( * {{\App\CPU\translate('Image ratio should be')}} 1:1 )</span>
                                     <input id="files" name="image" style="visibility:hidden;" type="file">
                                 </div>
 
+<!-- INFORMASI AKUN -->
                                 <div class="card-body {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
                                     <h3 class="font-nameA">{{\App\CPU\translate('account_information')}} </h3>
-
-
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="firstName">{{\App\CPU\translate('first_name')}} </label>
                                             <input type="text" class="form-control" id="f_name" name="f_name"
-                                                   value="{{$customerDetail['f_name']}}" required>
+                                                value="{{$customerDetail['f_name']}}" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="lastName"> {{\App\CPU\translate('last_name')}} </label>
                                             <input type="text" class="form-control" id="l_name" name="l_name"
-                                                   value="{{$customerDetail['l_name']}}">
+                                                value="{{$customerDetail['l_name']}}">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="inputEmail4">{{\App\CPU\translate('Email')}} </label>
-                                            <input type="email" class="form-control" type="email" id="account-email"
-                                                   value="{{$customerDetail['email']}}" disabled>
+                                            <input type="email" class="form-control" id="account-email"
+                                                value="{{$customerDetail['email']}}" disabled>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="phone">{{\App\CPU\translate('phone_name')}} </label>
-                                            <small class="text-primary">(
-                                                * {{\App\CPU\translate('country_code_is_must')}} {{\App\CPU\translate('like_for_BD_880')}}
-                                                )</small></label>
-                                            <input type="number" class="form-control" type="text" id="phone"
-                                                   name="phone"
-                                                   value="{{$customerDetail['phone']}}" required>
+                                            <label for="phone">{{\App\CPU\translate('phone_number')}}</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">+62</span>
+                                                </div>
+                                                <input type="number" class="form-control" id="phone"
+                                                    name="phone" aria-describedby="basic-addon1"
+                                                    value="{{$customerDetail['phone']}}" required>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -188,13 +182,13 @@
                                             <label for="si-password">{{\App\CPU\translate('new_password')}}</label>
                                             <div class="password-toggle">
                                                 <input class="form-control" name="password" type="password"
-                                                       id="password"
+                                                    id="password"
                                                 >
                                                 <label class="password-toggle-btn">
                                                     <input class="custom-control-input" type="checkbox"
-                                                           style="display: none">
+                                                        style="display: none">
                                                     <i class="czi-eye password-toggle-indicator"
-                                                       onChange="checkPasswordMatch()"></i>
+                                                    onChange="checkPasswordMatch()"></i>
                                                     <span
                                                         class="sr-only">{{\App\CPU\translate('Show')}} {{\App\CPU\translate('password')}} </span>
                                                 </label>
@@ -204,19 +198,105 @@
                                         <div class="form-group col-md-6">
                                             <label for="newPass">{{\App\CPU\translate('confirm_password')}} </label>
                                             <div class="password-toggle">
-                                                <input class="form-control" name="con_password" type="password"
-                                                       id="confirm_password">
+                                                <input class="form-control" name="con_password" type="password" id="confirm_password">
                                                 <div>
                                                     <label class="password-toggle-btn">
                                                         <input class="custom-control-input" type="checkbox"
-                                                               style="display: none">
-                                                        <i class="czi-eye password-toggle-indicator"
-                                                           onChange="checkPasswordMatch()"></i><span
-                                                            class="sr-only">{{\App\CPU\translate('Show')}} {{\App\CPU\translate('password')}} </span>
+                                                            style="display: none">
+                                                        <i class="czi-eye password-toggle-indicator" onChange="checkPasswordMatch()"></i><span
+                                                        class="sr-only">{{\App\CPU\translate('Show')}} {{\App\CPU\translate('password')}} </span>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div id='message'></div>
+                                        </div>
+                                    </div>
+<!-- USER PROFILE -->
+                                    <h3 class="font-nameA mt-4">{{\App\CPU\translate('user_profile')}} </h3>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="firstName">{{\App\CPU\translate('gender')}} </label>
+                                            <input type="text" class="form-control" name="kelamin"
+                                                value="{{$customerDetail['kelamin']}}" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="lastName"> {{\App\CPU\translate('date_of_birth')}} </label>
+                                            <input type="date" class="form-control" name="lahir"
+                                                value="{{$customerDetail['lahir']}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="asal">{{\App\CPU\translate('hometown')}} </label>
+                                            <input type="text" class="form-control" name="asal"
+                                                value="{{$customerDetail['asal']}}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="phone">{{\App\CPU\translate('marital_status')}} </label>
+                                            <input type="text" class="form-control" name="pernikahan" value="{{$customerDetail['status_pernikahan']}}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="si-password">{{\App\CPU\translate('last_education')}}</label>
+                                            <input type="text" class="form-control" name="pendidikan"
+                                                   value="{{$customerDetail['pendidikan']}}">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="newPass">{{\App\CPU\translate('emergency_phone_number')}} </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon2">+62</span>
+                                                    </div>
+                                                <input type="number" class="form-control"
+                                                        name="darurat" aria-describedby="basic-addon2"
+                                                        value="{{$customerDetail['hp_darurat']}}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+<!-- PROFESI -->
+                                    <h3 class="font-nameA mt-4">{{\App\CPU\translate('profession')}}</h3>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="firstName">{{\App\CPU\translate('profession')}} </label>
+                                            <div class="row pl-4">
+                                                <div class="col-4">
+                                                    <div class="form-check user-account">
+                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                                        <label class="form-check-label ml-1" for="exampleRadios1">
+                                                            {{\App\CPU\translate('mahasiswa')}}
+                                                        </label>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-check user-account">
+                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1">
+                                                        <label class="form-check-label ml-1" for="exampleRadios2">
+                                                            {{\App\CPU\translate('karyawan')}}
+                                                        </label>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-check user-account">
+                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option1">
+                                                        <label class="form-check-label ml-1" for="exampleRadios3">
+                                                            {{\App\CPU\translate('lainnya')}}
+                                                        </label>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <input type="text" class="form-control" name="pekerjaan"
+                                                value="{{$customerDetail['pekerjaan']}}" required> --}}
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="lastName"> {{\App\CPU\translate('university_name')}} </label>
+                                            <input type="text" class="form-control" name="tempat_kerja"
+                                                value="{{$customerDetail['tempat_kerja']}}">
                                         </div>
                                     </div>
                                     <button type="submit"

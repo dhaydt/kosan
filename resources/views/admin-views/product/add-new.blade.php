@@ -627,47 +627,6 @@
         $('input[name="unit_price"]').on('keyup', function () {
             update_sku();
         });
-
-
-        // function update_sku() {
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-
-        //     $.ajax({
-        //         type: "POST",
-        //         url: '{{route('admin.product.sku-combination')}}',
-        //         data: $('#product_form').serialize(),
-        //         success: function (data) {
-        //             $('#sku_combination').html(data.view);
-        //             $('#sku_combination').addClass('pt-4');
-        //             if (data.length > 1) {
-        //                 $('#quantity').hide();
-        //             } else {
-        //                 $('#quantity').show();
-        //             }
-        //         }
-        //     });
-        // };
-
-        // $(document).ready(function () {
-        //     // color select select2
-        //     $('.color-var-select').select2({
-        //         templateResult: colorCodeSelect,
-        //         templateSelection: colorCodeSelect,
-        //         escapeMarkup: function (m) {
-        //             return m;
-        //         }
-        //     });
-
-        //     function colorCodeSelect(state) {
-        //         var colorCode = $(state.element).val();
-        //         if (!colorCode) return state.text;
-        //         return "<span class='color-preview' style='background-color:" + colorCode + ";'></span>" + state.text;
-        //     }
-        // });
 </script>
 
 <script>
