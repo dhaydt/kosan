@@ -55,7 +55,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="reg-phone">{{\App\CPU\translate('phone_number')}}
-                                            <small class="text-primary">( * {{\App\CPU\translate('country_code_is_must')}} {{\App\CPU\translate('like_for_BD_880')}} )</small></label>
+                                            {{-- <small class="text-primary">( * {{\App\CPU\translate('country_code_is_must')}} {{\App\CPU\translate('like_for_BD_880')}} )</small></label> --}}
                                         <input class="form-control" type="number"  value="{{old('phone')}}"  name="phone"
                                                style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};"
                                                required>
@@ -77,12 +77,6 @@
                                             </label>
                                         </div>
                                     </div>
-
-                                    {{-- <div class="form-group">
-                                        <label for="reg-password">{{\App\CPU\translate('password')}}</label>
-                                        <input class="form-control" type="password" name="password">
-                                        <div class="invalid-feedback">Please enter password!</div>
-                                    </div> --}}
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -100,23 +94,6 @@
                                                     class="sr-only">{{\App\CPU\translate('Show')}} {{\App\CPU\translate('password')}} </span>
                                             </label>
                                         </div>
-                                    </div>
-                                    {{-- <div class="form-group">
-                                        <label for="reg-password-confirm">{{\App\CPU\translate('confirm_password')}}</label>
-                                        <input class="form-control" type="password" name="con_password">
-                                        <div class="invalid-feedback">Passwords do not match!</div>
-                                    </div> --}}
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="reg-password-confirm">{{\App\CPU\translate('country')}}</label>
-                                        <select id="country" name="country" class="form-control  js-select2-custom">
-                                            <option value="0" selected >---select country---</option>
-                                            @foreach($country as $r)
-                                                <option value="{{$r->country}}">{{$r->country_name}}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                 </div>
                             </div>
