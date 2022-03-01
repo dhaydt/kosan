@@ -185,73 +185,73 @@
         <!-- General info tab-->
         <div class="row" style="direction: ltr">
             <!-- Product gallery-->
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-7 col-md-7">
                 <div class="cz-product-gallery">
-                    <div class="cz-preview">
+                    <div class="cz-preview" id="cz-preview">
                         @if($product->images!=null)
                             @foreach (json_decode($product->images) as $key => $photo)
                                 <div
                                     class="cz-preview-item d-flex align-items-center justify-content-center {{$key==0?'active':''}}"
                                     id="image{{$key}}">
-                                    <img class="cz-image-zoom img-responsive"
+                                    <img class="img-responsive"
                                          onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                         src="{{asset("storage/app/public/product/$photo")}}"
-                                         data-zoom="{{asset("storage/app/public/product/$photo")}}"
+                                         src="{{asset("storage/product/$photo")}}"
                                          alt="Product image" width="">
                                     <div class="cz-image-zoom-pane"></div>
                                 </div>
                             @endforeach
                         @endif
                     </div>
-                    <div class="cz">
-                        <div class="container">
-                            <div class="row">
-                                <div class="table-responsive" data-simplebar style="max-height: 515px; padding: 1px;">
-                                    <div class="d-flex">
-                                        @if($product->images!=null)
-                                            @foreach (json_decode($product->images) as $key => $photo)
-                                                <div class="cz-thumblist">
-                                                    <a class="cz-thumblist-item  {{$key==0?'active':''}} d-flex align-items-center justify-content-center "
-                                                       href="#image{{$key}}">
-                                                        <img
-                                                            onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                                            src="{{asset("storage/app/public/product/$photo")}}"
-                                                            alt="Product thumb">
-                                                    </a>
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
+                </div>
+
+                <div class="details mt-4">
+                    @php($ganti = ['KABUPATEN', 'KOTA '])
+                    @php($dg = ['Kab.', ''])
+                    @php($filter = str_replace($ganti, $dg, $product->kost->city))
+                    <h1 class="h3 mb-2 capitalize">{{$product->kost->name}} {{ strToLower($filter) }}</h1>
+                    <div class="d-flex align-items-center mb-2">
+                        <section class="detail-kost-overview" style="height: 40px;">
+                            <div class="detail-kost-overview__left-section">
+                                <span class="detail-kost-overview__gender capitalize">
+                                    {{ $product->kost->penghuni }}
+                                </span>
+                                <span class="detail-kost-overview__divider">·</span>
+                                @for($inc=0;$inc<1;$inc++)
+                                @if($inc<$overallRating[0])
+                                <div class="detail-kost-overview__rating">
+                                        <i class="sr-star czi-star-filled active"></i>
+                                        <span class="detail-kost-overview__rating-text">{{$overallRating[1]}}</span>
+                                        {{-- <span class="detail-kost-overview__rating-review">
+                                            <span class="font-for-tab d-inline-block font-size-sm text-body align-middle">({{$overallRating[1]}})</span>
+                                        </span> --}}
+                                </div>
+                                <span class="detail-kost-overview__divider">·</span>
+                                @endif
+                                @endfor
+                            </div>
+                            <div class="detail-kost-overview__right-section">
+                                <div class="detail-kost-overview__area">
+                                    <i class="detail-kost-overview__area-icon bg-c-icon bg-c-icon--sm fa fa-map-marker">
+                                        <title>place-holder</title>
+                                        <use href="#basic-place-holder"></use>
+                                    </i>
+                                    <span class="detail-kost-overview__area-text capitalize">Kec. {{ strToLower($product->kost->district) }}</span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Product details-->
-            <div class="col-lg-6 col-md-6 mt-md-0 mt-sm-3" style="direction: {{ Session::get('direction') }}">
-                <div class="details">
-                    <h1 class="h3 mb-2">{{$product->name}}</h1>
-                    <div class="d-flex align-items-center mb-2 pro">
-                        <span
+                        </section>
+
+                        {{-- <span
                             class="d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'ml-md-2 ml-sm-0 pl-2' : 'mr-md-2 mr-sm-0 pr-2'}}">{{$overallRating[0]}}</span>
                         <div class="star-rating">
-                            @for($inc=0;$inc<5;$inc++)
-                                @if($inc<$overallRating[0])
-                                    <i class="sr-star czi-star-filled active"></i>
-                                @else
-                                    <i class="sr-star czi-star"></i>
-                                @endif
-                            @endfor
-                        </div>
-                        <span
-                            class="font-for-tab d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'mr-1 ml-md-2 ml-1 pr-md-2 pr-sm-1 pl-md-2 pl-sm-1' : 'ml-1 mr-md-2 mr-1 pl-md-2 pl-sm-1 pr-md-2 pr-sm-1'}}">{{$overallRating[1]}} {{\App\CPU\translate('Reviews')}}</span>
-                        <span style="width: 0px;height: 10px;border: 0.5px solid #707070; margin-top: 6px"></span>
+
+                        </div> --}}
+
+                        {{-- <span style="width: 0px;height: 10px;border: 0.5px solid #707070; margin-top: 6px"></span>
                         <span
                             class="font-for-tab d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'mr-1 ml-md-2 ml-1 pr-md-2 pr-sm-1 pl-md-2 pl-sm-1' : 'ml-1 mr-md-2 mr-1 pl-md-2 pl-sm-1 pr-md-2 pr-sm-1'}}">{{$countOrder}} {{\App\CPU\translate('orders')}}   </span>
                         <span style="width: 0px;height: 10px;border: 0.5px solid #707070; margin-top: 6px">    </span>
                         <span
-                            class=" font-for-tab d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'mr-1 ml-md-2 ml-0 pr-md-2 pr-sm-1 pl-md-2 pl-sm-1' : 'ml-1 mr-md-2 mr-0 pl-md-2 pl-sm-1 pr-md-2 pr-sm-1'}}">  {{$countWishlist}} {{\App\CPU\translate('wish')}} </span>
+                            class=" font-for-tab d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'mr-1 ml-md-2 ml-0 pr-md-2 pr-sm-1 pl-md-2 pl-sm-1' : 'ml-1 mr-md-2 mr-0 pl-md-2 pl-sm-1 pr-md-2 pr-sm-1'}}">  {{$countWishlist}} {{\App\CPU\translate('wish')}} </span> --}}
 
                     </div>
                     <div class="mb-3">
@@ -277,68 +277,6 @@
                         <strong>{{\App\CPU\translate('tax')}} : </strong>
                         <strong id="set-tax-amount"></strong>
                     </div>
-                    <form id="add-to-cart-form" class="mb-2">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $product->id }}">
-                        <div class="position-relative {{Session::get('direction') === "rtl" ? 'ml-n4' : 'mr-n4'}} mb-3">
-                            @if (count(json_decode($product->colors)) > 0)
-                                <div class="flex-start">
-                                    <div class="product-description-label mt-2">{{\App\CPU\translate('color')}}:
-                                    </div>
-                                    <div>
-                                        <ul class="list-inline checkbox-color mb-1 flex-start {{Session::get('direction') === "rtl" ? 'mr-2' : 'ml-2'}}"
-                                            style="padding-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 0;">
-                                            @foreach (json_decode($product->colors) as $key => $color)
-                                                <div>
-                                                    <li>
-                                                        <input type="radio"
-                                                               id="{{ $product->id }}-color-{{ $key }}"
-                                                               name="color" value="{{ $color }}"
-                                                               @if($key == 0) checked @endif>
-                                                        <label style="background: {{ $color }};"
-                                                               for="{{ $product->id }}-color-{{ $key }}"
-                                                               data-toggle="tooltip"></label>
-                                                    </li>
-                                                </div>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endif
-                            @php
-                                $qty = 0;
-                                if(!empty($product->variation)){
-                                foreach (json_decode($product->variation) as $key => $variation) {
-                                        $qty += $variation->qty;
-                                    }
-                                }
-                            @endphp
-                        </div>
-                        @foreach (json_decode($product->choice_options) as $key => $choice)
-                            <div class="row flex-start mx-0">
-                                <div
-                                    class="product-description-label mt-2 {{Session::get('direction') === "rtl" ? 'pl-2' : 'pr-2'}}">{{ $choice->title }}
-                                    :
-                                </div>
-                                <div>
-                                    <ul class="list-inline checkbox-alphanumeric checkbox-alphanumeric--style-1 mb-2 mx-1 flex-start"
-                                        style="padding-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 0;">
-                                        @foreach ($choice->options as $key => $option)
-                                            <div>
-                                                <li class="for-mobile-capacity">
-                                                    <input type="radio"
-                                                           id="{{ $choice->name }}-{{ $option }}"
-                                                           name="{{ $choice->name }}" value="{{ $option }}"
-                                                           @if($key == 0) checked @endif >
-                                                    <label style="font-size: .6em"
-                                                           for="{{ $choice->name }}-{{ $option }}">{{ $option }}</label>
-                                                </li>
-                                            </div>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                    @endforeach
 
                     <!-- Quantity + Add to cart -->
                         <div class="row no-gutters">
@@ -415,6 +353,33 @@
                     <hr style="padding-bottom: 10px">
                     <div style="text-align:{{Session::get('direction') === "rtl" ? 'right' : 'left'}};"
                          class="sharethis-inline-share-buttons"></div>
+                </div>
+            </div>
+            <!-- Product thumbnail-->
+            <div class="col-lg-5 col-md-5 mt-md-0 mt-sm-3" style="direction: {{ Session::get('direction') }}">
+                <div class="cz">
+                    <div class="container p-0">
+                        <div class="row">
+                            <div class="table-responsive ml-1" data-simplebar>
+                                <div class="thumblist-frame">
+                                    @if($product->images!=null)
+                                        @foreach (array_slice(json_decode($product->images), 1, 2) as $key => $photo)
+                                            <div class="cz-thumblist d-block">
+                                                <a class="mt-0 {{$key==0?'active':''}} d-flex align-items-center justify-content-center "
+                                                   href="#image{{$key}}">
+                                                    <img
+                                                        onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                                        src="{{asset("storage/product/$photo")}}"
+                                                        class="w-100 h-100"
+                                                        alt="Product thumb">
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -847,7 +812,7 @@
 
     <!-- Product carousel (You may also like)-->
     <div class="container  mb-3 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
-        <div class="flex-between">
+        {{-- <div class="flex-between">
             <div class="feature_header">
                 <span>{{ \App\CPU\translate('similar_products')}}</span>
             </div>
@@ -861,7 +826,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Grid-->
         <hr class="view_border">
         <!-- Product-->
@@ -902,7 +867,15 @@
 @endsection
 
 @push('script')
-
+    <script>
+        $(document).ready(function(){
+            var h = $('#cz-preview').outerHeight()
+            var tinggi = h/2;
+            var margin = tinggi - 5
+            console.log('height',margin)
+            $('.cz-thumblist').attr('style', 'min-height: 195px; height:' + margin + 'px')
+        })
+    </script>
     <script type="text/javascript">
         cartQuantityInitialize();
         getVariantPrice();

@@ -27,7 +27,6 @@
 .cz-preview-item.active {
     border: 1px solid #e2f0ff;
     border-radius: 3px;
-    padding: 10%;
 }
 
 .cz-preview-item > img {

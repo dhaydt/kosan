@@ -623,14 +623,14 @@ class Helpers
         $lowest_price = $product->unit_price;
         $highest_price = $product->unit_price;
 
-        foreach (json_decode($product->variation) as $key => $variation) {
-            if ($lowest_price > $variation->price) {
-                $lowest_price = round($variation->price);
-            }
-            if ($highest_price < $variation->price) {
-                $highest_price = round($variation->price);
-            }
-        }
+        // foreach (json_decode($product->variation) as $key => $variation) {
+        //     if ($lowest_price > $variation->price) {
+        //         $lowest_price = round($variation->price);
+        //     }
+        //     if ($highest_price < $variation->price) {
+        //         $highest_price = round($variation->price);
+        //     }
+        // }
 
         $lowest_price = Helpers::currency_converter($lowest_price - Helpers::get_product_discount($product, $lowest_price));
         $highest_price = Helpers::currency_converter($highest_price - Helpers::get_product_discount($product, $highest_price));
