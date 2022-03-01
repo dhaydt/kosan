@@ -12,6 +12,7 @@ Homestead.yaml
 npm-debug.log
 /storage
 yarn-error.log
+resources/lang
 /.idea
 /.vscode
 # node_modules

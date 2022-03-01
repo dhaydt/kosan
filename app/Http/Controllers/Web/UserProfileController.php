@@ -34,6 +34,19 @@ class UserProfileController extends Controller
         }
     }
 
+    public function user_verify(Request $request)
+    {
+        if (auth('customer')->check()) {
+            $customerDetail = User::where('id', auth('customer')->id())->first();
+            $city = City::get();
+            $ptn = Kampus::get();
+
+            return view('web-views.users-profile.account-verify', compact('customerDetail', 'city', 'ptn'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
+
     public function user_update(Request $request)
     {
         // dd($request);

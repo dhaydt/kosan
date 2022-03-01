@@ -214,7 +214,7 @@
                         {{-- if need data from also --}}
                         {{-- <h1 class="h3 text-dark mb-0 headerTitle text-uppercase">{{\App\CPU\translate('product_by')}} {{$data['data_from']}} ({{ isset($brand_name) ? $brand_name : $data_from}})</h1> --}}
                         <h1 class="h3 text-dark mb-3 headerTitle text-uppercase">
-                            {{\App\CPU\translate(session()->get('search_name'))}} {{ isset($brand_name) ? '('.$brand_name.')' : ''}}
+                            {{\App\CPU\translate(session()->get('search_name'))}}
                             <label>( {{$products->total()}} {{\App\CPU\translate('rooms_found')}} )</label>
                         </h1>
                     </div>
