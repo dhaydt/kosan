@@ -393,6 +393,54 @@
                     </form> -->
                     <hr class="my-4" style="padding-bottom: 10px">
 
+                    <!-- fasilitas -->
+                    <div class="container">
+                        <div class="section-header">
+                            <h5>{{ App\CPU\translate('Facility') }}</h5>
+                        </div>
+                        <div class="card-header pb-1 section-head">
+                            <h6 class="mb-1">{{ App\CPU\translate('room_size') }}</h6>
+                        </div>
+                        <div class="card-body pt-0 body-detail-product d-flex">
+                            <img class="mr-3" src="{{ asset('assets/front-end/img/room.png') }}" alt="room" style="height: 23px">
+                            <span>
+                                {{ $product->size }}
+                            </span>
+                        </div>
+
+                        <div class="card-header pb-1 section-head">
+                            <h6 class="mb-1">{{ App\CPU\translate('room_facility') }}</h6>
+                        </div>
+                        <div class="card-body pt-0 body-detail-product">
+                            @foreach (json_decode($product->fasilitas_id) as $f)
+                            @php($fas = App\CPU\Helpers::fasilitas($f))
+                            <div class="item-facility d-flex mb-2">
+                                <img class="mr-3" src="{{ asset('assets/front-end/img').'/'.strtolower($fas).'.png' }}" alt="broken" style="height: 23px">
+                                <span>
+                                    {{ $fas }}
+                                </span>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <div class="card-header pb-1 section-head">
+                            <h6 class="mb-1">{{ App\CPU\translate('general_facility') }}</h6>
+                        </div>
+                        <div class="card-body pt-0 body-detail-product">
+                            @foreach (json_decode($product->kost->fasilitas_id) as $f)
+                            @php($fas = App\CPU\Helpers::fasilitas($f))
+                            <div class="item-facility d-flex mb-2">
+                                <img class="mr-3" src="{{ asset('assets/front-end/img').'/'.strtolower($fas).'.png' }}" alt="broken" style="height: 23px">
+                                <span>
+                                    {{ $fas }}
+                                </span>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <!-- end fasilitas -->
+                    <hr class="my-4" style="padding-bottom: 10px">
+
                     <!-- seller section -->
                     @if($product->added_by=='seller')
                         <div class="container mt-4 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
@@ -563,6 +611,100 @@
                     <!-- end seller section -->
 
                     <!-- overview section -->
+                    <div class="kost-review container">
+                        <div class="kost-review__divider">
+                            <span role="separator" class="bg-c-divider"></span>
+                        </div> <div class="kost-review__content">
+                            <div class="kost-review__overview">
+                                <i class="fa fa-star bg-c-icon" style="font-size: 20px"></i>
+                                <span class="kost-review__overview-rating">5.0 (1 review)</span>
+                            </div>
+                            <div class="kost-review__fac-rating">
+                                <div class="kost-review-fac-rating">
+                                    <div class="kost-review-fac-rating__column">
+                                        <div class="kost-review-fac-rating__item">
+                                            <span class="kost-review-fac-rating__title">Kebersihan</span>
+                                            <div class="kost-review-fac-rating__value">
+                                                <div class="star-container">
+                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span>
+                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                    </span>
+                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                    </span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                    </span>
+                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use>
+                                                        </svg>
+                                                    </span></div>
+                                                    <span class="kost-review-fac-rating__value-text">5.0</span>
+                                                </div>
+                                            </div>
+                                            <div class="kost-review-fac-rating__item">
+                                                        <span class="kost-review-fac-rating__title">Kenyamanan</span>
+                                                        <div class="kost-review-fac-rating__value">
+                                                            <div class="star-container">
+                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                                </span>
+                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                                </span>
+                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                                </span>
+                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                                </span>
+                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
+                                                                </span>
+                                                            </div>
+                                                            <span class="kost-review-fac-rating__value-text">5.0</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="kost-review-fac-rating__item">
+                                                        <span class="kost-review-fac-rating__title">Keamanan</span>
+                                                        <div class="kost-review-fac-rating__value">
+                                                            <div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div><div class="kost-review-fac-rating__column"><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Harga
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Fasilitas Kamar
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Fasilitas Umum
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div></div></div> <div class="kost-review__users-feedback"><div class="users-feedback-container users-feedback-container--card"><div class="users-feedback"><div class="users-feedback__section"><div class="user-feedback__header"><img alt="foto profile" class="user-feedback__photo" data-src="null" src="{{ asset('assets/front-end/img/user.png') }}" lazy="error"> <div class="user-feedback__profile">
+                    <p class="user-feedback__profile-name bg-c-text bg-c-text--body-1 ">Agita Essa Putri</p>
+                    <p class="bg-c-text bg-c-text--label-2 ">1 bulan yang lalu</p>
+                </div>
+                <div class="p-2 user-feedback__rating bg-c-label bg-c-label--rainbow bg-c-label--rainbow-white"
+                ><i class="user-feedback__rating-star bg-c-icon bg-c-icon--sm fa fa-star">
+                    <title>star-glyph</title> <use href="#basic-star-glyph"></use></i> <p class="bg-c-text bg-c-text--body-1 ">5.0</p></div></div> <div class="user-feedback__body"><div data-v-2fd2a78f=""><p class="user-feedback__content-text bg-c-text bg-c-text--body-4 ">Cukup nyaman dan sesuai harga, pelayanan sangat bagus..</p></div> <div data-v-8bbcb614="" class="owner-feedback"><span data-v-8bbcb614="" class="owner-feedback__title">Balasan dari Pemilik kos</span> <span data-v-8bbcb614="" class="owner-feedback__date">1 bulan yang lalu</span> <p data-v-8bbcb614="" class="owner-feedback__description">
+            Hi kak, terimakasih banyak atas ulasan dan bintangnya, senang mendengar kakak nyaman singgah di sini :)
+
+        </p></div></div></div></div></div></div> <!--fragment#127eff51545#head--><div role="dialog" class="modal fade" fragment="127eff51545" id="modalAllReview"><div role="document" class="modal-dialog"><div class="modal-content"><div class="kost-review-modal-header"><span class="kost-review-modal-header__close"><svg role="img" class="bg-c-icon bg-c-icon--md"><title>close</title> <use href="#basic-close"></use></svg></span></div> <div class="kost-review-modal-content"><div class="kost-review-modal-content__header"><svg role="img" class="bg-c-icon bg-c-icon--md"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg> <span class="kost-review-modal-content__title">5.0 (1 review)</span></div> <div class="kost-review-fac-rating"><div class="kost-review-fac-rating__column"><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Kebersihan
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Kenyamanan
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Keamanan
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div><div class="kost-review-fac-rating__column"><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Harga
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Fasilitas Kamar
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
+                    Fasilitas Umum
+                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div></div> <div class="kost-review-modal-content__sorting"><div data-v-aa3ef0a4="" id="baseMainFilter"><div data-v-aa3ef0a4="" class="bg-c-dropdown"><div role="button" class="bg-c-dropdown__trigger"><span data-v-aa3ef0a4="" role="text" class="bg-c-tag bg-c-tag--md" data-testid="filter-tag"><svg role="img" class="bg-c-tag__left-content bg-c-icon bg-c-icon--sm"><title>sorting</title> <use href="#basic-sorting"></use></svg>
+                    Review terbaru
+                </span></div> <div class="bg-c-dropdown__menu bg-c-dropdown__menu--fit-to-content bg-c-dropdown__menu--text-lg"><ul> <li data-v-aa3ef0a4="" style="width: 220px;"><span class=""><!----> <div data-v-aa3ef0a4="" class="dropdown-menu__content dropdown-menu__content--full"><span data-v-aa3ef0a4="" class="dropdown-menu__content-filter-title"></span> <div data-v-aa3ef0a4="" class="dropdown-menu__content-filter-data"><!--fragment#f0f2c72ded#head--><div data-v-6a58aa2f="" fragment="f0f2c72ded" class="filter-input"><label data-v-6a58aa2f="" class="filter-input__label"><input data-v-6a58aa2f="" type="radio" value="new"> <span data-v-6a58aa2f="" class="filter-input__label--active">Review terbaru</span></label></div><div data-v-6a58aa2f="" fragment="f0f2c72ded" class="filter-input"><label data-v-6a58aa2f="" class="filter-input__label"><input data-v-6a58aa2f="" type="radio" value="last"> <span data-v-6a58aa2f="" class="filter-input__label--active">Review terlama</span></label></div><div data-v-6a58aa2f="" fragment="f0f2c72ded" class="filter-input"><label data-v-6a58aa2f="" class="filter-input__label"><input data-v-6a58aa2f="" type="radio" value="best"> <span data-v-6a58aa2f="" class="filter-input__label--active">Rating tertinggi</span></label></div><div data-v-6a58aa2f="" fragment="f0f2c72ded" class="filter-input"><label data-v-6a58aa2f="" class="filter-input__label"><input data-v-6a58aa2f="" type="radio" value="bad"> <span data-v-6a58aa2f="" class="filter-input__label--active">Rating terendah</span></label></div><!--fragment#f0f2c72ded#tail--></div></div></span></li></ul></div></div></div></div> <div class="kost-review-modal-content__users-feedback"><div class="users-feedback-container" review-modal-scroll-position="[object Object]"><div class="users-feedback"><div class="users-feedback__section"><div class="user-feedback__header"><img alt="foto profile" class="user-feedback__photo" data-src="null" src="/general/img/pictures/navbar/ic_profile.svg" lazy="loading"> <div class="user-feedback__profile"><p class="user-feedback__profile-name bg-c-text bg-c-text--body-1 ">Agita Essa Putri</p> <p class="bg-c-text bg-c-text--label-2 ">1 bulan yang lalu</p></div> <div class="user-feedback__rating bg-c-label bg-c-label--rainbow bg-c-label--rainbow-white"><svg role="img" class="user-feedback__rating-star bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg> <p class="bg-c-text bg-c-text--body-1 ">5.0</p></div></div> <div class="user-feedback__body"><div data-v-2fd2a78f=""><p class="user-feedback__content-text bg-c-text bg-c-text--body-4 ">Cukup nyaman dan sesuai harga, pelayanan sangat bagus..</p></div> <div data-v-8bbcb614="" class="owner-feedback"><span data-v-8bbcb614="" class="owner-feedback__title">Balasan dari Pemilik kos</span> <span data-v-8bbcb614="" class="owner-feedback__date">1 bulan yang lalu</span> <p data-v-8bbcb614="" class="owner-feedback__description">
+            Hi kak, terimakasih banyak atas ulasan dan bintangnya, senang mendengar kakak nyaman singgah di sini :)
+
+        </p></div></div></div></div></div></div> <div class="kost-review-modal-content__loading"><button type="button" class="bg-c-button bg-c-button--primary-naked bg-c-button--md bg-c-button--block"></button></div></div> <div class="modal-footer"><button type="button" class="btn btn-default">Close</button> <button type="button" class="btn btn-primary">Save changes</button></div></div></div></div> <div data-v-653cdb21="" fragment="127eff51545"><div data-v-653cdb21="" tabindex="-1" role="dialog" class="bg-c-modal bg-c-modal--backdrop bg-c-modal--button-block bg-c-modal--md bg-c-modal--popup"><!----></div></div><!--fragment#127eff51545#tail--> <div data-v-7e062822="" role="dialog" class="modal fade" id="modalDetailKostSwiperGallery"><div role="document" class="modal-dialog"><div class="modal-content"><div data-v-7e062822="" class="kost-gallery-modal-header"><span data-v-7e062822="" class="kost-gallery-modal-header__close"><svg data-v-7e062822="" role="img" class="bg-c-icon bg-c-icon--md"><title>close</title> <use href="#basic-close"></use></svg></span></div> <div data-v-7e062822="" class="kost-gallery-modal-content"><!----></div> <div class="modal-footer"><button type="button" class="btn btn-default">Close</button> <button type="button" class="btn btn-primary">Save changes</button></div></div></div></div></div></div>
+
+
+
                     <div class="container mt-4 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
                         <div class="row" style="background: white">
                             <div class="col-12">
@@ -572,13 +714,13 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" href="#overview" data-toggle="tab" role="tab"
                                             style="color: black !important;">
-                                                {{\App\CPU\translate('OVERVIEW')}}
+                                                {{\App\CPU\translate('Info_tambahan')}}
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#reviews" data-toggle="tab" role="tab"
                                             style="color: black !important;">
-                                                {{\App\CPU\translate('REVIEWS')}}
+                                                {{\App\CPU\translate('Reviews')}}
                                             </a>
                                         </li>
                                     </ul>
@@ -587,16 +729,16 @@
                                             <!-- Tech specs tab-->
                                             <div class="tab-pane fade show active" id="overview" role="tabpanel">
                                                 <div class="row pt-2 specification">
-                                                    @if($product->video_url!=null)
+                                                    {{-- @if($product->video_url!=null)
                                                         <div class="col-12 mb-4">
                                                             <iframe width="420" height="315"
                                                                     src="{{$product->video_url}}">
                                                             </iframe>
                                                         </div>
-                                                    @endif
+                                                    @endif --}}
 
                                                     <div class="col-lg-12 col-md-12">
-                                                        {!! $product['details'] !!}
+                                                        {!! $product->kost['deskripsi'] !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -822,6 +964,7 @@
 
                 </div>
             </div>
+
             <!-- Product thumbnail-->
             <div class="col-lg-5 col-md-5 mt-md-0 mt-sm-3" style="direction: {{ Session::get('direction') }}">
                 <div class="cz">
@@ -848,6 +991,32 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- booking card-->
+                <div class="booking-card --sticky mt-3">
+                    <section class="booking-card__info">
+                        <div class="booking-card__info-price">
+                            <h5 class="booking-card__info-price-amount">{{\App\CPU\Helpers::currency_converter(
+                                $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))
+                                )}}</h5>
+                            <span class="booking-card__info-price-amount-unit">/ bulan</span>
+                        </div>
+                        <div class="booking-card__info-select mt-3">
+                            <section class="booking-input-checkin booking-card__info-select-dat w-100">
+                                <div class="form-group">
+                                    <label for="">Tanggal mulai</label>
+                                    <input name="start_date" id="start_date" type="date" placeholder="Tanggal mulai" class="form-control">
+                                </div>
+                            </section>
+                        </div>
+                        <div class="sewa mt-3">
+                            <button class="btn btn-success w-100">
+                                Ajukan Sewa
+                            </button>
+                        </div>
+                    </section>
+                </div>
+                <!-- end booking card-->
             </div>
         </div>
     </div>

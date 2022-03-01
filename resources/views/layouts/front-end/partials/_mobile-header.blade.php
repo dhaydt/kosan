@@ -628,7 +628,7 @@
 @push('script')
 <script>
 
-fetch('https://ipapi.co/json/')
+fetch('https://ipapi.co/json/?key=mrRznn9f966OGRczDH9Vqg11LYzYzKTrHmGr48IDy8rTEP4xbX')
   .then(function(response) {
     return response.json();
   })

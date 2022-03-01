@@ -1,0 +1,516 @@
+/* kost review */
+.bg-c-divider {
+    width: 100%;
+    display: block;
+    height: 1px;
+    border-bottom: 1px #e8e8e8 solid;
+}
+.kost-review .kost-review__content{
+    display: block;
+    padding: 48px 0;
+}
+.kost-review .kost-review__overview{
+    align-items: center;
+    color: #1baa56;
+    display: flex;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.bg-c-icon--md {
+    width: 24px;
+    height: 24px;
+}
+.kost-review .kost-review__overview .kost-review__overview-rating{
+    color: #303030;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-left: 8px;
+}
+.kost-review .kost-review__fac-rating{
+    margin-top: 36px;
+}
+.kost-review-fac-rating {
+    display: flex;
+    justify-content: space-between;
+}
+.kost-review-fac-rating .kost-review-fac-rating__column {
+    display: block;
+    width: calc(50% - 20px);
+}
+.kost-review-fac-rating__item {
+    align-items: center;
+    display: flex;
+    font-size: 16px;
+    line-height: 24px;
+}
+.kost-review-fac-rating__item .kost-review-fac-rating__title {
+    color: #404040;
+    display: flex;
+    flex: 1;
+}
+.kost-review-fac-rating__item .kost-review-fac-rating__value {
+    align-items: center;
+    display: flex;
+}
+.star, .star-container {
+    display: flex;
+}
+.star {
+    align-items: center;
+    position: relative;
+    z-index: 8;
+}
+.bg-c-icon--sm {
+    width: 16px;
+    height: 16px;
+}
+.kost-review .kost-review__users-feedback{
+    margin: 40px 0 0;
+}
+.users-feedback-container {
+    display: block;
+}
+.users-feedback {
+    display: block;
+}
+.users-feedback__section {
+    display: flex;
+    flex-direction: column;
+}
+.users-feedback .user-feedback__header {
+    align-items: flex-start;
+    display: flex;
+}
+.users-feedback .user-feedback__photo {
+    border-radius: 24px;
+    height: 48px;
+    margin: 0 16px 0 0;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 48px;
+}
+.users-feedback .user-feedback__profile {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+}
+.bg-c-text--body-1 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+}
+.bg-c-text--label-2 {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+}
+.users-feedback .user-feedback__rating {
+    align-items: center;
+    display: flex;
+}
+.bg-c-label--rainbow-white {
+    color: #404040;
+    background-color: #fff;
+    border-width: 0;
+    box-shadow: inset 0 0 0 1px #dadada;
+}
+.users-feedback .user-feedback__rating-star {
+    margin: 3px 3px 3px 0;
+}
+.users-feedback .user-feedback__body {
+    display: flex;
+    flex-direction: column;
+    margin: 16px 0 0;
+}
+.users-feedback .user-feedback__content-text {
+    word-break: break-word;
+}
+.bg-c-text--body-4 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    font-family: Lato,sans-serif;
+}
+.owner-feedback{
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    padding-left: 36px;
+    position: relative;
+}
+.owner-feedback:before {
+    background-color: #e8e8e8;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 2px;
+}
+.owner-feedback .owner-feedback__title{
+    color: #303030;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.owner-feedback .owner-feedback__date{
+    color: #757575;
+    font-size: 14px;
+    line-height: 20px;
+}
+.owner-feedback .owner-feedback__description{
+    color: #404040;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 12px 0 0;
+    word-break: break-word;
+}
+
+
+/* end overview */
+.--sticky{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 90px;
+}
+
+.booking-card{
+    background-color: #f6f6f6;
+    border-radius: 8px;
+    box-shadow: 0 -2px 40px rgb(0 0 0 / 4%), 0 16px 40px rgb(0 0 0 / 6%);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+.booking-card__info{
+    padding: 20px;
+    background-color: #fff;;
+}
+.booking-card__info-price{
+    align-items: center;
+    color: #303030;
+    display: flex;
+    font-size: 16px;
+    line-height: 24px;
+}
+.booking-card__info-price-amount{
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    margin: 0 4px 0 0;
+}
+.booking-card__info-price-amount-unit{
+    text-transform: capitalize;
+}
+.booking-card__info-select{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.booking-input-checkin {
+    position: relative;
+}
+.booking-input-checkin__input-wrapper {
+    position: relative;
+    width: 100%;
+}
+.booking-card .booking-card__info-select-date .booking-input-checkin__input {
+    background-color: #fff;
+    border: 1px solid #dadada;
+    border-radius: 4px;
+    color: #404040;
+    cursor: pointer;
+    font-size: 16px;
+    height: auto;
+    line-height: 24px;
+    padding: 12px 44px 12px 16px;
+    width: 100%;
+}
+.booking-input-checkin__input {
+    background-color: #fff;
+    background-position: right 16px center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    border: 1px solid #dadada;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #383746;
+    font-size: 16px;
+    height: 40px;
+    line-height: 24px;
+    padding: 12px 48px 16px 16px;
+    width: 100%;
+}
+.booking-input-checkin__input-icon {
+    color: #303030;
+    cursor: pointer;
+    height: 24px;
+    position: absolute;
+    right: 16px;
+    top: calc(50% - 12px);
+    width: 24px;
+}
+.card-header.section-head{
+    border-bottom: none;
+}
+
+
+/* dettail kost */
+.detail-kost-overview {
+    align-items: center;
+    display: flex;
+    margin-top: 4px;
+}
+.detail-kost-overview .detail-kost-overview__left-section {
+    align-items: center;
+    display: flex;
+}
+.detail-kost-overview .detail-kost-overview__gender {
+    align-items: center;
+    border: 1px solid #dadada;
+    border-radius: 4px;
+    color: #404040;
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 2px 8px;
+}
+.detail-kost-overview .detail-kost-overview__rating {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+}
+.detail-kost-overview .detail-kost-overview__divider {
+    align-items: center;
+    color: #949494;
+    display: flex;
+    font-size: 14px;
+    height: 100%;
+    justify-content: center;
+    line-height: 20px;
+    margin: 0 8px;
+    width: 4px;
+}
+.detail-kost-overview .detail-kost-overview__rating .detail-kost-overview__rating-img {
+    height: auto;
+    width: 15px;
+}
+.detail-kost-overview .detail-kost-overview__rating .detail-kost-overview__rating-text {
+    color: #404040;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    margin-left: 4px;
+}
+.detail-kost-overview .detail-kost-overview__rating .detail-kost-overview__rating-review {
+    color: #949494;
+    font-size: 16px;
+    line-height: 24px;
+    margin-left: 4px;
+}
+.detail-kost-overview .detail-kost-overview__area {
+    align-items: center;
+    display: flex;
+}
+.detail-kost-overview .detail-kost-overview__area .detail-kost-overview__area-icon {
+    margin-left: 0;
+    width: 16px;
+}
+.detail-kost-overview .detail-kost-overview__area .detail-kost-overview__area-text {
+    color: #404040;
+    font-size: 16px;
+    line-height: 24px;
+    white-space: break-spaces;
+}
+
+/* Kost share */
+.detail-kost-additional-widget {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.detail-kost-additional-widget .detail-kost-overview__availability {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+.detail-kost-additional-widget .detail-kost-overview__availability .detail-kost-overview__availability-icon {
+    display: flex;
+    margin-right: 4px;
+    min-width: 24px;
+}
+.detail-kost-additional-widget .detail-kost-overview__availability .detail-kost-overview__availability-wrapper {
+    display: block;
+    overflow: hidden;
+    font-size: 14px;
+    color: #383746;
+}
+.detail-kost-overview-widget {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+.bg-c-button--md {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+}
+.bg-c-button--tertiary {
+    background-color: #fff;
+    color: #404040;
+    text-decoration: none;
+    border-width: 0;
+    box-shadow: inset 0 0 0 1px #e8e8e8;
+}
+.bg-c-button {
+    color: #000;
+    cursor: pointer;
+    outline: 0;
+    text-align: center;
+    transition: .3s;
+    border-radius: 4px;
+}
+.bg-c-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-menu.bg-c-dropdown__menu.dropdown-share .sharethis-inline-share-buttons .st-btn{
+    display: block;
+}
+[role=button] {
+    cursor: pointer;
+}
+.detail-kost-overview-widget .detail-kost-additional-widget__outer.--not-first {
+    margin-left: 8px;
+}
+.bg-c-icon--sm {
+    width: 16px;
+    height: 16px;
+}
+.bg-c-dropdown__menu.dropdown-share{
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate(-8px, 44px);
+}
+.bg-c-dropdown__menu--text-lg .bg-c-dropdown__menu-item, .bg-c-dropdown__menu--text-lg li, .bg-c-dropdown__menu--text-lg ul {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+#detailKostOverviewFavShare .mamiShareWrapper {
+    min-width: 140px;
+}
+
+
+
+.feature_header {
+    display: flex;
+    justify-content: center;
+}
+
+.feature_header span {
+    padding-right: 15px;
+    padding-left: 15px;
+    font-weight: 700;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+.cz-product-gallery {
+    display: block;
+}
+
+.cz-preview {
+    width: 100%;
+    margin-top: 0;
+    margin-left: 0;
+    max-height: 100% !important;
+    background: white;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+}
+
+.cz-preview-item.active {
+    border: 1px solid #e2f0ff;
+    border-radius: 3px;
+}
+
+.cz-preview-item > img {
+    width: 100%;
+    max-height: 400px;
+}
+
+.details {
+    border: 1px solid #e2f0ff;
+    border-radius: 10px;
+    padding: 16px;
+    background: white;
+}
+
+img,
+figure {
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+.thumblist-frame{
+    overflow: hidden;
+}
+
+.cz-thumblist{
+    width: 100%;
+    position: relative;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+
+.thumblist-frame .cz-thumblist:first-child img{
+    border-radius: 0 10px 0 0;
+}
+
+.thumblist-frame .cz-thumblist:last-child img{
+    border-radius: 0 0 10px 0;
+}
+
+.cz-thumblist a{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.cz-thumblist-item.active {
+    border-color: #8888883b!important;
+    background: white!important;
+}
+
+.cz-thumblist-item {
+    border-color: #8888883b!important;
+    background: white!important;
+    display: block;
+    position: relative;
+    transition: border-color 0.2s ease-in-out;
+    border-radius: 0.3125rem;
+    text-decoration: none !important;
+    overflow: hidden;
+}
+
+.cz-thumblist-item > img {
+    display: block;
+    width: 100%;
+    transition: opacity 0.2s ease-in-out;
+    max-height: 58px;
+    opacity: 0.6;
+}
