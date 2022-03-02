@@ -13,6 +13,7 @@ use App\Model\Fasilitas;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\Review;
+use App\Model\Rule;
 use App\Model\Seller;
 use App\Model\ShippingAddress;
 use App\Model\ShippingMethod;
@@ -59,6 +60,13 @@ class Helpers
         $fas = Fasilitas::where('id', $id)->first();
 
         return $fas->name;
+    }
+
+    public static function aturan($id)
+    {
+        $aturan = Rule::where('id', $id)->first();
+
+        return $aturan->name;
     }
 
     public static function transaction_formatter($transaction)

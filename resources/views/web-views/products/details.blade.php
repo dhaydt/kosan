@@ -430,7 +430,7 @@
                             @foreach (json_decode($product->kost->fasilitas_id) as $f)
                             @php($fas = App\CPU\Helpers::fasilitas($f))
                             <div class="item-facility d-flex mb-2">
-                                <img class="mr-3" src="{{ asset('assets/front-end/img').'/'.strtolower($fas).'.png' }}" alt="broken" style="height: 23px">
+                                <img onerror="this.src='{{asset('assets/front-end/img/bantal.png')}}'" class="mr-3" src="{{ asset('assets/front-end/img').'/'.strtolower($fas).'.png' }}" alt="broken" style="height: 23px">
                                 <span>
                                     {{ $fas }}
                                 </span>
@@ -610,6 +610,25 @@
                     @endif
                     <!-- end seller section -->
 
+                    <hr class="my-4" style="padding-bottom: 10px">
+
+                    <!-- atiuran kos -->
+                    <div class="container mt-4">
+                        <div class="section-header">
+                            <h5>
+                                {{ App\CPU\translate('rule') }}
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            @foreach (json_decode($product->kost->aturan_id) as $a)
+                            <div class="item-facility">
+                                <img onerror="this.src='{{asset('assets/front-end/img/rules.png')}}'" class="mr-3" src="{{ asset('assets/front-end/img').'/'.strtolower($a).'.png' }}" alt="broken" style="height: 23px">
+                                <span>{{ App\CPU\helpers::aturan($a) }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <!-- end atiuran kos -->
                     <!-- overview section -->
                     <div class="kost-review container">
                         <div class="kost-review__divider">
@@ -619,7 +638,104 @@
                                 <i class="fa fa-star bg-c-icon" style="font-size: 20px"></i>
                                 <span class="kost-review__overview-rating">5.0 (1 review)</span>
                             </div>
-                            <div class="kost-review__fac-rating">
+                            <div class="kost-review-fac-rating">
+                                <div class="col-12 text-center pt-sm-3 pt-md-0">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div
+                                            class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                class="d-inline-block align-middle text-muted">{{\App\CPU\translate('5')}}</span><i
+                                                class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    style="width: <?php echo $widthRating = ($rating[0] != 0) ? ($rating[0] / $overallRating[1]) * 100 : (0); ?>%;"
+                                                    aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                    {{$rating[0]}}
+                                </span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div
+                                            class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                class="d-inline-block align-middle text-muted">{{\App\CPU\translate('4')}}</span><i
+                                                class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar" role="progressbar"
+                                                    style="width: <?php echo $widthRating = ($rating[1] != 0) ? ($rating[1] / $overallRating[1]) * 100 : (0); ?>%; background-color: #a7e453;"
+                                                    aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                {{$rating[1]}}
+                                </span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div
+                                            class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                class="d-inline-block align-middle text-muted">{{\App\CPU\translate('3')}}</span><i
+                                                class="czi-star-filled font-size-xs ml-1"></i></div>
+                                        <div class="w-100">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar" role="progressbar"
+                                                    style="width: <?php echo $widthRating = ($rating[2] != 0) ? ($rating[2] / $overallRating[1]) * 100 : (0); ?>%; background-color: #ffda75;"
+                                                    aria-valuenow="17" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                    {{$rating[2]}}
+                                </span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div
+                                            class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                class="d-inline-block align-middle text-muted">{{\App\CPU\translate('2')}}</span><i
+                                                class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar" role="progressbar"
+                                                    style="width: <?php echo $widthRating = ($rating[3] != 0) ? ($rating[3] / $overallRating[1]) * 100 : (0); ?>%; background-color: #fea569;"
+                                                    aria-valuenow="9" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                {{$rating[3]}}
+                                </span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                class="d-inline-block align-middle text-muted">{{\App\CPU\translate('1')}}</span><i
+                                                class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar bg-danger" role="progressbar"
+                                                    style="width: <?php echo $widthRating = ($rating[4] != 0) ? ($rating[4] / $overallRating[1]) * 100 : (0); ?>%;"
+                                                    aria-valuenow="4" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                {{$rating[4]}}
+                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="kost-review__fac-rating">
                                 <div class="kost-review-fac-rating">
                                     <div class="kost-review-fac-rating__column">
                                         <div class="kost-review-fac-rating__item">
@@ -675,7 +791,21 @@
                     Fasilitas Kamar
                 </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
                     Fasilitas Umum
-                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div></div></div> <div class="kost-review__users-feedback"><div class="users-feedback-container users-feedback-container--card"><div class="users-feedback"><div class="users-feedback__section"><div class="user-feedback__header"><img alt="foto profile" class="user-feedback__photo" data-src="null" src="{{ asset('assets/front-end/img/user.png') }}" lazy="error"> <div class="user-feedback__profile">
+                </span>
+                <div class="kost-review-fac-rating__value">
+                    <div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use>
+
+                        </svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                            <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph">
+                                </use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title>
+                                        <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                            <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span>
+                                            <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
+                                                <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span>
+                                            </div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div></div></div>  --}}
+                                            <div class="kost-review__users-feedback"><div class="users-feedback-container users-feedback-container--card"><div class="users-feedback"><div class="users-feedback__section"><div class="user-feedback__header"><img alt="foto profile" class="user-feedback__photo" data-src="null" src="{{ asset('assets/front-end/img/user.png') }}" lazy="error"> <div class="user-feedback__profile">
                     <p class="user-feedback__profile-name bg-c-text bg-c-text--body-1 ">Agita Essa Putri</p>
                     <p class="bg-c-text bg-c-text--label-2 ">1 bulan yang lalu</p>
                 </div>
@@ -703,13 +833,24 @@
 
         </p></div></div></div></div></div></div> <div class="kost-review-modal-content__loading"><button type="button" class="bg-c-button bg-c-button--primary-naked bg-c-button--md bg-c-button--block"></button></div></div> <div class="modal-footer"><button type="button" class="btn btn-default">Close</button> <button type="button" class="btn btn-primary">Save changes</button></div></div></div></div> <div data-v-653cdb21="" fragment="127eff51545"><div data-v-653cdb21="" tabindex="-1" role="dialog" class="bg-c-modal bg-c-modal--backdrop bg-c-modal--button-block bg-c-modal--md bg-c-modal--popup"><!----></div></div><!--fragment#127eff51545#tail--> <div data-v-7e062822="" role="dialog" class="modal fade" id="modalDetailKostSwiperGallery"><div role="document" class="modal-dialog"><div class="modal-content"><div data-v-7e062822="" class="kost-gallery-modal-header"><span data-v-7e062822="" class="kost-gallery-modal-header__close"><svg data-v-7e062822="" role="img" class="bg-c-icon bg-c-icon--md"><title>close</title> <use href="#basic-close"></use></svg></span></div> <div data-v-7e062822="" class="kost-gallery-modal-content"><!----></div> <div class="modal-footer"><button type="button" class="btn btn-default">Close</button> <button type="button" class="btn btn-primary">Save changes</button></div></div></div></div></div></div>
 
+        <div class="container">
+            <div class="section-header">
+                <h5>
+                    {{ App\CPU\translate('additional_info') }}
+                </h5>
+            </div>
+            <div class="row pt-2 specification">
+                <div class="col-lg-12 col-md-12">
+                    {!! $product->kost['deskripsi'] !!}
+                </div>
+            </div>
+        </div>
 
 
-                    <div class="container mt-4 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
+                    <!-- <div class="container mt-4 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
                         <div class="row" style="background: white">
                             <div class="col-12">
                                 <div class="product_overview mt-1">
-                                    <!-- Tabs-->
                                     <ul class="nav nav-tabs d-flex justify-content-center" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" href="#overview" data-toggle="tab" role="tab"
@@ -726,7 +867,6 @@
                                     </ul>
                                     <div class="px-4 pt-lg-3 pb-3 mb-3">
                                         <div class="tab-content px-lg-3">
-                                            <!-- Tech specs tab-->
                                             <div class="tab-pane fade show active" id="overview" role="tabpanel">
                                                 <div class="row pt-2 specification">
                                                     {{-- @if($product->video_url!=null)
@@ -742,7 +882,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Reviews tab-->
                                             <div class="tab-pane fade" id="reviews" role="tabpanel">
                                                 <div class="row pt-2 pb-3">
                                                     <div class="col-lg-4 col-md-5 ">
@@ -959,7 +1098,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- end overview section -->
 
                 </div>

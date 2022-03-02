@@ -43,6 +43,7 @@
     }
     .section-header {
         display: flex;
+        text-transform: capitalize;
         justify-content: space-between;
     }
     .label-kost{
@@ -644,7 +645,7 @@
   <section class="container rtl">
     <div class="section-header">
         <div class="feature_header d-flex align-items-center">
-            <span class="for-feature-title">{{$category['name']}}</span>
+            <span class="for-feature-title capitalize">{{strtolower($category['name'])}}</span>
         </div>
         <div class="d-flex col-md-10 justify-content-between">
             <div class="d-flex float-right for-shoting-mobile">
