@@ -1137,16 +1137,20 @@
                         <div class="booking-card__info-price">
                             <h5 class="booking-card__info-price-amount">{{\App\CPU\Helpers::currency_converter(
                                 $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))
-                                )}}</h5>
+                                )}}
+                            </h5>
                             <span class="booking-card__info-price-amount-unit">/ bulan</span>
                         </div>
                         <div class="booking-card__info-select mt-3">
                             <section class="booking-input-checkin booking-card__info-select-dat w-100">
                                 <div class="form-group">
                                     <label for="">Tanggal mulai</label>
-                                    <input name="start_date" id="start_date" type="date" placeholder="Tanggal mulai" class="form-control">
+                                    <input name="start_date" id="start_date" type="date" placeholder="Tanggal mulai" class="start_date form-control">
                                 </div>
                             </section>
+                        </div>
+                        <div class="order-summary mt-2 d-none">
+                            @include('web-views.products._order-summary')
                         </div>
                         <div class="sewa mt-3">
                             <button class="btn btn-success w-100">
@@ -1230,6 +1234,10 @@
         })
     </script>
     <script type="text/javascript">
+        $(".start_date").on('change', function(){
+            $('.order-summary').removeClass('d-none')
+        })
+
         cartQuantityInitialize();
         getVariantPrice();
         $('#add-to-cart-form input').on('change', function () {
