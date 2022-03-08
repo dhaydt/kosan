@@ -1133,6 +1133,9 @@
 
                 <!-- booking card-->
                 <div class="booking-card --sticky mt-3">
+                    <form id="add-to-cart-form">
+                        @csrf
+                    <input type="hidden" name="id" value="{{ $product->id }}">
                     <section class="booking-card__info">
                         <div class="booking-card__info-price">
                             <h5 class="booking-card__info-price-amount">{{\App\CPU\Helpers::currency_converter(
@@ -1153,11 +1156,12 @@
                             @include('web-views.products._order-summary')
                         </div>
                         <div class="sewa mt-3">
-                            <button class="btn btn-success w-100">
+                            <button class="btn btn-success w-100" type="button" onclick="buy_now()">
                                 Ajukan Sewa
                             </button>
                         </div>
                     </section>
+                    </form>
                 </div>
                 <!-- end booking card-->
             </div>

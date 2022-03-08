@@ -7,8 +7,6 @@ use App\Model\CartShipping;
 use App\Model\Color;
 use App\Model\Product;
 use App\Model\Shop;
-use Barryvdh\Debugbar\Twig\Extension\Debug;
-use Cassandra\Collection;
 use Illuminate\Support\Str;
 
 class CartManager
@@ -81,6 +79,7 @@ class CartManager
         } else {
             $cart_ids = Cart::where(['customer_id' => $user->id])->groupBy('cart_group_id')->pluck('cart_group_id')->toArray();
         }
+
         return $cart_ids;
     }
 
@@ -92,6 +91,7 @@ class CartManager
             $data = CartShipping::where('cart_group_id', $group_id)->first();
             $cost = isset($data) ? $data->shipping_cost : 0;
         }
+
         return $cost;
     }
 
@@ -104,6 +104,7 @@ class CartManager
                 $total += $product_subtotal;
             }
         }
+
         return $total;
     }
 
@@ -116,6 +117,7 @@ class CartManager
                 $total += $product_subtotal;
             }
         }
+
         return $total;
     }
 
@@ -128,6 +130,7 @@ class CartManager
                 $total += $product_subtotal;
             }
         }
+
         return $total;
     }
 
@@ -145,6 +148,7 @@ class CartManager
             }
             $total += $shipping_cost;
         }
+
         return $total;
     }
 
@@ -178,16 +182,16 @@ class CartManager
         }
 
         //Gets all the choice values of customer choice option and generate a string like Black-S-Cotton
-        $choices = [];
-        foreach (json_decode($product->choice_options) as $key => $choice) {
-            $choices[$choice->name] = $request[$choice->name];
-            $variations[$choice->title] = $request[$choice->name];
-            if ($str != null) {
-                $str .= '-' . str_replace(' ', '', $request[$choice->name]);
-            } else {
-                $str .= str_replace(' ', '', $request[$choice->name]);
-            }
-        }
+        // $choices = [];
+        // foreach (json_decode($product->choice_options) as $key => $choice) {
+        //     $choices[$choice->name] = $request[$choice->name];
+        //     $variations[$choice->title] = $request[$choice->name];
+        //     if ($str != null) {
+        //         $str .= '-' . str_replace(' ', '', $request[$choice->name]);
+        //     } else {
+        //         $str .= str_replace(' ', '', $request[$choice->name]);
+        //     }
+        // }
 
         if ($user == 'offline') {
             if (session()->has('offline_cart')) {
@@ -199,7 +203,7 @@ class CartManager
                 } else {
                     return [
                         'status' => 0,
-                        'message' => translate('already_added!')
+                        'message' => translate('already_added!'),
                     ];
                 }
             } else {
@@ -213,43 +217,43 @@ class CartManager
             } else {
                 return [
                     'status' => 0,
-                    'message' => translate('already_added!')
+                    'message' => translate('already_added!'),
                 ];
             }
         }
 
-        $cart['color'] = $request->has('color') ? $request['color'] : null;
+        // $cart['color'] = $request->has('color') ? $request['color'] : null;
         $cart['product_id'] = $product->id;
-        $cart['choices'] = json_encode($choices);
+        // $cart['choices'] = json_encode($choices);
 
         //chek if out of stock
         if ($product['current_stock'] < $request['quantity']) {
             return [
                 'status' => 0,
-                'message' => translate('out_of_stock!')
+                'message' => translate('out_of_stock!'),
             ];
         }
 
-        $cart['variations'] = json_encode($variations);
-        $cart['variant'] = $str;
+        // $cart['variations'] = json_encode($variations);
+        // $cart['variant'] = $str;
 
         //Check the string and decreases quantity for the stock
-        if ($str != null) {
-            $count = count(json_decode($product->variation));
-            for ($i = 0; $i < $count; $i++) {
-                if (json_decode($product->variation)[$i]->type == $str) {
-                    $price = json_decode($product->variation)[$i]->price;
-                    if (json_decode($product->variation)[$i]->qty < $request['quantity']) {
-                        return [
-                            'status' => 0,
-                            'message' => translate('out_of_stock!')
-                        ];
-                    }
-                }
-            }
-        } else {
-            $price = $product->unit_price;
-        }
+        // if ($str != null) {
+        //     $count = count(json_decode($product->variation));
+        //     for ($i = 0; $i < $count; ++$i) {
+        //         if (json_decode($product->variation)[$i]->type == $str) {
+        //             $price = json_decode($product->variation)[$i]->price;
+        //             if (json_decode($product->variation)[$i]->qty < $request['quantity']) {
+        //                 return [
+        //                     'status' => 0,
+        //                     'message' => translate('out_of_stock!'),
+        //                 ];
+        //             }
+        //         }
+        //     }
+        // } else {
+        $price = $product->unit_price;
+        // }
 
         $tax = Helpers::tax_calculation($price, $product['tax'], 'percent');
 
@@ -261,18 +265,17 @@ class CartManager
             $cart_check = Cart::where([
                 'customer_id' => $user->id,
                 'seller_id' => $product->user_id,
-                'seller_is' => $product->added_by])->first();
+                'seller_is' => $product->added_by, ])->first();
         }
 
         if (isset($cart_check)) {
             $cart['cart_group_id'] = $cart_check['cart_group_id'];
         } else {
-            $cart['cart_group_id'] = ($user == 'offline' ? 'offline' : $user->id) . '-' . Str::random(5) . '-' . time();
+            $cart['cart_group_id'] = ($user == 'offline' ? 'offline' : $user->id).'-'.Str::random(5).'-'.time();
         }
         //generate group id end
-
         $cart['customer_id'] = $user->id ?? 0;
-        $cart['quantity'] = $request['quantity'];
+        $cart['quantity'] = 1;
         /*$data['shipping_method_id'] = $shipping_id;*/
         $cart['price'] = $price;
         $cart['tax'] = $tax;
@@ -280,7 +283,7 @@ class CartManager
         $cart['name'] = $product->name;
         $cart['discount'] = Helpers::get_product_discount($product, $price);
         /*$data['shipping_cost'] = $shipping_cost;*/
-        $cart['thumbnail'] = $product->thumbnail;
+        $cart['thumbnail'] = json_decode($product->images)[0];
         $cart['seller_id'] = $product->user_id;
         $cart['seller_is'] = $product->added_by;
         if ($product->added_by == 'seller') {
@@ -299,7 +302,7 @@ class CartManager
 
         return [
             'status' => 1,
-            'message' => translate('successfully_added!')
+            'message' => translate('successfully_added!'),
         ];
     }
 
@@ -313,7 +316,7 @@ class CartManager
         $product = Product::find($cart['product_id']);
         $count = count(json_decode($product->variation));
         if ($count) {
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if (json_decode($product->variation)[$i]->type == $cart['variant']) {
                     if (json_decode($product->variation)[$i]->qty < $request->quantity) {
                         $status = 0;
@@ -321,12 +324,12 @@ class CartManager
                     }
                 }
             }
-        } else if ($product['current_stock'] < $request->quantity) {
+        } elseif ($product['current_stock'] < $request->quantity) {
             $status = 0;
             $qty = $cart['quantity'];
         }
 
-        if ($status){
+        if ($status) {
             $qty = $request->quantity;
             $cart['quantity'] = $request->quantity;
         }
@@ -336,7 +339,7 @@ class CartManager
         return [
             'status' => $status,
             'qty' => $qty,
-            'message' => $status == 1 ? translate('successfully_updated!') : translate('sorry_stock_is_limited')
+            'message' => $status == 1 ? translate('successfully_updated!') : translate('sorry_stock_is_limited'),
         ];
     }
 }

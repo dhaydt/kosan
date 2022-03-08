@@ -1,5 +1,5 @@
 <div class="feature_header">
-    <span>{{ \App\CPU\translate('shopping_cart')}}</span>
+    <span>{{ \App\CPU\translate('pengajuan_sewa')}}</span>
 </div>
 
 <!-- Grid-->
@@ -29,12 +29,13 @@
                                         <a href="{{route('product',$cartItem['slug'])}}">
                                             <img style="height: 82px;"
                                                  onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                                 src="{{\App\CPU\ProductManager::product_image_path('thumbnail')}}/{{$cartItem['thumbnail']}}"
+                                                 src="{{\App\CPU\ProductManager::product_image_path('product')}}/{{$cartItem['thumbnail']}}"
                                                  alt="Product">
                                         </a>
                                     </div>
 
                                     <div class="media-body d-flex justify-content-center align-items-center">
+                                        {{-- {{ dd($cartItem) }} --}}
                                         <div class="cart_product">
                                             <div class="product-title">
                                                 <a href="{{route('product',$cartItem['slug'])}}">{{$cartItem['name']}}</a>
@@ -46,11 +47,11 @@
                                                     {{\App\CPU\Helpers::currency_converter($cartItem['price'])}}
                                                 </strike>
                                             @endif
-                                            @foreach(json_decode($cartItem['variations'],true) as $key1 =>$variation)
+                                            {{-- @foreach(json_decode($cartItem['variations'],true) as $key1 =>$variation)
                                                 <div class="text-muted"><span
                                                         class="{{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}}">{{$key1}} :</span>{{$variation}}
                                                 </div>
-                                            @endforeach
+                                            @endforeach --}}
                                         </div>
                                     </div>
                                 </div>
@@ -84,65 +85,8 @@
                             </div>
                         </div>
                     </div>
-                    @if($cart_key==$group->count()-1)
-                    <!-- choosen shipping method-->
-            @php($choosen_shipping=\App\Model\CartShipping::where(['cart_group_id'=>$cartItem['cart_group_id']])->first())
-            @if(isset($choosen_shipping)==false)
-            @php($choosen_shipping['shipping_method_id']=0)
-            @endif
 
-            @if($shippingMethod=='sellerwise_shipping')
-            @php($shippings=\App\CPU\Helpers::get_shipping_methods($cartItem['seller_id'],$cartItem['seller_is'],$cartItem['product_id']))
-            <div class="row">
-                {{-- {{ dd($shippings) }} --}}
-                <div class="col-12">
-                    <select class="form-control"
-                        onchange="set_shipping_id(this.value,'{{$cartItem['cart_group_id']}}')">
-                        <option>{{\App\CPU\translate('choose_shipping_method')}}</option>
-                        @if ($shippings[0][0][0]['costs'])
-                        @foreach($shippings[0][0][0]['costs'] as $ship)
-                        {{-- {{ dd($ship) }} --}}
-                        <option value="{{'JNE-'.$ship['service'].','.$ship['cost'][0]['value']}}"
-                            {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
-                            {{"JNE - ".''.$ship['service'].' ( '.$ship['cost'][0]['etd'].' Days)
-                           '.\App\CPU\Helpers::currency_converter(\App\CPU\Convert::idrTousd($ship['cost'][0]['value']))}}
-                        </option>
-                        @endforeach
-                        @endif
-
-                        @if ($shippings[0][1][0]['costs'])
-                        @foreach($shippings[0][1][0]['costs'] as $ship)
-                        {{-- {{ dd($ship) }} --}}
-                       <option value="{{'TIKI- '.$ship['service'].','.$ship['cost'][0]['value']}}"
-                            {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
-                            {{"TIKI - ".''.$ship['service'].' ( '.$ship['cost'][0]['etd'].' Days)
-                           '.\App\CPU\Helpers::currency_converter(\App\CPU\Convert::idrTousd($ship['cost'][0]['value']))}}
-                        </option>
-                        @endforeach
-                        @endif
-
-                        @if ($shippings[0][2][0]['costs'])
-                        @foreach($shippings[0][2][0]['costs'] as $ship)
-                        {{-- {{ dd($ship) }} --}}
-                        <option value="{{'SiCepat- '.$ship['service'].','.$ship['cost'][0]['value']}}"
-                            {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
-                            {{"SiCepat - ".''.$ship['service'].' ( '.$ship['cost'][0]['etd'].' Days)
-                           '.\App\CPU\Helpers::currency_converter(\App\CPU\Convert::idrTousd($ship['cost'][0]['value']))}}
-                        </option>
-                        @endforeach
-                        @endif
-                        @foreach($shippings[1] as $shipping)
-                        <option value="{{$shipping['id']}}"
-                            {{$choosen_shipping['shipping_method_id']==$shipping['id']?'selected':''}}>
-                            {{$shipping['title'].' ( '.$shipping['duration'].' )
-                            '.\App\CPU\Helpers::currency_converter($shipping['cost'])}}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            @endif
-            @endif
+            {{-- @endif --}}
             @endforeach
             <div class="mt-3"></div>
             @endforeach

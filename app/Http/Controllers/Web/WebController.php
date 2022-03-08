@@ -241,14 +241,13 @@ class WebController extends Controller
 
     public function checkout_details(Request $request)
     {
-        if (auth('customer')->user()->district == null) {
-            // dd('no distrcit');
-            $country = DB::table('country')->get();
+        // if (auth('customer')->user()->district == null) {
+        //     $country = DB::table('country')->get();
 
-            Toastr::warning(translate('Please fill your address first'));
+        //     Toastr::warning(translate('Please fill your address first'));
 
-            return view('web-views.addAddress', compact('country'));
-        }
+        //     return view('web-views.addAddress', compact('country'));
+        // }
 
         $cart_group_ids = CartManager::get_cart_group_ids();
         if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
@@ -315,20 +314,20 @@ class WebController extends Controller
     public function shop_cart()
     {
         if (auth('customer')->check() && Cart::where(['customer_id' => auth('customer')->id()])->count() > 0) {
-            if (auth('customer')->user()->district == null) {
-                // dd('no distrcit');
-                $country = DB::table('country')->get();
+            // if (auth('customer')->user()->district == null) {
+            //     // dd('no distrcit');
+            //     $country = DB::table('country')->get();
 
-                Toastr::warning(translate('Please fill your address first'));
+            //     Toastr::warning(translate('Please fill your address first'));
 
-                return view('web-views.addAddress', compact('country'));
-            }
+            //     return view('web-views.addAddress', compact('country'));
+            // }
 
             $user = auth('customer')->id();
-            $address = ShippingAddress::where('customer_id', $user)->first();
+            // $address = ShippingAddress::where('customer_id', $user)->first();
 
             // dd($address);
-            session()->put('address_id', $address->id);
+            // session()->put('address_id', $address->id);
 
             return view('web-views.shop-cart');
         }
