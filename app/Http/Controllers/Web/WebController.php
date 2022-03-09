@@ -241,20 +241,12 @@ class WebController extends Controller
 
     public function checkout_details(Request $request)
     {
-        // if (auth('customer')->user()->district == null) {
-        //     $country = DB::table('country')->get();
-
-        //     Toastr::warning(translate('Please fill your address first'));
-
-        //     return view('web-views.addAddress', compact('country'));
-        // }
-
         $cart_group_ids = CartManager::get_cart_group_ids();
-        if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
-            Toastr::info(translate('select_shipping_method_first'));
+        // if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
+        //     Toastr::info(translate('select_shipping_method_first'));
 
-            return redirect('shop-cart');
-        }
+        //     return redirect('shop-cart');
+        // }
 
         if (count($cart_group_ids) > 0) {
             // session(['address_changed' => 0]);

@@ -9,6 +9,10 @@ body {
     color: #000 !important;
 }
 
+.text-grey {
+    color: #484848 !important;
+}
+
 .navbar-light .navbar-tool-icon-box .navbar-tool-icon {
     color: #000 !important;
 }

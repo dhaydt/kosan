@@ -1,15 +1,28 @@
-<div class="feature_header">
-    <span>{{ \App\CPU\translate('pengajuan_sewa')}}</span>
-</div>
-
+<style>
+    div.feature_header{
+        justify-content: start;
+    }
+    div.feature_header span {
+        text-transform: capitalize;
+    }
+</style>
 <!-- Grid-->
-<hr class="view_border">
-@php($shippingMethod=\App\CPU\Helpers::get_business_settings('shipping_method'))
 @php($cart=\App\Model\Cart::where(['customer_id' => auth('customer')->id()])->get()->groupBy('cart_group_id'))
 
 <div class="row">
     <!-- List of items-->
     <section class="col-lg-8">
+        <div class="back-btn">
+            <div class="col-6">
+                <a href="{{route('home')}}" class="text-grey">
+                    <i class="fa fa-{{Session::get('direction') === "rtl" ? 'forward' : 'backward'}} px-1"></i> {{\App\CPU\translate('kembali')}}
+                </a>
+            </div>
+        </div>
+        <div class="feature_header mt-4">
+            <span class="pl-0">{{ \App\CPU\translate('pengajuan_sewa')}}</span>
+        </div>
+        @include('web-views.partials._checkout-steps',['step'=>1])
         <div class="cart_information">
             @foreach($cart as $group_key=>$group)
                 @foreach($group as $cart_key=>$cartItem)
@@ -47,11 +60,6 @@
                                                     {{\App\CPU\Helpers::currency_converter($cartItem['price'])}}
                                                 </strike>
                                             @endif
-                                            {{-- @foreach(json_decode($cartItem['variations'],true) as $key1 =>$variation)
-                                                <div class="text-muted"><span
-                                                        class="{{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}}">{{$key1}} :</span>{{$variation}}
-                                                </div>
-                                            @endforeach --}}
                                         </div>
                                     </div>
                                 </div>
@@ -91,36 +99,13 @@
             <div class="mt-3"></div>
             @endforeach
 
-            @if($shippingMethod=='inhouse_shipping')
-                @php($shippings=\App\CPU\Helpers::get_shipping_methods(1,'admin', $cartItem['product_id']))
-            <div class="row">
-                <div class="col-12">
-                    <select class="form-control" onchange="set_shipping_id(this.value,'all_cart_group')">
-                        @foreach($shippings[1] as $shipping)
-                        <!--{{dd($shipping)}}-->
-                        <option value="{{$shipping['id']}}"
-                            {{$choosen_shipping['shipping_method_id']==$shipping['id']?'selected':''}}>
-                            {{$shipping['title'].' ( '.$shipping['duration'].' )
-                            '.\App\CPU\Helpers::currency_converter($shipping['cost'])}}
-                        </option>
-                        @endforeach
-                    </select>
-                    </div>
-                </div>
-            @endif
-
             @if( $cart->count() == 0)
                 <div class="d-flex justify-content-center align-items-center">
                     <h4 class="text-danger text-capitalize">{{\App\CPU\translate('cart_empty')}}</h4>
                 </div>
             @endif
         </div>
-        <div class="row pt-2">
-            <div class="col-6">
-                <a href="{{route('home')}}" class="btn btn-primary">
-                    <i class="fa fa-{{Session::get('direction') === "rtl" ? 'forward' : 'backward'}} px-1"></i> {{\App\CPU\translate('continue_shopping')}}
-                </a>
-            </div>
+        <div class="row pt-2 justify-content-end">
             <div class="col-6">
                 <a href="{{route('checkout-details')}}"
                    class="btn btn-primary pull-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}">

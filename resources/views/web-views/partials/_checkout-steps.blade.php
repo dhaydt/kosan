@@ -20,13 +20,13 @@
         font-weight: 400;
     }
 </style>
-<div class="steps steps-light pt-2 pb-2">
+<div class="steps steps-light pt-2 pb-2 mt-5">
     <a class="step-item {{$step>=1?'active':''}} {{$step==1?'current':''}}" href="{{route('checkout-details')}}">
         <div class="step-progress">
             <span class="step-count"><i class="czi-user-circle"></i></span>
         </div>
         <div class="step-label">
-            {{\App\CPU\translate('sing_in')}} / {{\App\CPU\translate('sing_up')}}
+            {{\App\CPU\translate('ajukan_sewa')}}
         </div>
     </a>
     <a class="step-item {{$step>=2?'active':''}} {{$step==2?'current':''}}" href="{{route('checkout-shipping')}}">
@@ -34,7 +34,7 @@
             <span class="step-count"><i class="czi-package"></i></span>
         </div>
         <div class="step-label">
-            {{\App\CPU\translate('Shipping')}}
+            {{\App\CPU\translate('Pemilik_menyetujui')}}
         </div>
     </a>
     <a class="step-item {{$step>=3?'active':''}} {{$step==3?'current':''}}" href="{{route('checkout-payment')}}">
@@ -42,7 +42,15 @@
             <span class="step-count"><i class="czi-card"></i></span>
         </div>
         <div class="step-label">
-            {{\App\CPU\translate('Payment')}}
+            {{\App\CPU\translate('Bayar_sewa_pertama')}}
+        </div>
+    </a>
+    <a class="step-item {{$step>=4?'active':''}} {{$step==4?'current':''}}" href="{{route('checkout-payment')}}">
+        <div class="step-progress">
+            <span class="step-count"><i class="czi-card"></i></span>
+        </div>
+        <div class="step-label">
+            {{\App\CPU\translate('Check_in')}}
         </div>
     </a>
 </div>

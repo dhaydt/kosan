@@ -16,7 +16,7 @@
 @endpush
 
 @section('content')
-    <div class="container pb-5 mb-2 mt-3 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};" id="cart-summary">
+    <div class="container pb-5 mb-2 mt-5 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};" id="cart-summary">
         @include('layouts.front-end.partials.cart_details')
     </div>
 @endsection

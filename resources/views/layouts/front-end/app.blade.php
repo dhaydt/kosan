@@ -813,7 +813,7 @@
 
     function addToCart(form_id = 'add-to-cart-form') {
         var data = JSON.stringify($('#' + form_id).serializeArray())
-        alert(data)
+        // alert(data)
 
         if (checkAddToCartValidity()) {
             $.ajaxSetup({
