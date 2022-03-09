@@ -1156,7 +1156,7 @@
                             @include('web-views.products._order-summary')
                         </div>
                         <div class="sewa mt-3">
-                            <button class="btn btn-success w-100" type="button" onclick="buy_now()">
+                            <button class="btn btn-success w-100" id="ajukan" type="button" onclick="buy_now()" disabled>
                                 Ajukan Sewa
                             </button>
                         </div>
@@ -1239,7 +1239,8 @@
     </script>
     <script type="text/javascript">
         $(".start_date").on('change', function(){
-            $('.order-summary').removeClass('d-none')
+            $('.order-summary').removeClass('d-none');
+            $('#ajukan').removeAttr('disabled')
         })
 
         cartQuantityInitialize();

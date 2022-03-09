@@ -36,6 +36,65 @@ class Helpers
         return $x;
     }
 
+    public static function dateChange($date)
+    {
+        $day = [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+        ];
+
+        $hari = [
+            'Minggu',
+            'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jum\'at',
+            'Sabtu',
+        ];
+
+        $d = str_replace($day, $hari, $date);
+
+        $month = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ];
+
+        $bulan = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'July',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember',
+        ];
+        $x = str_replace($month, $bulan, $d);
+
+
+        return $x;
+    }
+
     public static function country()
     {
         // $country = Product::with('country')->whereIn('country', 'country');

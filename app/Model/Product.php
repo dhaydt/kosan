@@ -132,7 +132,7 @@ class Product extends Model
                 } else {
                     return $query->where('locale', Helpers::default_lang());
                 }
-            }, 'reviews'])->withCount('reviews');
+            }, 'reviews'])->withCount('reviews')->with('kost');
         });
     }
 }

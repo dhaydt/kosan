@@ -47,7 +47,7 @@ class WebController extends Controller
 
     public function home(Request $request)
     {
-        // dd($request);
+        CartManager::cart_clean();
         $home_categories = Category::where('home_status', true)->get();
         $home_categories->map(function ($data) {
             $data['products'] = Product::active()->whereJsonContains('category_ids', ['id' => (string) $data['id']])->inRandomOrder()->take(12)->get();

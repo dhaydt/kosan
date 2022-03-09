@@ -812,8 +812,6 @@
     }
 
     function addToCart(form_id = 'add-to-cart-form') {
-        var data = JSON.stringify($('#' + form_id).serializeArray())
-        // alert(data)
 
         if (checkAddToCartValidity()) {
             $.ajaxSetup({
@@ -862,7 +860,7 @@
     function buy_now() {
         console.log('work')
         addToCart();
-        location.href = "{{route('checkout-details')}}";
+        location.href = "{{url('/shop-cart')}}";
     }
 
     function currency_change(currency_code) {

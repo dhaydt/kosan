@@ -281,6 +281,7 @@ class CartManager
         $cart['tax'] = $tax;
         $cart['slug'] = $product->slug;
         $cart['name'] = $product->name;
+        $cart['mulai'] = $request['start_date'];
         $cart['discount'] = Helpers::get_product_discount($product, $price);
         /*$data['shipping_cost'] = $shipping_cost;*/
         $cart['thumbnail'] = json_decode($product->images)[0];
