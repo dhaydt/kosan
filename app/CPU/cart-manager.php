@@ -13,37 +13,34 @@ class CartManager
 {
     public static function cart_to_db()
     {
-        $user = Helpers::get_customer();
-        if (session()->has('offline_cart')) {
-            $cart = session('offline_cart');
-            $storage = [];
-            foreach ($cart as $item) {
-                $db_cart = Cart::where(['customer_id' => $user->id, 'seller_id' => $item['seller_id'], 'seller_is' => $item['seller_is']])->first();
-                $storage[] = [
-                    'customer_id' => $user->id,
-                    'cart_group_id' => isset($db_cart) ? $db_cart['cart_group_id'] : str_replace('offline', $user->id, $item['cart_group_id']),
-                    'product_id' => $item['product_id'],
-                    'color' => $item['color'],
-                    'choices' => $item['choices'],
-                    'variations' => $item['variations'],
-                    'variant' => $item['variant'],
-                    'quantity' => $item['quantity'],
-                    'price' => $item['price'],
-                    'tax' => $item['tax'],
-                    'discount' => $item['discount'],
-                    'slug' => $item['slug'],
-                    'name' => $item['name'],
-                    'thumbnail' => $item['thumbnail'],
-                    'seller_id' => $item['seller_id'],
-                    'seller_is' => $item['seller_is'],
-                    'shop_info' => $item['shop_info'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-            }
-            Cart::insert($storage);
-            session()->put('offline_cart', collect([]));
-        }
+        // $user = Helpers::get_customer();
+        // if (session()->has('offline_cart')) {
+        //     $cart = session('offline_cart');
+        //     $storage = [];
+        //     foreach ($cart as $item) {
+        //         $db_cart = Cart::where(['customer_id' => $user->id, 'seller_id' => $item['seller_id'], 'seller_is' => $item['seller_is']])->first();
+        //         $storage[] = [
+        //             'customer_id' => $user->id,
+        //             'cart_group_id' => isset($db_cart) ? $db_cart['cart_group_id'] : str_replace('offline', $user->id, $item['cart_group_id']),
+        //             'product_id' => $item['product_id'],
+        //             'quantity' => $item['quantity'],
+        //             'price' => $item['price'],
+        //             'tax' => $item['tax'],
+        //             'discount' => $item['discount'],
+        //             'slug' => $item['slug'],
+        //             'name' => $item['name'],
+        //             'mulai' => $item['mulai'],
+        //             'thumbnail' => $item['thumbnail'],
+        //             'seller_id' => $item['seller_id'],
+        //             'seller_is' => $item['seller_is'],
+        //             'shop_info' => $item['shop_info'],
+        //             'created_at' => now(),
+        //             'updated_at' => now(),
+        //         ];
+        //     }
+        //     Cart::insert($storage);
+        //     session()->put('offline_cart', collect([]));
+        // }
     }
 
     public static function get_cart($group_id = null)
