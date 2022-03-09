@@ -17,7 +17,7 @@
 </style>
 
 <aside class="col-lg-4 pt-4 pt-lg-0">
-    <div class="cart_total">
+    <div class="cart_total py-4">
         @php($sub_total=0)
         @php($total_tax=0)
         @php($total_shipping_cost=0)
@@ -36,32 +36,30 @@
         @else
             <span>{{\App\CPU\translate('empty_cart')}}</span>
         @endif
-        <div class="d-flex justify-content-between">
-            <span class="cart_title">{{\App\CPU\translate('sub_total')}}</span>
+        <div class="penyewa">
+            <h3 class="title-section mb-1">Rincian pembayaran awal </h3>
+            <small class="text-grey">Dibayar setelah pemilik kos menyetujui pengajuan sewa</small>
+        </div>
+        <div class="d-flex justify-content-between mt-4">
+            <span class="cart_title">{{\App\CPU\translate('biaya_sewa_kos')}}</span>
             <span class="cart_value">
                 {{\App\CPU\Helpers::currency_converter($sub_total)}}
             </span>
         </div>
-        <div class="d-flex justify-content-between">
-            <span class="cart_title">{{\App\CPU\translate('tax')}}</span>
+        <div class="d-flex justify-content-between mt-4">
+            <span class="cart_title">{{\App\CPU\translate('biaya_layanan_Inroom')}}</span>
             <span class="cart_value">
                 {{\App\CPU\Helpers::currency_converter($total_tax)}}
             </span>
         </div>
-        <div class="d-flex justify-content-between">
-            <span class="cart_title">{{\App\CPU\translate('shipping')}}</span>
-            <span class="cart_value">
-                {{\App\CPU\Helpers::currency_converter($total_shipping_cost)}}
-            </span>
-        </div>
-        <div class="d-flex justify-content-between">
-            <span class="cart_title">{{\App\CPU\translate('discount_on_product')}}</span>
+        <div class="d-flex justify-content-between mt-4">
+            <span class="cart_title">{{\App\CPU\translate('potongan_harga')}}</span>
             <span class="cart_value">
                 - {{\App\CPU\Helpers::currency_converter($total_discount_on_product)}}
             </span>
         </div>
         @if(session()->has('coupon_discount'))
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mt-4">
                 <span class="cart_title">{{\App\CPU\translate('coupon_code')}}</span>
                 <span class="cart_value" id="coupon-discount-amount">
                     - {{session()->has('coupon_discount')?\App\CPU\Helpers::currency_converter(session('coupon_discount')):0}}
@@ -69,7 +67,7 @@
             </div>
             @php($coupon_dis=session('coupon_discount'))
         @else
-            <div class="mt-2">
+            <div class="mt-2 mt-4">
                 <form class="needs-validation" method="post" novalidate id="coupon-code-ajax">
                     <div class="form-group">
                         <input class="form-control input_code" type="text" name="code" placeholder="{{\App\CPU\translate('Coupon code')}}"
@@ -82,21 +80,21 @@
             </div>
             @php($coupon_dis=0)
         @endif
-        <hr class="mt-2 mb-2">
+        <hr class="my-4 mb-2" style="border: 1px dashed #e3e9ef">
         <div class="d-flex justify-content-between">
-            <span class="cart_title">{{\App\CPU\translate('total')}}</span>
+            <span class="cart_title">{{\App\CPU\translate('total_pembayaran_pertama')}}</span>
             <span class="cart_value">
                {{\App\CPU\Helpers::currency_converter($sub_total+$total_tax+$total_shipping_cost-$coupon_dis-$total_discount_on_product)}}
             </span>
         </div>
 
-        <div class="d-flex justify-content-center">
+        {{-- <div class="d-flex justify-content-center">
             <span class="cart_total_value mt-2">
                 {{\App\CPU\Helpers::currency_converter($sub_total+$total_tax+$total_shipping_cost-$coupon_dis-$total_discount_on_product)}}
             </span>
-        </div>
+        </div> --}}
     </div>
-    <div class="container mt-2">
+    {{-- <div class="container mt-2">
         <div class="row p-0">
             <div class="col-md-3 p-0 text-center mobile-padding">
                 <img style="height: 29px;" src="{{asset("public/assets/front-end/png/delivery.png")}}" alt="">
@@ -116,5 +114,5 @@
                 <div class="deal-title">{{\App\CPU\translate('authentic_payment')}}</div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </aside>

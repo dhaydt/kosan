@@ -91,7 +91,6 @@ class Helpers
         ];
         $x = str_replace($month, $bulan, $d);
 
-
         return $x;
     }
 
