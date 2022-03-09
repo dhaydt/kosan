@@ -92,12 +92,35 @@
         background-color: #d1d1d1;
         color: #000;
     }
-    textarea{
+
+    textarea {
         border: 1px solid #d1d1d1;
         padding: 8px;
         border-radius: 5px;
         font-size: 14px;
         width: 98%;
+    }
+
+    [class^="tio-"],
+    [class*=" tio-"] {
+        font-family: 'The-Icon-of' !important;
+        font-size: 1.125em;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        letter-spacing: 0;
+        -webkit-font-feature-settings: "liga";
+        -moz-font-feature-settings: "liga=1";
+        -moz-font-feature-settings: "liga";
+        -ms-font-feature-settings: "liga"1;
+        font-feature-settings: "liga";
+        -webkit-font-variant-ligatures: discretionary-ligatures;
+        font-variant-ligatures: discretionary-ligatures;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 </style>
 <!-- Grid-->
@@ -233,10 +256,27 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                                 <div class="col-md-4" style="margin-left: 12px;">
                                     <div class="data-penyewa pl-2 d-flex-justify-content-center">
                                         <div class="quantity">
-                                            <input disabled type="number" name="penyewa" min="1" max="9" step="1" value="1">
+                                            <input disabled type="number" name="penyewa" min="1" max="9" step="1"
+                                                value="1">
                                         </div>
                                     </div>
                                     <span style="margin-left: 40px">Orang</span>
+                                </div>
+                            </div>
+                            <hr class="border_section" style="margin: 50px 0 50px 0;">
+                        </div>
+                        <div class="col-12 px1">
+                            <div class="penyewa mb-3">
+                                <h3 class="title-section mb-1">Dokumen persyaratan masuk kos</h3>
+                                <small>Mohon melengkapi dokumen berikut yang diperlukan pemilik kos untuk
+                                    verifikasi.</small>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="" style="width:156px; height:156px">
+                                        <div class="row" id="coba"></div>
+                                        <span>Foto KTP (Opsional)</span>
+                                    </div>
                                 </div>
                             </div>
                             <hr class="border_section" style="margin: 50px 0 50px 0;">
@@ -249,7 +289,8 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="data-penyewa pl-2 d-flex-justify-content-center">
-                                        <textarea name="catatan_tambahan" id="" cols="30" rows="3" placeholder="Misal: saya membawa barang elektronik berupa laptop"></textarea>
+                                        <textarea name="catatan_tambahan" id="" cols="30" rows="3"
+                                            placeholder="Misal: saya membawa barang elektronik berupa laptop"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -261,7 +302,7 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                             </div>
                             @php($date = Carbon\Carbon::parse($cartItem->mulai)->isoFormat('dddd, D MMMM Y'))
                             <div class="row mt-3 pl-3">
-                               <p class="text-grey">{{ App\CPU\Helpers::dateChange($date) }}</p>
+                                <p class="text-grey">{{ App\CPU\Helpers::dateChange($date) }}</p>
                             </div>
                             <hr class="border_section" style="margin: 50px 0 50px 0;">
                         </div>
@@ -282,10 +323,11 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
         </div>
         <div class="row pt-2 justify-content-center">
             <div class="col-12">
-                <a href="{{route('checkout-details')}}" class="w-100 btn btn-primary pull-{{Session::get('direction') === "
-                    rtl" ? 'left' : 'right' }}">
+                <a href="{{route('checkout-details')}}"
+                    class="w-100 btn btn-primary pull-{{Session::get('direction') === " rtl" ? 'left' : 'right' }}">
                     {{\App\CPU\translate('Ajukan_sewa')}}
-                    {{-- <i class="fa fa-{{Session::get('direction') === " rtl" ? 'backward' : 'forward' }} px-1"></i> --}}
+                    {{-- <i class="fa fa-{{Session::get('direction') === " rtl" ? 'backward' : 'forward' }} px-1"></i>
+                    --}}
                 </a>
             </div>
         </div>
@@ -319,7 +361,44 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
     }
 </script>
 @push('script')
+<script src="{{asset('public/assets/back-end/js/spartan-multi-image-picker.js')}}"></script>
 <script>
+    $(function () {
+            $("#coba").spartanMultiImagePicker({
+                fieldName: 'ktp',
+                maxCount: 1,
+                rowHeight: 'auto',
+                groupClassName: 'col-12',
+                maxFileSize: '',
+                placeholderImage: {
+                    image: '{{asset('assets/front-end/img/upload-here.png')}}',
+                    width: '100%',
+                },
+                dropFileLabel: "Drop Here",
+                onAddRow: function (index, file) {
+
+                },
+                onRenderedPreview: function (index) {
+
+                },
+                onRemoveRow: function (index) {
+
+                },
+                onExtensionErr: function (index, file) {
+                    toastr.error('{{\App\CPU\translate('Please only input png or jpg type file')}}', {
+                        CloseButton: true,
+                        ProgressBar: true
+                    });
+                },
+                onSizeErr: function (index, file) {
+                    toastr.error('{{\App\CPU\translate('File size too big')}}', {
+                        CloseButton: true,
+                        ProgressBar: true
+                    });
+                }
+            });
+        })
+
     $(document).ready(function(){
             jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
     jQuery('.quantity').each(function() {
