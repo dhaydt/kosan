@@ -323,7 +323,7 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
         </div>
         <div class="row pt-2 justify-content-center">
             <div class="col-12">
-                <a href="{{route('checkout-details')}}"
+                <a href="{{route('checkout-complete')}}"
                     class="w-100 btn btn-primary pull-{{Session::get('direction') === " rtl" ? 'left' : 'right' }}">
                     {{\App\CPU\translate('Ajukan_sewa')}}
                     {{-- <i class="fa fa-{{Session::get('direction') === " rtl" ? 'backward' : 'forward' }} px-1"></i>

@@ -278,6 +278,7 @@ class WebController extends Controller
 
     public function checkout_complete(Request $request)
     {
+        // dd($request);
         $unique_id = OrderManager::gen_unique_id();
         $order_ids = [];
         foreach (CartManager::get_cart_group_ids() as $group_id) {

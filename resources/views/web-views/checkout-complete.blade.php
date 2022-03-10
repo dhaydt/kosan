@@ -83,13 +83,16 @@
     <div class="container mt-5 mb-5 rtl"
          style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
         <div class="row d-flex justify-content-center">
-            <div class="col-md-10 col-lg-10">
+            <div class="col-md-8 col-lg-7">
                 <div class="card">
                     @if(auth('customer')->check())
                         <div class=" p-5">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <h5 style="font-size: 20px; font-weight: 900">{{\App\CPU\translate('your_order_has_been_placed_successfully!')}}
+                                <div class="col-12">
+                                    @include('web-views.partials._checkout-steps',['step'=>1.5])
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <h5 style="font-size: 20px; font-weight: 700">{{\App\CPU\translate('pengajuan_sewa_berhasil_dikirim!')}}
                                         !</h5>
                                 </div>
                             </div>
@@ -97,25 +100,19 @@
                             <div class="row mb-4">
                                 <div class="col-12">
                                     <center>
-                                        <i style="font-size: 100px; color: #0f9d58" class="fa fa-check-circle"></i>
+                                        <img src="{{ asset('assets/front-end/img/success.svg') }}" alt="">
                                     </center>
                                 </div>
                             </div>
 
-                            <span class="font-weight-bold d-block mt-4" style="font-size: 17px;">{{\App\CPU\translate('Hello')}}, {{auth('customer')->user()->f_name}}</span>
-                            <span>{{\App\CPU\translate('You order has been confirmed and will be shipped according to the method you selected!')}}</span>
+                            <span class="font-weight-bold d-block mt-4" style="font-size: 17px;">{{\App\CPU\translate('Halo')}}, {{auth('customer')->user()->f_name}} {{auth('customer')->user()->l_name}}</span>
+                            <span>{{\App\CPU\translate('Kamu_akan_menerima_konfirmasi_dari_pemilik_paling_lambat_3 x 24_jam_dari_sekarang.!')}}</span>
 
                             <div class="row mt-4">
-                                <div class="col-6">
-                                    <a href="{{route('home')}}" class="btn btn-primary">
-                                        {{\App\CPU\translate('go_to_shopping')}}
-                                    </a>
-                                </div>
-
-                                <div class="col-6">
+                                <div class="col-12">
                                     <a href="{{route('account-oder')}}"
-                                       class="btn btn-secondary pull-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}">
-                                        {{\App\CPU\translate('check_orders')}}
+                                       class="btn btn-primary w-100 pull-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}">
+                                        {{\App\CPU\translate('lihat_status_pengajuan')}}
                                     </a>
                                 </div>
                             </div>
