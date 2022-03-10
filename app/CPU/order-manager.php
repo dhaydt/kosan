@@ -232,7 +232,6 @@ class OrderManager
 
     public static function generate_order($data)
     {
-        // dd($data);
         $order_id = 100000 + Order::all()->count() + 1;
         if (Order::find($order_id)) {
             $order_id = Order::orderBy('id', 'DESC')->first()->id + 1;
@@ -266,6 +265,7 @@ class OrderManager
             'customer_id' => $user->id,
             'seller_id' => $seller_data->seller_id,
             'seller_is' => $seller_data->seller_is,
+            'mulai' => $seller_data->mulai,
             'customer_type' => 'customer',
             'payment_status' => $data['payment_status'],
             'order_status' => $data['order_status'],

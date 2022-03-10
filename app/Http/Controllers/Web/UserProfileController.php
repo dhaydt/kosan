@@ -355,7 +355,7 @@ class UserProfileController extends Controller
     {
         $orders = Order::where('customer_id', auth('customer')->id())->orderBy('id', 'DESC')->get();
 
-        return view('web-views.users-profile.account-orders', compact('orders'));
+        return view('web-views.users-profile.account-booking', compact('orders'));
     }
 
     public function account_order_details(Request $request)

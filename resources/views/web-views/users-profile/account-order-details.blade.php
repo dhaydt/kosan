@@ -5,78 +5,61 @@
 @push('css_or_js')
     <style>
         .page-item.active .page-link {
-            background-color: {{$web_config['primary_color']}}            !important;
+            background-color: {{$web_config['primary_color']}}!important;
         }
-
         .page-item.active > .page-link {
             box-shadow: 0 0 black !important;
         }
-
         .widget-categories .accordion-heading > a:hover {
             color: #FFD5A4 !important;
         }
-
         .widget-categories .accordion-heading > a {
             color: #FFD5A4;
         }
-
         body {
             font-family: 'Titillium Web', sans-serif
         }
-
         .card {
             border: none
         }
 
-
         .totals tr td {
             font-size: 13px
         }
-
         .footer span {
             font-size: 12px
         }
-
         .product-qty span {
             font-size: 14px;
             color: #6A6A6A;
         }
-
         .spanTr {
             color: #FFFFFF;
             font-weight: 900;
             font-size: 13px;
-
         }
-
         .spandHeadO {
             color: #FFFFFF !important;
             font-weight: 400;
             font-size: 13px;
-
         }
-
         .font-name {
             font-weight: 600;
             font-size: 12px;
             color: #030303;
         }
-
         .amount {
             font-size: 15px;
             color: #030303;
             font-weight: 600;
-            margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 60px;
-
+            margin-right: 60px;
         }
-
         a {
             color: {{$web_config['primary_color']}};
             cursor: pointer;
             text-decoration: none;
             background-color: transparent;
         }
-
         a:hover {
             cursor: pointer;
         }
@@ -85,7 +68,6 @@
             .sidebar_heading {
                 background: #1B7FED;
             }
-
             .sidebar_heading h1 {
                 text-align: center;
                 color: aliceblue;
@@ -98,7 +80,6 @@
             .for-tab-img {
                 width: 100% !important;
             }
-
             .for-glaxy-name {
                 display: none;
             }
@@ -108,11 +89,9 @@
             .for-mobile-glaxy {
                 display: flex !important;
             }
-
             .for-glaxy-mobile {
-                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 6px;
+                margin-left: 6px;
             }
-
             .for-glaxy-name {
                 display: none;
             }
@@ -122,54 +101,42 @@
             .for-mobile-glaxy {
                 display: flex !important;
             }
-
             .for-glaxy-mobile {
-                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 6px;
+                margin-left: 6px;
             }
-
             .for-glaxy-name {
                 display: none;
             }
-
             .order_table_tr {
                 display: grid;
             }
-
             .order_table_td {
                 border-bottom: 1px solid #fff !important;
             }
-
             .order_table_info_div {
                 width: 100%;
                 display: flex;
             }
-
             .order_table_info_div_1 {
                 width: 50%;
             }
-
             .order_table_info_div_2 {
                 width: 49%;
-                text-align: {{Session::get('direction') === "rtl" ? 'left' : 'right'}}        !important;
+                text-align:  left !important;
             }
-
             .spandHeadO {
                 font-size: 16px;
-                margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 16px;
+                margin-right: 16px;
             }
-
             .spanTr {
                 font-size: 16px;
-                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 16px;
+                margin-left: 16px;
                 margin-top: 10px;
             }
-
             .amount {
                 font-size: 13px;
-                margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 0px;
-
+                margin-left: 0px;
             }
-
         }
     </style>
 @endpush
@@ -188,7 +155,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <a class="page-link" href="{{ route('account-oder') }}">
-                            <i class="czi-arrow-{{Session::get('direction') === "rtl" ? 'right ml-2' : 'left mr-2'}}"></i>{{\App\CPU\translate('back')}}
+                            <i class="czi-arrow-right mr-2"></i>{{\App\CPU\translate('back')}}
                         </a>
                     </div>
                 </div>

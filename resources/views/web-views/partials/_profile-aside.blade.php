@@ -50,7 +50,7 @@
             <!-- Filter by price-->
             <div class="sidebarL">
                 <h3 class="widget-title btnF" style="font-weight: 700;">
-                    <a class="{{Request::is('account-oder*') || Request::is('account-order-details*') ? 'active-menu' :''}}" href="{{route('account-oder') }} ">{{\App\CPU\translate('my_order')}}</a>
+                    <a class="{{Request::is('account-oder*') || Request::is('account-order-details*') ? 'active-menu' :''}}" href="{{route('account-oder') }} ">{{\App\CPU\translate('booking')}}</a>
                 </h3>
                 <div class="divider-role"
                      style="border: 1px solid whitesmoke; margin-bottom: 14px;  margin-top: -6px;">
