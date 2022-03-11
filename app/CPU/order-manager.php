@@ -232,6 +232,7 @@ class OrderManager
 
     public static function generate_order($data)
     {
+        // dd($data);
         $order_id = 100000 + Order::all()->count() + 1;
         if (Order::find($order_id)) {
             $order_id = Order::orderBy('id', 'DESC')->first()->id + 1;
@@ -258,7 +259,7 @@ class OrderManager
 
         $cart_group_id = $data['cart_group_id'];
         $seller_data = Cart::where(['cart_group_id' => $cart_group_id])->first();
-
+        // dd($seller_data);
         $or = [
             'id' => $order_id,
             'verification_code' => rand(100000, 999999),
@@ -266,6 +267,9 @@ class OrderManager
             'seller_id' => $seller_data->seller_id,
             'seller_is' => $seller_data->seller_is,
             'mulai' => $seller_data->mulai,
+            'durasi' => $data['data']->durasi,
+            'jumlah_penyewa' => $data['data']->penyewa,
+            'catatan_tambahan' => $data['data']->catatan_tambahan,
             'customer_type' => 'customer',
             'payment_status' => $data['payment_status'],
             'order_status' => $data['order_status'],

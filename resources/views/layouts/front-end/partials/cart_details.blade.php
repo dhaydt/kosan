@@ -248,6 +248,8 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                             </div>
                             <hr class="border_section" style="margin: 50px 0 50px 0;">
                         </div>
+                        <form id="booking_form" action="{{ route('checkout-complete') }}" method="post" enctype="multipart/form-data">
+                        @csrf
                         <div class="col-12 px1">
                             <div class="penyewa">
                                 <h3 class="title-section">Jumlah penyewa</h3>
@@ -256,7 +258,7 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                                 <div class="col-md-4" style="margin-left: 12px;">
                                     <div class="data-penyewa pl-2 d-flex-justify-content-center">
                                         <div class="quantity">
-                                            <input disabled type="number" name="penyewa" min="1" max="9" step="1"
+                                            <input type="number" name="penyewa" min="1" max="9" step="1"
                                                 value="1">
                                         </div>
                                     </div>
@@ -306,6 +308,23 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                             </div>
                             <hr class="border_section" style="margin: 50px 0 50px 0;">
                         </div>
+                        <div class="col-12 px1">
+                            <div class="penyewa mb-3">
+                                <h3 class="title-section mb-1">Durasi kos</h3>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4" style="margin-left: 12px;">
+                                    <div class="data-penyewa pl-2 d-flex-justify-content-center">
+                                        <div class="quantity">
+                                            <input type="number" name="durasi" min="1" max="999" step="1"
+                                                value="1">
+                                        </div>
+                                    </div>
+                                    <span style="margin-left: 40px">Bulan</span>
+                                </div>
+                            </div>
+                            <hr class="border_section" style="margin: 50px 0 50px 0;">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -323,14 +342,15 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
         </div>
         <div class="row pt-2 justify-content-center">
             <div class="col-12">
-                <a href="{{route('checkout-complete')}}"
+                <button href="javascript:" type="submit"
                     class="w-100 btn btn-primary pull-{{Session::get('direction') === " rtl" ? 'left' : 'right' }}">
                     {{\App\CPU\translate('Ajukan_sewa')}}
                     {{-- <i class="fa fa-{{Session::get('direction') === " rtl" ? 'backward' : 'forward' }} px-1"></i>
                     --}}
-                </a>
+                </button>
             </div>
         </div>
+    </form>
     </section>
     <!-- Sidebar-->
     @include('web-views.partials._order-summary')

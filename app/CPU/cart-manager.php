@@ -300,7 +300,7 @@ class CartManager
 
         return [
             'status' => 1,
-            'message' => translate('successfully_added!'),
+            'message' => translate('berhasil_menyimpan_tanggal_masuk!'),
         ];
     }
 

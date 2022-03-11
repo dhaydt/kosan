@@ -828,7 +828,7 @@
                 success: function (response) {
                     console.log(response);
                     if (response.status == 1) {
-                        updateNavCart();
+                        // updateNavCart();
                         toastr.success(response.message, {
                             CloseButton: true,
                             ProgressBar: true
