@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], funct
         Route::get('checkout-payment', 'WebController@checkout_payment')->name('checkout-payment')->middleware('customer');
         Route::get('checkout-review', 'WebController@checkout_review')->name('checkout-review')->middleware('customer');
         Route::post('checkout-complete', 'WebController@checkout_complete')->name('checkout-complete')->middleware('customer');
+        Route::get('checkout-complete', 'WebController@checkout_complete')->name('checkout-complete')->middleware('customer');
         Route::get('order-placed', 'WebController@order_placed')->name('order-placed')->middleware('customer');
         Route::get('shop-cart', 'WebController@shop_cart')->name('shop-cart');
     });

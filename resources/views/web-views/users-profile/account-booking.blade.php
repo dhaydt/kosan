@@ -201,7 +201,7 @@
                                 </div>
                                 <div class="col-12 d-flex justify-content-between mt-3">
                                     <span class="field">Durasi sewa</span>
-                                    <span class="content">1 bulan</span>
+                                    <span class="content">{{ $order->durasi }} bulan</span>
                                 </div>
                             </div>
                         </div>
