@@ -288,11 +288,13 @@ class OrderManager
 
         foreach (CartManager::get_cart($data['cart_group_id']) as $c) {
             $product = Product::where(['id' => $c['product_id']])->first();
+            $penyewa = Auth('customer')->user();
             $or_d = [
                 'order_id' => $order_id,
                 'product_id' => $c['product_id'],
                 'seller_id' => $c['seller_id'],
                 'product_details' => $product,
+                'data_penyewa' => $penyewa,
                 'qty' => $c['quantity'],
                 'price' => $c['price'],
                 'tax' => $c['tax'] * $c['quantity'],
