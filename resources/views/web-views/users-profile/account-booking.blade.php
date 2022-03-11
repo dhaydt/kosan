@@ -123,7 +123,7 @@
                 <div class="more-content d-none" id="more_content{{ $order->id }}">
                     <div class="row justify-content-center px-4 mb-4">
                         <div class="price mt-3 col-md-9 px2">
-                            <span class="price-card">{{\App\CPU\Helpers::currency_converter($detail->purchase_price)}} <span class="satuan">/bulan</span></span>
+                            <span class="price-card">{{\App\CPU\Helpers::currency_converter($order->details[0]->price)}} <span class="satuan">/bulan</span></span>
                         </div>
                         <div class="col-md-9">
                             <div class="btn-fasilitas">
