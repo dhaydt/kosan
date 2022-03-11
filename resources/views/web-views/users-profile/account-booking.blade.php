@@ -148,6 +148,7 @@
                                 </div>
                             </div>
                         </div>
+                        @php($user = json_decode($order->details[0]->data_penyewa))
                         <div class="col-md-12 data-penyewa p-3 mt-3">
                             <span class="title-kost capitalize">
                                 data penyewa
@@ -155,11 +156,11 @@
                             <div class="row mt-3">
                                 <div class="col-12 d-flex justify-content-between">
                                     <span class="field">Nama</span>
-                                    <span class="content">Muhammad Hidayat</span>
+                                    <span class="content">{{ $user->f_name }} {{ $user->l_name }}</span>
                                 </div>
                                 <div class="col-12 d-flex justify-content-between mt-3">
                                     <span class="field">Nomor Handphone</span>
-                                    <span class="content">082382852283</span>
+                                    <span class="content">+62{{ $user->phone }}</span>
                                 </div>
                             </div>
                         </div>
@@ -170,11 +171,19 @@
                             <div class="row mt-3">
                                 <div class="col-12 d-flex justify-content-between">
                                     <span class="field">ID Booking</span>
-                                    <span class="content">INROOM22021962</span>
+                                    <span class="content">{{ $order->id }}</span>
                                 </div>
                                 <div class="col-12 d-flex justify-content-between mt-3">
                                     <span class="field">Tanggal Masuk</span>
-                                    <span class="content">Senin, 09 Mei 2022</span>
+                                    <span class="content">{{ App\CPU\Helpers::dateChange($date) }}</span>
+                                </div>
+                                <div class="col-12 d-flex justify-content-between mt-3">
+                                    <span class="field">Jumlah penyewa</span>
+                                    <span class="content">1</span>
+                                </div>
+                                <div class="col-12 d-flex justify-content-between mt-3">
+                                    <span class="field">Durasi sewa</span>
+                                    <span class="content">1 bulan</span>
                                 </div>
                             </div>
                         </div>
