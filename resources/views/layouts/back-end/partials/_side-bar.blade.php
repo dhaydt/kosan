@@ -78,7 +78,7 @@
 
                         @if(\App\CPU\Helpers::module_permission_check('order_management'))
                             <li class="nav-item {{Request::is('admin/orders*')?'scroll-here':''}}">
-                                <small class="nav-subtitle" title="">{{\App\CPU\translate('rent_management')}}</small>
+                                <small class="nav-subtitle" title="">{{\App\CPU\translate('Booking_management')}}</small>
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                             </li>
                             <!-- Order -->
@@ -87,7 +87,7 @@
                                    href="javascript:">
                                     <i class="tio-shopping-cart-outlined nav-icon"></i>
                                     <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                    {{\App\CPU\translate('rent')}}
+                                    {{\App\CPU\translate('Booking')}}
                                 </span>
                                 </a>
                                 <ul class="js-navbar-vertical-aside-submenu nav nav-sub"

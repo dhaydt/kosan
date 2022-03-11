@@ -1,6 +1,6 @@
 @extends('layouts.back-end.app')
 
-@section('title', \App\CPU\translate('Order List'))
+@section('title', \App\CPU\translate('Pengajuan_booking'))
 
 @push('css_or_js')
 
@@ -12,7 +12,7 @@
         <div class="page-header mb-1">
             <div class="flex-between align-items-center">
                 <div>
-                    <h1 class="page-header-title">{{\App\CPU\translate('Orders')}} <span
+                    <h1 class="page-header-title">{{\App\CPU\translate('Pengajuan_booking')}} <span
                             class="badge badge-soft-dark mx-2">{{$orders->total()}}</span></h1>
                 </div>
                 <div>
@@ -38,7 +38,7 @@
                 <!-- Nav -->
                 <ul class="nav nav-tabs page-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">{{\App\CPU\translate('order_list')}}</a>
+                        <a class="nav-link active" href="#">{{\App\CPU\translate('Daftar_booking')}}</a>
                     </li>
                 </ul>
                 <!-- End Nav -->
@@ -70,10 +70,10 @@
                         </form>
                     </div>
                     <div>
-                        <label> {{\App\CPU\translate('inhouse_orders_only')}} : </label>
+                        <label> {{\App\CPU\translate('inhouse_booking_only')}} : </label>
                         <label class="switch ml-3">
                             <input type="checkbox" class="status"
-                                   onclick="filter_order()" {{session()->has('show_inhouse_orders') && session('show_inhouse_orders')==1?'checked':''}}>
+                                   onclick="filter_order()" {{session()->has('show_inhouse_bookings') && session('show_inhouse_bookings')==1?'checked':''}}>
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -88,57 +88,48 @@
                        style="width: 100%; text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}}">
                     <thead class="thead-light">
                     <tr>
-                        <th class="">
+                        <th class="text-center">
                             {{\App\CPU\translate('SL')}}#
                         </th>
-                        <th class=" ">{{\App\CPU\translate('Order')}}</th>
-                        <th>{{\App\CPU\translate('Date')}}</th>
-                        <th>{{\App\CPU\translate('customer_name')}}</th>
-                        <th>{{\App\CPU\translate('Status')}}</th>
-                        <th>{{\App\CPU\translate('Total')}}</th>
-                        <th>{{\App\CPU\translate('Order')}} {{\App\CPU\translate('Status')}} </th>
-                        <th>{{\App\CPU\translate('Action')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Booking_ID')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Star_date')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Property')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Duration')}}</th>
+                        <th class="text-center">{{\App\CPU\translate('Booking')}} {{\App\CPU\translate('Status')}} </th>
+                        <th class="text-center">{{\App\CPU\translate('Action')}}</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     @foreach($orders as $key=>$order)
-
+                    @php($detail = json_decode($order->details[0]->product_details))
+                    @php($district = strtolower($detail->kost->district))
+                    @php($city = strtolower($detail->kost->city))
                         <tr class="status-{{$order['order_status']}} class-all">
-                            <td class="">
+                            <td class="text-center">
                                 {{$orders->firstItem()+$key}}
                             </td>
-                            <td class="table-column-pl-0">
+                            <td class="table-column-pl-0 text-center">
                                 <a href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order['id']}}</a>
                             </td>
-                            <td>{{date('d M Y',strtotime($order['created_at']))}}</td>
+                            <td class="text-center">{{date('d M Y',strtotime($order['mulai']))}}</td>
                             <td>
                                 @if($order->customer)
                                     <a class="text-body text-capitalize"
-                                       href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{$order->customer['f_name'].' '.$order->customer['l_name']}}</a>
+                                       href="{{route('admin.orders.details',['id'=>$order['id']])}}">{{ $detail->kost->name }} {{ $detail->type }} {{ $district }} {{ $city }}</a>
                                 @else
                                     <label class="badge badge-danger">{{\App\CPU\translate('invalid_customer_data')}}</label>
                                 @endif
                             </td>
-                            <td>
-                                @if($order->payment_status=='paid')
-                                    <span class="badge badge-soft-success">
-                                      <span class="legend-indicator bg-success"
-                                            style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('paid')}}
-                                    </span>
-                                @else
-                                    <span class="badge badge-soft-danger">
-                                      <span class="legend-indicator bg-danger"
-                                            style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('unpaid')}}
-                                    </span>
-                                @endif
+                            <td class="text-center">
+                                {{ $order->durasi }} {{ App\CPU\Translate('month') }}
                             </td>
-                            <td> {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order->order_amount))}}</td>
+                            {{-- <td> {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order->order_amount))}}</td> --}}
                             <td class="text-capitalize">
                                 @if($order['order_status']=='pending')
                                     <span class="badge badge-soft-info ml-2 ml-sm-3">
                                         <span class="legend-indicator bg-info"
-                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate($order['order_status'])}}
+                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('need_confirmation')}}
                                       </span>
 
                                 @elseif($order['order_status']=='processing' || $order['order_status']=='out_for_delivery')
