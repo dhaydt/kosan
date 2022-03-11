@@ -149,6 +149,7 @@
                             </div>
                         </div>
                         @php($user = json_decode($order->details[0]->data_penyewa))
+                        @if (isset($user))
                         <div class="col-md-12 data-penyewa p-3 mt-3">
                             <span class="title-kost capitalize">
                                 data penyewa
@@ -164,6 +165,23 @@
                                 </div>
                             </div>
                         </div>
+                        @else
+                        <div class="col-md-12 data-penyewa p-3 mt-3">
+                            <span class="title-kost capitalize">
+                                data penyewa
+                            </span>
+                            <div class="row mt-3">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <span class="field">Nama</span>
+                                    <span class="content badge badge-danger">data penyewa tidak valid</span>
+                                </div>
+                                <div class="col-12 d-flex justify-content-between mt-3">
+                                    <span class="field">Nomor Handphone</span>
+                                    <span class="content badge badge-danger">data penyewa tidak valid</span>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="col-md-12 data-penyewa p-3 mt-3">
                             <span class="title-kost capitalize">
                                 detail booking
