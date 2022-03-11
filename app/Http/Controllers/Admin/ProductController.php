@@ -206,7 +206,7 @@ class ProductController extends BaseController
         //combinations end
         // $product->variation = json_encode($variations);
         $product->unit_price = Convert::usd($request->unit_price);
-        $product->purchase_price = Convert::usd($request->purchase_price);
+        $product->purchase_price = Convert::usd($request->unit_price);
         $product->tax = $request->tax;
         $product->tax_type = $request->tax_type;
         $product->discount = $request->discount_type == 'flat' ? Convert::usd($request->discount) : $request->discount;
@@ -428,6 +428,7 @@ class ProductController extends BaseController
 
         //combinations end
         $product->unit_price = BackEndHelper::currency_to_usd($request->unit_price);
+        $product->purchase_price = BackEndHelper::currency_to_usd($request->unit_price);
         $product->tax = $request->tax == 'flat' ? BackEndHelper::currency_to_usd($request->tax) : $request->tax;
         $product->tax_type = $request->tax_type;
         $product->discount = $request->discount_type == 'flat' ? BackEndHelper::currency_to_usd($request->discount) : $request->discount;

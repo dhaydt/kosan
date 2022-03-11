@@ -87,6 +87,9 @@
                     @if ($order->order_status == 'delivered')
                     <span class="status text-success">Pembayaran berhasil</span>
                     @endif
+                    @if ($order->order_status == 'canceled')
+                    <span class="status text-danger">Booking dibatalkan</span>
+                    @endif
                     {{-- {{ dd($orders) }} --}}
                     @php($detail = json_decode($order->details[0]->product_details))
                     @php($district = strtolower($detail->kost->district))
@@ -109,17 +112,18 @@
                                     <img src="{{ asset('assets/front-end/img/date.png') }}" style="height: 15px" alt="">
                                     <span class="ml-2 dated">Tanggal masuk</span>
                                 </div>
-                                <div class="ml-5 mt-1">
-                                    <span class="date-date">09 Mei 2022</span>
+                                @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
+                                <div class="ml-4 mt-1">
+                                    <span class="date-date">{{ App\CPU\Helpers::dateChange($date) }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="more-content d-none" id="more_content{{ $order->id }}">
-                    <div class="row justify-content-center px-4">
+                    <div class="row justify-content-center px-4 mb-4">
                         <div class="price mt-3 col-md-9 px2">
-                            <span class="price-card">Rp.1.900.000 <span class="satuan">/bulan</span></span>
+                            <span class="price-card">{{\App\CPU\Helpers::currency_converter($detail->purchase_price)}} <span class="satuan">/bulan</span></span>
                         </div>
                         <div class="col-md-9">
                             <div class="btn-fasilitas">
@@ -175,11 +179,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 d-flex justify-content-end mt-4 mb-4 pr-3">
-                        <button class="btn btn-outline-success capitalize">
+                    @if ($order->order_status == 'pending')
+                    <div class="col-12 d-flex justify-content-end mb-4 pr-3">
+                        <button onclick="route_alert('{{ route('order-cancel',[$order->id]) }}','{{\App\CPU\translate('ingin_membatalkan_bookingan_ini ?')}}')" class="btn btn-outline-success capitalize">
                             Batalkan booking
                         </button>
                     </div>
+                    @endif
                 </div>
                 <div class="col-12 text-center mb-2">
                     <a href="javascript:" id="lengkap{{ $order->id }}" class="see-more text-success" onclick="lihat({{ $order->id }})">
