@@ -14,6 +14,37 @@
             text-align: center;
             padding-top: 10px;
         }
+        .title-kos{
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 32px;
+            text-transform: capitalize;
+        }
+        .status-kos span {
+            border: 1px solid #d1d1d1;
+            text-transform: capitalize;
+            border-radius: 5px;
+            padding: 5px;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        .room-status {
+            text-transform: capitalize;
+            font-weight: 600;
+            margin: 15px 0 15px 0;
+            color: #454545;
+        }
+        .price{
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .price span {
+            font-weight: 500;
+        }
+        .card-confirm{
+            position: sticky;
+            top: 70px;
+        }
     </style>
 @endpush
 
@@ -26,15 +57,15 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-no-gutter">
                             <li class="breadcrumb-item"><a class="breadcrumb-link"
-                                                           href="{{route('admin.orders.list',['status'=>'all'])}}">{{\App\CPU\translate('Orders')}}</a>
+                                                           href="{{route('admin.orders.list',['status'=>'all'])}}">{{\App\CPU\translate('Bookings')}}</a>
                             </li>
                             <li class="breadcrumb-item active"
-                                aria-current="page">{{\App\CPU\translate('Order')}} {{\App\CPU\translate('details')}} </li>
+                                aria-current="page">{{\App\CPU\translate('Booking')}} {{\App\CPU\translate('details')}} </li>
                         </ol>
                     </nav>
 
                     <div class="d-sm-flex align-items-sm-center">
-                        <h1 class="page-header-title">{{\App\CPU\translate('Order')}} #{{$order['id']}}</h1>
+                        <h1 class="page-header-title">{{\App\CPU\translate('Booking')}} #{{$order['id']}}</h1>
 
                         @if($order['payment_status']=='paid')
                             <span class="badge badge-soft-success ml-sm-3">
@@ -48,15 +79,15 @@
 
                         @if($order['order_status']=='pending')
                             <span class="badge badge-soft-info ml-2 ml-sm-3 text-capitalize">
-                              <span class="legend-indicator bg-info text"></span>{{str_replace('_',' ',$order['order_status'])}}
+                              <span class="legend-indicator bg-info text"></span>need confirmation
                             </span>
                         @elseif($order['order_status']=='failed')
                             <span class="badge badge-danger ml-2 ml-sm-3 text-capitalize">
                               <span class="legend-indicator bg-info"></span>{{str_replace('_',' ',$order['order_status'])}}
                             </span>
                         @elseif($order['order_status']=='processing' || $order['order_status']=='out_for_delivery')
-                            <span class="badge badge-soft-warning ml-2 ml-sm-3 text-capitalize">
-                              <span class="legend-indicator bg-warning"></span>{{str_replace('_',' ',$order['order_status'])}}
+                            <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
+                              <span class="legend-indicator bg-warning"></span>Diterima
                             </span>
                         @elseif($order['order_status']=='delivered' || $order['order_status']=='confirmed')
                             <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
@@ -74,7 +105,7 @@
                         @if(\App\CPU\Helpers::get_business_settings('order_verification'))
                             <span class="ml-2 ml-sm-3">
                                 <b>
-                                    {{\App\CPU\translate('order_verification_code')}} : {{$order['verification_code']}}
+                                    {{\App\CPU\translate('Booking_verification_code')}} : {{$order['verification_code']}}
                                 </b>
                             </span>
                         @endif
@@ -148,7 +179,10 @@
         </div>
 
         <!-- End Page Header -->
-
+        @php($detail = json_decode($order->details[0]->product_details))
+        @php($sewa = json_decode($order->details[0]->data_penyewa))
+        @php($district = strtolower($detail->kost->district))
+        @php($city = strtolower($detail->kost->city))
         <div class="row" id="printableArea">
             <div class="col-lg-8 mb-3 mb-lg-0">
                 <!-- Card -->
@@ -158,28 +192,44 @@
                         <div class="row">
                             <div class="col-12 pb-2 border-bottom">
                                 <h4 class="card-header-title">
-                                    {{\App\CPU\translate('Order')}} {{\App\CPU\translate('details')}}
+                                    {{\App\CPU\translate('Booking')}} {{\App\CPU\translate('details')}}
                                     <span
                                         class="badge badge-soft-dark rounded-circle ml-1">{{$order->details->count()}}</span>
                                 </h4>
                             </div>
-                            <div class="col-6 pt-2">
 
+                            <div class="col-12">
+                                <h2 class="mt-2 title-kos mt-3">{{ $detail->kost->name }} {{ $detail->type }} {{ $district }} {{ $city }}</h2>
+                                <span class="subtitle capitalize">
+                                    {{ $district }}, {{ $city }}
+                                </span>
                             </div>
-                            <div class="col-6 pt-2">
-                                <div class="text-right">
-                                    <h6 class="" style="color: #8a8a8a;">
-                                        {{\App\CPU\translate('Payment')}} {{\App\CPU\translate('Method')}}
-                                        : {{str_replace('_',' ',$order['payment_method'])}}
-                                    </h6>
-                                    <h6 class="" style="color: #8a8a8a;">
-                                        {{\App\CPU\translate('Payment')}} {{\App\CPU\translate('reference')}}
-                                        : {{str_replace('_',' ',$order['transaction_ref'])}}
-                                    </h6>
-                                    <h6 class="" style="color: #8a8a8a;">
-                                        {{\App\CPU\translate('shipping')}} {{\App\CPU\translate('method')}}
-                                        : {{$order->shipping ? $order->shipping->title :'No shipping method selected'}}
-                                    </h6>
+                            <div class="col-12 mt-3">
+                                <div class="title-sub w-100 d-block mt-2">
+                                    <h4>Properti yang dipesan:</h4>
+                                </div>
+                                <div class="row w-100">
+                                    <div class="col-md-10">
+                                        <div class="status-kos mt-2">
+                                            <span>
+                                                {{ $detail->kost->penghuni }}
+                                            </span>
+                                            @if ($detail->current_stock <= 3)
+                                            <span>
+                                                {{\App\CPU\translate('Sisa')}} {{ $detail->current_stock }} {{\App\CPU\translate('kamar')}}
+                                            </span>
+                                            @endif
+                                        </div>
+                                        <span class="room-status w-100 d-block">
+                                            kamar belum dikonfirmasi
+                                        </span>
+                                        <span class="price">{{\App\CPU\Helpers::currency_converter($order->details[0]->price)}}  <span class="month">/Bulan</span></span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img onerror="this.src='{{asset('assets/back-end/img/400x400/img2.jpg')}}'"
+                                        src="{{asset('storage/product')}}/{{json_decode($detail->images)[0]}}"
+                                        alt="" style="height: 98px; border-radius: 5px;">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -188,187 +238,49 @@
 
                     <!-- Body -->
                     <div class="card-body">
-                        <div class="media">
-                            <div class="avatar avatar-xl mr-3">
-                                <p>{{\App\CPU\translate('image')}}</p>
+                        <div class="col-12 user-section d-flex py-3">
+                            <img src="{{ asset('assets/back-end/img/admin.jpg') }}" alt="" class="user mr-4" style="height: 56px">
+                            <div class="d-flex flex-column mr-5">
+                                <h3 class="mb-0">{{ $sewa->f_name }} {{ $sewa->l_name }}</h3>
+                                <span class="phone">
+                                    +62{{ $sewa->phone }}
+                                </span>
                             </div>
-
-                            <div class="media-body">
-                                <div class="row">
-                                    <div class="col-md-4 product-name">
-                                        <p> {{\App\CPU\translate('Name')}}</p>
-                                    </div>
-
-                                    <div class="col col-md-2 align-self-center p-0 ">
-                                        <p> {{\App\CPU\translate('price')}}</p>
-                                    </div>
-
-                                    <div class="col col-md-1 align-self-center">
-                                        <p>Q</p>
-                                    </div>
-                                    <div class="col col-md-1 align-self-center  p-0 product-name">
-                                        <p> {{\App\CPU\translate('TAX')}}</p>
-                                    </div>
-                                    <div class="col col-md-2 align-self-center  p-0 product-name">
-                                        <p> {{\App\CPU\translate('Discount')}}</p>
-                                    </div>
-
-                                    <div class="col col-md-2 align-self-center text-right  ">
-                                        <p> {{\App\CPU\translate('Subtotal')}}</p>
-                                    </div>
-                                </div>
+                            <button class="btn btn-outline-secondary px-4 my-auto" style="height: 40px;">
+                                Chat
+                            </button>
+                        </div>
+                        <hr>
+                        <div class="col-12 py-3">
+                            <div class="title-sub w-100 d-block mt-2">
+                                <h4>Kelengkapan dokumen persyaratan</h4>
                             </div>
                         </div>
-                        @php($subtotal=0)
-                        @php($total=0)
-                        @php($shipping=0)
-                        @php($discount=0)
-                        @php($tax=0)
-                        @foreach($order->details as $key=>$detail)
-
-                            @if($detail->product)
-                                @if ($key==0)
-                                    @if($detail->product->added_by=='admin')
-                                        <div class="row">
-                                            <img
-                                                class="avatar-img" style="width: 55px;height: 55px; border-radius: 50%;"
-                                                onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                                src="{{asset('storage/app/public/company/'.\App\Model\BusinessSetting::where(['type' => 'company_web_logo'])->first()->value)}}"
-                                                alt="Image">
-                                            <p class="sellerName">
-                                                <a style="color: black;"
-                                                   href="javascript:">
-                                                    {{ \App\Model\BusinessSetting::where(['type' => 'company_name'])->first()->value }}
-                                                </a>
-                                            </p>
-                                        </div>
-                                    @else
-                                        <div class="row">
-                                            <img
-                                                class="avatar-img" style="width: 55px;height: 55px; border-radius: 50%;"
-                                                onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                                src="{{asset('storage/app/public/shop/'.\App\Model\Shop::where('seller_id','=',$detail->seller_id)->first()->image)}}"
-                                                alt="Image">
-                                            <p class="sellerName">
-                                                <a style="color: black;"
-                                                   href="{{route('admin.sellers.view',$detail->seller_id)}}">{{ \App\Model\Shop::where('seller_id','=',$detail->seller_id)->first()->name}}</a>
-                                                <i class="tio tio-info-outined ml-4" data-toggle="collapse"
-                                                   style="font-size: 20px; cursor: pointer"
-                                                   data-target="#sellerInfoCollapse-{{ $detail->id }}"
-                                                   aria-expanded="false"></i>
-                                            </p>
-                                        </div>
-
-                                        @php($seller = App\Model\Seller::with('shop')->find($detail->seller_id))
-                                        <div class="collapse" id="sellerInfoCollapse-{{ $detail->id }}">
-                                            <div class="row card-body mb-3">
-                                                <div class="col-6">
-                                                    <h4>
-                                                        {{\App\CPU\translate('Status')}}
-                                                        : {!! $seller->status=='approved'?'<label class="badge badge-success">Active</label>':'<label class="badge badge-danger">In-Active</label>' !!}
-                                                    </h4>
-                                                    <h5>{{\App\CPU\translate('Email')}} : <a
-                                                            class="text-dark"
-                                                            href="mailto:{{ $seller->email }}">{{ $seller->email }}</a>
-                                                    </h5>
-                                                </div>
-                                                <div class="col-6">
-                                                    <h5>{{\App\CPU\translate('name')}} : <a
-                                                            class="text-dark"
-                                                            href="{{ route('admin.sellers.view', [$seller['id']]) }}">{{ $seller['shop']->name }}</a>
-                                                    </h5>
-                                                    <h5>{{\App\CPU\translate('Phone')}} : <a
-                                                            class="text-dark"
-                                                            href="tel:{{ $seller->phone }}">{{ $seller->phone }}</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endif
-                            <!-- Media -->
-                                <div class="media">
-                                    <div class="avatar avatar-xl mr-3">
-                                        <img class="img-fluid"
-                                             onerror="this.src='{{asset('public/assets/back-end/img/160x160/img2.jpg')}}'"
-                                             src="{{\App\CPU\ProductManager::product_image_path('thumbnail')}}/{{$detail->product['thumbnail']}}"
-                                             alt="Image Description">
-                                    </div>
-
-                                    <div class="media-body">
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3 mb-md-0 product-name">
-                                                <p>
-                                                    {{substr($detail->product['name'],0,30)}}{{strlen($detail->product['name'])>10?'...':''}}</p>
-                                                <strong><u>{{\App\CPU\translate('Variation')}} : </u></strong>
-
-                                                <div class="font-size-sm text-body">
-
-                                                    <span class="font-weight-bold">{{$detail['variant']}}</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col col-md-2 align-self-center p-0 ">
-                                                <h6>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($detail['price']))}}</h6>
-                                            </div>
-
-                                            <div class="col col-md-1 align-self-center">
-
-                                                <h5>{{$detail->qty}}</h5>
-                                            </div>
-                                            <div class="col col-md-1 align-self-center  p-0 product-name">
-
-                                                <h5>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($detail['tax']))}}</h5>
-                                            </div>
-                                            <div class="col col-md-2 align-self-center  p-0 product-name">
-
-                                                <h5>
-                                                    {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($detail['discount']))}}</h5>
-                                            </div>
-
-                                            <div class="col col-md-2 align-self-center text-right  ">
-                                                @php($subtotal=$detail['price']*$detail->qty+$detail['tax']-$detail['discount'])
-
-                                                <h5 style="font-size: 12px">{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($subtotal))}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- seller info old --}}
-
-                                @php($discount+=$detail['discount'])
-                                @php($tax+=$detail['tax'])
-                                @php($total+=$subtotal)
-                            <!-- End Media -->
-                                <hr>
-                            @endif
-                            @php($sellerId=$detail->seller_id)
-                        @endforeach
-                        @php($shipping=$order['shipping_cost'])
-                        @php($coupon_discount=$order['discount_amount'])
-
-                        <div class="row justify-content-md-end mb-3">
-                            <div class="col-md-9 col-lg-8">
-                                <dl class="row text-sm-right">
-                                    <dt class="col-sm-6">{{\App\CPU\translate('Shipping')}}</dt>
-                                    <dd class="col-sm-6 border-bottom">
-                                        <strong>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($shipping))}}</strong>
-                                    </dd>
-
-                                    <dt class="col-sm-6">{{\App\CPU\translate('coupon_discount')}}</dt>
-                                    <dd class="col-sm-6 border-bottom">
-                                        <strong>- {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($coupon_discount))}}</strong>
-                                    </dd>
-
-                                    <dt class="col-sm-6">{{\App\CPU\translate('Total')}}</dt>
-                                    <dd class="col-sm-6">
-                                        <strong>{{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($total+$shipping-$coupon_discount))}}</strong>
-                                    </dd>
-                                </dl>
-                                <!-- End Row -->
-                            </div>
+                        <hr>
+                        <div class="col-12 py-3">
+                            <img src="{{ asset('assets/back-end/img/keyhand.png') }}" alt="" style="height: 30px;" class="mb-3">
+                            <h5 style="capitalize">Jumlah Penyewa:</h5>
+                            <span style="font-weight: 700;">
+                                {{ $order->jumlah_penyewa }} Penyewa
+                            </span>
                         </div>
-                        <!-- End Row -->
+                        <hr>
+                        <div class="col-12 py-3">
+                            <img src="{{ asset('assets/back-end/img/user.png') }}" alt="" style="height: 30px;" class="mb-3">
+                            <h5 style="capitalize">Profil Penyewa:</h5>
+                            <span class="capitalize d-block pb-3">
+                                {{ $sewa->kelamin }}
+                            </span>
+                            <span class="capitalize d-block pb-3">
+                                {{ $sewa->status_pernikahan }}
+                            </span>
+                            <span class="capitalize d-block pb-3">
+                                {{ $sewa->pekerjaan }} - {{ $sewa->kampus ? $sewa->kampus : $sewa->tempat_kerja }}
+                            </span>
+                            <span class="capitalize">
+                                {{ $sewa->email }}
+                            </span>
+                        </div>
                     </div>
                     <!-- End Body -->
                 </div>
@@ -377,94 +289,68 @@
 
             <div class="col-lg-4">
                 <!-- Card -->
-                <div class="card">
+                <div class="card card-confirm">
                     <!-- Header -->
                     <div class="card-header">
-                        <h4 class="card-header-title">{{\App\CPU\translate('Customer')}}</h4>
+                        @if($order['order_status']=='pending')
+                        <span class="badge badge-soft-warning text-capitalize" style="font-size: 14px;">
+                            {{ \App\CPU\translate('butuh_konfirmasi') }}
+                        </span>
+                        @elseif($order['order_status']=='failed')
+                            <span class="badge badge-danger ml-2 ml-sm-3 text-capitalize">
+                            <span class="legend-indicator bg-info"></span>{{str_replace('_',' ',$order['order_status'])}}
+                            </span>
+                        @elseif($order['order_status']=='processing' || $order['order_status']=='out_for_delivery')
+                            <span class="badge badge-soft-success text-capitalize" style="font-size: 14px;">
+                                {{ \App\CPU\translate('diterima') }}
+                            </span>
+                        @elseif($order['order_status']=='delivered' || $order['order_status']=='confirmed')
+                            <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
+                            <span class="legend-indicator bg-success"></span>{{str_replace('_',' ',$order['order_status'])}}
+                            </span>
+                        @else
+                            <span class="badge badge-soft-danger ml-2 ml-sm-3 text-capitalize">
+                            <span class="legend-indicator bg-danger"></span>{{str_replace('_',' ',$order['order_status'])}}
+                            </span>
+                        @endif
                     </div>
                     <!-- End Header -->
 
                     <!-- Body -->
-                    @if($order->customer)
-                        <div class="card-body">
-                            <div class="media align-items-center" href="javascript:">
-                                <div class="avatar avatar-circle mr-3">
-                                    <img
-                                        class="avatar-img" style="width: 75px;height: 42px"
-                                        onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                        src="{{asset('storage/app/public/profile/'.$order->customer->image)}}"
-                                        alt="Image">
-                                </div>
-                                <div class="media-body">
-                                <span
-                                    class="text-body text-hover-primary">{{$order->customer['f_name'].' '.$order->customer['l_name']}}</span>
-                                </div>
-                                <div class="media-body text-right">
-                                    {{--<i class="tio-chevron-right text-body"></i>--}}
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="media align-items-center" href="javascript:">
-                                <div class="icon icon-soft-info icon-circle mr-3">
-                                    <i class="tio-shopping-basket-outlined"></i>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text-body text-hover-primary"> {{\App\Model\Order::where('customer_id',$order['customer_id'])->count()}} {{\App\CPU\translate('orders')}}</span>
-                                </div>
-                                <div class="media-body text-right">
-                                    {{--<i class="tio-chevron-right text-body"></i>--}}
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5>{{\App\CPU\translate('Contact')}} {{\App\CPU\translate('info')}} </h5>
-                            </div>
-
-                            <ul class="list-unstyled list-unstyled-py-2">
-                                <li>
-                                    <i class="tio-online mr-2"></i>
-                                    {{$order->customer['email']}}
-                                </li>
-                                <li>
-                                    <i class="tio-android-phone-vs mr-2"></i>
-                                    {{$order->customer['phone']}}
-                                </li>
-                            </ul>
-
-                            <hr>
-
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5>{{\App\CPU\translate('shipping_address')}}</h5>
-
-                            </div>
-
-                            @if($order->shippingAddress)
-                                @php($shipping=$order->shippingAddress)
-                            @else
-                                @php($shipping=json_decode($order['shipping_address_data']))
-                            @endif
-
-                            <span class="d-block">{{\App\CPU\translate('Name')}} :
-                                <strong>{{$shipping? $shipping->contact_person_name : \App\CPU\translate('empty')}}</strong><br>
-                                 {{\App\CPU\translate('Country')}}:
-                                <strong>{{$shipping ? $shipping->country : \App\CPU\translate('empty')}}</strong><br>
-                                {{\App\CPU\translate('City')}}:
-                                <strong>{{$shipping ? $shipping->city : \App\CPU\translate('empty')}}</strong><br>
-                                {{\App\CPU\translate('zip_code')}} :
-                                <strong>{{$shipping ? $shipping->zip  : \App\CPU\translate('empty')}}</strong><br>
-                                {{\App\CPU\translate('address')}} :
-                                <strong>{{$shipping ? $shipping->address  : \App\CPU\translate('empty')}}</strong><br>
-                                {{\App\CPU\translate('Phone')}}:
-                                <strong>{{$shipping ? $shipping->phone  : \App\CPU\translate('empty')}}</strong>
-                            </span>
+                    <div class="card-body">
+                        <h3 class="">
+                            {{\App\CPU\translate('Waktu')}} {{\App\CPU\translate('Pemesanan')}}:
+                        </h3>
+                        <div class="subtitle">
+                            {{date('d M Y',strtotime($order['created_at']))}}, Pukul {{ date('H:m', strtotime($order['created_at'])) }}
                         </div>
-                @endif
+                        @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
+                        <div class="col-12 d-flex justify-content-between mt-3 px-0">
+                            <span class="capitalize">Mulai sewa</span>
+                            <span>{{ App\CPU\Helpers::dateChange($date) }}</span>
+                        </div>
+                        <div class="col-12 d-flex justify-content-between mt-3 px-0">
+                            <span class="capitalize">Durasi sewa</span>
+                            <span>{{ $order->durasi }} Bulan</span>
+                        </div>
+                    </div>
                 <!-- End Body -->
+                @if ($order['order_status']!='processing' )
+                <div class="card-footer d-flex justify-content-center">
+                    <div class="row w-100">
+                        <div class="col-md-6">
+                            <button class="btn btn-outline-secondary w-100">
+                                {{ \App\CPU\Translate('Tolak') }}
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <a onclick="order_status('processing')" class="btn btn-success w-100">
+                                {{ \App\CPU\Translate('Terima') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 </div>
                 <!-- End Card -->
             </div>
@@ -546,12 +432,12 @@
             })
             @else
             Swal.fire({
-                title: '{{\App\CPU\translate('Are you sure Change this')}}?',
-                text: "{{\App\CPU\translate('You will not be able to revert this')}}!",
+                title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_menerima _penyewa_ini')}}?',
+                text: "{{\App\CPU\translate('harap_membaca_deskripsi_penyewa_dengan_teliti')}}!",
                 showCancelButton: true,
                 confirmButtonColor: '#377dff',
                 cancelButtonColor: 'secondary',
-                confirmButtonText: '{{\App\CPU\translate('Yes, Change it')}}!'
+                confirmButtonText: '{{\App\CPU\translate('Ya,_terima_penyewa')}}!'
             }).then((result) => {
                 if (result.value) {
                     $.ajaxSetup({
