@@ -258,22 +258,24 @@ class WebController extends Controller
         return redirect('/');
     }
 
-    public function checkout_payment()
+    public function checkout_payment(Request $request)
     {
         $cart_group_ids = CartManager::get_cart_group_ids();
-        if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
-            Toastr::info(translate('select_shipping_method_first'));
+        // if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
+        //     Toastr::info(translate('select_shipping_method_first'));
 
-            return redirect('shop-cart');
-        }
+        //     return redirect('shop-cart');
+        // }
+        // dd($request);
+        $order = Order::with('details')->where('id', $request['order_id'])->first();
 
-        if (session()->has('address_id') && count($cart_group_ids) > 0) {
-            return view('web-views.checkout-payment');
-        }
+        // if (session()->has('address_id') && count($cart_group_ids) > 0) {
+        return view('web-views.checkout-payment', compact('order'));
+        // }
 
-        Toastr::error(translate('incomplete_info'));
+        // Toastr::error(translate('incomplete_info'));
 
-        return back();
+        // return back();
     }
 
     public function checkout_complete(Request $request)

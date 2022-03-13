@@ -79,10 +79,10 @@
             <div class="card w-100 mt-4">
                 <div class="card-header">
                     @if ($order->order_status == 'pending')
-                    <span class="status text-warning">Tunggu Konfirmasi</span>
+                    <span class="status text-info">Tunggu Konfirmasi</span>
                     @endif
                     @if ($order->order_status == 'processing')
-                    <span class="status text-success">Dikonfirmasi</span>
+                    <span class="status text-warning">Butuh Pembayaran</span>
                     @endif
                     @if ($order->order_status == 'delivered')
                     <span class="status text-success">Pembayaran berhasil</span>
@@ -226,11 +226,20 @@
                 </div>
                 <div class="card-footer">
                     <div class="row">
+                        @if($order->order_status == 'pending')
                         <div class="col-12 d-flex justify-content-end">
                             <button class="btn btn-outline-success">
                                 Chat pemilik
                             </button>
                         </div>
+                        @endif
+                        @if($order->order_status == 'processing')
+                        <div class="col-12 d-flex justify-content-end">
+                            <a href="{{ route('checkout-payment', ['order_id' => $order->id]) }}" class="btn btn-success">
+                                Bayar sekarang
+                            </a>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
