@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Model\Order;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderDetail extends Model
@@ -43,5 +43,13 @@ class OrderDetail extends Model
     public function address()
     {
         return $this->belongsTo(ShippingAddress::class, 'shipping_address');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('translate', function (Builder $builder) {
+            $builder->with('product');
+        });
     }
 }

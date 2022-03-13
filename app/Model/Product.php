@@ -122,6 +122,11 @@ class Product extends Model
         return $this->translations[0]->value ?? $detail;
     }
 
+    public function room()
+    {
+        return $this->hasMany(Detail_room::class, 'room_id', 'room_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -132,7 +137,7 @@ class Product extends Model
                 } else {
                     return $query->where('locale', Helpers::default_lang());
                 }
-            }, 'reviews'])->withCount('reviews')->with('kost');
+            }, 'reviews'])->withCount('reviews')->with('kost', 'room');
         });
     }
 }

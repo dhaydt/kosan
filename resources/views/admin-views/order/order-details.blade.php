@@ -86,8 +86,8 @@
                               <span class="legend-indicator bg-info"></span>{{str_replace('_',' ',$order['order_status'])}}
                             </span>
                         @elseif($order['order_status']=='processing' || $order['order_status']=='out_for_delivery')
-                            <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
-                              <span class="legend-indicator bg-warning"></span>Diterima
+                            <span class="badge badge-soft-warning ml-2 ml-sm-3 text-capitalize">
+                              <span class="legend-indicator bg-warning"></span>tunggu pembayaran
                             </span>
                         @elseif($order['order_status']=='delivered' || $order['order_status']=='confirmed')
                             <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
@@ -221,7 +221,11 @@
                                             @endif
                                         </div>
                                         <span class="room-status w-100 d-block">
-                                            kamar belum dikonfirmasi
+                                            @if ($order->room_id == 'NULL')
+                                                Kamar belum dikonfirmasi
+                                            @else
+                                                Kamar  {{ $order->room[0]->name }}
+                                            @endif
                                         </span>
                                         <span class="price">{{\App\CPU\Helpers::currency_converter($order->details[0]->price)}}  <span class="month">/Bulan</span></span>
                                     </div>
@@ -302,7 +306,7 @@
                             </span>
                         @elseif($order['order_status']=='processing' || $order['order_status']=='out_for_delivery')
                             <span class="badge badge-soft-success text-capitalize" style="font-size: 14px;">
-                                {{ \App\CPU\translate('diterima') }}
+                                {{ \App\CPU\translate('tunggu_pembayaran') }}
                             </span>
                         @elseif($order['order_status']=='delivered' || $order['order_status']=='confirmed')
                             <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
@@ -344,20 +348,56 @@
                             </button>
                         </div>
                         <div class="col-md-6">
-                            <a onclick="order_status('processing')" class="btn btn-success w-100">
+                            <a class="btn btn-success w-100" type="button" data-toggle="modal" data-target="#exampleModal">
                                 {{ \App\CPU\Translate('Terima') }}
                             </a>
+                            {{-- <a onclick="order_status('processing')" class="btn btn-success w-100">
+                                {{ \App\CPU\Translate('Terima') }}
+                            </a> --}}
                         </div>
+
                     </div>
                 </div>
                 @endif
                 </div>
                 <!-- End Card -->
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pilih penempatan kamar untuk penyewa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        @php($rooms = $order->details[0]->product->room)
+                        {{-- {{ dd($rooms) }} --}}
+                        <div class="modal-body">
+                                <input type="hidden" name="order_status" value="processing">
+                                <select id="rooms" class="custom-select custom-select-lg mb-3" name="no_kamar">
+                                    <option selected>Pilih nomor kamar</option>
+                                    <option value="ditempat">Pilih ditempat</option>
+                                    @foreach ($rooms as $r)
+                                    @if ($r->available == 1)
+                                    <option value="{{ $r->room_id }}">{{ $r->name }}</option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button onclick="order_status('processing')" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- End Row -->
     </div>
 @endsection
+
 
 @push('script_2')
     <script>
@@ -393,16 +433,15 @@
                 }
             })
         });
-
         function order_status(status) {
-            @if($order['order_status']=='delivered')
+            var room = $('#rooms').val()
             Swal.fire({
-                title: '{{\App\CPU\translate('Order is already delivered, and transaction amount has been disbursed, changing status can be the reason of miscalculation')}}!',
-                text: "{{\App\CPU\translate('Think before you proceed')}}.",
+                title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_menerima')}}?',
+                text: "{{\App\CPU\translate('Pastikan_anda_telah_melihat_profil_penyewa')}}!",
                 showCancelButton: true,
                 confirmButtonColor: '#377dff',
                 cancelButtonColor: 'secondary',
-                confirmButtonText: '{{\App\CPU\translate('Yes, Change it')}}!'
+                confirmButtonText: '{{\App\CPU\translate('Ya, Terima_penyewa')}}!'
             }).then((result) => {
                 if (result.value) {
                     $.ajaxSetup({
@@ -415,7 +454,8 @@
                         method: 'POST',
                         data: {
                             "id": '{{$order['id']}}',
-                            "order_status": status
+                            "order_status": status,
+                            'no_kamar': room
                         },
                         success: function (data) {
                             if (data.success == 0) {
@@ -425,47 +465,10 @@
                                 toastr.success('{{\App\CPU\translate('Status Change successfully')}}!');
                                 location.reload();
                             }
-
                         }
                     });
                 }
             })
-            @else
-            Swal.fire({
-                title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_menerima _penyewa_ini')}}?',
-                text: "{{\App\CPU\translate('harap_membaca_deskripsi_penyewa_dengan_teliti')}}!",
-                showCancelButton: true,
-                confirmButtonColor: '#377dff',
-                cancelButtonColor: 'secondary',
-                confirmButtonText: '{{\App\CPU\translate('Ya,_terima_penyewa')}}!'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: "{{route('admin.orders.status')}}",
-                        method: 'POST',
-                        data: {
-                            "id": '{{$order['id']}}',
-                            "order_status": status
-                        },
-                        success: function (data) {
-                            if (data.success == 0) {
-                                toastr.success('{{\App\CPU\translate('Order is already delivered, You can not change it')}} !!');
-                                location.reload();
-                            } else {
-                                toastr.success('{{\App\CPU\translate('Status Change successfully')}}!');
-                                location.reload();
-                            }
-
-                        }
-                    });
-                }
-            })
-            @endif
         }
     </script>
 @endpush

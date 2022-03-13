@@ -68,7 +68,7 @@ class OrderController extends Controller
 
     public function details($id)
     {
-        $order = Order::with('details', 'shipping', 'seller')->where(['id' => $id])->first();
+        $order = Order::with('details', 'shipping', 'seller', 'room')->where(['id' => $id])->first();
         $linked_orders = Order::where(['order_group_id' => $order['order_group_id']])
             ->whereNotIn('order_group_id', ['def-order-group'])
             ->whereNotIn('id', [$order['id']])
@@ -79,6 +79,7 @@ class OrderController extends Controller
 
     public function status(Request $request)
     {
+        // dd($request);
         $order = Order::find($request->id);
         $fcm_token = $order->customer->cm_firebase_token;
         $value = Helpers::order_status_update_message($request->order_status);
@@ -95,7 +96,15 @@ class OrderController extends Controller
         } catch (\Exception $e) {
         }
 
+        $kamar = $request->no_kamar;
+        if ($kamar == '' || $kamar == 'ditempat') {
+            $rom = null;
+        } else {
+            $rom = $kamar;
+        }
+
         $order->order_status = $request->order_status;
+        $order->room_id = $rom;
         OrderManager::stock_update_on_order_status_change($order, $request->order_status);
         $order->save();
 
