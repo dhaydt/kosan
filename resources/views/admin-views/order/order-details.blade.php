@@ -83,7 +83,7 @@
                             </span>
                         @elseif($order['order_status']=='failed')
                             <span class="badge badge-danger ml-2 ml-sm-3 text-capitalize">
-                              <span class="legend-indicator bg-info"></span>{{str_replace('_',' ',$order['order_status'])}}
+                              <span class="legend-indicator bg-info"></span>Gagal
                             </span>
                         @elseif($order['order_status']=='processing' || $order['order_status']=='out_for_delivery')
                             <span class="badge badge-soft-warning ml-2 ml-sm-3 text-capitalize">
@@ -91,7 +91,7 @@
                             </span>
                         @elseif($order['order_status']=='delivered' || $order['order_status']=='confirmed')
                             <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
-                              <span class="legend-indicator bg-success"></span>{{str_replace('_',' ',$order['order_status'])}}
+                              <span class="legend-indicator bg-success"></span>Terbayar
                             </span>
                         @else
                             <span class="badge badge-soft-danger ml-2 ml-sm-3 text-capitalize">
@@ -304,20 +304,21 @@
                             {{ \App\CPU\translate('butuh_konfirmasi') }}
                         </span>
                         @elseif($order['order_status']=='failed')
-                            <span class="badge badge-danger ml-2 ml-sm-3 text-capitalize">
-                            <span class="legend-indicator bg-info"></span>{{str_replace('_',' ',$order['order_status'])}}
+                            <span class="badge badge-danger ml-sm-3 text-capitalize" style="font-size: 14px;">
+                            <span class="legend-indicator bg-info"></span>
+                            {{ \App\CPU\translate('gagal') }}
                             </span>
                         @elseif($order['order_status']=='processing' || $order['order_status']=='out_for_delivery')
                             <span class="badge badge-soft-success text-capitalize" style="font-size: 14px;">
                                 {{ \App\CPU\translate('tunggu_pembayaran') }}
                             </span>
                         @elseif($order['order_status']=='delivered' || $order['order_status']=='confirmed')
-                            <span class="badge badge-soft-success ml-2 ml-sm-3 text-capitalize">
-                            <span class="legend-indicator bg-success"></span>{{str_replace('_',' ',$order['order_status'])}}
+                            <span class="badge badge-soft-success ml-sm-3 text-capitalize" style="font-size: 14px;">
+                            {{ \App\CPU\translate('terbayar') }}
                             </span>
                         @else
-                            <span class="badge badge-soft-danger ml-2 ml-sm-3 text-capitalize">
-                            <span class="legend-indicator bg-danger"></span>{{str_replace('_',' ',$order['order_status'])}}
+                            <span class="badge badge-soft-danger ml-sm-3 text-capitalize" style="font-size: 14px;">
+                            {{str_replace('_',' ',$order['order_status'])}}
                             </span>
                         @endif
                     </div>
@@ -342,7 +343,7 @@
                         </div>
                     </div>
                 <!-- End Body -->
-                @if ($order['order_status']!='processing' )
+                @if ($order['order_status']=='pending' )
                 <div class="card-footer d-flex justify-content-center">
                     <div class="row w-100">
                         <div class="col-md-6">

@@ -45,7 +45,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], funct
         Route::post('/va/create', 'XenditPaymentController@createVa')->name('vaCreate');
         Route::get('/va/list', 'XenditPaymentController@getListVa');
         Route::post('/va/invoice', 'XenditPaymentController@invoice')->name('vaInvoice');
-        Route::get('/success/{type}', 'XenditPaymentController@success')->name('xenditSuccess');
+        Route::get('/success/{id}', 'XenditPaymentController@success')->name('xenditSuccess');
     });
 
     Route::get('search-shop', 'WebController@search_shop')->name('search-shop');

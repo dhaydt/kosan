@@ -85,7 +85,7 @@
                     <span class="status text-warning">Butuh Pembayaran</span>
                     @endif
                     @if ($order->order_status == 'delivered')
-                    <span class="status text-success">Pembayaran berhasil</span>
+                    <span class="status text-success">Terbayar</span>
                     @endif
                     @if ($order->order_status == 'canceled')
                     <span class="status text-danger">Booking dibatalkan</span>

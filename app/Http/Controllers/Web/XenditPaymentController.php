@@ -6,6 +6,7 @@ use App\CPU\CartManager;
 use App\CPU\Convert;
 use App\CPU\OrderManager;
 use App\Http\Controllers\Controller;
+use App\Model\Order;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -63,13 +64,14 @@ class XenditPaymentController extends Controller
     {
         // dd($request);
         $customer = auth('customer')->user();
-        $discount = session()->has('coupon_discount') ? session('coupon_discount') : 0;
-        // $value = CartManager::cart_grand_total() - $discount;
-        $value = 20000;
+        $order_id = $request['order_id'];
+        $order = Order::find($order_id);
+        $type = strtoupper($request['type']);
+        // dd($type);
+        $value = $order['order_amount'];
         $tran = OrderManager::gen_unique_id();
 
         session()->put('transaction_ref', $tran);
-
         Xendit::setApiKey(config('xendit.apikey'));
 
         $products = [];
@@ -78,26 +80,26 @@ class XenditPaymentController extends Controller
                 'name' => $detail->product['name'],
             ]);
         }
-        // dd($products);
 
-        // $user = [
-        //     'given_names' => $customer->f_name,
-        //     'email' => $customer->email,
-        //     'mobile_number' => $customer->phone,
-        //     'address' => $customer->district.', '.$customer->city.', '.$customer->province,
-        // ];
+        $user = [
+            'given_names' => $customer->f_name,
+            'email' => $customer->email,
+            'mobile_number' => $customer->phone,
+            'address' => $customer->district.', '.$customer->city.', '.$customer->province,
+        ];
 
         $params = [
-            'external_id' => 'ws'.$customer->phone.$customer->id,
+            'external_id' => $order_id,
             'amount' => Convert::usdToidr($value),
             'payer_email' => $customer->email,
             'description' => 'inRoom',
-            'payment_methods' => [strtoupper($request->type)],
+            'payment_methods' => [$type],
             'fixed_va' => true,
             'should_send_email' => true,
-            // 'customer' => $user,
-            // 'items' => $products,
-            'success_redirect_url' => env('APP_URL').'/xendit-payment/success/'.strtoupper($request->type),
+            'customer' => $user,
+            // 'invoice_duration' => $duration,
+            'success_redirect_url' => env('APP_URL').'/xendit-payment/success/'.$order_id,
+            // 'failure_redirect_url' => env('APP_URL').'/xendit-payment/expired/'.$order_id,
         ];
 
         $checkout_session = \Xendit\Invoice::create($params);
@@ -105,28 +107,32 @@ class XenditPaymentController extends Controller
         return redirect()->away($checkout_session['invoice_url']);
     }
 
-    public function success($type)
+    public function success($id)
     {
         // dd($type);
         // $order = Order::find($request->id);
 
-        $unique_id = OrderManager::gen_unique_id();
-        $order_ids = [];
-        foreach (CartManager::get_cart_group_ids() as $group_id) {
-            $data = [
-                'payment_method' => 'Virtual Account'.$type,
-                'order_status' => 'confirmed',
-                'payment_status' => 'paid',
-                'transaction_ref' => session('transaction_ref'),
-                'order_group_id' => $unique_id,
-                'cart_group_id' => $group_id,
-            ];
-            $order_id = OrderManager::generate_order($data);
-            array_push($order_ids, $order_id);
-        }
+        $order = Order::find($id);
+        // $order_ids = [];
+        // foreach (CartManager::get_cart_group_ids() as $group_id) {
+        //     $data = [
+        //         'payment_method' => 'Virtual Account'.$type,
+        //         'order_status' => 'confirmed',
+        //         'payment_status' => 'paid',
+        //         'transaction_ref' => session('transaction_ref'),
+        //         'order_group_id' => $unique_id,
+        //         'cart_group_id' => $group_id,
+        //     ];
+        //     $order_id = OrderManager::generate_order($data);
+        //     array_push($order_ids, $order_id);
+        // }
+        $order->order_status = 'delivered';
+        $order->payment_status = 'paid';
+        $order->transaction_ref = session('transaction_ref');
+        $order->save();
         CartManager::cart_clean();
         if (auth('customer')->check()) {
-            Toastr::success('Payment success.');
+            Toastr::success('Pembayaran berhasil.');
 
             return view('web-views.checkout-complete');
         }

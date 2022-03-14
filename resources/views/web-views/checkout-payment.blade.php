@@ -170,8 +170,8 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/bni.png') }}" style="height: 16px;"
-                                                                alt="BNI">
+                                                            <img src="{{ asset('assets/front-end/img/bni.png') }}"
+                                                                style="height: 16px;" alt="BNI">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
@@ -183,8 +183,8 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/bri.png') }}" style="height: 22px;"
-                                                                alt="BRI">
+                                                            <img src="{{ asset('assets/front-end/img/bri.png') }}"
+                                                                style="height: 22px;" alt="BRI">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
@@ -196,8 +196,8 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/bca.png') }}" style="height: 20px;"
-                                                                alt="BCA">
+                                                            <img src="{{ asset('assets/front-end/img/bca.png') }}"
+                                                                style="height: 20px;" alt="BCA">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
@@ -211,19 +211,6 @@
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
                                                             <img src="{{ asset('assets/front-end/img/mandiri.png') }}"
                                                                 alt="mandiri">
-                                                            <i class="fa fa-chevron-right"></i>
-                                                        </div>
-                                                    </a>
-                                                    <a href="javascript:" onclick="payment('cimb')" class="row mt-3">
-                                                        <div class="col-9">
-                                                            <span class="bank">
-                                                                Bank CIMB
-                                                            </span>
-                                                        </div>
-                                                        <div
-                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/cimb.png') }}" style="height: 16px;"
-                                                                alt="cimb">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
@@ -250,7 +237,8 @@
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
-                                                    <a href="javascript:" onclick="payment('indomaret')" class="row mt-3">
+                                                    <a href="javascript:" onclick="payment('indomaret')"
+                                                        class="row mt-3">
                                                         <div class="col-9">
                                                             <span class="bank">
                                                                 Indomaret
@@ -281,8 +269,8 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/gopay-ready.png') }}" style="height: 18px;"
-                                                                alt="gopay">
+                                                            <img src="{{ asset('assets/front-end/img/gopay-ready.png') }}"
+                                                                style="height: 18px;" alt="gopay">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
@@ -294,8 +282,8 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/dana-ready.png') }}" style="height: 18px;"
-                                                                alt="dana">
+                                                            <img src="{{ asset('assets/front-end/img/dana-ready.png') }}"
+                                                                style="height: 18px;" alt="dana">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
@@ -307,12 +295,13 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/ovo-ready.png') }}" style="height: 18px;"
-                                                                alt="ovo">
+                                                            <img src="{{ asset('assets/front-end/img/ovo-ready.png') }}"
+                                                                style="height: 18px;" alt="ovo">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
-                                                    <a href="javascript:" onclick="payment('shopeePAY')" class="row mt-3">
+                                                    <a href="javascript:" onclick="payment('shopeepay')"
+                                                        class="row mt-3">
                                                         <div class="col-9">
                                                             <span class="bank">
                                                                 Shopee PAY
@@ -320,12 +309,12 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/shopee.png') }}" style="height: 18px;"
-                                                                alt="ovo">
+                                                            <img src="{{ asset('assets/front-end/img/shopee.png') }}"
+                                                                style="height: 18px;" alt="ovo">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
-                                                    <a href="javascript:" onclick="payment('linkAja')" class="row mt-3">
+                                                    <a href="javascript:" onclick="payment('linkaja')" class="row mt-3">
                                                         <div class="col-9">
                                                             <span class="bank">
                                                                 LinkAja
@@ -333,8 +322,8 @@
                                                         </div>
                                                         <div
                                                             class="col-3 bank-logo d-flex justify-content-between align-items-center">
-                                                            <img src="{{ asset('assets/front-end/img/link.png') }}" style="height: 18px;"
-                                                                alt="linkaja">
+                                                            <img src="{{ asset('assets/front-end/img/link.png') }}"
+                                                                style="height: 18px;" alt="linkaja">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
                                                     </a>
@@ -359,7 +348,7 @@
                 <div class="form-list d-flex justify-content-between w-100">
                     <span class="subtitle mb-1">Total Pembayaran</span>
                     <input type="hidden" name="value" value="{{ $order->details[0]->price}}" id="price">
-                    <span class="content price">{{ \App\CPU\Helpers::currency_converter($order->details[0]->price)
+                    <span class="content price">{{ \App\CPU\Helpers::currency_converter($order->order_amount)
                         }}</span>
                     <hr class="line mt-4 mb-4">
                 </div>
@@ -369,10 +358,19 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-4">
-                        <a class="btn btn-success btn-block disabled" id="send" href="javascript:" onclick="payNow()">
+                        {{-- <a class="btn btn-success btn-block disabled" id="send" href="javascript:" onclick="payNow()">
                             <span class="d-none d-sm-inline">{{\App\CPU\translate('Bayar')}}</span>
                             <span class="d-inline d-sm-none">{{\App\CPU\translate('Bayar')}}</span>
-                        </a>
+                        </a> --}}
+                        <form class="needs-validation" target="_blank" method="POST" id="send"
+                            action="{{route('xendit-payment.vaInvoice')}}">
+                            <input type="hidden" id="type" name="type" value="">
+                            <input type="hidden" name="order_id" value="{{ $order->id }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-success w-100" id="pay-btn" type="submit" disabled>
+                                {{\App\CPU\translate('Bayar')}}
+                            </button>
+                        </form>
                     </div>
                     <div class="col-4"></div>
                 </div>
@@ -497,42 +495,26 @@
 
 
 <script type="text/javascript">
-        function showErrorMessage(response) {
-            let message = 'Unknown Error';
-            if (response.hasOwnProperty('errorMessage')) {
-                let errorCode = parseInt(response.errorCode);
-                let bkashErrorCode = [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
-                    2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,
-                    2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046,
-                    2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062,
-                    2063, 2064, 2065, 2066, 2067, 2068, 2069, 503,
-                ];
-                if (bkashErrorCode.includes(errorCode)) {
-                    message = response.errorMessage
-                }
-            }
-            Swal.fire("Payment Failed!", message, "error");
-        }
-
         function capitalizeFirstLetter(string){
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
         function payment(val){
             $('#payment-method').text(capitalizeFirstLetter(val))
-            $('#payment').val(val)
+            $('#type').val(val)
             $('#exampleModal').modal('hide')
-            $('#send').removeClass('disabled');
+            $('#pay-btn').removeAttr('disabled');
         }
 
         function payNow(){
             var id = {{ $order->id }};
             var payment = $('#payment').val();
             var val = $('#price').val();
-            console.log(payment);
+            var csrf = $('meta[name="_token"]').attr('content')
+            console.log(csrf);
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    'X-CSRF-TOKEN': csrf
                 }
             });
             $.ajax({
