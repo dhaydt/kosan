@@ -184,6 +184,7 @@
         @php($district = strtolower($detail->kost->district))
         @php($city = strtolower($detail->kost->city))
         <div class="row" id="printableArea">
+            {{-- {{ dd($order) } --}}
             <div class="col-lg-8 mb-3 mb-lg-0">
                 <!-- Card -->
                 <div class="card mb-3 mb-lg-5">
@@ -382,7 +383,7 @@
                                     <option value="ditempat">Pilih ditempat</option>
                                     @foreach ($rooms as $r)
                                     @if ($r->available == 1)
-                                    <option value="{{ $r->room_id }}">{{ $r->name }}</option>
+                                    <option value="{{ $r->id }}">{{ $r->name }}</option>
                                     @endif
                                     @endforeach
                                 </select>
