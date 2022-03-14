@@ -561,7 +561,7 @@
                                     @if ($order->roomDetail_id == 'ditempat')
                                     Pilih ditempat
                                     @else
-                                    {{ $order->room->name }}
+                                    Kamar {{ $order->room[0]->name }}
                                     @endif
                                 </span>
                             </div>
