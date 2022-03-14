@@ -16,13 +16,15 @@
     }
 
     span.content {
-        font-weight: 700;
+        font-weight: 400;
         color: #818181;
     }
 
     span.content.price {
         width: 75%;
         text-align: right;
+        font-size: 20px;
+        color: #1a1a1a;
     }
 
     hr.line {
@@ -133,6 +135,7 @@
                         <div class="col-6">
                             <span class="content" id="payment-method">Pilih metode pembayaran</span>
                         </div>
+                        <input type="hidden" name="payment" value="" id="payment">
                         <div class="col-6 text-right">
                             <a href="javascript:" type="button" class="text-success" data-toggle="modal"
                                 data-target="#exampleModal">
@@ -145,7 +148,7 @@
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel" id="">Pilih metode pembayaran</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Pilih metode pembayaran</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -339,170 +342,6 @@
                                                 <hr class="mt-3 mb-3">
                                             </div>
                                         </div>
-                                        <!--
-                                        <div class="row">
-                                            @php($user = auth('customer')->user())
-                                            <div class="payment-type wallet card w-100">
-                                                <span class="card-header py-1">E-Wallet</span>
-                                                <div class="card-body pb-1 row">
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'OVO'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/ovo.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'DANA'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/dana.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'SHOPEEPAY'])}}">
-                                                                    <img width="200" style="margin-top: 0px"
-                                                                        src="{{asset('public/assets/front-end/img/shopee-ready.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'LINKAJA'])}}">
-                                                                    <img width="150" style="margin-top: -4px"
-                                                                        src="{{asset('public/assets/front-end/img/link-ready.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {{-- Virtual Account --}}
-                                            <div class="card virtual payment-type w-100">
-                                                <span class="card-header py-1">
-                                                    {{\App\CPU\translate('virtual_account')}}
-                                                </span>
-                                                <div class="card-body row">
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'BCA'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/bca.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'BNI'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/bni.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'BRI'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/bri.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'MANDIRI'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/mandiri.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {{-- Retail --}}
-                                            <div class="card retail payment-type w-100">
-                                                <span class="card-header py-1">Retail</span>
-                                                <div class="card-body row">
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'INDOMARET'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/indo.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'ALFAMART'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/alfa.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {{-- Other --}}
-                                            <div class="card other payment-type w-100">
-                                                <span class="card-header py-1">{{\App\CPU\translate('other')}}</span>
-                                                <div class="card-body row">
-                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
-                                                        <div class="card">
-                                                            <div class="card-body" style="height: 100px">
-                                                                <a class="btn btn-block"
-                                                                    href="{{route('checkout-complete',['payment_method'=>'QRIS'])}}">
-                                                                    <img width="150" style="margin-top: -10px"
-                                                                        src="{{asset('public/assets/front-end/img/qris-ready.png')}}" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            @php($coupon_discount = session()->has('coupon_discount') ?
-                                            session('coupon_discount') : 0)
-                                            @php($amount = \App\CPU\CartManager::cart_grand_total() - $coupon_discount)
-                                        </div> -->
                                         @php($cart=\App\Model\Cart::where(['customer_id' =>
                                         auth('customer')->id()])->get()->groupBy('cart_group_id'))
 
@@ -519,6 +358,7 @@
                 </div>
                 <div class="form-list d-flex justify-content-between w-100">
                     <span class="subtitle mb-1">Total Pembayaran</span>
+                    <input type="hidden" name="value" value="{{ $order->details[0]->price}}" id="price">
                     <span class="content price">{{ \App\CPU\Helpers::currency_converter($order->details[0]->price)
                         }}</span>
                     <hr class="line mt-4 mb-4">
@@ -529,7 +369,7 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-4">
-                        <a class="btn btn-success btn-block" href="{{route('checkout-details')}}">
+                        <a class="btn btn-success btn-block disabled" id="send" href="javascript:" onclick="payNow()">
                             <span class="d-none d-sm-inline">{{\App\CPU\translate('Bayar')}}</span>
                             <span class="d-inline d-sm-none">{{\App\CPU\translate('Bayar')}}</span>
                         </a>
@@ -657,101 +497,6 @@
 
 
 <script type="text/javascript">
-    function BkashPayment() {
-            $('#loading').show();
-            // get token
-            $.ajax({
-                url: "{{ route('bkash-get-token') }}",
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (data) {
-                    $('#loading').hide();
-                    $('pay-with-bkash-button').trigger('click');
-                    if (data.hasOwnProperty('msg')) {
-                        showErrorMessage(data) // unknown error
-                    }
-                },
-                error: function (err) {
-                    $('#loading').hide();
-                    showErrorMessage(err);
-                }
-            });
-        }
-
-        let paymentID = '';
-        bKash.init({
-            paymentMode: 'checkout',
-            paymentRequest: {},
-            createRequest: function (request) {
-                setTimeout(function () {
-                    createPayment(request);
-                }, 2000)
-            },
-            executeRequestOnAuthorization: function (request) {
-                $.ajax({
-                    url: '{{ route('bkash-execute-payment') }}',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        "paymentID": paymentID
-                    }),
-                    success: function (data) {
-                        if (data) {
-                            if (data.paymentID != null) {
-                                BkashSuccess(data);
-                            } else {
-                                showErrorMessage(data);
-                                bKash.execute().onError();
-                            }
-                        } else {
-                            $.get('{{ route('bkash-query-payment') }}', {
-                                payment_info: {
-                                    payment_id: paymentID
-                                }
-                            }, function (data) {
-                                if (data.transactionStatus === 'Completed') {
-                                    BkashSuccess(data);
-                                } else {
-                                    createPayment(request);
-                                }
-                            });
-                        }
-                    },
-                    error: function (err) {
-                        bKash.execute().onError();
-                    }
-                });
-            },
-            onClose: function () {
-                // for error handle after close bKash Popup
-            }
-        });
-
-        function createPayment(request) {
-            // because of createRequest function finds amount from this request
-            request['amount'] = "{{round(\App\CPU\Convert::usdTobdt($amount),2)}}"; // max two decimal points allowed
-            $.ajax({
-                url: '{{ route('bkash-create-payment') }}',
-                data: JSON.stringify(request),
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (data) {
-                    $('#loading').hide();
-                    if (data && data.paymentID != null) {
-                        paymentID = data.paymentID;
-                        bKash.create().onSuccess(data);
-                    } else {
-                        bKash.create().onError();
-                    }
-                },
-                error: function (err) {
-                    $('#loading').hide();
-                    showErrorMessage(err.responseJSON);
-                    bKash.create().onError();
-                }
-            });
-        }
-
         function showErrorMessage(response) {
             let message = 'Unknown Error';
             if (response.hasOwnProperty('errorMessage')) {
@@ -774,9 +519,41 @@
         }
 
         function payment(val){
-            console.log(val);
             $('#payment-method').text(capitalizeFirstLetter(val))
+            $('#payment').val(val)
             $('#exampleModal').modal('hide')
+            $('#send').removeClass('disabled');
+        }
+
+        function payNow(){
+            var id = {{ $order->id }};
+            var payment = $('#payment').val();
+            var val = $('#price').val();
+            console.log(payment);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{route('xendit-payment.vaInvoice')}}",
+                method: 'POST',
+                data: {
+                    "id": id,
+                    'type': payment,
+                    "value": val
+
+                },
+                success: function (data) {
+                    if (data.success == 0) {
+                        toastr.success('{{\App\CPU\translate('Order is already delivered, You can not change it')}} !!');
+                        location.reload();
+                    } else {
+                        toastr.success('{{\App\CPU\translate('Status Change successfully')}}!');
+                        // location.reload();
+                    }
+                }
+            });
         }
 </script>
 @endpush

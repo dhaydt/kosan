@@ -64,7 +64,8 @@ class XenditPaymentController extends Controller
         // dd($request);
         $customer = auth('customer')->user();
         $discount = session()->has('coupon_discount') ? session('coupon_discount') : 0;
-        $value = CartManager::cart_grand_total() - $discount;
+        // $value = CartManager::cart_grand_total() - $discount;
+        $value = 20000;
         $tran = OrderManager::gen_unique_id();
 
         session()->put('transaction_ref', $tran);
@@ -79,40 +80,27 @@ class XenditPaymentController extends Controller
         }
         // dd($products);
 
-        $user = [
-            'given_names' => $customer->f_name,
-            'email' => $customer->email,
-            'mobile_number' => $customer->phone,
-            'address' => $customer->district.', '.$customer->city.', '.$customer->province,
-        ];
+        // $user = [
+        //     'given_names' => $customer->f_name,
+        //     'email' => $customer->email,
+        //     'mobile_number' => $customer->phone,
+        //     'address' => $customer->district.', '.$customer->city.', '.$customer->province,
+        // ];
 
         $params = [
             'external_id' => 'ws'.$customer->phone.$customer->id,
             'amount' => Convert::usdToidr($value),
             'payer_email' => $customer->email,
-            'description' => 'WSHOPEDIA',
-            'payment_methods' => [$request->type],
+            'description' => 'inRoom',
+            'payment_methods' => [strtoupper($request->type)],
             'fixed_va' => true,
             'should_send_email' => true,
-            'customer' => $user,
+            // 'customer' => $user,
             // 'items' => $products,
-            'success_redirect_url' => env('APP_URL').'/xendit-payment/success/'.$request->type,
+            'success_redirect_url' => env('APP_URL').'/xendit-payment/success/'.strtoupper($request->type),
         ];
 
         $checkout_session = \Xendit\Invoice::create($params);
-        // $order_ids = [];
-        // foreach (CartManager::get_cart_group_ids() as $group_id) {
-        //     $data = [
-        //         'payment_method' => 'xendit_payment',
-        //         'order_status' => 'pending',
-        //         'payment_status' => 'unpaid',
-        //         'transaction_ref' => session('transaction_ref'),
-        //         'order_group_id' => $tran,
-        //         'cart_group_id' => $group_id,
-        //     ];
-        //     $order_id = OrderManager::generate_order($data);
-        //     array_push($order_ids, $order_id);
-        // }
 
         return redirect()->away($checkout_session['invoice_url']);
     }
