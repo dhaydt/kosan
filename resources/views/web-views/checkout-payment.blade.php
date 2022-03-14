@@ -3,91 +3,120 @@
 @section('title',\App\CPU\translate('Pembayaran'))
 
 @push('css_or_js')
-    <style>
-        .payment-title{
-            font-weight: 600;
-            color: #747474;
-        }
-        span.subtitle{
-            color: #5b5b5b;
-            font-weight: 500;
-            font-size: 18px;
-        }
-        span.content {
-            font-weight: 700;
-            color: #818181;
-        }
-        span.content.price {
-            width: 75%;
-            text-align: right;
-        }
-        hr.line {
-            border-top: 1px solid #cdcdcd;
-        }
-        .title-card {
-            font-size: 16px;
-            font-weight: 500;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        .status-kos span {
-            border: 1px solid #d1d1d1;
-            text-transform: capitalize;
-            border-radius: 5px;
-            padding: 5px;
-            margin-right: 10px;
-            font-weight: 600;
-            font-size: 12px;
-        }
-        span.price {
-            font-size: 14px;
-            color: #686868;
-            font-weight: 600
-        }
-        .mulai .title{
-            font-size: 14px;
-        }
-        .mulai span.content{
-            font-weight: 600;
-            color: #3e3e3e;
-        }
-        .info-box{
-            border: 1px solid #747474;
-            border-radius: 5px;
-            padding: 5px;
-        }
-        .info-box .fa{
-            color: #1e90ff;
-        }
-        .info-box span {
-            font-size: 14px;
-            font-weight: 500;
-            color: #747474;
-        }
-    </style>
+<style>
+    .payment-title {
+        font-weight: 600;
+        color: #747474;
+    }
 
-    {{--stripe--}}
-    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
-    <script src="https://js.stripe.com/v3/"></script>
-    {{--stripe--}}
+    span.subtitle {
+        color: #5b5b5b;
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    span.content {
+        font-weight: 700;
+        color: #818181;
+    }
+
+    span.content.price {
+        width: 75%;
+        text-align: right;
+    }
+
+    hr.line {
+        border-top: 1px solid #cdcdcd;
+    }
+
+    .title-card {
+        font-size: 16px;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .status-kos span {
+        border: 1px solid #d1d1d1;
+        text-transform: capitalize;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 10px;
+        color: #5b5b5b;
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    span.price {
+        font-size: 14px;
+        color: #686868;
+        font-weight: 600
+    }
+
+    .mulai .title {
+        font-size: 14px;
+    }
+
+    .mulai span.content {
+        font-weight: 600;
+        color: #3e3e3e;
+    }
+
+    .info-box {
+        border: 1px solid #747474;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .info-box .fa {
+        color: #1e90ff;
+    }
+
+    .info-box span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #747474;
+    }
+
+    .title-payment {
+        font-size: 20px;
+        font-weight: 600;
+        color: #2c2c2c;
+    }
+
+    span.bank {
+        font-size: 16px;
+        color: #4e4e4e;
+    }
+
+    .bank-logo img {
+        height: 25px;
+        ;
+    }
+
+    .bank-logo i {
+        font-size: 12px
+    }
+</style>
+
+{{--stripe--}}
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="https://js.stripe.com/v3/"></script>
+{{--stripe--}}
 @endpush
 
 @section('content')
-    <!-- Page Content-->
-    <div class="container pb-5 mb-2 mb-md-4 rtl"
-         style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
-        <div class="row">
-            <section class="col-lg-8">
-                <hr>
-                <div class="checkout_details mt-3">
+<!-- Page Content-->
+<div class="container pb-5 mb-2 mb-md-4 rtl" style="text-align: {{Session::get('direction') === " rtl" ? 'right'
+    : 'left' }};">
+    <div class="row">
+        <section class="col-lg-8">
+            <hr>
+            <div class="checkout_details mt-3">
                 @include('web-views.partials._checkout-steps',['step'=>3])
 
-                <!-- Payment methods accordion-->
-                @php($ship = App\Model\CartShipping::where('cart_group_id', session()->get('cart_group_id'))->first())
-                {{-- @if ($ship->shipping_cost !== "0.00") --}}
                 <h2 class="pb-5 mb-3 mt-4 payment-title">{{\App\CPU\translate('Pembayaran')}}</h2>
-
                 <div class="form-list">
                     <span class="subtitle mb-1 d-block">No. Booking</span>
                     <span class="content">{{ $order->id }}</span>
@@ -102,185 +131,504 @@
                     <span class="subtitle mb-1 d-block capitalize">Metode pembayaran</span>
                     <div class="row">
                         <div class="col-6">
-                            <span class="content">Pilih metode pembayaran</span>
+                            <span class="content" id="payment-method">Pilih metode pembayaran</span>
                         </div>
                         <div class="col-6 text-right">
-                            <span>Ubah</span>
+                            <a href="javascript:" type="button" class="text-success" data-toggle="modal"
+                                data-target="#exampleModal">
+                                Ubah
+                            </a>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel" id="">Pilih metode pembayaran</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body mb-4">
+                                        <div class="row">
+                                            <div class="section-payment w-100">
+                                                <div class="title-payment mb-3">
+                                                    <span>
+                                                        Transfer
+                                                    </span>
+                                                </div>
+                                                <div class="content-payment">
+                                                    <a href="javascript:" onclick="payment('bni')" class="row">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Bank BNI
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/bni.png') }}" style="height: 16px;"
+                                                                alt="BNI">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('bri')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Bank BRI
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/bri.png') }}" style="height: 22px;"
+                                                                alt="BRI">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('bca')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Bank BCA
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/bca.png') }}" style="height: 20px;"
+                                                                alt="BCA">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('mandiri')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Bank Mandiri
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/mandiri.png') }}"
+                                                                alt="mandiri">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('cimb')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Bank CIMB
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/cimb.png') }}" style="height: 16px;"
+                                                                alt="cimb">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <hr class="mt-3 mb-3">
+                                            </div>
+                                            <div class="section-payment w-100">
+                                                <div class="title-payment mb-3">
+                                                    <span>
+                                                        Gerai Retail
+                                                    </span>
+                                                </div>
+                                                <div class="content-payment">
+                                                    <a href="javascript:" onclick="payment('alfamart')" class="row">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Alfamart
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/alfa.png') }}"
+                                                                alt="alfa">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('indomaret')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Indomaret
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/indo.png') }}"
+                                                                alt="indo">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <hr class="mt-3 mb-3">
+                                            </div>
+                                            <div class="section-payment w-100">
+                                                <div class="title-payment mb-3">
+                                                    <span>
+                                                        Uang Elektronik
+                                                    </span>
+                                                </div>
+                                                <div class="content-payment">
+                                                    <a href="javascript:" onclick="payment('gopay')" class="row">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Go PAY
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/gopay-ready.png') }}" style="height: 18px;"
+                                                                alt="gopay">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('dana')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                DANA
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/dana-ready.png') }}" style="height: 18px;"
+                                                                alt="dana">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('ovo')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                OVO
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/ovo-ready.png') }}" style="height: 18px;"
+                                                                alt="ovo">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('shopeePAY')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                Shopee PAY
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/shopee.png') }}" style="height: 18px;"
+                                                                alt="ovo">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="javascript:" onclick="payment('linkAja')" class="row mt-3">
+                                                        <div class="col-9">
+                                                            <span class="bank">
+                                                                LinkAja
+                                                            </span>
+                                                        </div>
+                                                        <div
+                                                            class="col-3 bank-logo d-flex justify-content-between align-items-center">
+                                                            <img src="{{ asset('assets/front-end/img/link.png') }}" style="height: 18px;"
+                                                                alt="linkaja">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <hr class="mt-3 mb-3">
+                                            </div>
+                                        </div>
+                                        <!--
+                                        <div class="row">
+                                            @php($user = auth('customer')->user())
+                                            <div class="payment-type wallet card w-100">
+                                                <span class="card-header py-1">E-Wallet</span>
+                                                <div class="card-body pb-1 row">
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'OVO'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/ovo.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'DANA'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/dana.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'SHOPEEPAY'])}}">
+                                                                    <img width="200" style="margin-top: 0px"
+                                                                        src="{{asset('public/assets/front-end/img/shopee-ready.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'LINKAJA'])}}">
+                                                                    <img width="150" style="margin-top: -4px"
+                                                                        src="{{asset('public/assets/front-end/img/link-ready.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Virtual Account --}}
+                                            <div class="card virtual payment-type w-100">
+                                                <span class="card-header py-1">
+                                                    {{\App\CPU\translate('virtual_account')}}
+                                                </span>
+                                                <div class="card-body row">
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'BCA'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/bca.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'BNI'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/bni.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'BRI'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/bri.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'MANDIRI'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/mandiri.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Retail --}}
+                                            <div class="card retail payment-type w-100">
+                                                <span class="card-header py-1">Retail</span>
+                                                <div class="card-body row">
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'INDOMARET'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/indo.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'ALFAMART'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/alfa.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Other --}}
+                                            <div class="card other payment-type w-100">
+                                                <span class="card-header py-1">{{\App\CPU\translate('other')}}</span>
+                                                <div class="card-body row">
+                                                    <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                                                        <div class="card">
+                                                            <div class="card-body" style="height: 100px">
+                                                                <a class="btn btn-block"
+                                                                    href="{{route('checkout-complete',['payment_method'=>'QRIS'])}}">
+                                                                    <img width="150" style="margin-top: -10px"
+                                                                        src="{{asset('public/assets/front-end/img/qris-ready.png')}}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            @php($coupon_discount = session()->has('coupon_discount') ?
+                                            session('coupon_discount') : 0)
+                                            @php($amount = \App\CPU\CartManager::cart_grand_total() - $coupon_discount)
+                                        </div> -->
+                                        @php($cart=\App\Model\Cart::where(['customer_id' =>
+                                        auth('customer')->id()])->get()->groupBy('cart_group_id'))
+
+                                        @php($coupon_discount = session()->has('coupon_discount') ?
+                                        session('coupon_discount') : 0)
+                                        @php($amount = \App\CPU\CartManager::cart_grand_total() - $coupon_discount)
+                                        {{-- @endif --}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr class="line mt-4 mb-4">
                 </div>
                 <div class="form-list d-flex justify-content-between w-100">
                     <span class="subtitle mb-1">Total Pembayaran</span>
-                    <span class="content price">{{ \App\CPU\Helpers::currency_converter($order->details[0]->price) }}</span>
+                    <span class="content price">{{ \App\CPU\Helpers::currency_converter($order->details[0]->price)
+                        }}</span>
                     <hr class="line mt-4 mb-4">
                 </div>
+
+
+                <!-- Navigation (desktop)-->
                 <div class="row">
-                @php($user = auth('customer')->user())
-                <div class="col-md-6 mb-4" style="cursor: pointer">
-                    <div class="card">
-                        <div class="card-body" style="height: 100px">
-                            <form class="needs-validation" method="POST" id="payment-form"
-                                action="{{route('xendit-payment.vaInvoice')}}">
-
-                                <input type="hidden" name="type" value="OVO">
-                                {{-- <input class="price" type="hidden" name="price" value="price"> --}}
-                                {{ csrf_field() }}
-                                <button class="btn btn-block" type="submit">
-                                    <img width="150" style="margin-top: -10px"
-                                    src="{{asset('public/assets/front-end/img/ovo.png')}}" />
-                                </button>
-                            </form>
-                        </div>
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <a class="btn btn-success btn-block" href="{{route('checkout-details')}}">
+                            <span class="d-none d-sm-inline">{{\App\CPU\translate('Bayar')}}</span>
+                            <span class="d-inline d-sm-none">{{\App\CPU\translate('Bayar')}}</span>
+                        </a>
                     </div>
+                    <div class="col-4"></div>
                 </div>
-
-                <div class="col-md-6 mb-4" style="cursor: pointer">
-                    <div class="card">
-                        <div class="card-body" style="height: 100px">
-                            <form class="needs-validation" method="POST" id="payment-form"
-                                action="{{route('xendit-payment.vaInvoice')}}">
-
-                                <input type="hidden" name="type" value="DANA">
-                                {{-- <input class="price" type="hidden" name="price" value="price"> --}}
-                                {{ csrf_field() }}
-                                <button class="btn btn-block" type="submit">
-                                    <img width="150" style="margin-top: -10px"
-                                    src="{{asset('public/assets/front-end/img/dana.png')}}" />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 mb-4" style="cursor: pointer">
-                    <div class="card">
-                        <div class="card-body" style="height: 100px">
-                            <form class="needs-validation" method="POST" id="payment-form"
-                                action="{{route('xendit-payment.vaInvoice')}}">
-
-                                <input type="hidden" name="type" value="BNI">
-                                {{-- <input class="price" type="hidden" name="price" value="price"> --}}
-                                {{ csrf_field() }}
-                                <button class="btn btn-block" type="submit">
-                                    <img width="150" style="margin-top: -10px"
-                                    src="{{asset('public/assets/front-end/img/bni.png')}}" />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                    @php($coupon_discount = session()->has('coupon_discount') ? session('coupon_discount') : 0)
-                    @php($amount = \App\CPU\CartManager::cart_grand_total() - $coupon_discount)
-
-                </div>
-                {{-- @else --}}
-                {{-- @php($shippingMethod=\App\CPU\Helpers::get_business_settings('shipping_method')) --}}
-                @php($cart=\App\Model\Cart::where(['customer_id' => auth('customer')->id()])->get()->groupBy('cart_group_id'))
-
-                @php($coupon_discount = session()->has('coupon_discount') ? session('coupon_discount') : 0)
-                @php($amount = \App\CPU\CartManager::cart_grand_total() - $coupon_discount)
-                {{-- @endif --}}
-
-                    <!-- Navigation (desktop)-->
+            </div>
+        </section>
+        <!-- Sidebar-->
+        @php($detail = json_decode($order->details[0]->product_details))
+        @php($sewa = json_decode($order->details[0]->data_penyewa))
+        @php($district = strtolower($detail->kost->district))
+        @php($city = strtolower($detail->kost->city))
+        <div class="side-section col-lg-4 mt-5">
+            <div class="card p-2">
+                <div class="card-header">
                     <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4">
-                            <a class="btn btn-secondary btn-block" href="{{route('checkout-details')}}">
-                                <span class="d-none d-sm-inline">{{\App\CPU\translate('Back to Shipping')}}</span>
-                                <span class="d-inline d-sm-none">{{\App\CPU\translate('Back')}}</span>
-                            </a>
-                        </div>
-                        <div class="col-4"></div>
-                    </div>
-                </div>
-            </section>
-            <!-- Sidebar-->
-            <div class="side-section col-lg-4 mt-5">
-                <div class="card p-2">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="title-card">
-                                    <span class="">
-                                        Kost Programmer Tipe A Gedong Tengen Yogyakarta
-                                    </span>
-                                </div>
-                                <div class="status-kos mt-2">
-                                    <span>
-                                        {{-- {{ $detail->kost->penghuni }} --}}
-                                        perempuan
-                                    </span>
-                                    <span>
-                                        no kamar
-                                    </span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="price">
-                                        Perbulan - Rp.1.900.000
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-4 img-div">
-                                <img class="w-100" src="{{ asset('assets/front-end/img/kos.jpg') }}" style="border-radius: 6px">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row px-0">
-                            <div class="col-12 d-flex justify-content-between mt-2 px-0 mulai ">
-                                <span class="capitalize title">Mulai sewa</span>
-                                {{-- <span>{{ App\CPU\Helpers::dateChange($date) }}</span> --}}
-                                <span class="content">12, feb 2022</span>
-                            </div>
-                            <div class="col-12 d-flex justify-content-between mt-3 px-0 mulai">
-                                <span class="capitalize title">Durasi sewa</span>
-                                {{-- <span>{{ $order->durasi }} Bulan</span> --}}
-                                <span class="content">1 bulan</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="title-card capitalize d-block">
-                            Informasi penyewa
-                        </span>
-                        <span class="content d-block mb-3" style="font-weight: 500;">
-                            Muhammad Hidayat
-                        </span>
-                        <div class="row info-box">
-                            <div class="col-1 text-center">
-                                <i class="fa fa-info-circle text-blue mt-1"></i>
-                            </div>
-                            <div class="col-11">
-                                <span>
-                                    Mohon tunjukan kartu identitas asli pada pemilik kos saat masuk
+                        <div class="col-8">
+                            <div class="title-card">
+                                <span class="">
+                                    {{ $detail->kost->name }} {{ $detail->type }} {{ $district }} {{ $city }}
                                 </span>
                             </div>
+                            <div class="status-kos mt-2">
+                                <span>
+                                    {{ $detail->kost->penghuni }}
+                                </span>
+                                <span>
+                                    @if ($order->roomDetail_id == 'ditempat')
+                                    Pilih ditempat
+                                    @else
+                                    {{ $order->room->name }}
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="price">
+                                    Perbulan - {{\App\CPU\Helpers::currency_converter($order->details[0]->price)}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-4 img-div">
+                            <img class="w-100" src="{{ asset('assets/front-end/img/kos.jpg') }}"
+                                style="border-radius: 6px">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
+                    <div class="row px-0">
+                        <div class="col-12 d-flex justify-content-between mt-2 px-0 mulai ">
+                            <span class="capitalize title">Tanggal Masuk</span>
+                            <span class="content">{{ App\CPU\Helpers::dateChange($date) }}</span>
+                        </div>
+                        <div class="col-12 d-flex justify-content-between mt-3 px-0 mulai">
+                            <span class="capitalize title">Durasi sewa</span>
+                            <span class="content">{{ $order->durasi }} Bulan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="title-card capitalize d-block">
+                        Informasi penyewa
+                    </span>
+                    <span class="content d-block mb-3" style="font-weight: 500;">
+                        Muhammad Hidayat
+                    </span>
+                    <div class="row info-box">
+                        <div class="col-1 text-center">
+                            <i class="fa fa-info-circle text-blue mt-1"></i>
+                        </div>
+                        <div class="col-11">
+                            <span>
+                                Mohon tunjukan kartu identitas asli pada pemilik kos saat masuk
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @push('script')
 
-    @if(env('APP_MODE')=='live')
-        <script id="myScript"
-                src="https://scripts.pay.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout.js"></script>
-    @else
-        <script id="myScript"
-                src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
-    @endif
+@if(env('APP_MODE')=='live')
+<script id="myScript" src="https://scripts.pay.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout.js"></script>
+@else
+<script id="myScript" src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js">
+</script>
+@endif
 
-    <script>
-        setTimeout(function () {
+<script>
+    setTimeout(function () {
             $('.stripe-button-el').hide();
             $('.razorpay-payment-button').hide();
         }, 10)
-    </script>
+</script>
 
 
 <script>
@@ -308,8 +656,8 @@
 </script>
 
 
-    <script type="text/javascript">
-        function BkashPayment() {
+<script type="text/javascript">
+    function BkashPayment() {
             $('#loading').show();
             // get token
             $.ajax({
@@ -404,18 +752,6 @@
             });
         }
 
-        function BkashSuccess(data) {
-            $.post('{{ route('bkash-success') }}', {
-                payment_info: data
-            }, function (res) {
-                @if(session()->has('payment_mode') && session('payment_mode') == 'app')
-                    location.href = '{{ route('payment-success')}}';
-                @else
-                    location.href = '{{route('order-placed')}}';
-                @endif
-            });
-        }
-
         function showErrorMessage(response) {
             let message = 'Unknown Error';
             if (response.hasOwnProperty('errorMessage')) {
@@ -432,5 +768,15 @@
             }
             Swal.fire("Payment Failed!", message, "error");
         }
-    </script>
+
+        function capitalizeFirstLetter(string){
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function payment(val){
+            console.log(val);
+            $('#payment-method').text(capitalizeFirstLetter(val))
+            $('#exampleModal').modal('hide')
+        }
+</script>
 @endpush

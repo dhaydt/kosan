@@ -267,7 +267,7 @@ class WebController extends Controller
         //     return redirect('shop-cart');
         // }
         // dd($request);
-        $order = Order::with('details')->where('id', $request['order_id'])->first();
+        $order = Order::with('details', 'room')->where('id', $request['order_id'])->first();
 
         // if (session()->has('address_id') && count($cart_group_ids) > 0) {
         return view('web-views.checkout-payment', compact('order'));
