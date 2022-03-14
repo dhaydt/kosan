@@ -221,8 +221,10 @@
                                             @endif
                                         </div>
                                         <span class="room-status w-100 d-block">
-                                            @if ($order->room_id == NULL)
+                                            @if ($order->roomDetail_id == NULL)
                                                 Kamar belum dikonfirmasi
+                                            @elseif ($order->roomDetail_id == 'ditempat')
+                                                Pilih kamar ditempat
                                             @else
                                                 Kamar  {{ $order->room[0]->name }}
                                             @endif

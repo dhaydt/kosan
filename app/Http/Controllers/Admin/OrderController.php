@@ -98,7 +98,7 @@ class OrderController extends Controller
 
         $kamar = $request->no_kamar;
         if ($kamar == '' || $kamar == 'ditempat') {
-            $rom = null;
+            $rom = 'ditempat';
         } else {
             $rom = $kamar;
         }

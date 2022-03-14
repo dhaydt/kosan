@@ -4,12 +4,66 @@
 
 @push('css_or_js')
     <style>
-        .stripe-button-el {
-            display: none !important;
+        .payment-title{
+            font-weight: 600;
+            color: #747474;
         }
-
-        .razorpay-payment-button {
-            display: none !important;
+        span.subtitle{
+            color: #5b5b5b;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        span.content {
+            font-weight: 700;
+            color: #818181;
+        }
+        span.content.price {
+            width: 75%;
+            text-align: right;
+        }
+        hr.line {
+            border-top: 1px solid #cdcdcd;
+        }
+        .title-card {
+            font-size: 16px;
+            font-weight: 500;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .status-kos span {
+            border: 1px solid #d1d1d1;
+            text-transform: capitalize;
+            border-radius: 5px;
+            padding: 5px;
+            margin-right: 10px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        span.price {
+            font-size: 14px;
+            color: #686868;
+            font-weight: 600
+        }
+        .mulai .title{
+            font-size: 14px;
+        }
+        .mulai span.content{
+            font-weight: 600;
+            color: #3e3e3e;
+        }
+        .info-box{
+            border: 1px solid #747474;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .info-box .fa{
+            color: #1e90ff;
+        }
+        .info-box span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #747474;
         }
     </style>
 
@@ -24,12 +78,6 @@
     <div class="container pb-5 mb-2 mb-md-4 rtl"
          style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
         <div class="row">
-            <div class="col-md-12 mb-5 pt-5">
-                <div class="feature_header" style="background: #dcdcdc;line-height: 1px">
-                    <span>{{ \App\CPU\translate('Metode_pembayaran')}}</span>
-                </div>
-            </div>
-
             <section class="col-lg-8">
                 <hr>
                 <div class="checkout_details mt-3">
@@ -38,68 +86,37 @@
                 <!-- Payment methods accordion-->
                 @php($ship = App\Model\CartShipping::where('cart_group_id', session()->get('cart_group_id'))->first())
                 {{-- @if ($ship->shipping_cost !== "0.00") --}}
-                <h2 class="h6 pb-3 mb-2 mt-5">{{\App\CPU\translate('Pembayaran')}}</h2>
+                <h2 class="pb-5 mb-3 mt-4 payment-title">{{\App\CPU\translate('Pembayaran')}}</h2>
 
                 <div class="form-list">
-                    <h4>No. Booking</h4>
+                    <span class="subtitle mb-1 d-block">No. Booking</span>
                     <span class="content">{{ $order->id }}</span>
+                    <hr class="line mt-4 mb-4">
                 </div>
                 <div class="form-list">
-                    <h4>Total Pembayaran</h4>
-                    <span class="content">{{ $order->details[0]->price }}</span>
+                    <span class="subtitle mb-1 d-block capitalize">Jenis pembayaran</span>
+                    <span class="content">Bayar sewa kos</span>
+                    <hr class="line mt-4 mb-4">
+                </div>
+                <div class="form-list">
+                    <span class="subtitle mb-1 d-block capitalize">Metode pembayaran</span>
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="content">Pilih metode pembayaran</span>
+                        </div>
+                        <div class="col-6 text-right">
+                            <span>Ubah</span>
+                        </div>
+                    </div>
+                    <hr class="line mt-4 mb-4">
+                </div>
+                <div class="form-list d-flex justify-content-between w-100">
+                    <span class="subtitle mb-1">Total Pembayaran</span>
+                    <span class="content price">{{ \App\CPU\Helpers::currency_converter($order->details[0]->price) }}</span>
+                    <hr class="line mt-4 mb-4">
                 </div>
                 <div class="row">
-                    @php($config=\App\CPU\Helpers::get_business_settings('cash_on_delivery'))
-                    @if($config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <a class="btn btn-block"
-                                       href="{{route('checkout-complete',['payment_method'=>'cash_on_delivery'])}}">
-                                        <img width="150" style="margin-top: -10px"
-                                             src="{{asset('public/assets/front-end/img/cod.png')}}"/>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @php($config=\App\CPU\Helpers::get_business_settings('ssl_commerz_payment'))
-                    @if($config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <form action="{{ url('/pay-ssl') }}" method="POST" class="needs-validation">
-                                        <input type="hidden" value="{{ csrf_token() }}" name="_token"/>
-                                        <button class="btn btn-block" type="submit">
-                                            <img width="150"
-                                                 src="{{asset('public/assets/front-end/img/sslcomz.png')}}"/>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @php($config=\App\CPU\Helpers::get_business_settings('paypal'))
-                    @if($config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <form class="needs-validation" method="POST" id="payment-form"
-                                          action="{{route('pay-paypal')}}">
-                                        {{ csrf_field() }}
-                                        <button class="btn btn-block" type="submit">
-                                            <img width="150"
-                                                 src="{{asset('public/assets/front-end/img/paypal.png')}}"/>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @php($user = auth('customer')->user())
+                @php($user = auth('customer')->user())
                 <div class="col-md-6 mb-4" style="cursor: pointer">
                     <div class="card">
                         <div class="card-body" style="height: 100px">
@@ -157,209 +174,6 @@
                     @php($coupon_discount = session()->has('coupon_discount') ? session('coupon_discount') : 0)
                     @php($amount = \App\CPU\CartManager::cart_grand_total() - $coupon_discount)
 
-                    @php($config=\App\CPU\Helpers::get_business_settings('stripe'))
-                    @if($config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <button class="btn btn-block" type="button" id="checkout-button">
-                                        <i class="czi-card"></i> {{\App\CPU\translate('Credit / Debit card ( Stripe )')}}
-                                    </button>
-                                    <script type="text/javascript">
-                                        // Create an instance of the Stripe object with your publishable API key
-                                        var stripe = Stripe('{{$config['published_key']}}');
-                                        var checkoutButton = document.getElementById("checkout-button");
-                                        checkoutButton.addEventListener("click", function () {
-                                            fetch("{{route('pay-stripe')}}", {
-                                                method: "GET",
-                                            }).then(function (response) {
-                                                console.log(response)
-                                                return response.text();
-                                            }).then(function (session) {
-                                                /*console.log(JSON.parse(session).id)*/
-                                                return stripe.redirectToCheckout({sessionId: JSON.parse(session).id});
-                                            }).then(function (result) {
-                                                if (result.error) {
-                                                    alert(result.error.message);
-                                                }
-                                            }).catch(function (error) {
-                                                console.error("{{\App\CPU\translate('Error')}}:", error);
-                                            });
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @php($config=\App\CPU\Helpers::get_business_settings('razor_pay'))
-                    @php($inr=\App\Model\Currency::where(['symbol'=>'₹'])->first())
-                    @php($usd=\App\Model\Currency::where(['code'=>'USD'])->first())
-                    @if(isset($inr) && isset($usd) && $config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <form action="{!!route('payment-razor')!!}" method="POST">
-                                    @csrf
-                                    <!-- Note that the amount is in paise = 50 INR -->
-                                        <!--amount need to be in paisa-->
-                                        <script src="https://checkout.razorpay.com/v1/checkout.js"
-                                                data-key="{{ \Illuminate\Support\Facades\Config::get('razor.razor_key') }}"
-                                                data-amount="{{(round(\App\CPU\Convert::usdToinr($amount)))*100}}"
-                                                data-buttontext="Pay {{(\App\CPU\Convert::usdToinr($amount))*100}} INR"
-                                                data-name="{{\App\Model\BusinessSetting::where(['type'=>'company_name'])->first()->value}}"
-                                                data-description=""
-                                                data-image="{{asset('storage/app/public/company/'.\App\Model\BusinessSetting::where(['type'=>'company_web_logo'])->first()->value)}}"
-                                                data-prefill.name="{{auth('customer')->user()->f_name}}"
-                                                data-prefill.email="{{auth('customer')->user()->email}}"
-                                                data-theme.color="#ff7529">
-                                        </script>
-                                    </form>
-                                    <button class="btn btn-block" type="button"
-                                            onclick="$('.razorpay-payment-button').click()">
-                                        <img width="150"
-                                             src="{{asset('public/assets/front-end/img/razor.png')}}"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @php($config=\App\CPU\Helpers::get_business_settings('paystack'))
-                    @if($config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    @php($config=\App\CPU\Helpers::get_business_settings('paystack'))
-                                    @php($order=\App\Model\Order::find(session('order_id')))
-                                    <form method="POST" action="{{ route('paystack-pay') }}" accept-charset="UTF-8"
-                                          class="form-horizontal"
-                                          role="form">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-md-8 col-md-offset-2">
-                                                <input type="hidden" name="email"
-                                                       value="{{auth('customer')->user()->email}}"> {{-- required --}}
-                                                <input type="hidden" name="orderID"
-                                                       value="{{session('cart_group_id')}}">
-                                                <input type="hidden" name="amount"
-                                                       value="{{\App\CPU\Convert::usdTozar($amount*100)}}"> {{-- required in kobo --}}
-                                                <input type="hidden" name="quantity" value="1">
-                                                <input type="hidden" name="currency"
-                                                       value="ZAR">
-                                                <input type="hidden" name="metadata"
-                                                       value="{{ json_encode($array = ['key_name' => 'value',]) }}"> {{-- For other necessary things you want to add to your payload. it is optional though --}}
-                                                <input type="hidden" name="reference"
-                                                       value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
-                                                <p>
-                                                    <button class="paystack-payment-button" style="display: none"
-                                                            type="submit"
-                                                            value="Pay Now!"></button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <button class="btn btn-block" type="button"
-                                            onclick="$('.paystack-payment-button').click()">
-                                        <img width="100"
-                                             src="{{asset('public/assets/front-end/img/paystack.png')}}"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @php($myr=\App\Model\Currency::where(['code'=>'MYR'])->first())
-                    @php($usd=\App\Model\Currency::where(['code'=>'usd'])->first())
-                    @php($config=\App\CPU\Helpers::get_business_settings('senang_pay'))
-                    @if(isset($myr) && isset($usd) && $config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    @php($config=\App\CPU\Helpers::get_business_settings('senang_pay'))
-                                    @php($user=auth('customer')->user())
-                                    @php($secretkey = $config['secret_key'])
-                                    @php($data = new \stdClass())
-                                    @php($data->merchantId = $config['merchant_id'])
-                                    @php($data->detail = 'payment')
-                                    @php($data->order_id = session('cart_group_id'))
-                                    @php($data->amount = \App\CPU\Convert::usdTomyr($amount))
-                                    @php($data->name = $user->f_name.' '.$user->l_name)
-                                    @php($data->email = $user->email)
-                                    @php($data->phone = $user->phone)
-                                    @php($data->hashed_string = md5($secretkey . urldecode($data->detail) . urldecode($data->amount) . urldecode($data->order_id)))
-
-                                    <form name="order" method="post"
-                                          action="https://{{env('APP_MODE')=='live'?'app.senangpay.my':'sandbox.senangpay.my'}}/payment/{{$config['merchant_id']}}">
-                                        <input type="hidden" name="detail" value="{{$data->detail}}">
-                                        <input type="hidden" name="amount" value="{{$data->amount}}">
-                                        <input type="hidden" name="order_id" value="{{$data->order_id}}">
-                                        <input type="hidden" name="name" value="{{$data->name}}">
-                                        <input type="hidden" name="email" value="{{$data->email}}">
-                                        <input type="hidden" name="phone" value="{{$data->phone}}">
-                                        <input type="hidden" name="hash" value="{{$data->hashed_string}}">
-                                    </form>
-
-                                    <button class="btn btn-block" type="button"
-                                            onclick="document.order.submit()">
-                                        <img width="100"
-                                             src="{{asset('public/assets/front-end/img/senangpay.png')}}"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @php($config=\App\CPU\Helpers::get_business_settings('paymob_accept'))
-                    @if($config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <form class="needs-validation" method="POST" id="payment-form-paymob"
-                                          action="{{route('paymob-credit')}}">
-                                        {{ csrf_field() }}
-                                        <button class="btn btn-block" type="submit">
-                                            <img width="150"
-                                                 src="{{asset('public/assets/front-end/img/paymob.png')}}"/>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @php($config=\App\CPU\Helpers::get_business_settings('bkash'))
-                    @if(isset($config)  && $config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <button class="btn btn-block" id="bKash_button" onclick="BkashPayment()">
-                                        <img width="100" src="{{asset('public/assets/front-end/img/bkash.png')}}"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @php($config=\App\CPU\Helpers::get_business_settings('paytabs'))
-                    @if(isset($config)  && $config['status'])
-                        <div class="col-md-6 mb-4" style="cursor: pointer">
-                            <div class="card">
-                                <div class="card-body" style="height: 100px">
-                                    <button class="btn btn-block"
-                                            onclick="location.href='{{route('paytabs-payment')}}'"
-                                            style="margin-top: -11px">
-                                        <img width="150"
-                                             src="{{asset('public/assets/front-end/img/paytabs.png')}}"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
                 {{-- @else --}}
                 {{-- @php($shippingMethod=\App\CPU\Helpers::get_business_settings('shipping_method')) --}}
@@ -383,7 +197,70 @@
                 </div>
             </section>
             <!-- Sidebar-->
-            {{-- @include('web-views.partials._order-summary') --}}
+            <div class="side-section col-lg-4 mt-5">
+                <div class="card p-2">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="title-card">
+                                    <span class="">
+                                        Kost Programmer Tipe A Gedong Tengen Yogyakarta
+                                    </span>
+                                </div>
+                                <div class="status-kos mt-2">
+                                    <span>
+                                        {{-- {{ $detail->kost->penghuni }} --}}
+                                        perempuan
+                                    </span>
+                                    <span>
+                                        no kamar
+                                    </span>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="price">
+                                        Perbulan - Rp.1.900.000
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-4 img-div">
+                                <img class="w-100" src="{{ asset('assets/front-end/img/kos.jpg') }}" style="border-radius: 6px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row px-0">
+                            <div class="col-12 d-flex justify-content-between mt-2 px-0 mulai ">
+                                <span class="capitalize title">Mulai sewa</span>
+                                {{-- <span>{{ App\CPU\Helpers::dateChange($date) }}</span> --}}
+                                <span class="content">12, feb 2022</span>
+                            </div>
+                            <div class="col-12 d-flex justify-content-between mt-3 px-0 mulai">
+                                <span class="capitalize title">Durasi sewa</span>
+                                {{-- <span>{{ $order->durasi }} Bulan</span> --}}
+                                <span class="content">1 bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="title-card capitalize d-block">
+                            Informasi penyewa
+                        </span>
+                        <span class="content d-block mb-3" style="font-weight: 500;">
+                            Muhammad Hidayat
+                        </span>
+                        <div class="row info-box">
+                            <div class="col-1 text-center">
+                                <i class="fa fa-info-circle text-blue mt-1"></i>
+                            </div>
+                            <div class="col-11">
+                                <span>
+                                    Mohon tunjukan kartu identitas asli pada pemilik kos saat masuk
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

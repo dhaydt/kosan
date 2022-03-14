@@ -104,8 +104,18 @@
                         <div class="kost-detail d-flex flex-column">
                             <span class="title-kost capitalize">{{ $detail->kost->name }} {{ $detail->type }} {{ $district }} {{ $city }}</span>
                             <div class="status mt-1">
+                                {{-- {{ dd($order) }} --}}
                                 <img src="{{ asset('assets/front-end/img/room.png') }}" class="img-kos" alt="">
-                                <span class="capitalize room-info ml-2">Kamar belum dikonfirmasi</span>
+                                <span class="capitalize room-info ml-2">
+                                    @if ($order->roomDetail_id == NULL)
+                                    Kamar belum dikonfirmasi
+                                    @elseif ($order->roomDetail_id == 'ditempat')
+                                    Dipilih ditempat
+                                    @else
+                                    Kamar {{ $order->room[0]->name }}
+                                    @endif
+
+                                </span>
                             </div>
                             <div class="date row mt-1">
                                 <div class="col-12">
