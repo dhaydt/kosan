@@ -82,6 +82,70 @@
         }
 
         @media (max-width: 768px) {
+            .card-body span {
+                font-size: 14px;
+            }
+            .card-body img{
+                height: 20px !important;
+            }
+            h6{
+                font-size: 16px;
+            }
+            .card-header.section-head{
+                padding-top: 5px;
+            }
+            h5.fasilitas{
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+            .detail-kost-additional-widget{
+                flex-direction: column;
+                margin-top: 37px;
+                align-items: flex-start;
+            }
+            .detail-kost-additional-widget__left-section{
+                margin-bottom: 18px;
+            }
+            .detail-kost-overview{
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .detail-kost-overview .detail-kost-overview__gender{
+                font-size: 14px;
+            }
+            .detail-kost-overview__area{
+                margin-top: 10px;
+            }
+            .detail-kost-overview .detail-kost-overview__area .detail-kost-overview__area-text{
+                font-size: 14px;
+            }
+            .product-footer{
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                padding: 10px;
+                background-color: #fff;
+                right: 0;
+                z-index: 20;
+            }
+            .price-foot {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .price-foot .month{
+                color: #6f6f6f;
+            }
+            .details h1.h3{
+                font-size: 22px;
+                font-weight: 600 !important;
+            }
+            .mobile-margin{
+                margin-top: -10px;
+            }
+            .cz-preview{
+                z-index: 1 !important;
+                border-radius: 8px;
+            }
             .feature_header span {
                 margin-bottom: -40px;
             }
@@ -128,6 +192,10 @@
         }
 
         @media (max-width: 500px) {
+            .seller_shop {
+                display: flex !important;
+                justify-content: space-between !important;
+            }
             .for-dicount-div {
                 margin-top: -4%;
                 margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: -5%;
@@ -181,11 +249,12 @@
     $rating = \App\CPU\ProductManager::get_rating($product->reviews);
     ?>
     <!-- Page Content-->
+    <div class="mobile-margin d-block d-md-none"></div>
     <div class="container mt-4 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
         <!-- General info tab-->
         <div class="row" style="direction: ltr">
             <!-- Product gallery-->
-            <div class="col-lg-7 col-md-7">
+            <div class="col-lg-7 col-md-7 col-12">
                 <div class="cz-product-gallery">
                     <div class="cz-preview" id="cz-preview">
                         @if($product->images!=null)
@@ -204,7 +273,7 @@
                     </div>
                 </div>
 
-                <div class="details mt-4">
+                <div class="details mt-md-4 mt-2">
                     @php($ganti = ['KABUPATEN', 'KOTA '])
                     @php($dg = ['Kab.', ''])
                     @php($filter = str_replace($ganti, $dg, $product->kost->city))
@@ -225,34 +294,18 @@
                                             <span class="font-for-tab d-inline-block font-size-sm text-body align-middle">({{$overallRating[1]}})</span>
                                         </span> --}}
                                 </div>
-                                <span class="detail-kost-overview__divider">·</span>
+                                <span class="detail-kost-overview__divider d-none d-md-flex">·</span>
                                 @endif
                                 @endfor
                             </div>
                             <div class="detail-kost-overview__right-section">
-                                <div class="detail-kost-overview__area">
+                                <div class="detail-kost-overview__area pl-1">
                                     <i class="detail-kost-overview__area-icon bg-c-icon bg-c-icon--sm fa fa-map-marker">
-                                        <title>place-holder</title>
-                                        <use href="#basic-place-holder"></use>
                                     </i>
                                     <span class="detail-kost-overview__area-text capitalize">Kec. {{ strToLower($product->kost->district) }}</span>
                                 </div>
                             </div>
                         </section>
-
-                        {{-- <span
-                            class="d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'ml-md-2 ml-sm-0 pl-2' : 'mr-md-2 mr-sm-0 pr-2'}}">{{$overallRating[0]}}</span>
-                        <div class="star-rating">
-
-                        </div> --}}
-
-                        {{-- <span style="width: 0px;height: 10px;border: 0.5px solid #707070; margin-top: 6px"></span>
-                        <span
-                            class="font-for-tab d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'mr-1 ml-md-2 ml-1 pr-md-2 pr-sm-1 pl-md-2 pl-sm-1' : 'ml-1 mr-md-2 mr-1 pl-md-2 pl-sm-1 pr-md-2 pr-sm-1'}}">{{$countOrder}} {{\App\CPU\translate('orders')}}   </span>
-                        <span style="width: 0px;height: 10px;border: 0.5px solid #707070; margin-top: 6px">    </span>
-                        <span
-                            class=" font-for-tab d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "rtl" ? 'mr-1 ml-md-2 ml-0 pr-md-2 pr-sm-1 pl-md-2 pl-sm-1' : 'ml-1 mr-md-2 mr-0 pl-md-2 pl-sm-1 pr-md-2 pr-sm-1'}}">  {{$countWishlist}} {{\App\CPU\translate('wish')}} </span> --}}
-
                     </div>
                     <section class="detail-kost-additional-widget">
                         <div class="detail-kost-additional-widget__left-section">
@@ -396,7 +449,7 @@
                     <!-- fasilitas -->
                     <div class="container">
                         <div class="section-header">
-                            <h5>{{ App\CPU\translate('Facility') }}</h5>
+                            <h5 class="fasilitas">{{ App\CPU\translate('Fasilitas') }}</h5>
                         </div>
                         <div class="card-header pb-1 section-head">
                             <h6 class="mb-1">{{ App\CPU\translate('room_size') }}</h6>
@@ -530,7 +583,6 @@
                                     <input type="text" class="seller_id" hidden seller-id="{{$product->seller->id }}">
                                     <textarea shop-id="{{$product->seller->shop->id}}" class="chatInputBox"
                                             id="chatInputBox" rows="5"> </textarea>
-
                                     <button class="btn btn-secondary" style="color: white;"
                                             id="cancelBtn">{{\App\CPU\translate('cancel')}}
                                     </button>
@@ -551,7 +603,7 @@
                                         <div class="shop_image d-flex justify-content-center align-items-center">
                                             <a href="{{ route('shopView',[0]) }}" class="d-flex justify-content-center">
                                                 <img style="height: 65px;width: 65px; border-radius: 50%"
-                                                    src="{{asset("storage/app/public/company")}}/{{$web_config['fav_icon']->value}}"
+                                                    src="{{asset("storage/company")}}/{{$web_config['fav_icon']->value}}"
                                                     onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                                     alt="">
                                             </a>
@@ -572,7 +624,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="review d-flex align-items-center">
-                                            <div class="w-100 d-flex">
+                                            {{-- <div class="w-100 d-flex">
                                                 <div class="flag">
                                                     <img class="{{Session::get('direction') === " rtl" ? 'ml-2' : 'mr-2' }}" width="20"
                                                         src="{{asset('public/assets/front-end')}}/img/flags/id.png" alt="Eng"
@@ -584,16 +636,14 @@
                                                 <span
                                                     class="d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "
                                                     rtl" ? 'mr-2' : 'ml-2' }}"></span>
+                                            </div> --}}
+                                                </div>
                                             </div>
-                                        </div>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 p-md-0 pt-sm-3">
+                                {{-- <div class="col-md-6 p-md-0 pt-sm-3">
                                     <div class="seller_contact">
-
                                         <div
                                             class="d-flex align-items-center {{Session::get('direction') === "rtl" ? 'pl-4' : 'pr-4'}}">
                                             <a href="{{ route('shopView',[0]) }}">
@@ -604,7 +654,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     @endif
@@ -735,77 +785,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="kost-review__fac-rating">
-                                <div class="kost-review-fac-rating">
-                                    <div class="kost-review-fac-rating__column">
-                                        <div class="kost-review-fac-rating__item">
-                                            <span class="kost-review-fac-rating__title">Kebersihan</span>
-                                            <div class="kost-review-fac-rating__value">
-                                                <div class="star-container">
-                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span>
-                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                    </span>
-                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                    </span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                    </span>
-                                                    <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use>
-                                                        </svg>
-                                                    </span></div>
-                                                    <span class="kost-review-fac-rating__value-text">5.0</span>
-                                                </div>
-                                            </div>
-                                            <div class="kost-review-fac-rating__item">
-                                                        <span class="kost-review-fac-rating__title">Kenyamanan</span>
-                                                        <div class="kost-review-fac-rating__value">
-                                                            <div class="star-container">
-                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                                </span>
-                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                                </span>
-                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                                </span>
-                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                                </span>
-                                                                <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg>
-                                                                </span>
-                                                            </div>
-                                                            <span class="kost-review-fac-rating__value-text">5.0</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="kost-review-fac-rating__item">
-                                                        <span class="kost-review-fac-rating__title">Keamanan</span>
-                                                        <div class="kost-review-fac-rating__value">
-                                                            <div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div><div class="kost-review-fac-rating__column"><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
-                    Harga
-                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
-                    Fasilitas Kamar
-                </span> <div class="kost-review-fac-rating__value"><div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;"><svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span></div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div><div class="kost-review-fac-rating__item"><span class="kost-review-fac-rating__title">
-                    Fasilitas Umum
-                </span>
-                <div class="kost-review-fac-rating__value">
-                    <div class="star-container"><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                        <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use>
-
-                        </svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                            <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph">
-                                </use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                    <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title>
-                                        <use href="#basic-star-glyph"></use></svg></span><span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                            <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span>
-                                            <span class="star fa fa-star" style="color: rgb(64, 64, 64); margin-left: 2px;">
-                                                <svg role="img" class="bg-c-icon bg-c-icon--sm"><title>star-glyph</title> <use href="#basic-star-glyph"></use></svg></span>
-                                            </div> <span class="kost-review-fac-rating__value-text">5.0</span></div></div></div></div></div>  --}}
-                                            <div class="kost-review__users-feedback"><div class="users-feedback-container users-feedback-container--card"><div class="users-feedback"><div class="users-feedback__section"><div class="user-feedback__header"><img alt="foto profile" class="user-feedback__photo" data-src="null" src="{{ asset('assets/front-end/img/user.png') }}" lazy="error"> <div class="user-feedback__profile">
+                            <div class="kost-review__users-feedback"><div class="users-feedback-container users-feedback-container--card"><div class="users-feedback"><div class="users-feedback__section"><div class="user-feedback__header"><img alt="foto profile" class="user-feedback__photo" data-src="null" src="{{ asset('assets/front-end/img/user.png') }}" lazy="error"> <div class="user-feedback__profile">
                     <p class="user-feedback__profile-name bg-c-text bg-c-text--body-1 ">Agita Essa Putri</p>
                     <p class="bg-c-text bg-c-text--label-2 ">1 bulan yang lalu</p>
                 </div>
@@ -876,7 +856,6 @@
                                                             </iframe>
                                                         </div>
                                                     @endif --}}
-
                                                     <div class="col-lg-12 col-md-12">
                                                         {!! $product->kost['deskripsi'] !!}
                                                     </div>
@@ -951,7 +930,6 @@
                                                         {{$rating[0]}}
                                                     </span>
                                                         </div>
-
                                                         <div class="d-flex align-items-center mb-2">
                                                             <div
                                                                 class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
@@ -970,7 +948,6 @@
                                                     {{$rating[1]}}
                                                     </span>
                                                         </div>
-
                                                         <div class="d-flex align-items-center mb-2">
                                                             <div
                                                                 class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
@@ -988,7 +965,6 @@
                                                         {{$rating[2]}}
                                                     </span>
                                                         </div>
-
                                                         <div class="d-flex align-items-center mb-2">
                                                             <div
                                                                 class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
@@ -1007,7 +983,6 @@
                                                     {{$rating[3]}}
                                                     </span>
                                                         </div>
-
                                                         <div class="d-flex align-items-center">
                                                             <div
                                                                 class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
@@ -1059,7 +1034,6 @@
                                                                                         @endfor
                                                                                     </div>
                                                                                 </div>
-
                                                                                 <div class="font-size-ms text-muted">
                                                                                     {{$productReview->created_at->format('M d Y')}}
                                                                                 </div>
@@ -1105,7 +1079,7 @@
             </div>
 
             <!-- Product thumbnail-->
-            <div class="col-lg-5 col-md-5 mt-md-0 mt-sm-3" style="direction: {{ Session::get('direction') }}">
+            <div class="col-lg-5 col-md-5 mt-md-0 mt-sm-3 d-none d-md-block" style="direction: {{ Session::get('direction') }}">
                 <div class="cz">
                     <div class="container p-0">
                         <div class="row">
@@ -1225,10 +1199,29 @@
             </div>
         </div>
     </div>
+    <div class="product-footer d-flex d-md-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <span class="price-foot">
+                        Rp.1900.000 <span class="month">/ Bulan</s>
+                    </span>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-success px-1 py-2 w-100" onclick="selectDate()">
+                        Ajukan Sewa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('script')
     <script>
+        function selectDate(){
+            console.log('select date')
+        }
         $(document).ready(function(){
             var h = $('#cz-preview').outerHeight()
             var tinggi = h/2;

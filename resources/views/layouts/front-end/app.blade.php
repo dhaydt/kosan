@@ -716,9 +716,11 @@
 <!-- Footer-->
 <!-- Footer-->
 @include('layouts.front-end.partials._footer')
+@if (Route::is('home'))
 <div class="footer-mobile d-block d-md-none">
     @include('layouts.front-end.partials._mobile_footer')
 </div>
+@endif
 <!-- Toolbar for handheld devices-->
 <!--<div class="cz-handheld-toolbar" id="toolbar">
     {{--@include('layouts.front-end.partials._toolbar')--}}

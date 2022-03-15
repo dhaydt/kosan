@@ -239,6 +239,7 @@
                 </div>
             </div>
         </div>
+        @if (Route::is('home'))
         <div class="bottom-nav">
             <div class="input-group-overlay p-2" style="text-align: {{Session::get('direction') === " rtl" ? 'right'
                 : 'left' }}">
@@ -260,6 +261,7 @@
                 </form>
             </div>
         </div>
+        @endif
     </div>
 </header>
 
