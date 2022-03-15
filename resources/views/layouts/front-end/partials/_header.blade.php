@@ -260,14 +260,13 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a class="navbar-brand d-none d-sm-block {{Session::get('direction') === " rtl" ? 'ml-3' : 'mr-3' }}
+        <a class="navbar-brand d-none d-md-block {{Session::get('direction') === " rtl" ? 'ml-3' : 'mr-3' }}
           flex-shrink-0 tab-logo" href="{{route('home')}}" style="min-width: 7rem;">
           <img style="height: 45px!important;"
                          src="{{asset("storage/company")."/".$web_config['web_logo']->value}}"
                          onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                          alt="{{$web_config['name']->value}}"/>
         </a>
-
         @if (!Route::is('shop-cart'))
         <!-- Toolbar-->
         <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">

@@ -277,6 +277,41 @@
         }
 
         @media (max-width: 768px ) {
+            .btn-scroll-top.show {
+                right: 1rem;
+                display: none !important;
+            }
+            .unf-bottomnav {
+                padding: 10px 20px 10px 20px;
+                height: 50px;
+                position: fixed;
+                bottom: 0px;
+                width: 100%;
+                padding-bottom: 50px;
+                background-color: var(--N0,#FFFFFF);
+                box-shadow: rgb(108 114 124 / 16%) 0px -2px 4px 0px;
+                z-index: 20;
+                display: flex;
+                max-width: 100vw;
+                margin: 0px auto;
+                -webkit-box-pack: justify;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+            .css-11rf802 {
+                padding: 4px 0px;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                flex-flow: column nowrap;
+                justify-content: space-around;
+                font-weight: 400;
+                font-size: 10px;
+                line-height: 16px;
+                color: rgba(49, 53, 59, 0.68);
+                text-decoration: initial;
+                white-space: nowrap;
+            }
             .feature_header {
                 margin-top: 0;
                 display: flex;
@@ -681,6 +716,9 @@
 <!-- Footer-->
 <!-- Footer-->
 @include('layouts.front-end.partials._footer')
+<div class="footer-mobile d-block d-md-none">
+    @include('layouts.front-end.partials._mobile_footer')
+</div>
 <!-- Toolbar for handheld devices-->
 <!--<div class="cz-handheld-toolbar" id="toolbar">
     {{--@include('layouts.front-end.partials._toolbar')--}}

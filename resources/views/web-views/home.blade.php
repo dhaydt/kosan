@@ -120,6 +120,14 @@
     .for-flash-deal-img img {
         max-width: none;
     }
+    .kampus-body h5{
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .kampus-body span {
+        font-size: 16px;
+        font-weight: 500;
+    }
 
     @media (max-width: 375px) {
         .cz-countdown {
@@ -134,6 +142,19 @@
     }
 
     @media (max-width: 600px) {
+        .kampus-body h5{
+        font-size: 14px;
+    }
+    .kampus-body span {
+        font-size: 14px;
+    }
+        .manual-nav.nav-manual .owl-carousel .owl-nav button {
+            padding: 5px 9px !important;
+            font-size: 13px;
+        }
+        .manual-nav.nav-manual .owl-carousel .owl-nav{
+            right: -7px;
+        }
         .flash_deal_title {
         font-weight: 600;
         font-size: 18px;
@@ -200,7 +221,7 @@
     @media (max-width: 992px) {
         .navbar-collapse {
         position: fixed;
-        top: 69px;
+        top: 56px;
         left: 0;
         padding-left: 15px;
         padding-right: 15px;
@@ -647,7 +668,7 @@
         <div class="feature_header d-flex align-items-center">
             <span class="for-feature-title capitalize">{{strtolower($category['name'])}}</span>
         </div>
-        <div class="d-flex col-md-10 justify-content-between">
+        <div class="d-flex col-md-10 col-8 justify-content-between">
             <div class="d-flex float-right for-shoting-mobile">
                 <form id="{{ $category['id'] }}-form" action="{{ route('products') }}" method="GET">
                     <div class="form-inline flex-nowrap for-mobile">
@@ -689,7 +710,7 @@
     <div class="row mt-2 mb-3 w-100">
         @foreach(\App\CPU\CategoryManager::products($category['id']) as $key=>$product)
         @if($key<12)
-        <div class="col-md-3 col-sm-3 col-6 pl-0">
+        <div class="col-md-3 mb-3 col-sm-3 col-6 pl-0">
             @if (empty($country))
             @include('web-views.partials._single-product',['product'=>$product])
             @else
@@ -720,9 +741,9 @@
         <div class="mt-2 mb-3 row">
                 @foreach($ptn as $p)
                 <div class="col-md-3 col-6 mb-2">
-                    <div class="card px-2 py-4 kampus-card">
+                    <div class="card px-2 p-2 py-md-4 kampus-card">
                         <a href="{{ route('products', ['data-from' => 'collage', 'collage_id' => $p->id ]) }}" class="row no-gutters">
-                          <div class="col-md-4 d-flex justify-content-center align-items-center">
+                          <div class="col-md-4 pr-2 col-4 d-flex justify-content-center align-items-center">
                               <div class="img-frame">
                                   <img onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                   src="{{asset("storage/collage/$p->logo")}}" class="h-100"
@@ -732,12 +753,12 @@
                           @php($word = ['KOTA ', 'KABUPATEN'])
                           @php($rpl = ['', 'Kab.'])
                           {{-- {{ dd($p->city->name) }} --}}
-                          <div class="col-md-8">
-                              <div class="card-body p-0">
-                                <h5 class="card-title my-1" style="font-size: 16px; font-weight: 600;">{{ $p->short }}</h5>
+                          <div class="col-md-8 col-8">
+                              <div class="card-body p-0 kampus-body">
+                                <h5 class="card-title my-1">{{ $p->short }}</h5>
                                 @if (isset($p->city))
                                 @php($city = str_replace($word, $rpl, $p->city->name))
-                                <span class="card-text capitalize" style="font-size: 16px; font-weight: 500;">{{ strtoLower($city) }}</span>
+                                <span class="card-text capitalize">{{ strtoLower($city) }}</span>
                                 @endif
                             </div>
                           </div>
@@ -882,7 +903,7 @@
             navText: ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
             dots: false,
             autoplayHoverPause: false,
-            center: true,
+            // center: true,
             responsive: {
                 //X-Small
                 0: {
