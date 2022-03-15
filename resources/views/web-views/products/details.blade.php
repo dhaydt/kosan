@@ -80,6 +80,14 @@
             background-color: #ffffff;
             text-transform: uppercase;
         }
+        button.carousel-control-next, button.carousel-control-prev {
+            background-color: transparent;
+            opacity: 1;
+            border: none;
+        }
+        .carousel-control-prev i, .carousel-control-next i{
+            color: #fff;
+        }
 
         @media (max-width: 768px) {
             .card-body span {
@@ -243,7 +251,7 @@
     </style>
     <style>
         thead {
-            background: {{$web_config['primary_color']}}                         !important;
+            background: {{$web_config['primary_color']}}!important;
             color: white;
         }
         th, td {
@@ -269,19 +277,30 @@
             <div class="col-lg-7 col-md-7 col-12">
                 <div class="cz-product-gallery">
                     <div class="cz-preview" id="cz-preview">
-                        @if($product->images!=null)
+                        <div id="carouselExampleControls" data-interval="false" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                            @if($product->images!=null)
                             @foreach (json_decode($product->images) as $key => $photo)
                                 <div
-                                    class="cz-preview-item d-flex align-items-center justify-content-center {{$key==0?'active':''}}"
+                                    class="carousel-item h-100 {{$key==0?'active':''}}"
                                     id="image{{$key}}">
-                                    <img class="img-responsive"
-                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                         src="{{asset("storage/product/$photo")}}"
-                                         alt="Product image" width="">
-                                    <div class="cz-image-zoom-pane"></div>
+                                    <img class="w-100"
+                                        onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                        src="{{asset("storage/product/$photo")}}"
+                                        style="height: 383px;"
+                                        alt="Product image" width="">
                                 </div>
                             @endforeach
-                        @endif
+                            @endif
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+
                     </div>
                 </div>
 
@@ -558,7 +577,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 p-md-0 pt-sm-3">
+                                {{-- <div class="col-md-6 p-md-0 pt-sm-3">
                                     <div class="seller_contact">
                                         <div
                                             class="d-flex align-items-center {{Session::get('direction') === "rtl" ? 'pl-4' : 'pr-4'}}">
@@ -588,7 +607,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row msg-option" id="msg-option">
                                 <form action="">
