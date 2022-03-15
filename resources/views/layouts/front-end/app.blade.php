@@ -41,8 +41,6 @@
 
     <link rel="stylesheet" href="{{asset('assets/front-end')}}/css/home.css"/>
     <link rel="stylesheet" href="{{asset('assets/front-end')}}/css/responsive1.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
     {{--dont touch this--}}
     <meta name="_token" content="{{csrf_token()}}">

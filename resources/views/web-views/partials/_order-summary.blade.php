@@ -83,9 +83,13 @@
         <hr class="my-4 mb-2" style="border: 1px dashed #e3e9ef">
         <div class="d-flex justify-content-between">
             <span class="cart_title">{{\App\CPU\translate('total_pembayaran_pertama')}}</span>
-            <span class="cart_value">
-               {{\App\CPU\Helpers::currency_converter($sub_total+$total_tax+$total_shipping_cost-$coupon_dis-$total_discount_on_product)}}
-            </span>
+            <span id="priceTotal" class="d-none">{{\App\CPU\Helpers::currency_converter($sub_total+$total_tax+$total_shipping_cost-$coupon_dis-$total_discount_on_product)}}</span>
+            <div class="d-flex">
+                <span class="cart_value">
+                   Rp.
+                </span>
+                <span class="cart_value" id="totalPrice"></span>
+            </div>
         </div>
 
         {{-- <div class="d-flex justify-content-center">

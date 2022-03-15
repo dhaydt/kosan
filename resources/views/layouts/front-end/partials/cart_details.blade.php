@@ -355,30 +355,8 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
     <!-- Sidebar-->
     @include('web-views.partials._order-summary')
 </div>
-
-
 <script>
     cartQuantityInitialize();
-
-    function set_shipping_id(id, cart_group_id) {
-        $.get({
-            url: '{{url('/')}}/customer/set-shipping-method',
-            dataType: 'json',
-            data: {
-                id: id,
-                cart_group_id: cart_group_id
-            },
-            beforeSend: function () {
-                $('#loading').show();
-            },
-            success: function (data) {
-                location.reload();
-            },
-            complete: function () {
-                $('#loading').hide();
-            },
-        });
-    }
 </script>
 @push('script')
 <script src="{{asset('public/assets/back-end/js/spartan-multi-image-picker.js')}}"></script>
@@ -417,41 +395,59 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                     });
                 }
             });
-        })
+    })
+
+    function number(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     $(document).ready(function(){
-            jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
-    jQuery('.quantity').each(function() {
-      var spinner = jQuery(this),
-        input = spinner.find('input[type="number"]'),
-        btnUp = spinner.find('.quantity-up'),
-        btnDown = spinner.find('.quantity-down'),
-        min = input.attr('min'),
-        max = input.attr('max');
+        var pure = $('#priceTotal').text();
+        var rmrp = pure.replace(/[Rp.]/g, '');
+        $('#totalPrice').text(rmrp)
+        console.log(rmrp)
+    jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up" id="up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+        jQuery('.quantity').each(function() {
+        var spinner = jQuery(this),
+            input = spinner.find('input[type="number"]'),
+            btnUp = spinner.find('.quantity-up'),
+            btnDown = spinner.find('.quantity-down'),
+            min = input.attr('min'),
+            max = input.attr('max');
 
-      btnUp.click(function() {
-        var oldValue = parseFloat(input.val());
-        if (oldValue >= max) {
-          var newVal = oldValue;
-        } else {
-          var newVal = oldValue + 1;
-        }
-        spinner.find("input").val(newVal);
-        spinner.find("input").trigger("change");
-      });
+        btnUp.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue >= max) {
+            var newVal = oldValue;
+            } else {
+            var newVal = oldValue + 1;
+            }
+            spinner.find("input").val(newVal);
+            var price = $("#priceTotal").text()
+            var rp = price.replace(/[^\d\.]/g, '')
+            var val = rp.replace(/[\.]/g, '')* newVal
+            var newPrice = number(val)
+            $('#totalPrice').text(newPrice)
 
-      btnDown.click(function() {
-        var oldValue = parseFloat(input.val());
-        if (oldValue <= min) {
-          var newVal = oldValue;
-        } else {
-          var newVal = oldValue - 1;
-        }
-        spinner.find("input").val(newVal);
-        spinner.find("input").trigger("change");
-      });
+            spinner.find("input").trigger("change");
+        });
 
-    });
-        })
+        btnDown.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue <= min) {
+            var newVal = oldValue;
+            } else {
+            var newVal = oldValue - 1;
+            }
+            spinner.find("input").val(newVal);
+            var price = $("#priceTotal").text()
+            var rp = price.replace(/[^\d\.]/g, '')
+            const val = rp.replace(/[\.]/g, '')* newVal
+            var newPrice = number(val)
+            $('#totalPrice').text(newPrice)
+            spinner.find("input").trigger("change");
+        });
+        });
+    })
 </script>
 @endpush
