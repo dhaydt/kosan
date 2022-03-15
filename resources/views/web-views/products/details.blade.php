@@ -192,6 +192,18 @@
         }
 
         @media (max-width: 500px) {
+            .specification p{
+                font-size: 14px;
+            }
+            .owner-feedback .owner-feedback__title, .owner-feedback .owner-feedback__description{
+                font-size: 14px;
+            }
+            .owner-feedback .owner-feedback__date{
+                font-size: 12px;
+            }
+            .seller_details{
+                height: 90px;
+            }
             .seller_shop {
                 display: flex !important;
                 justify-content: space-between !important;
@@ -669,7 +681,7 @@
                                 {{ App\CPU\translate('rule') }}
                             </h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body pt-1">
                             @foreach (json_decode($product->kost->aturan_id) as $a)
                             <div class="item-facility">
                                 <img onerror="this.src='{{asset('assets/front-end/img/rules.png')}}'" class="mr-3" src="{{ asset('assets/front-end/img').'/'.strtolower($a).'.png' }}" alt="broken" style="height: 23px">
@@ -815,12 +827,12 @@
 
         <div class="container">
             <div class="section-header">
-                <h5>
+                <h5 class="">
                     {{ App\CPU\translate('additional_info') }}
                 </h5>
             </div>
             <div class="row pt-2 specification">
-                <div class="col-lg-12 col-md-12">
+                <div class="col-lg-12 col-md-12 pl-4">
                     {!! $product->kost['deskripsi'] !!}
                 </div>
             </div>
