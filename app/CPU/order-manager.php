@@ -57,9 +57,9 @@ class OrderManager
         $success = 1;
         $stock = $product['current_stock'];
         if ($status == 0) {
-            $product->current_stock = $stock + 1;
-        } else {
             $product->current_stock = $stock - 1;
+        } else {
+            $product->current_stock = $stock + 1;
         }
 
         $room->available = $status;
