@@ -6,6 +6,7 @@ use App\Model\Admin;
 use App\Model\AdminWallet;
 use App\Model\Cart;
 use App\Model\CartShipping;
+use App\Model\Detail_room;
 use App\Model\Order;
 use App\Model\OrderDetail;
 use App\Model\OrderTransaction;
@@ -49,6 +50,28 @@ class OrderManager
         ];
     }
 
+    public static function updateRoom($id, $status)
+    {
+        $room = Detail_room::where(['id' => $id])->first();
+        $product = Product::where('room_id', $room->room_id)->first();
+        $success = 1;
+        $stock = $product['current_stock'];
+        if ($status == 1) {
+            $product->current_stock = $stock + 1;
+        } else {
+            $product->current_stock = $stock - 1;
+        }
+
+        $room->available = $status;
+
+        $product->save();
+        $room->save();
+
+        return response()->json([
+            'success' => $success,
+        ], 200);
+    }
+
     public static function stock_update_on_order_status_change($order, $status)
     {
         if ($status == 'returned' || $status == 'failed' || $status == 'canceled') {
@@ -65,7 +88,7 @@ class OrderManager
                     // }
                     Product::where(['id' => $product['id']])->update([
                         // 'variation' => json_encode($var_store),
-                        'current_stock' => $product['current_stock'] + $detail['qty'],
+                        // 'current_stock' => $product['current_stock'] + $detail['qty'],
                     ]);
                     OrderDetail::where(['id' => $detail['id']])->update([
                         'is_stock_decreased' => 0,
@@ -99,7 +122,7 @@ class OrderManager
                     // }
                     Product::where(['id' => $product['id']])->update([
                         // 'variation' => json_encode($var_store),
-                        'current_stock' => $product['current_stock'] - $detail['qty'],
+                        // 'current_stock' => $product['current_stock'] - $detail['qty'],
                     ]);
                     OrderDetail::where(['id' => $detail['id']])->update([
                         'is_stock_decreased' => 1,
@@ -279,7 +302,7 @@ class OrderManager
             'discount_amount' => $discount,
             'discount_type' => $discount == 0 ? null : 'coupon_discount',
             'coupon_code' => $coupon_code,
-            'order_amount' => CartManager::cart_grand_total($cart_group_id) - $discount,
+            'order_amount' => (CartManager::cart_grand_total($cart_group_id) - $discount) * $data['data']->durasi,
             // 'shipping_address' => $address_id,
             // 'shipping_address_data' => ShippingAddress::find($address_id),
             // 'shipping_cost' => CartManager::get_shipping_cost($data['cart_group_id']),
@@ -300,7 +323,7 @@ class OrderManager
                 'product_details' => $product,
                 'data_penyewa' => $penyewa,
                 'qty' => $data['data']->durasi,
-                'price' => $c['price'] * $data['data']->durasi,
+                'price' => $c['price'],
                 'tax' => $c['tax'] * $c['quantity'],
                 'discount' => $c['discount'] * $c['quantity'],
                 'discount_type' => 'discount_on_product',
@@ -328,7 +351,7 @@ class OrderManager
             // }
 
             Product::where(['id' => $product['id']])->update([
-                'current_stock' => $product['current_stock'] - $c['quantity'],
+                // 'current_stock' => $product['current_stock'] - $c['quantity'],
             ]);
 
             DB::table('order_details')->insert($or_d);

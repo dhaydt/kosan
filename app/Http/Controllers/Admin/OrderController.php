@@ -81,6 +81,7 @@ class OrderController extends Controller
     {
         // dd($request);
         $order = Order::find($request->id);
+        // $detail = $order['details']
         $fcm_token = $order->customer->cm_firebase_token;
         $value = Helpers::order_status_update_message($request->order_status);
         try {
@@ -102,10 +103,10 @@ class OrderController extends Controller
         } else {
             $rom = $kamar;
         }
-
         $order->order_status = $request->order_status;
         $order->roomDetail_id = $rom;
-        OrderManager::stock_update_on_order_status_change($order, $request->order_status);
+        OrderManager::updateRoom($rom, 1);
+        // OrderManager::stock_update_on_order_status_change($order, $request->order_status);
         $order->save();
 
         $transaction = OrderTransaction::where(['order_id' => $order['id']])->first();

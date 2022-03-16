@@ -125,10 +125,10 @@
                                 {{ $order->durasi }} {{ App\CPU\Translate('month') }}
                             </td>
                             {{-- <td> {{\App\CPU\BackEndHelper::set_symbol(\App\CPU\BackEndHelper::usd_to_currency($order->order_amount))}}</td> --}}
-                            <td class="text-capitalize">
+                            <td class="text-capitalize text-center">
                                 @if($order['order_status']=='pending')
-                                    <span class="badge badge-soft-info ml-2 ml-sm-3">
-                                        <span class="legend-indicator bg-info"
+                                    <span class="badge badge-soft-warning ml-2 ml-sm-3">
+                                        <span class="legend-indicator bg-warning"
                                               style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('need_confirmation')}}
                                       </span>
 
