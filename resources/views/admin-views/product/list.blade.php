@@ -70,6 +70,7 @@
                                     <th class="text-center">{{\App\CPU\translate('Image')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Class')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('price_/_month')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Available')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Total_rooms')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Active')}} {{\App\CPU\translate('status')}}</th>
                                     <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
@@ -98,6 +99,9 @@
                                         </td>
                                         <td class="text-center">
                                             {{ $p->current_stock }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $p->total }}
                                         </td>
                                         <td class="text-center">
                                             <label class="switch">

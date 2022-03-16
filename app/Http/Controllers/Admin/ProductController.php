@@ -213,7 +213,7 @@ class ProductController extends BaseController
         $product->discount_type = $request->discount_type;
         $product->request_status = 1;
         // $product->attributes = json_encode($request->choice_attributes);
-        $product->current_stock = abs($stock_count);
+
         $product->total = $request['total'];
         $product->size = $request['size'];
 
@@ -230,6 +230,7 @@ class ProductController extends BaseController
         if ($request->ajax()) {
             return response()->json([], 200);
         } else {
+            $current = [];
             foreach ($room as $r) {
                 if ($r) {
                     $isi = new Detail_room();
@@ -239,11 +240,13 @@ class ProductController extends BaseController
                         $avai = 0;
                     } else {
                         $avai = 1;
+                        array_push($current, 1);
                     }
                     $isi->available = $avai;
-                    $isi->save();
                 }
+                $isi->save();
             }
+            $product->current_stock = count($current);
             $product->save();
             $data = [];
             // foreach ($request->lang as $index => $key) {
