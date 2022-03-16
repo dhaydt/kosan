@@ -322,6 +322,28 @@ class ProductController extends BaseController
         ], 200);
     }
 
+    public function room_update(Request $request)
+    {
+        $room = Detail_room::where(['id' => $request['id']])->first();
+        $product = Product::where('room_id', $room->room_id)->first();
+        $success = 1;
+        $stock = $product['current_stock'];
+        if ($request['status'] == 1) {
+            $product->current_stock = $stock + 1;
+        } else {
+            $product->current_stock = $stock - 1;
+        }
+
+        $room->available = $request['status'];
+
+        $product->save();
+        $room->save();
+
+        return response()->json([
+            'success' => $success,
+        ], 200);
+    }
+
     public function get_categories(Request $request)
     {
         $cat = Category::where(['parent_id' => $request->parent_id])->get();

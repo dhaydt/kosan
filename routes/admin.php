@@ -242,6 +242,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::post('store', 'ProductController@store')->name('store');
             Route::get('remove-image', 'ProductController@remove_image')->name('remove-image');
             Route::post('status-update', 'ProductController@status_update')->name('status-update');
+            Route::post('room-update', 'ProductController@room_update')->name('room-update');
             Route::get('list/{type}', 'ProductController@list')->name('list');
             //Route::get('list/{type}/{slug}', 'ProductController@list')->name('list');
             Route::get('edit/{id}', 'ProductController@edit')->name('edit');
