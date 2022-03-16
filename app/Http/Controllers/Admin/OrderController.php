@@ -105,7 +105,7 @@ class OrderController extends Controller
         }
         $order->order_status = $request->order_status;
         $order->roomDetail_id = $rom;
-        OrderManager::updateRoom($rom, 1);
+        OrderManager::updateRoom($rom, 0);
         // OrderManager::stock_update_on_order_status_change($order, $request->order_status);
         $order->save();
 
