@@ -150,6 +150,7 @@
                 height: 35px !important;
                 overflow: hidden !important;
                 width: 100%;
+                text-overflow: ellipsis;
                 white-space: normal;
             }
             .search-card{
