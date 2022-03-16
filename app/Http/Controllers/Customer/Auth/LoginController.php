@@ -24,8 +24,20 @@ class LoginController extends Controller
         session()->put('keep_return_url', url()->previous());
         $user = session()->get('user');
         $pass = session()->get('password');
+
         if (isset($user) && isset($pass)) {
             $auth = User::where('email', 'like', "%{$user}%")->first();
+            if (isset($auth)) {
+                $phone_verification = Helpers::get_business_settings('phone_verification');
+                $email_verification = Helpers::get_business_settings('email_verification');
+                if ($phone_verification && !$auth->is_phone_verified) {
+                    return redirect(route('customer.auth.check', [$auth->id]));
+                }
+                if ($email_verification && !$auth->is_email_verified) {
+                    return redirect(route('customer.auth.check', [$auth->id]));
+                }
+            }
+
             if (isset($auth) && auth('customer')->attempt(['email' => $user, 'password' => $pass])) {
                 session()->put('wish_list', Wishlist::where('customer_id', auth('customer')->user()->id)->pluck('product_id')->toArray());
                 Toastr::info('Welcome to '.Helpers::get_business_settings('company_name').'!');
@@ -72,24 +84,24 @@ class LoginController extends Controller
 
         // VERIFIKASI HP/EMAIL
 
-        // $phone_verification = Helpers::get_business_settings('phone_verification');
-        // $email_verification = Helpers::get_business_settings('email_verification');
-        // if ($phone_verification && !$user->is_phone_verified) {
-        //     return redirect(route('customer.auth.check', [$user->id]));
-        // }
-        // if ($email_verification && !$user->is_email_verified) {
-        //     return redirect(route('customer.auth.check', [$user->id]));
-        // }
+        $phone_verification = Helpers::get_business_settings('phone_verification');
+        $email_verification = Helpers::get_business_settings('email_verification');
+        if ($phone_verification && !$user->is_phone_verified) {
+            return redirect(route('customer.auth.check', [$user->id]));
+        }
+        if ($email_verification && !$user->is_email_verified) {
+            return redirect(route('customer.auth.check', [$user->id]));
+        }
 
         // CHECK VERIFIKASI
 
-        // if (isset($user) && $user->is_active && auth('customer')->attempt(['email' => $user->email, 'password' => $request->password], $remember)) {
-        //     session()->put('wish_list', Wishlist::where('customer_id', auth('customer')->user()->id)->pluck('product_id')->toArray());
-        //     Toastr::info('Welcome to '.Helpers::get_business_settings('company_name').'!');
-        //     CartManager::cart_to_db();
+        if (isset($user) && $user->is_active && auth('customer')->attempt(['email' => $user->email, 'password' => $request->password], $remember)) {
+            session()->put('wish_list', Wishlist::where('customer_id', auth('customer')->user()->id)->pluck('product_id')->toArray());
+            Toastr::info('Welcome to '.Helpers::get_business_settings('company_name').'!');
+            CartManager::cart_to_db();
 
-        //     return redirect(session('keep_return_url'));
-        // }
+            return redirect(session('keep_return_url'));
+        }
 
         if (isset($user) && auth('customer')->attempt(['email' => $user->email, 'password' => $request->password], $remember)) {
             session()->put('wish_list', Wishlist::where('customer_id', auth('customer')->user()->id)->pluck('product_id')->toArray());

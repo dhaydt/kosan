@@ -86,7 +86,7 @@
             <span id="priceTotal" class="d-none">{{\App\CPU\Helpers::currency_converter($sub_total+$total_tax+$total_shipping_cost-$coupon_dis-$total_discount_on_product)}}</span>
             <div class="d-flex">
                 <span class="cart_value">
-                   Rp.
+                    Rp.
                 </span>
                 <span class="cart_value" id="totalPrice"></span>
             </div>
