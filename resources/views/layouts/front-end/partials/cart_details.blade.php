@@ -193,9 +193,8 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                         class="col-md-4 col-sm-4 offset-4 offset-sm-0 text-center d-flex justify-content-between align-items-center">
                         <div class="">
                             <div class=" text-accent">
-                                {{
-                                \App\CPU\Helpers::currency_converter(($cartItem['price']-$cartItem['discount'])*$cartItem['quantity'])
-                                }}
+                                {{-- {{ \App\CPU\Helpers::currency_converter(($cartItem['price']-$cartItem['discount'])*$cartItem['quantity']) }} --}}
+                                {{ \App\CPU\Helpers::currency_converter($cartItem['price']) }}
                             </div>
                         </div>
                         <div style="margin-top: 3px;">

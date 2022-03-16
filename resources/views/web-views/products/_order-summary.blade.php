@@ -30,7 +30,7 @@
                 @php($total_tax+=$cartItem['tax']*$cartItem['quantity'])
                 @php($total_discount_on_product+=$cartItem['discount']*$cartItem['quantity'])
             @endforeach
-            @php($total_shipping_cost=$shipping_cost)
+            {{-- @php($total_shipping_cost=$shipping_cost) --}}
         @else
             {{-- <span>{{\App\CPU\translate('empty_cart')}}</span> --}}
         @endif

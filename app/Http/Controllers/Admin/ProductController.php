@@ -327,17 +327,15 @@ class ProductController extends BaseController
         $room = Detail_room::where(['id' => $request['id']])->first();
         $product = Product::where('room_id', $room->room_id)->first();
         $success = 1;
-        $stock = $product['current_stock'];
-        if ($request['status'] == 1) {
-            $product->current_stock = $stock + 1;
-        } else {
-            $product->current_stock = $stock - 1;
-        }
 
         $room->available = $request['status'];
 
-        $product->save();
         $room->save();
+        $current = Detail_room::where('room_id', $room['room_id'])->where('available', 1)->get();
+        $available = count($current);
+        $product->current_stock = $available;
+
+        $product->save();
 
         return response()->json([
             'success' => $success,
