@@ -75,7 +75,7 @@
                 </div>
             </div>
             @endif
-            <div class="price_landscape d-flex" style="height: 48%;">
+            <div class="price_landscape d-flex">
                 <div class="kost-rc__price h-100">
                     <div class="rc-price mt-auto">
                         @if($product->discount > 0)

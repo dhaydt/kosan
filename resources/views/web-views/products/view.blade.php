@@ -97,6 +97,9 @@
         .sidepanel a:hover {
             color: #f1f1f1;
         }
+        .price_landscape{
+            height: 48px;
+        }
 
         .sidepanel .closebtn {
             position: absolute;
@@ -120,6 +123,7 @@
 
         .for-display {
             display: block !important;
+            padding-top: 40px;
         }
 
         @media (max-width: 360px) {
@@ -139,17 +143,41 @@
         }
 
         @media (max-width: 500px) {
+            .card-body.inline_product_search{
+                width: 64%;
+            }
+            .rc-facilities{
+                height: 35px !important;
+                overflow: hidden !important;
+                width: 100%;
+                white-space: normal;
+            }
+            .search-card{
+                height: 160px !important;
+            }
+            .img-box-search {
+                height: 165px !important;
+                width: 130px !important;
+            }
             .for-mobile {
-
                 margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 27%;
             }
-
             .openbtn:hover {
                 background-color: #fff;
             }
 
             .for-display {
                 display: flex !important;
+                padding-top: 0;
+            }
+            .for-display .flex-wrap {
+                margin-left: auto;
+            }
+            .for-shoting{
+                font-size: 14px;
+            }
+            .form-control.custom-select{
+                padding: 5px 10px !important;
             }
 
             .for-tab-display {
@@ -220,14 +248,14 @@
                     </div>
                     <div class="row col-md-6 for-display mx-0">
 
-                        <button class="openbtn text-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}" onclick="openNav()">
-                            <div style="margin-bottom: -30%;">
+                        {{-- <button class="d-none d-md-flex openbtn text-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}" onclick="openNav()">
+                            <div style="">
                                 <i class="fa fa-filter"></i>
                                 {{\App\CPU\translate('filter')}}
                             </div>
-                        </button>
+                        </button> --}}
 
-                        <div class="d-flex flex-wrap mt-5 float-right for-shoting-mobile">
+                        <div class="d-flex flex-wrap float-right for-shoting-mobile">
                             <form id="search-form" action="{{ route('products') }}" method="GET">
                                 <input hidden name="data_from" value="{{$data['data_from']}}">
                                 <div class="form-inline flex-nowrap pb-3 for-mobile">
