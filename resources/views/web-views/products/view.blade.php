@@ -147,7 +147,7 @@
                 width: 64%;
             }
             .rc-facilities{
-                height: 35px !important;
+                height: 24px !important;
                 overflow: hidden !important;
                 width: 100%;
                 text-overflow: ellipsis;
