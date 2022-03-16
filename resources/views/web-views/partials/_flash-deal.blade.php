@@ -229,9 +229,15 @@
                 <div class="card-body inline_product text-left px-3 pt-3 clickable" style="cursor: pointer;">
                     <div class="rating-show d-flex">
                         <div class="rc-overview__label bg-c-label capitalize">{{ $deal->product->kost->penghuni }}</div>
-                        @if ($deal->product->current_stock <= 3)
-                        <span class="stock-label text-danger bg-c-text--label-1">
-                            {{\App\CPU\translate('Sisa')}} {{ $deal->product->current_stock }} {{\App\CPU\translate('kamar')}}
+                        @if ($deal->product->current_stock != 0)
+                            @if ($deal->product->current_stock <= 3)
+                            <span class="stock-label text-danger bg-c-text--label-1">
+                                {{\App\CPU\translate('Sisa')}} {{ $deal->product->current_stock }} {{\App\CPU\translate('kamar')}}
+                            </span>
+                            @endif
+                        @else
+                        <span class="stock-label ml-1 text-grey bg-c-text--label-1">
+                            {{\App\CPU\translate('Kamar')}} {{\App\CPU\translate('Penuh')}}
                         </span>
                         @endif
                         <div class="room-card_overview">
@@ -471,11 +477,18 @@
                                             <div class="capitalize rc-overview__label bg-c-label bg-c-label--rainbow bg-c-label--rainbow-white">
                                                 {{ $deal->product->kost->penghuni }}
                                             </div>
-                                            @if ($deal->product->current_stock < 3)
+                                            @if ($deal->product->current_stock != 0)
+                                                @if ($deal->product->current_stock <= 3)
                                                 <span class="stock-label text-danger bg-c-text--label-1">
                                                     {{\App\CPU\translate('Sisa')}} {{ $deal->product->current_stock }} {{\App\CPU\translate('kamar')}}
                                                 </span>
                                             @endif
+                                            @else
+                                            <span class="stock-label ml-1 text-grey bg-c-text--label-1">
+                                                {{\App\CPU\translate('Kamar')}} {{\App\CPU\translate('Penuh')}}
+                                            </span>
+                                            @endif
+
                                             <span class="rc-overview__availability bg-c-text bg-c-text--label-4 bg-c-text--italic ">
                                                 @for($inc=0;$inc<1;$inc++) @if($inc<$overallRating[0])
                                                 <i class="sr-star czi-star-filled active"></i>

@@ -1161,9 +1161,15 @@
                             @include('web-views.products._order-summary')
                         </div>
                         <div class="sewa mt-3">
+                            @if ($product->current_stock > 0)
                             <button class="btn btn-success w-100" id="ajukan" type="button" onclick="buy_now()" disabled>
                                 Ajukan Sewa
                             </button>
+                            @else
+                            <button class="btn btn-secondary w-100" type="button" onclick="buy_now()" disabled>
+                                Kamar penuh
+                            </but
+                            @endif
                         </div>
                     </section>
                     </form>

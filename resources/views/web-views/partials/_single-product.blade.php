@@ -42,6 +42,10 @@
                 <span class="stock-label ml-1 text-danger bg-c-text--label-1">
                     {{\App\CPU\translate('Sisa')}} {{ $product->current_stock }} {{\App\CPU\translate('kamar')}}
                 </span>
+                @elseif($product->current_stock == 0)
+                <span class="stock-label ml-1 text-grey bg-c-text--label-1">
+                    {{\App\CPU\translate('Kamar')}} {{\App\CPU\translate('Penuh')}}
+                </span>
                 @endif
                 <div class="room-card_overview">
                     <span class="d-inline-block font-size-sm text-body">
