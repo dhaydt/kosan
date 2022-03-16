@@ -79,9 +79,7 @@ class OrderController extends Controller
 
     public function status(Request $request)
     {
-        // dd($request);
         $order = Order::find($request->id);
-        // $detail = $order['details']
         $fcm_token = $order->customer->cm_firebase_token;
         $value = Helpers::order_status_update_message($request->order_status);
         try {
@@ -98,14 +96,14 @@ class OrderController extends Controller
         }
 
         $kamar = $request->no_kamar;
-        if ($kamar == '' || $kamar == 'ditempat') {
+        if (strpos($kamar, 'id') !== false) {
             $rom = 'ditempat';
         } else {
             $rom = $kamar;
         }
         $order->order_status = $request->order_status;
         $order->roomDetail_id = $rom;
-        OrderManager::updateRoom($rom, 0);
+        OrderManager::updateRoom($kamar, 0);
         // OrderManager::stock_update_on_order_status_change($order, $request->order_status);
         $order->save();
 

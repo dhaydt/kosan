@@ -215,9 +215,18 @@
                                             <span>
                                                 {{ $detail->kost->penghuni }}
                                             </span>
-                                            @if ($detail->current_stock <= 3)
+                                            @php($stock = $order->details[0]->product->current_stock)
+                                            @if ($stock <= 3 && $stock != 0)
                                             <span>
-                                                {{\App\CPU\translate('Sisa')}} {{ $detail->current_stock }} {{\App\CPU\translate('kamar')}}
+                                                {{\App\CPU\translate('Sisa')}} {{ $stock }} {{\App\CPU\translate('kamar')}}
+                                            </span>
+                                            @elseif ($stock == 0)
+                                            <span>
+                                                Kamar Habis
+                                            </span>
+                                            @else
+                                            <span>
+                                                Ada {{ $stock }} kamar
                                             </span>
                                             @endif
                                         </div>
@@ -352,7 +361,9 @@
                             </button>
                         </div>
                         <div class="col-md-6">
-                            <a class="btn btn-success w-100" type="button" data-toggle="modal" data-target="#exampleModal">
+                            <a class="btn btn-success w-100 @if ($stock == 0)
+                                disabled
+                            @endif" type="button" data-toggle="modal" data-target="#exampleModal">
                                 {{ \App\CPU\Translate('Terima') }}
                             </a>
                             {{-- <a onclick="order_status('processing')" class="btn btn-success w-100">
@@ -381,7 +392,7 @@
                                 <input type="hidden" name="order_status" value="processing">
                                 <select id="rooms" class="custom-select custom-select-lg mb-3" name="no_kamar">
                                     <option selected>Pilih nomor kamar</option>
-                                    <option value="ditempat">Pilih ditempat</option>
+                                    <option value="id{{ $rooms[0]->room_id }}">Pilih ditempat</option>
                                     @foreach ($rooms as $r)
                                     @if ($r->available == 1)
                                     <option value="{{ $r->id }}">{{ $r->name }}</option>

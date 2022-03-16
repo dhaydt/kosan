@@ -52,20 +52,37 @@ class OrderManager
 
     public static function updateRoom($id, $status)
     {
-        $room = Detail_room::where(['id' => $id])->first();
-        $product = Product::where('room_id', $room->room_id)->first();
         $success = 1;
-        $stock = $product['current_stock'];
-        if ($status == 0) {
-            $product->current_stock = $stock - 1;
+        if (strpos($id, 'id') !== false) {
+            $int = str_replace('id', '', $id);
+            $product = Product::where('room_id', $int)->first();
+            $room = Detail_room::where('room_id', $product['room_id'])->where('available', 1)->first();
+            $stock = $product['current_stock'];
+            $room->user_id = 'booked';
+            if ($status == 0) {
+                $product->current_stock = $stock - 1;
+            } else {
+                $product->current_stock = $stock + 1;
+            }
+            $room->available = $status;
+            $product->save();
+            $room->save();
         } else {
-            $product->current_stock = $stock + 1;
+            $room = Detail_room::where(['id' => $id])->first();
+            $product = Product::where('room_id', $room->room_id)->first();
+
+            $stock = $product['current_stock'];
+            if ($status == 0) {
+                $product->current_stock = $stock - 1;
+            } else {
+                $product->current_stock = $stock + 1;
+            }
+
+            $room->available = $status;
+
+            $product->save();
+            $room->save();
         }
-
-        $room->available = $status;
-
-        $product->save();
-        $room->save();
 
         return response()->json([
             'success' => $success,
