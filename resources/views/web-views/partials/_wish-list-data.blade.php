@@ -149,7 +149,7 @@
 @else
     <center>
         <h6 class="text-muted">
-            {{\App\CPU\translate('Tidak_ada_data_ditemukan')}}.
+            {{\App\CPU\translate('data_not_found')}}.
         </h6>
     </center>
 @endif
