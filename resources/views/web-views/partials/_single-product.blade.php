@@ -13,6 +13,7 @@
     }
     .label-kost.single-label{
         left: 0;
+        background-color: {{ $web_config['primary_color'] }};
     }
     .product-card.card.single-card{
         border-radius: 10px;

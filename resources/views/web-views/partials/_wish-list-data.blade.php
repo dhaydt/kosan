@@ -85,6 +85,7 @@
     }
 </style>
 @if($wishlists->count()>0)
+{{-- {{ dd($wishlists) }} --}}
     @foreach($wishlists as $wishlist)
         @php($product = $wishlist->product)
         @if( $wishlist->product)
@@ -93,19 +94,35 @@
                     <div class="card">
                         <div class="row forPadding">
                             <div class="wishlist_product_img col-md-2 col-lg-2 col-sm-2">
-                                <a href="{{route('product',$product->slug)}}">
+                                <div href="{{route('product',$product->slug)}}">
                                     <img
-                                        src="{{\App\CPU\ProductManager::product_image_path('thumbnail')}}/{{$product['thumbnail']}}"
+                                        src="{{\App\CPU\ProductManager::product_image_path('product')}}/{{json_decode($product['images'])[0]}}"
                                         width="100">
-                                </a>
+                                </div>
                             </div>
-                            <div class="wishlist_product_desc col-md-4 mt-4">
-                                <span class="font-name">
-                                    <a href="{{route('product',$product['slug'])}}">{{$product['name']}}</a>
-                                </span>
-                                <br>
-                                <span
-                                    class="sellerName"> {{\App\CPU\translate('Brand')}} :{{$product->brand?$product->brand['name']:''}} </span>
+                            <div class="wishlist_product_desc col-md-8 mt-1">
+                                <div class="kost-rc__info">
+                                    <a href="{{route('product',$product->slug)}}">
+                                        <div class="rc-info">
+                                            @php($city = strtolower($product->kost['city']))
+                                            @php($district = strtolower($product->kost['district']))
+                                            <span class="rc-info__name bg-c-text bg-c-text--body-4 capitalize">
+                                                {{ $product->kost['name'] }} {{ $product->type }} {{ $city }}
+                                            </span>
+                                            <span class="rc-info__location bg-c-text bg-c-text--body-3 capitalize">
+                                                {{ $district }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="rating-show d-flex">
+                                    <div class="rc-overview__label bg-c-label capitalize">{{ $product->kost->penghuni }}</div>
+                                        @if ($product->current_stock <= 3)
+                                        <span class="stock-label ml-1 text-danger bg-c-text--label-1">
+                                            {{\App\CPU\translate('Sisa')}} {{ $product->current_stock }} {{\App\CPU\translate('kamar')}}
+                                        </span>
+                                        @endif
+                                </div>
                                 @php($tax = ($product->tax_type == 'percent' ? $product->unit_price + ($product->unit_price * $product->tax) / 100 : $product->unit_price + $product->tax))
                                 <div class="">
                                 <span
@@ -113,7 +130,7 @@
                                 </div>
                             </div>
                             <div
-                                class="wishlist_product_btn col-md-6 col-lg-6 col-sm-6 mt-5 float-right bodytr font-weight-bold"
+                                class="wishlist_product_btn col-md-2 col-sm-6 mt-3 float-right bodytr font-weight-bold"
                                 style="color: #92C6FF;">
 
                                 <a href="javascript:" class="wishlist_product_icon ml-2 pull-right mr-3">

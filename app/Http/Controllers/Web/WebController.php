@@ -670,7 +670,7 @@ class WebController extends Controller
 
     public function viewWishlist()
     {
-        $wishlists = Wishlist::where('customer_id', auth('customer')->id())->get();
+        $wishlists = Wishlist::with('product')->where('customer_id', auth('customer')->id())->get();
 
         return view('web-views.users-profile.account-wishlist', compact('wishlists'));
     }
