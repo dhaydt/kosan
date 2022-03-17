@@ -309,7 +309,8 @@ class WebController extends Controller
 
     public function shop_cart()
     {
-        if (auth('customer')->check() && Cart::where(['customer_id' => auth('customer')->id()])->count() > 0) {
+        $cart = Cart::where('customer_id', auth('customer')->id())->get();
+        if (auth('customer')->check() && count($cart) > 0) {
             // if (auth('customer')->user()->district == null) {
             //     // dd('no distrcit');
             //     $country = DB::table('country')->get();
@@ -327,6 +328,7 @@ class WebController extends Controller
 
             return view('web-views.shop-cart');
         }
+
         Toastr::info(translate('no_items_in_basket'));
 
         return redirect('/');

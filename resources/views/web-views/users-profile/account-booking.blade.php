@@ -88,6 +88,7 @@
         @include('web-views.partials._profile-aside')
         <section class="col-lg-9 mt-2 col-md-9 booking-col">
             <h1 class="h3 float-left headerTitle w-100">{{\App\CPU\translate('booking')}}</h1>
+            {{-- {{ dd($orders) }} --}}
             @foreach ($orders as $order)
             <div class="card w-100 mt-4">
                 <div class="card-header">
@@ -249,13 +250,43 @@
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        @if($order->order_status == 'pending' || $order->order_status == 'delivered')
-                        <div class="col-12 d-flex justify-content-end" id="contact-seller">
-                            <button class="btn btn-outline-success">
-                                Chat pemilik
-                            </button>
-                        </div>
+                        @if ($order->seller_is != 'admin')
+                            @if($order->order_status == 'pending' || $order->order_status == 'delivered')
+                            <div class="col-12 d-flex justify-content-end" id="contact-seller">
+                                <button class="btn btn-outline-success">
+                                    Chat pemilik
+                                </button>
+                            </div>
+                            @php($seller = $order->details[0]->product->kost->seller_id)
+                            @php($kost = $order->details[0]->product->kost->id)
+                            <div class="row msg-option" id="msg-option">
+                                <form action="">
+                                    <input type="text" class="seller_id" hidden seller-id="{{$seller }}">
+                                    <textarea shop-id="{{$kost}}" class="chatInputBox"
+                                              id="chatInputBox" rows="5"> </textarea>
+
+                                    <button class="btn btn-secondary" style="color: white;"
+                                            id="cancelBtn">{{\App\CPU\translate('cancel')}}
+                                    </button>
+                                    <button class="btn btn-primary" style="color: white;"
+                                            id="sendBtn">{{\App\CPU\translate('send')}}</button>
+                                </form>
+                            </div>
+                            <div class="go-to-chatbox" id="go_to_chatbox">
+                                <a href="{{route('chat-with-seller')}}" class="btn btn-primary" id="go_to_chatbox_btn">
+                                    {{\App\CPU\translate('go_to')}} {{\App\CPU\translate('chatbox')}} </a>
+                            </div>
+                            @endif
+                        @else
+                            @if($order->order_status == 'pending' || $order->order_status == 'delivered')
+                            <div class="col-12 d-flex justify-content-end">
+                                <a href="{{ route('contacts') }}" target="_blank" class="btn btn-outline-success text-success">
+                                    Chat Admin InRoom
+                                </a>
+                            </div>
+                            @endif
                         @endif
+
                         @if($order->order_status == 'processing')
                         <div class="col-12 d-flex justify-content-end">
                             <a href="{{ route('checkout-payment', ['order_id' => $order->id]) }}" class="btn btn-success">
@@ -265,25 +296,7 @@
                         @endif
                     </div>
                     {{-- {{ dd($order->details[0]->product->kost->id) }} --}}
-                    @php($seller = $order->details[0]->product->kost->seller_id)
-                    @php($kost = $order->details[0]->product->kost->id)
-                    <div class="row msg-option" id="msg-option">
-                        <form action="">
-                            <input type="text" class="seller_id" hidden seller-id="{{$seller }}">
-                            <textarea shop-id="{{$kost}}" class="chatInputBox"
-                                      id="chatInputBox" rows="5"> </textarea>
 
-                            <button class="btn btn-secondary" style="color: white;"
-                                    id="cancelBtn">{{\App\CPU\translate('cancel')}}
-                            </button>
-                            <button class="btn btn-primary" style="color: white;"
-                                    id="sendBtn">{{\App\CPU\translate('send')}}</button>
-                        </form>
-                    </div>
-                    <div class="go-to-chatbox" id="go_to_chatbox">
-                        <a href="{{route('chat-with-seller')}}" class="btn btn-primary" id="go_to_chatbox_btn">
-                            {{\App\CPU\translate('go_to')}} {{\App\CPU\translate('chatbox')}} </a>
-                    </div>
                 </div>
             </div>
             @endforeach
