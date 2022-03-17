@@ -333,12 +333,12 @@
               style="text-align: {{Session::get('direction') === " rtl" ? 'right' : 'left' }};">
               <a class="dropdown-item" href="{{route('customer.auth.login')}}">
                 <i class="fa fa-sign-in {{Session::get('direction') === " rtl" ? 'ml-2' : 'mr-2' }}"></i>
-                {{\App\CPU\translate('sing_in')}}
+                {{\App\CPU\translate('Masuk_sebagai_pencari_kos')}}
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{route('customer.auth.register')}}">
+              <a class="dropdown-item" href="{{route('seller.auth.login')}}">
                 <i class="fa fa-user-circle {{Session::get('direction') === " rtl" ? 'ml-2' : 'mr-2'
-                  }}"></i>{{\App\CPU\translate('sing_up')}}
+                  }}"></i>{{\App\CPU\translate('Masuk_sebagai_pemilik_kos')}}
               </a>
             </div>
           </div>

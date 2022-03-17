@@ -21,7 +21,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>{{\App\CPU\translate('order_table')}} </h5>
+                        <h5 class="d-none d-md-flex">{{\App\CPU\translate('order_table')}} </h5>
                         <div class="row justify-content-between align-items-center flex-grow-1">
                             <div class="col-lg-3"></div>
                             <div class="col-lg-6 mb-3 mb-lg-0">
@@ -53,7 +53,7 @@
                                     <th>{{\App\CPU\translate('Order')}}</th>
                                     <th>{{\App\CPU\translate('customer_name')}}</th>
                                     <th>{{\App\CPU\translate('Phone')}}</th>
-                                    <th>{{\App\CPU\translate('Payment')}}</th>
+                                    <th class="d-none d-md-flex">{{\App\CPU\translate('Payment')}}</th>
                                     <th>{{\App\CPU\translate('Status')}} </th>
                                     <th style="width: 30px">{{\App\CPU\translate('Action')}}</th>
                                 </tr>
@@ -69,7 +69,7 @@
                                         </td>
                                         <td> {{$order->customer ? $order->customer['f_name'].' '.$order->customer['l_name'] : 'Customer Data not found'}}</td>
                                         <td>{{ $order->customer ? $order->customer->phone : '' }}</td>
-                                        <td>
+                                        <td class="d-none d-md-flex">
                                             @if($order->payment_status=='paid')
                                                 <span class="badge badge-soft-success">
                                                 <span class="legend-indicator bg-success" style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('paid')}}
@@ -83,13 +83,13 @@
                                             <td class="text-capitalize ">
                                                 @if($order->order_status=='pending')
                                                     <label
-                                                        class="badge badge-primary">{{\App\CPU\translate($order['order_status'])}}</label>
+                                                        class="badge badge-primary">{{\App\CPU\translate("need_confirmation")}}</label>
                                                 @elseif($order->order_status=='processing' || $order->order_status=='out_for_delivery')
                                                     <label
-                                                        class="badge badge-warning">{{\App\CPU\translate($order['order_status'])}}</label>
+                                                        class="badge badge-warning">{{\App\CPU\translate("wait_for_payment")}}</label>
                                                 @elseif($order->order_status=='delivered' || $order->order_status=='confirmed')
                                                     <label
-                                                        class="badge badge-success">{{\App\CPU\translate($order['order_status'])}}</label>
+                                                        class="badge badge-success">{{\App\CPU\translate("paid")}}</label>
                                                 @elseif($order->order_status=='returned')
                                                     <label
                                                         class="badge badge-danger">{{\App\CPU\translate($order['order_status'])}}</label>

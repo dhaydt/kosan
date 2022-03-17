@@ -44,7 +44,7 @@
                                     <!-- End Search -->
                                 </form>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-12 add-new">
                                 <a href="{{route('seller.property.add-new')}}" class="btn btn-primary float-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}">
                                     <i class="tio-add-circle"></i>
                                     <span class="text">{{\App\CPU\translate('New_property')}}</span>

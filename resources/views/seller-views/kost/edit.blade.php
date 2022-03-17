@@ -21,9 +21,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a
-                    href="{{route('admin.dashboard')}}">{{\App\CPU\translate('Dashboard')}}</a></li>
+                    href="{{route('seller.dashboard.index')}}">{{\App\CPU\translate('Dashboard')}}</a></li>
             <li class="breadcrumb-item" aria-current="page"><a
-                    href="{{route('admin.product.list',['seller', 'status'=>'1'])}}">{{\App\CPU\translate('Property')}}</a>
+                    href="{{route('seller.property.list',['seller', 'status'=>'1'])}}">{{\App\CPU\translate('Property')}}</a>
             </li>
             <li class="breadcrumb-item" aria-current="page">{{ \App\CPU\translate('Edit')}}</li>
         </ol>

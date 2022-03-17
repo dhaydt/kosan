@@ -80,15 +80,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #003638;
         }
-
-        @media only screen and (max-width: 768px) {
-            /* For mobile phones: */
-            .map-warper {
-                height: 250px;
-                padding-bottom: 10px;
-            }
-        }
-
         .deco-none {
             color: inherit;
             text-decoration: inherit;
@@ -97,6 +88,34 @@
         .qcont:first-letter {
             text-transform: capitalize
         }
+
+        @media only screen and (max-width: 768px) {
+            /* For mobile phones: */
+            .map-warper {
+                height: 250px;
+                padding-bottom: 10px;
+            }
+            .page-header-title {
+                font-size: 16px;
+            }
+            .content.container-fluid{
+                padding: 10px 5px;
+            }
+            .card-header{
+                padding: 10px;
+                margin-top: -15px;
+            }
+            .table .thead-light th{
+                font-size: 10px;
+            }
+            .table-align-middle tbody td{
+                font-size: 11px;
+            }
+            .add-new a{
+                width: 100%;
+            }
+        }
+
     </style>
     <style>
         .capitalize{
