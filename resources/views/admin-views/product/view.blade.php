@@ -433,7 +433,7 @@
             },
             success: function (data) {
                 if(data.success == true) {
-                    toastr.success('{{\App\CPU\translate('Status updated successfully')}}');
+                    toastr.success('{{\App\CPU\translate('Status_kamar_berhasil_diubah')}}');
                 }
                 else if(data.success == false) {
                     toastr.error('{{\App\CPU\translate('Status updated failed. Product must be approved')}}');

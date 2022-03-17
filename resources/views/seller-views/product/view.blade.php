@@ -348,6 +348,37 @@
     <script src="{{asset('public/assets/back-end')}}/js/tags-input.min.js"></script>
     <script src="{{ asset('public/assets/select2/js/select2.min.js')}}"></script>
     <script>
+        $(document).on('change', '.status', function () {
+        var id = $(this).attr("id");
+        if ($(this).prop("checked") == true) {
+            var status = 1;
+        } else if ($(this).prop("checked") == false) {
+            var status = 0;
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{route('seller.product.room-update')}}",
+            method: 'POST',
+            data: {
+                id: id,
+                status: status
+            },
+            success: function (data) {
+                if(data.success == true) {
+                    toastr.success('{{\App\CPU\translate('Status_kamar_berhasil_diubah')}}');
+                }
+                else if(data.success == false) {
+                    toastr.error('{{\App\CPU\translate('Status updated failed. Product must be approved')}}');
+                    location.reload();
+                }
+            }
+        });
+    });
+
         $('input[name="colors_active"]').on('change', function () {
             if (!$('input[name="colors_active"]').is(':checked')) {
                 $('#colors-selector').prop('disabled', true);

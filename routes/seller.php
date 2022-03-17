@@ -51,6 +51,7 @@ Route::group(['namespace' => 'Seller', 'prefix' => 'seller', 'as' => 'seller.'],
             Route::get('add-new', 'ProductController@add_new')->name('add-new');
             Route::post('add-new', 'ProductController@store');
             Route::post('status-update', 'ProductController@status_update')->name('status-update');
+            Route::post('room-update', 'ProductController@room_update')->name('room-update');
             Route::get('list', 'ProductController@list')->name('list');
             Route::get('edit/{id}', 'ProductController@edit')->name('edit');
             Route::post('update/{id}', 'ProductController@update')->name('update');

@@ -71,6 +71,26 @@ class ProductController extends Controller
         }
     }
 
+    public function room_update(Request $request)
+    {
+        $room = Detail_room::where(['id' => $request['id']])->first();
+        $product = Product::where('room_id', $room->room_id)->first();
+        $success = 1;
+
+        $room->available = $request['status'];
+
+        $room->save();
+        $current = Detail_room::where('room_id', $room['room_id'])->where('available', 1)->get();
+        $available = count($current);
+        $product->current_stock = $available;
+
+        $product->save();
+
+        return response()->json([
+            'success' => $success,
+        ], 200);
+    }
+
     public function featured_status(Request $request)
     {
         if ($request->ajax()) {
@@ -228,6 +248,7 @@ class ProductController extends Controller
         if ($request->ajax()) {
             return response()->json([], 200);
         } else {
+            $current = [];
             foreach ($room as $r) {
                 if ($r) {
                     $isi = new Detail_room();
@@ -237,11 +258,13 @@ class ProductController extends Controller
                         $avai = 0;
                     } else {
                         $avai = 1;
+                        array_push($current, 1);
                     }
                     $isi->available = $avai;
-                    $isi->save();
                 }
+                $isi->save();
             }
+            $product->current_stock = count($current);
             $product->save();
             $data = [];
             // foreach ($request->lang as $index => $key) {

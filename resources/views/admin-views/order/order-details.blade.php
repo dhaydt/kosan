@@ -210,7 +210,7 @@
                                     <h4>Properti yang dipesan:</h4>
                                 </div>
                                 <div class="row w-100">
-                                    <div class="col-md-10">
+                                    <div class="col-md-8">
                                         <div class="status-kos mt-2">
                                             <span>
                                                 {{ $detail->kost->penghuni }}
@@ -241,7 +241,7 @@
                                         </span>
                                         <span class="price">{{\App\CPU\Helpers::currency_converter($order->details[0]->price)}}  <span class="month">/Bulan</span></span>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <img onerror="this.src='{{asset('assets/back-end/img/400x400/img2.jpg')}}'"
                                         src="{{asset('storage/product')}}/{{json_decode($detail->images)[0]}}"
                                         alt="" style="height: 98px; border-radius: 5px;">
