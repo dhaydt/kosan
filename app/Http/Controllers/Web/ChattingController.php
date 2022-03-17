@@ -16,19 +16,19 @@ class ChattingController extends Controller
         // $last_chat = Chatting::with('seller_info')->where('user_id', auth('customer')->id())
         //     ->orderBy('created_at', 'DESC')
         //     ->first();
-        $last_chat = Chatting::with(['shop'])->where('user_id', auth('customer')->id())
+        $last_chat = Chatting::with(['kost'])->where('user_id', auth('customer')->id())
             ->orderBy('created_at', 'DESC')
             ->first();
 
         if (isset($last_chat)) {
-            $chattings = Chatting::join('shops', 'shops.id', '=', 'chattings.shop_id')
-                ->select('chattings.*', 'shops.name', 'shops.image')
+            $chattings = Chatting::join('kosts', 'kosts.id', '=', 'chattings.shop_id')
+                ->select('chattings.*', 'kosts.name', 'kosts.images')
                 ->where('chattings.user_id', auth('customer')->id())
                 ->where('shop_id', $last_chat->shop_id)
                 ->get();
 
-            $unique_shops = Chatting::join('shops', 'shops.id', '=', 'chattings.shop_id')
-                ->select('chattings.*', 'shops.name', 'shops.image')
+            $unique_shops = Chatting::join('kosts', 'kosts.id', '=', 'chattings.shop_id')
+                ->select('chattings.*', 'kosts.name', 'kosts.images')
                 ->where('chattings.user_id', auth('customer')->id())
                 ->orderBy('chattings.created_at', 'desc')
                 ->get()
@@ -36,9 +36,10 @@ class ChattingController extends Controller
 
             return view('web-views.users-profile.profile.chat-with-seller', compact('chattings', 'unique_shops', 'last_chat'));
         }
-        return view('web-views.users-profile.profile.chat-with-seller');
 
+        return view('web-views.users-profile.profile.chat-with-seller');
     }
+
     public function messages(Request $request)
     {
         $last_chat = Chatting::where('user_id', auth('customer')->id())
@@ -61,25 +62,24 @@ class ChattingController extends Controller
 
     public function messages_store(Request $request)
     {
-
         if ($request->message == '') {
             Toastr::warning('Type Something!');
+
             return response()->json('type something!');
         } else {
             $message = $request->message;
             DB::table('chattings')->insert([
-                'user_id'          => auth('customer')->id(),
-                'shop_id'          => $request->shop_id,
-                'seller_id'        => $request->seller_id,
+                'user_id' => auth('customer')->id(),
+                'shop_id' => $request->shop_id,
+                'seller_id' => $request->seller_id,
 
-                'message'          => $request->message,
+                'message' => $request->message,
                 'sent_by_customer' => 1,
                 'seen_by_customer' => 0,
-                'created_at'       => now(),
+                'created_at' => now(),
             ]);
 
             return response()->json($message);
         }
     }
-
 }

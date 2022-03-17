@@ -458,14 +458,16 @@
                             <div class="inbox_chat">
                                 @if (isset($unique_shops))
                                     @foreach($unique_shops as $key=>$shop)
+                                    {{-- {{ dd($shop) }} --}}
                                         <div class="chat_list @if ($key == 0) btn-primary @endif"
                                              id="user_{{$shop->shop_id}}">
                                             <div class="chat_people" id="chat_people">
                                                 <div class="chat_img">
                                                     <img
                                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                                        src="{{asset('storage/app/public/shop/'.$shop->image)}}"
-                                                        style="border-radius: 10px">
+                                                        src="{{asset('storage/kost/'.json_decode($shop->images)->depan)}}"
+                                                        class="h-100 mt-1"
+                                                        style="border-radius: 5px">
                                                 </div>
                                                 <div class="chat_ib">
                                                     <h5 class="seller @if($shop->seen_by_customer)active-text @endif"
@@ -493,7 +495,7 @@
                                                 @if ($chat->sent_by_seller)
                                                     <div class="incoming_msg">
                                                         <div class="incoming_msg_img"><img
-                                                                src="@if($chat->image == 'def.png'){{asset('storage/app/public/'.$chat->image)}} @else {{asset('storage/app/public/shop/'.$chat->image)}} @endif"
+                                                                src="@if($chat->image == 'def.png'){{asset('storage/'.$chat->image)}} @else {{asset('storage/kost/'.json_decode($chat->images)->depan)}} @endif"
                                                                 alt="sunil"></div>
                                                         <div class="received_msg">
                                                             <div class="received_withd_msg">
@@ -528,11 +530,10 @@
                                                 class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2"
                                                 id="myForm">
                                                 @csrf
-
                                                 <input type="text" id="hidden_value" hidden
                                                        value="{{$last_chat->shop_id}}" name="">
                                                 <input type="text" id="seller_value" hidden
-                                                       value="{{$last_chat->shop->seller_id}}" name="">
+                                                       value="{{$last_chat->kost->seller_id}}" name="">
 
                                                 <input
                                                     class="form-control form-control-sm {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}} w-75"

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Kost;
 use App\Model\Chatting;
 use App\Model\Seller;
-use App\Model\Shop;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,7 @@ class ChattingController extends Controller
 {
     public function chat()
     {
-        $shop_id = Shop::where('seller_id', auth('seller')->id())->first()->id;
+        $shop_id = Kost::where('seller_id', auth('seller')->id())->first()->id;
 
         $last_chat = Chatting::where('shop_id', $shop_id)
             ->orderBy('created_at', 'DESC')
@@ -43,7 +43,7 @@ class ChattingController extends Controller
 
     public function message_by_user(Request $request)
     {
-        $shop_id = Shop::where('seller_id', auth('seller')->id())->first()->id;
+        $shop_id = Kost::where('seller_id', auth('seller')->id())->first()->id;
         $last_chat = Chatting::where('seller_id', auth('seller')->id())
             ->where('user_id', $request->user_id)
             ->orderBy('created_at', 'DESC')
@@ -67,26 +67,25 @@ class ChattingController extends Controller
     {
         if ($request->message == '') {
             Toastr::warning('Type Something!');
+
             return response()->json('type something!');
         } else {
-            $shop_id = Shop::where('seller_id', auth('seller')->id())->first()->id;
+            $shop_id = Kost::where('seller_id', auth('seller')->id())->first()->id;
 
             $message = $request->message;
             $time = now();
 
             DB::table('chattings')->insert([
-                'user_id'        => $request->user_id, //user_id == seller_id
-                'seller_id'      => auth('seller')->id(),
-                'shop_id'        => $shop_id,
-                'message'        => $request->message,
+                'user_id' => $request->user_id, //user_id == seller_id
+                'seller_id' => auth('seller')->id(),
+                'shop_id' => $shop_id,
+                'message' => $request->message,
                 'sent_by_seller' => 1,
                 'seen_by_seller' => 0,
-                'created_at'     => now(),
+                'created_at' => now(),
             ]);
 
             return response()->json(['message' => $message, 'time' => $time]);
-
         }
     }
-
 }

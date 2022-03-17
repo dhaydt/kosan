@@ -3,6 +3,19 @@
 
 @push('css_or_js')
 <style>
+    .msg-option {
+            display: none;
+    }
+    .chatInputBox {
+        width: 100%;
+    }
+
+    .go-to-chatbox {
+        width: 100%;
+        text-align: center;
+        padding: 5px 0px;
+        display: none;
+    }
     .booking-col{
         border: 1px solid #d1d1d1;
         border-radius: 8px;
@@ -236,8 +249,8 @@
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        @if($order->order_status == 'pending')
-                        <div class="col-12 d-flex justify-content-end">
+                        @if($order->order_status == 'pending' || $order->order_status == 'delivered')
+                        <div class="col-12 d-flex justify-content-end" id="contact-seller">
                             <button class="btn btn-outline-success">
                                 Chat pemilik
                             </button>
@@ -250,6 +263,26 @@
                             </a>
                         </div>
                         @endif
+                    </div>
+                    {{-- {{ dd($order->details[0]->product->kost->id) }} --}}
+                    @php($seller = $order->details[0]->product->kost->seller_id)
+                    @php($kost = $order->details[0]->product->kost->id)
+                    <div class="row msg-option" id="msg-option">
+                        <form action="">
+                            <input type="text" class="seller_id" hidden seller-id="{{$seller }}">
+                            <textarea shop-id="{{$kost}}" class="chatInputBox"
+                                      id="chatInputBox" rows="5"> </textarea>
+
+                            <button class="btn btn-secondary" style="color: white;"
+                                    id="cancelBtn">{{\App\CPU\translate('cancel')}}
+                            </button>
+                            <button class="btn btn-primary" style="color: white;"
+                                    id="sendBtn">{{\App\CPU\translate('send')}}</button>
+                        </form>
+                    </div>
+                    <div class="go-to-chatbox" id="go_to_chatbox">
+                        <a href="{{route('chat-with-seller')}}" class="btn btn-primary" id="go_to_chatbox_btn">
+                            {{\App\CPU\translate('go_to')}} {{\App\CPU\translate('chatbox')}} </a>
                     </div>
                 </div>
             </div>
@@ -270,5 +303,49 @@
             $('#lengkap'+  val).removeClass('d-none')
             $('#sedikit'+  val).addClass('d-none')
         }
+    </script>
+    <script>
+         $('#contact-seller').on('click', function (e) {
+            // $('#seller_details').css('height', '200px');
+            $('#seller_details').animate({'height': '276px'});
+            $('#msg-option').css('display', 'block');
+        });
+        $('#sendBtn').on('click', function (e) {
+            e.preventDefault();
+            let msgValue = $('#msg-option').find('textarea').val();
+            let data = {
+                message: msgValue,
+                shop_id: $('#msg-option').find('textarea').attr('shop-id'),
+                seller_id: $('.msg-option').find('.seller_id').attr('seller-id'),
+            }
+            if (msgValue != '') {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: "post",
+                    url: '{{route('messages_store')}}',
+                    data: data,
+                    success: function (respons) {
+                        console.log('send successfully');
+                    }
+                });
+                $('#chatInputBox').val('');
+                $('#msg-option').css('display', 'none');
+                $('#contact-seller').find('.contact').attr('disabled', '');
+                $('#seller_details').animate({'height': '125px'});
+                $('#go_to_chatbox').css('display', 'block');
+            } else {
+                console.log('say something');
+            }
+        });
+        $('#cancelBtn').on('click', function (e) {
+            e.preventDefault();
+            $('#seller_details').animate({'height': '114px'});
+            $('#msg-option').css('display', 'none');
+        });
     </script>
 @endpush

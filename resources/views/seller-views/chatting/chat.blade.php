@@ -243,6 +243,9 @@
                 font-size: 19px;
             }
 
+            .sent_msg {
+                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 7px;
+            }
             .Chat {
                 margin-top: 2rem;
             }
@@ -251,9 +254,6 @@
                 margin-right: 0 !important
             }
 
-            .sent_msg {
-                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 7px;
-            }
         }
 
     </style>
@@ -291,7 +291,7 @@
                                          id="user_{{$chatting->user_id}}">
                                         <div class="chat_people" id="chat_people">
                                             <div class="chat_img">
-                                                <img src="{{asset('storage/app/public/profile/'.$chatting->image)}}"
+                                                <img src="{{asset('storage/profile/'.$chatting->image)}}"
                                                      onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                                      style="border-radius: 15px; width: 30px; height: 30px">
                                             </div>
@@ -318,7 +318,7 @@
                                                 <div class="incoming_msg">
                                                     <div class="incoming_msg_img">
                                                         <img style="width: 30px;height: 30px;border-radius: 50%"
-                                                             src="{{asset('storage/app/public/profile/'.$message->image)}}"
+                                                             src="{{asset('storage/profile/'.$message->image)}}"
                                                              onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                                              alt="">
                                                     </div>

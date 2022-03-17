@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Kost;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,5 +34,10 @@ class Chatting extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id');
+    }
+
+    public function kost()
+    {
+        return $this->belongsTo(Kost::class, 'shop_id');
     }
 }
