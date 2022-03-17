@@ -8,6 +8,10 @@
         border: none
     }
 
+    .rc-info .rc-info__location.bg-c-text{
+            color: #959595;
+    }
+
     .totals tr td {
         font-size: 13px
     }
@@ -115,18 +119,20 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="rating-show d-flex">
-                                    <div class="rc-overview__label bg-c-label capitalize">{{ $product->kost->penghuni }}</div>
-                                        @if ($product->current_stock <= 3)
-                                        <span class="stock-label ml-1 text-danger bg-c-text--label-1">
-                                            {{\App\CPU\translate('Sisa')}} {{ $product->current_stock }} {{\App\CPU\translate('kamar')}}
-                                        </span>
-                                        @endif
-                                </div>
-                                @php($tax = ($product->tax_type == 'percent' ? $product->unit_price + ($product->unit_price * $product->tax) / 100 : $product->unit_price + $product->tax))
-                                <div class="">
-                                <span
-                                    class="font-weight-bold amount">{{App\CPU\Helpers::currency_converter($tax)}}</span>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <div class="rating-show d-flex">
+                                        <div class="rc-overview__label bg-c-label capitalize">{{ $product->kost->penghuni }}</div>
+                                            @if ($product->current_stock <= 3)
+                                            <span class="stock-label ml-1 text-danger bg-c-text--label-1">
+                                                {{\App\CPU\translate('Sisa')}} {{ $product->current_stock }} {{\App\CPU\translate('kamar')}}
+                                            </span>
+                                            @endif
+                                    </div>
+                                    @php($tax = ($product->tax_type == 'percent' ? $product->unit_price + ($product->unit_price * $product->tax) / 100 : $product->unit_price + $product->tax))
+                                    <div class="">
+                                    <span
+                                        class="mt-auto font-weight-bold amount">{{App\CPU\Helpers::currency_converter($tax)}}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div
