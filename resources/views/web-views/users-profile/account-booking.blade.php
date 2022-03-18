@@ -82,13 +82,32 @@
     .chatInputBox{
         border-radius: 7px;
     }
+    @media(max-width: 500px){
+        .margin-auto{
+            margin-top: 50px !important;
+        }
+        .booking-col{
+            border: none;
+            padding: 10px 0;
+        }
+        .booking-frame{
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .booking-frame .img-booking{
+            height: 110px;
+            width: 150px;
+        }
+    }
 </style>
 @endpush
 
 @section('content')
-<div class="container pb-5 mb-2 mb-md-4 mt-3 rtl">
+<div class="container pb-5 mb-2 mb-md-4 mt-3 rtl margin-auto">
     <div class="row">
-        @include('web-views.partials._profile-aside')
+            @include('web-views.partials._profile-aside')
         <section class="col-lg-9 mt-2 col-md-9 booking-col">
             <h1 class="h3 float-left headerTitle w-100">{{\App\CPU\translate('booking')}}</h1>
             {{-- {{ dd($orders) }} --}}
@@ -115,9 +134,11 @@
                 <hr class="line">
                 <div class="card-body">
                     <div class="row">
-                        <img class="img-booking mr-3"
-                        onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                        src="{{asset('storage/product')}}/{{json_decode($detail->images)[0]}}" alt="">
+                        <div class="booking-frame">
+                            <img class="img-booking mr-3"
+                            onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                            src="{{asset('storage/product')}}/{{json_decode($detail->images)[0]}}" alt="">
+                        </div>
                         <div class="kost-detail d-flex flex-column">
                             <span class="title-kost capitalize">{{ $detail->kost->name }} {{ $detail->type }} {{ $district }} {{ $city }}</span>
                             <div class="status mt-1">
