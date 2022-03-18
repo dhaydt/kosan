@@ -4,15 +4,15 @@
         <div class="navbar-nav-wrap">
             <div class="navbar-brand-wrapper">
                 <!-- Logo -->
-                @php($seller_logo=\App\Model\Shop::where(['seller_id'=>auth('seller')->id()])->first()->image)
+                @php($seller_logo=\App\Model\BusinessSetting::where(['type'=>'company_web_logo'])->first()->value)
 
                 <a class="navbar-brand" href="{{route('seller.dashboard.index')}}" aria-label="">
                     <img class="navbar-brand-logo" style="max-height: 42px;"
                          onerror="this.src='{{asset('public/assets/back-end/img/160x160/img1.jpg')}}'"
-                         src="{{asset("storage/shop/$seller_logo")}}" alt="Logo" height="40" width="40">
+                         src="{{asset("storage/company/$seller_logo")}}" alt="Logo" height="40" width="40">
                     <img class="navbar-brand-logo-mini" style="max-height: 42px;"
                          onerror="this.src='{{asset('public/assets/back-end/img/160x160/img1.jpg')}}'"
-                         src="{{asset("storage/shop/$seller_logo")}}"
+                         src="{{asset("storage/company/$seller_logo")}}"
                          alt="Logo" height="40" width="40">
 
                 </a>

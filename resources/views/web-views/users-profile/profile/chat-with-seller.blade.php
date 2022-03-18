@@ -4,6 +4,9 @@
 
 @push('css_or_js')
     <style>
+        .input_msg_write input{
+            background-color: #db5b5b0d !important;
+        }
         .headerTitle {
             font-size: 24px;
             font-weight: 600;
@@ -335,9 +338,12 @@
             overflow-y: auto;
         }
 
-        .aSend {
+        .form-inline#myForm .aSend {
+            width: 57px;
+            background-color: {{ $web_config['primary_color'] }} !important;
+            border-radius: 10px;
             padding: 10px;
-            color: #4884ea;
+            color: #fff;
             font-size: 16px;
             font-weight: 600;
         }
@@ -458,7 +464,6 @@
                             <div class="inbox_chat">
                                 @if (isset($unique_shops))
                                     @foreach($unique_shops as $key=>$shop)
-                                    {{-- {{ dd($shop) }} --}}
                                         <div class="chat_list @if ($key == 0) btn-primary @endif"
                                              id="user_{{$shop->shop_id}}">
                                             <div class="chat_people" id="chat_people">
@@ -539,7 +544,7 @@
                                                     class="form-control form-control-sm {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}} w-75"
                                                     id="msgInputValue"
                                                     type="text" placeholder="{{\App\CPU\translate('Send a message')}}" aria-label="Search">
-                                                <input class="aSend" type="submit" id="msgSendBtn" style="width: 45px;"
+                                                <input class="aSend" type="submit" id="msgSendBtn"
                                                        value="Send">
                                                 {{-- <a class="aSend" id="msgSendBtn">Send</a> --}}
                                                 {{-- <i class="fa fa-send" style="color: #92C6FF" aria-hidden="true"></i> --}}

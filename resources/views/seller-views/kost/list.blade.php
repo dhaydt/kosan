@@ -63,7 +63,7 @@
                                     <th class="text-center">{{\App\CPU\translate('SL#')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Name')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('image')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate('Total_rooms')}}</th>
+                                    {{-- <th class="text-center">{{\App\CPU\translate('Total_rooms')}}</th> --}}
                                     <th class="text-center">{{\App\CPU\translate('address')}}</th>
                                     <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
                                 </tr>
@@ -83,9 +83,9 @@
                                             src="{{asset('storage/kost')}}/{{$img->depan}}"
                                             alt="Image Description">
                                         </td>
-                                        <td class="text-center capitalize">
+                                        {{-- <td class="text-center capitalize">
                                             {{ count($p->rooms) }}
-                                        </td>
+                                        </td> --}}
                                         <td class="text-center capitalize">
                                             {{ $p['district'].', '.$p['city'].' - '.$p['province'] }}
                                         </td>

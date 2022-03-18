@@ -541,7 +541,7 @@
                                         <div class="shop_image d-flex justify-content-center align-items-center">
                                             <a href="#" class="d-flex justify-content-center">
                                                 <img style="height: 65px; width: 65px; border-radius: 50%"
-                                                    src="{{asset('storage/app/public/shop')}}/{{$product->seller->shop->image}}"
+                                                    src="{{asset('storage/kost/')}}/{{json_decode($product->kost->images)->depan}}"
                                                     onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                                     alt="">
                                             </a>
@@ -551,7 +551,7 @@
                                             <div>
                                                 <a href="#" class="d-flex align-items-center">
                                                     <div
-                                                        class="title">{{$product->seller->shop->name}}</div>
+                                                        class="title">{{$product->kost->name}}</div>
                                                 </a>
                                                 <div class="review d-flex align-items-center">
                                                     <div class="">
@@ -562,21 +562,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="review d-flex align-items-center">
-                                            <div class="w-100 d-flex">
-                                                <div class="flag">
-                                                    <img class="{{Session::get('direction') === " rtl" ? 'ml-2' : 'mr-2' }}" width="20"
-                                                        src="{{asset('public/assets/front-end')}}/img/flags/{{ strtolower($product->seller->shop->country)  }}.png"
-                                                        alt="Eng" style="width: 20px">
-                                                </div>
-                                                @php($c_name = App\Country::where('country', $product->seller->shop->country)->get())
-                                                <span
-                                                    class="d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "
-                                                    rtl" ? 'ml-2' : 'mr-2' }}" style="line-height: 1.2;">{{$c_name[0]->country_name}}
-                                                </span>
-                                                <span
-                                                    class="d-inline-block font-size-sm text-body align-middle mt-1 {{Session::get('direction') === "
-                                                    rtl" ? 'mr-2' : 'ml-2' }}"></span>
-                                            </div>
                                         </div>
                                             </div>
 

@@ -47,11 +47,13 @@ class ChattingController extends Controller
             ->orderBy('created_at', 'DESC')
             ->first();
 
+        // dd($last_chat);
+
         $last_chat->seen_by_customer = 0;
         $last_chat->save();
 
-        $shops = Chatting::join('shops', 'shops.id', '=', 'chattings.shop_id')
-            ->select('chattings.*', 'shops.name', 'shops.image')
+        $shops = Chatting::join('kosts', 'kosts.id', '=', 'chattings.shop_id')
+            ->select('chattings.*', 'kosts.name', 'kosts.images')
             ->where('user_id', auth('customer')->id())
             ->where('chattings.shop_id', json_decode($request->shop_id))
             ->orderBy('created_at', 'ASC')

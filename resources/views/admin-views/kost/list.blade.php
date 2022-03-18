@@ -88,7 +88,9 @@
                                             {{ count($p->rooms)  }}
                                         </td>
                                         <td class="text-center capitalize">
+                                            @if(isset($p->kampus->short))
                                             {{ $p->kampus->short  }}
+                                            @endif
                                         </td>
                                         <td class="text-center capitalize">
                                             {{ $p['district'].', '.$p['city'].' - '. $p['province']  }}
