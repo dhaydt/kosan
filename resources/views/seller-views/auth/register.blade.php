@@ -20,12 +20,12 @@
                 <div class="col-lg-12">
                     <div class="p-5">
                         <div class="text-center mb-2 ">
-                            <h3 class="" > {{\App\CPU\translate('Shop')}} {{\App\CPU\translate('Application')}}</h3>
+                            <h3 class="" > {{\App\CPU\translate('Daftar')}} {{\App\CPU\translate('Akun')}} {{\App\CPU\translate('pemilik_kos')}}</h3>
                             <hr>
                         </div>
                         <form class="user" action="{{route('shop.apply')}}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <h5 class="black">{{\App\CPU\translate('Seller')}} {{\App\CPU\translate('Info')}} </h5>
+                            <h5 class="black">{{\App\CPU\translate('Info')}} {{\App\CPU\translate('pemilik_kos')}} </h5>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="text" class="form-control form-control-user" id="exampleFirstName" name="f_name" value="{{old('f_name')}}" placeholder="{{\App\CPU\translate('first_name')}}" required>
@@ -35,10 +35,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0 mt-4">
+                                <div class="col-sm-6 mb-3 mb-sm-0 ">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail" name="email" value="{{old('email')}}" placeholder="{{\App\CPU\translate('email_address')}}" required>
                                 </div>
-                                <div class="col-sm-6"><small class="text-danger">( * {{\App\CPU\translate('country_code_is_must')}} {{\App\CPU\translate('like_for_BD_880')}} )</small>
+                                <div class="col-sm-6">
                                     <input type="number" class="form-control form-control-user" id="exampleInputPhone" name="phone" value="{{old('phone')}}" placeholder="{{\App\CPU\translate('phone_number')}}" required>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                     <div class="pass invalid-feedback">{{\App\CPU\translate('Repeat')}}  {{\App\CPU\translate('password')}} {{\App\CPU\translate('not match')}} .</div>
                                 </div>
                             </div>
-                             <div class="form-group row">
+                             {{-- <div class="form-group row">
                                 <div class="col-sm-12 mb-3 mb-sm-0">
                                     <select id="country" name="country" class="form-control  js-select2-custom">
                                         <option value="0" selected>---select country---</option>
@@ -121,8 +121,8 @@
                                         <label class="custom-file-label" for="BannerUpload">{{\App\CPU\translate('Upload')}} {{\App\CPU\translate('Banner')}}</label>
                                     </div>
                                 </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block" id="apply">{{\App\CPU\translate('Apply')}} {{\App\CPU\translate('Shop')}} </button>
+                            </div> --}}
+                            <button type="submit" class="btn btn-primary btn-user btn-block" id="apply">{{\App\CPU\translate('daftar')}} {{\App\CPU\translate('sekarang')}} </button>
                         </form>
                         <hr>
                         <div class="text-center">

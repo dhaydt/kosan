@@ -125,7 +125,7 @@
 
                             <button type="submit" class="btn btn-lg btn-block btn-primary">{{\App\CPU\translate('sign_in')}}</button>
                         </form>
-                        <h5 class="mt-2">dont have account ? <a href="{{ route('shop.apply') }}">Register now!</a></h5>
+                        <h5 class="mt-2">don't have account ? <a href="{{ route('shop.apply') }}">Register now!</a></h5>
                         <!-- End Form -->
                     </div>
                     @if(env('APP_MODE')=='demo')

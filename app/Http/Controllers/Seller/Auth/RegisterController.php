@@ -21,7 +21,6 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'email' => 'required|unique:sellers',
             'password' => 'required|min:8',
@@ -31,22 +30,22 @@ class RegisterController extends Controller
             $seller = new Seller();
             $seller->f_name = $request->f_name;
             $seller->l_name = $request->l_name;
-            $seller->country = $request->country;
+            $seller->country = 'ID';
             $seller->phone = $request->phone;
             $seller->email = $request->email;
             $seller->image = ImageManager::upload('seller/', 'png', $request->file('image'));
             $seller->password = bcrypt($request->password);
-            $seller->status = "pending";
+            $seller->status = 'pending';
             $seller->save();
 
             $shop = new Shop();
             $shop->seller_id = $seller->id;
-            $shop->name = $request->shop_name;
-            $shop->country = $request->country;
-            $shop->address = $request->shop_address;
-            $shop->contact = $request->phone;
-            $shop->image = ImageManager::upload('shop/', 'png', $request->file('logo'));
-            $shop->banner = ImageManager::upload('shop/banner/', 'png', $request->file('banner'));
+            // $shop->name = $request->shop_name;
+            $shop->country = 'ID';
+            // $shop->address = $request->shop_address;
+            // $shop->contact = $request->phone;
+            // $shop->image = ImageManager::upload('shop/', 'png', $request->file('logo'));
+            // $shop->banner = ImageManager::upload('shop/banner/', 'png', $request->file('banner'));
             $shop->save();
 
             DB::table('seller_wallets')->insert([
@@ -60,11 +59,10 @@ class RegisterController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
         });
 
-        Toastr::success('Shop apply successfully!');
-        return redirect()->route('seller.auth.login');
+        Toastr::success('Pemilik_kos_berasil_didaftarkan!');
 
+        return redirect()->route('seller.auth.login');
     }
 }
