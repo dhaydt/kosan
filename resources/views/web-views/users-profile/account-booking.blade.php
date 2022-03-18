@@ -4,7 +4,7 @@
 @push('css_or_js')
 <style>
     .msg-option {
-            display: none;
+            /* display: none; */
     }
     .chatInputBox {
         width: 100%;
@@ -78,6 +78,9 @@
     .content{
         font-size: 14px;
         font-weight: 600;
+    }
+    .chatInputBox{
+        border-radius: 7px;
     }
 </style>
 @endpush
@@ -253,29 +256,53 @@
                         @if ($order->seller_is != 'admin')
                             @if($order->order_status == 'pending' || $order->order_status == 'delivered')
                             <div class="col-12 d-flex justify-content-end" id="contact-seller">
-                                <button class="btn btn-outline-success">
+                                {{-- <button class="btn btn-outline-success">
                                     Chat pemilik
-                                </button>
+                                </button> --}}
+                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#staticBackdrop">
+                                    Chat pemilik
+                                  </button>
                             </div>
                             @php($seller = $order->details[0]->product->kost->seller_id)
                             @php($kost = $order->details[0]->product->kost->id)
-                            <div class="row msg-option" id="msg-option">
-                                <form action="">
-                                    <input type="text" class="seller_id" hidden seller-id="{{$seller }}">
-                                    <textarea shop-id="{{$kost}}" class="chatInputBox"
-                                              id="chatInputBox" rows="5"> </textarea>
 
-                                    <button class="btn btn-secondary" style="color: white;"
-                                            id="cancelBtn">{{\App\CPU\translate('cancel')}}
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Chat pemilik kos</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <button class="btn btn-primary" style="color: white;"
-                                            id="sendBtn">{{\App\CPU\translate('send')}}</button>
-                                </form>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row msg-option" id="msg-option">
+                                            <form action="">
+                                                <input type="text" class="seller_id" hidden seller-id="{{$seller }}">
+                                                <textarea shop-id="{{$kost}}" class="chatInputBox"
+                                                            id="chatInputBox" rows="5"> </textarea>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="go-to-chatbox" id="go_to_chatbox">
+                                                <a href="{{route('chat-with-seller')}}" class="btn btn-primary" id="go_to_chatbox_btn">
+                                                    {{\App\CPU\translate('go_to')}} {{\App\CPU\translate('chatbox')}} </a>
+                                            </div>
+                                            <button class="btn btn-secondary" style="color: white;" data-dismiss="modal"
+                                            id="cancelBtn">{{\App\CPU\translate('cancel')}}
+                                            </button>
+                                            <button class="btn btn-primary" style="color: white;"
+                                                    id="sendBtn">{{\App\CPU\translate('send')}}</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
-                            <div class="go-to-chatbox" id="go_to_chatbox">
-                                <a href="{{route('chat-with-seller')}}" class="btn btn-primary" id="go_to_chatbox_btn">
-                                    {{\App\CPU\translate('go_to')}} {{\App\CPU\translate('chatbox')}} </a>
-                            </div>
+
+
                             @endif
                         @else
                             @if($order->order_status == 'pending' || $order->order_status == 'delivered')
