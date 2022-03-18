@@ -200,6 +200,13 @@
         }
 
         @media (max-width: 500px) {
+            .modal-dialog{
+                top:7%;
+            }
+            h5.modal-title{
+                font-size: 16px;
+                text-transform: capitalize;
+            }
             .specification p{
                 font-size: 14px;
             }
@@ -1162,7 +1169,7 @@
                         </div>
                         <div class="sewa mt-3">
                             @if ($product->current_stock > 0)
-                            <button class="btn btn-success w-100" id="ajukan" type="button" onclick="buy_now()" disabled>
+                            <button class="btn btn-success w-100" id="ajukan" type="button" onclick="buy_now('add-to-cart-form')" disabled>
                                 Ajukan Sewa
                             </button>
                             @else
@@ -1241,17 +1248,55 @@
             <div class="row">
                 <div class="col-8">
                     <span class="price-foot">
-                        Rp.1900.000 <span class="month">/ Bulan</s>
+                        {{\App\CPU\Helpers::currency_converter(
+                            $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))
+                            )}} <span class="month">/ Bulan</s>
                     </span>
                 </div>
                 <div class="col-4">
-                    <button class="btn btn-success px-1 py-2 w-100" onclick="selectDate()">
+                    @if ($product->current_stock > 0)
+                    <button type="button" class="btn btn-success px-1 py-2 w-100" data-toggle="modal" data-target="#exampleModal">
                         Ajukan Sewa
                     </button>
+                    @else
+                    <button disabled type="button" class="btn btn-danger px-1 py-2 w-100" data-toggle="modal" data-target="#exampleModal">
+                        Penuh
+                    </button>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 3 !mportant;">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pilih tanggal masuk</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <form id="add-to-cart">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $product->id }}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Tanggal mulai</label>
+                        <input name="start_date" id="start_" type="date" placeholder="Tanggal mulai" class="start_date form-control">
+                    </div>
+                    <div class="order-summary mt-2 d-none">
+                        @include('web-views.products._order-summary')
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="buy_now('add-to-cart')">Booking</button>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
 @endsection
 
 @push('script')

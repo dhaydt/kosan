@@ -851,8 +851,8 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
         });
     }
 
-    function addToCart(form_id = 'add-to-cart-form') {
-
+    function addToCart(val) {
+        var form_id = val;
         if (checkAddToCartValidity()) {
             $.ajaxSetup({
                 headers: {
@@ -897,9 +897,9 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
         }
     }
 
-    function buy_now() {
-        console.log('work')
-        addToCart();
+    function buy_now(val) {
+        console.log(val);
+        addToCart(val);
         location.href = "{{url('/shop-cart')}}";
     }
 
