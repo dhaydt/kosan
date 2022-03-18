@@ -715,7 +715,9 @@
 
 <!-- Footer-->
 <!-- Footer-->
+@if (Route::currentRouteName() != 'wishlists' && Route::currentRouteName() != 'account-oder' && Route::currentRouteName() != 'chat-with-seller' && Route::currentRouteName() != 'user-account' && Route::currentRouteName() != 'account-verify')
 @include('layouts.front-end.partials._footer')
+@endif
 @if (Route::is('home'))
 <div class="footer-mobile d-block d-md-none">
     @include('layouts.front-end.partials._mobile_footer')
