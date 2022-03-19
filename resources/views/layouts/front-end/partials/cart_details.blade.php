@@ -368,7 +368,9 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
     </form>
     </section>
     <!-- Sidebar-->
+    @if( $cart->count() > 0)
     @include('web-views.partials._order-summary')
+    @endif
 </div>
 <script>
     cartQuantityInitialize();
