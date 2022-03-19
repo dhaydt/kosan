@@ -189,7 +189,7 @@
 
 
         @php($detail = json_decode($order->details[0]->product_details))
-        @php($sewa = json_decode($order->details[0]->data_penyewa))
+        @php($sewa = $order->customer)
         @php($district = strtolower($detail->kost->district))
         @php($city = strtolower($detail->kost->city))
         <div class="row" id="printableArea">
@@ -278,6 +278,11 @@
                         <div class="col-12 py-3">
                             <div class="title-sub w-100 d-block mt-2">
                                 <h4>Kelengkapan dokumen persyaratan</h4>
+                            </div>
+                            <div class="content">
+                                <div class="ktp text-center">
+                                    <img onerror="this.src='{{asset('assets/back-end/img/400x400/img2.jpg')}}'" src="{{ asset('storage/ktp').'/'.$sewa->ktp }}" alt="">
+                                </div>
                             </div>
                         </div>
                         <hr>
