@@ -1,4 +1,8 @@
 <style>
+    .spartan_item_wrapper{
+        height: 100%;
+        max-width: 50%;
+    }
     div.feature_header {
         justify-content: start;
     }
@@ -274,8 +278,20 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-6">
-                                    <div class="" style="width:156px; height:156px">
-                                        <div class="row" id="coba"></div>
+                                    <div class="" style=""">
+                                        @php($photo = $user->ktp)
+                                        <div class="row d-flex w-100" id="coba">
+                                            <div class="col-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <img style="width: 100%" height="auto"
+                                                             onerror="this.src='{{asset('assets/front-end/img/image-place-holder.png')}}'"
+                                                             src="{{asset("storage/ktp")}}/{{$photo}}"
+                                                             alt="ktp">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <span>Foto KTP (Opsional)</span>
                                     </div>
                                 </div>

@@ -14,6 +14,7 @@ use App\Model\Product;
 use App\Model\Seller;
 use App\Model\SellerWallet;
 use App\Model\ShippingAddress;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -297,6 +298,9 @@ class OrderManager
             $discount = round($discount / count(CartManager::get_cart_group_ids($req)), 2);
         }
 
+        $id = auth('customer')->id();
+        $user = User::find($id);
+
         $cart_group_id = $data['cart_group_id'];
         $seller_data = Cart::where(['cart_group_id' => $cart_group_id])->first();
         // dd($seller_data);
@@ -308,6 +312,7 @@ class OrderManager
             'seller_is' => $seller_data->seller_is,
             'mulai' => $seller_data->mulai,
             'durasi' => $data['data']->durasi,
+            'ktp' => $user->ktp,
             'jumlah_penyewa' => $data['data']->penyewa,
             'catatan_tambahan' => $data['data']->catatan_tambahan,
             'customer_type' => 'customer',

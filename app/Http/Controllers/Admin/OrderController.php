@@ -68,7 +68,7 @@ class OrderController extends Controller
 
     public function details($id)
     {
-        $order = Order::with('details', 'shipping', 'seller', 'room')->where(['id' => $id])->first();
+        $order = Order::with('details', 'shipping', 'seller', 'room', 'customer')->where(['id' => $id])->first();
         $linked_orders = Order::where(['order_group_id' => $order['order_group_id']])
             ->whereNotIn('order_group_id', ['def-order-group'])
             ->whereNotIn('id', [$order['id']])

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\CPU\CartManager;
 use App\CPU\Helpers;
+use App\CPU\ImageManager;
 use App\CPU\OrderManager;
 use App\CPU\ProductManager;
 use function App\CPU\translate;
@@ -27,6 +28,7 @@ use App\Model\Seller;
 use App\Model\ShippingAddress;
 use App\Model\Shop;
 use App\Model\Wishlist;
+use App\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -280,7 +282,23 @@ class WebController extends Controller
 
     public function checkout_complete(Request $request)
     {
-        // dd($request);
+        $id = auth('customer')->user()->id;
+        $user = User::find($id);
+        $image = $request->file('ktp');
+
+        if ($image != null) {
+            $imageName = ImageManager::update('ktp/', auth('customer')->user()->ktp, 'png', $request->file('ktp'));
+            $user->ktp = $imageName;
+            $user->save();
+        }
+
+        $user = User::find($id);
+        if ($user->ktp == null) {
+            Toastr::warning('Mohon upload ktp anda');
+
+            return redirect()->back();
+        }
+
         $unique_id = OrderManager::gen_unique_id();
         $order_ids = [];
         foreach (CartManager::get_cart_group_ids() as $group_id) {

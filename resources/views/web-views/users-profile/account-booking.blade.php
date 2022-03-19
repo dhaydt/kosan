@@ -196,7 +196,7 @@
                                 </div>
                             </div>
                         </div>
-                        @php($user = json_decode($order->details[0]->data_penyewa))
+                        @php($user = auth('customer')->user())
                         @if (isset($user))
                         <div class="col-md-12 data-penyewa p-3 mt-3">
                             <span class="title-kost capitalize">
@@ -209,7 +209,7 @@
                                 </div>
                                 <div class="col-12 d-flex justify-content-between mt-3">
                                     <span class="field">Nomor Handphone</span>
-                                    <span class="content">+62{{ $user->phone }}</span>
+                                    <span class="content">+62{{ (int)$user->phone }}</span>
                                 </div>
                             </div>
                         </div>

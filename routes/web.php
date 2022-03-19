@@ -98,6 +98,9 @@ Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], funct
     Route::get('order-cancel/{id}', 'UserProfileController@order_cancel')->name('order-cancel');
     Route::post('ticket-submit', 'UserProfileController@ticket_submit')->name('ticket-submit');
 
+    //ktp
+    Route::post('ktp', 'UserProfileController@ktp')->name('ktp');
+
     // Chatting start
     Route::get('chat-with-seller', 'ChattingController@chat_with_seller')->name('chat-with-seller');
     Route::get('messages', 'ChattingController@messages')->name('messages');
