@@ -292,7 +292,7 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                                                 </div>
                                             </div>
                                         </div>
-                                        <span>Foto KTP (Opsional)</span>
+                                        <span>Foto KTP (Dibutuhkan)</span>
                                     </div>
                                 </div>
                             </div>
