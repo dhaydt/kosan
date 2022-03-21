@@ -524,7 +524,6 @@
                     "id": id,
                     'type': payment,
                     "value": val
-
                 },
                 success: function (data) {
                     if (data.success == 0) {

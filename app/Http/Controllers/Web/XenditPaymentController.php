@@ -161,7 +161,7 @@ class XenditPaymentController extends Controller
         if (auth('customer')->check()) {
             Toastr::success('Pembayaran berhasil.');
 
-            return view('web-views.checkout-complete');
+            return view('web-views.payment-complete');
         }
 
         return response()->json(['message' => 'Payment succeeded'], 200);
