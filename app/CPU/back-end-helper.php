@@ -11,43 +11,42 @@ class BackEndHelper
 {
     public static function currency_to_usd($amount)
     {
-        $currency_model = Helpers::get_business_settings('currency_model');
-        if ($currency_model == 'multi_currency') {
-            $default = Currency::find(BusinessSetting::where(['type' => 'system_default_currency'])->first()->value);
-            $usd = Currency::where('code', 'USD')->first()->exchange_rate;
-            $rate = $default['exchange_rate'] / $usd;
-            $value = floatval($amount) / floatval($rate);
-        } else {
-            $value = floatval($amount);
-        }
+        // $currency_model = Helpers::get_business_settings('currency_model');
+        // if ($currency_model == 'multi_currency') {
+        //     $default = Currency::find(BusinessSetting::where(['type' => 'system_default_currency'])->first()->value);
+        //     $usd = Currency::where('code', 'USD')->first()->exchange_rate;
+        //     $rate = $default['exchange_rate'] / $usd;
+        //     $value = floatval($amount) / floatval($rate);
+        // } else {
+        $value = floatval($amount);
+        // }
 
         return $value;
     }
 
     public static function usd_to_currency($amount)
     {
-        $currency_model = Helpers::get_business_settings('currency_model');
-        if ($currency_model == 'multi_currency') {
+        // $currency_model = Helpers::get_business_settings('currency_model');
+        // if ($currency_model == 'multi_currency') {
+        //     if (session()->has('default')) {
+        //         $default = session('default');
+        //     } else {
+        //         $default = Currency::find(Helpers::get_business_settings('system_default_currency'))->exchange_rate;
+        //         session()->put('default', $default);
+        //     }
 
-            if (session()->has('default')) {
-                $default = session('default');
-            } else {
-                $default = Currency::find(Helpers::get_business_settings('system_default_currency'))->exchange_rate;
-                session()->put('default', $default);
-            }
+        //     if (session()->has('usd')) {
+        //         $usd = session('usd');
+        //     } else {
+        //         $usd = Currency::where('code', 'USD')->first()->exchange_rate;
+        //         session()->put('usd', $usd);
+        //     }
 
-            if (session()->has('usd')) {
-                $usd = session('usd');
-            } else {
-                $usd = Currency::where('code', 'USD')->first()->exchange_rate;
-                session()->put('usd', $usd);
-            }
-
-            $rate = $default / $usd;
-            $value = floatval($amount) * floatval($rate);
-        } else {
-            $value = floatval($amount);
-        }
+        //     $rate = $default / $usd;
+        //     $value = floatval($amount) * floatval($rate);
+        // } else {
+        $value = floatval($amount);
+        // }
 
         return round($value, 2);
     }
@@ -55,6 +54,7 @@ class BackEndHelper
     public static function currency_symbol()
     {
         $currency = Currency::where('id', Helpers::get_business_settings('system_default_currency'))->first();
+
         return $currency->symbol;
     }
 
@@ -62,16 +62,18 @@ class BackEndHelper
     {
         $position = Helpers::get_business_settings('currency_symbol_position');
         if (!is_null($position) && $position == 'left') {
-            $string = currency_symbol() . '' . number_format($amount, 2);
+            $string = currency_symbol().''.number_format($amount, 2);
         } else {
-            $string = number_format($amount, 2) . '' . currency_symbol();
+            $string = number_format($amount, 2).''.currency_symbol();
         }
+
         return $string;
     }
 
     public static function currency_code()
     {
         $currency = Currency::where('id', Helpers::get_business_settings('system_default_currency'))->first();
+
         return $currency->code;
     }
 
@@ -93,6 +95,7 @@ class BackEndHelper
                 $max = $count;
             }
         }
+
         return $max;
     }
 
@@ -108,12 +111,13 @@ class BackEndHelper
         foreach ($data as $month) {
             $count = 0;
             foreach ($month as $order) {
-                $count += 1;
+                ++$count;
             }
             if ($count > $max) {
                 $max = $count;
             }
         }
+
         return $max;
     }
 }

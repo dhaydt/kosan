@@ -40,13 +40,14 @@
                 {{\App\CPU\Helpers::currency_converter($product->unit_price)}}
             </span>
         </div>
-        {{-- <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
             <span class="cart_title">{{\App\CPU\translate('tax')}}</span>
             <span class="cart_value">
-                {{\App\CPU\Helpers::currency_converter($total_tax)}}
+                @php($tax = $product->unit_price * $product->tax/100)
+                {{\App\CPU\Helpers::currency_converter($tax)}}
             </span>
         </div>
-        <div class="d-flex justify-content-between">
+        {{-- <div class="d-flex justify-content-between">
             <span class="cart_title">{{\App\CPU\translate('shipping')}}</span>
             <span class="cart_value">
                 {{\App\CPU\Helpers::currency_converter($total_shipping_cost)}}
@@ -89,7 +90,7 @@
             <span class="cart_title">{{\App\CPU\translate('total')}}</span>
             <span class="cart_value">
                 {{\App\CPU\Helpers::currency_converter(
-                    $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price)))}}
+                    $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))+ $tax)}}
             </span>
         </div>
 

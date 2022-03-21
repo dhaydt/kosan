@@ -648,21 +648,21 @@ class Helpers
 
     public static function currency_converter($amount)
     {
-        $currency_model = Helpers::get_business_settings('currency_model');
-        if ($currency_model == 'multi_currency') {
-            if (session()->has('usd')) {
-                $usd = session('usd');
-            } else {
-                $usd = Currency::where(['code' => 'USD'])->first()->exchange_rate;
-                session()->put('usd', $usd);
-            }
-            $my_currency = \session('currency_exchange_rate');
-            $rate = $my_currency / $usd;
-        } else {
-            $rate = 1;
-        }
+        // $currency_model = Helpers::get_business_settings('currency_model');
+        // if ($currency_model == 'multi_currency') {
+        //     if (session()->has('usd')) {
+        //         $usd = session('usd');
+        //     } else {
+        //         $usd = Currency::where(['code' => 'USD'])->first()->exchange_rate;
+        //         session()->put('usd', $usd);
+        //     }
+        //     $my_currency = \session('currency_exchange_rate');
+        //     $rate = $my_currency / $usd;
+        // } else {
+        //     $rate = 1;
+        // }
 
-        return Helpers::set_symbol(round($amount * $rate));
+        return Helpers::set_symbol(round($amount));
     }
 
     public static function language_load()

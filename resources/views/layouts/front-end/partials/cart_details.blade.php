@@ -198,6 +198,7 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                         <div class="">
                             <div class=" text-accent">
                                 {{-- {{ \App\CPU\Helpers::currency_converter(($cartItem['price']-$cartItem['discount'])*$cartItem['quantity']) }} --}}
+                                {{-- {{ dd($cartItem['price']) }} --}}
                                 {{ \App\CPU\Helpers::currency_converter($cartItem['price']) }}
                             </div>
                         </div>

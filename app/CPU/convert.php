@@ -2,7 +2,6 @@
 
 namespace App\CPU;
 
-
 use App\Model\BusinessSetting;
 use App\Model\Currency;
 
@@ -10,30 +9,31 @@ class Convert
 {
     public static function usd($amount)
     {
-        $currency_model = Helpers::get_business_settings('currency_model');
-        if ($currency_model == 'multi_currency') {
-            $default = Currency::find(BusinessSetting::where(['type' => 'system_default_currency'])->first()->value);
-            $usd = Currency::where('code', 'USD')->first()->exchange_rate;
-            $rate = $default['exchange_rate'] / $usd;
-            $value = floatval($amount) / floatval($rate);
-        } else {
-            $value = floatval($amount);
-        }
+        // $currency_model = Helpers::get_business_settings('currency_model');
+        // if ($currency_model == 'multi_currency') {
+        //     $default = Currency::find(BusinessSetting::where(['type' => 'system_default_currency'])->first()->value);
+        //     $usd = Currency::where('code', 'USD')->first()->exchange_rate;
+        //     $rate = $default['exchange_rate'] / $usd;
+        //     $value = floatval($amount) / floatval($rate);
+        // } else {
+        $value = floatval($amount);
+        // }
 
         return $value;
     }
 
     public static function default($amount)
     {
-        $currency_model = Helpers::get_business_settings('currency_model');
-        if ($currency_model == 'multi_currency') {
-            $default = Currency::find(BusinessSetting::where(['type' => 'system_default_currency'])->first()->value);
-            $usd = Currency::where('code', 'USD')->first()->exchange_rate;
-            $rate = $default['exchange_rate'] / $usd;
-            $value = floatval($amount) * floatval($rate);
-        }else{
-            $value = floatval($amount);
-        }
+        // $currency_model = Helpers::get_business_settings('currency_model');
+        // if ($currency_model == 'multi_currency') {
+        //     $default = Currency::find(BusinessSetting::where(['type' => 'system_default_currency'])->first()->value);
+        //     $usd = Currency::where('code', 'USD')->first()->exchange_rate;
+        //     $rate = $default['exchange_rate'] / $usd;
+        //     $value = floatval($amount) * floatval($rate);
+        // } else {
+        $value = floatval($amount);
+        // }
+
         return round($value, 2);
     }
 
@@ -45,7 +45,7 @@ class Convert
             $usd = Currency::where('code', 'USD')->first()->exchange_rate;
             $rate = $bdt / $usd;
             $value = floatval($amount) / floatval($rate);
-        }else{
+        } else {
             $value = floatval($amount);
         }
 
@@ -60,7 +60,7 @@ class Convert
             $usd = Currency::where('code', 'USD')->first()->exchange_rate;
             $rate = $usd / $bdt;
             $value = floatval($amount) / floatval($rate);
-        }else{
+        } else {
             $value = floatval($amount);
         }
 
@@ -75,7 +75,7 @@ class Convert
             $usd = Currency::where('code', 'USD')->first()->exchange_rate;
             $rate = $usd / $myr;
             $value = floatval($amount) / floatval($rate);
-        }else{
+        } else {
             $value = floatval($amount);
         }
 
@@ -90,7 +90,7 @@ class Convert
             $usd = Currency::where('code', 'USD')->first()->exchange_rate;
             $rate = $usd / $zar;
             $value = floatval($amount) / floatval($rate);
-        }else{
+        } else {
             $value = floatval($amount);
         }
 
@@ -105,7 +105,7 @@ class Convert
             $usd = Currency::where('code', 'USD')->first()->exchange_rate;
             $rate = $usd / $inr;
             $value = floatval($amount) / floatval($rate);
-        }else{
+        } else {
             $value = floatval($amount);
         }
 
@@ -120,38 +120,39 @@ class Convert
             $usd = Currency::where('code', 'USD')->first()->exchange_rate;
             $rate = $usd / $egp;
             $value = floatval($amount) / floatval($rate);
-        }else{
+        } else {
             $value = floatval($amount);
         }
 
         return $value;
     }
-      public static function usdToidr($amount)
+
+    public static function usdToidr($amount)
     {
-        $currency_model = Helpers::get_business_settings('currency_model');
-        if ($currency_model == 'multi_currency') {
-            $idr = Currency::where(['code' => 'IDR'])->first()->exchange_rate;
-            $usd = Currency::where('code', 'USD')->first()->exchange_rate;
-            $rate = $usd / $idr;
-            $value = floatval($amount) / floatval($rate);
-        } else {
-            $value = floatval($amount);
-        }
+        // $currency_model = Helpers::get_business_settings('currency_model');
+        // if ($currency_model == 'multi_currency') {
+        //     $idr = Currency::where(['code' => 'IDR'])->first()->exchange_rate;
+        //     $usd = Currency::where('code', 'USD')->first()->exchange_rate;
+        //     $rate = $usd / $idr;
+        //     $value = floatval($amount) / floatval($rate);
+        // } else {
+        $value = floatval($amount);
+        // }
 
         return $value;
     }
 
     public static function idrTousd($amount)
     {
-        $currency_model = Helpers::get_business_settings('currency_model');
-        if ($currency_model == 'multi_currency') {
-            $idr = Currency::where(['code' => 'IDR'])->first()->exchange_rate;
-            $usd = Currency::where('code', 'USD')->first()->exchange_rate;
-            $rate = $idr / $usd;
-            $value = floatval($amount) / floatval($rate);
-        } else {
-            $value = floatval($amount);
-        }
+        // $currency_model = Helpers::get_business_settings('currency_model');
+        // if ($currency_model == 'multi_currency') {
+        //     $idr = Currency::where(['code' => 'IDR'])->first()->exchange_rate;
+        //     $usd = Currency::where('code', 'USD')->first()->exchange_rate;
+        //     $rate = $idr / $usd;
+        //     $value = floatval($amount) / floatval($rate);
+        // } else {
+        $value = floatval($amount);
+        // }
 
         return $value;
     }
