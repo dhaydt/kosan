@@ -261,7 +261,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="content-payment">
-                                                    <a href="javascript:" onclick="payment('gopay')" class="row">
+                                                    {{-- <a href="javascript:" onclick="payment('gopay')" class="row">
                                                         <div class="col-9">
                                                             <span class="bank">
                                                                 Go PAY
@@ -273,7 +273,7 @@
                                                                 style="height: 18px;" alt="gopay">
                                                             <i class="fa fa-chevron-right"></i>
                                                         </div>
-                                                    </a>
+                                                    </a> --}}
                                                     <a href="javascript:" onclick="payment('dana')" class="row mt-3">
                                                         <div class="col-9">
                                                             <span class="bank">
