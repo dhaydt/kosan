@@ -351,7 +351,7 @@ class WebController extends Controller
         Toastr::info(translate('no_items_in_basket'));
 
         // return redirect('/');
-        return redirect()->back();
+        return redirect()->reload();
     }
 
     //for seller Shop
