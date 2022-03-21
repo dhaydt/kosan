@@ -888,6 +888,7 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
                 },
                 complete: function () {
                     $('#loading').hide();
+                    location.href = "{{url('/shop-cart')}}";
                 }
             });
         } else {
@@ -902,8 +903,6 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
     function buy_now(val) {
         // console.log(val);
         addToCart(val);
-        setTimeout('', 5000);
-        location.href = "{{url('/shop-cart')}}";
     }
 
     function currency_change(currency_code) {
