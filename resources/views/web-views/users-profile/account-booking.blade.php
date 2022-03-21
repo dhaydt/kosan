@@ -160,6 +160,8 @@
                                     <img src="{{ asset('assets/front-end/img/date.png') }}" style="height: 15px" alt="">
                                     <span class="ml-2 dated">Tanggal masuk</span>
                                 </div>
+                                {{-- @php($add = 2)
+                                {{ date("Y-m-d", strtotime("+".$add."month", strtotime($order->mulai))) }} --}}
                                 @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
                                 <div class="ml-4 mt-1">
                                     <span class="date-date">{{ App\CPU\Helpers::dateChange($date) }}</span>

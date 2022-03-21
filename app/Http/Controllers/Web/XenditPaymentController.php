@@ -6,6 +6,7 @@ use App\CPU\CartManager;
 use App\CPU\Convert;
 use App\CPU\OrderManager;
 use App\Http\Controllers\Controller;
+use App\Model\Detail_room;
 use App\Model\Order;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -130,6 +131,16 @@ class XenditPaymentController extends Controller
         $order->payment_status = 'paid';
         $order->transaction_ref = session('transaction_ref');
         $order->save();
+
+        $room = Detail_room::find($order->roomDetail_id);
+        if (isset($room)) {
+            $month = strtotime($order->mulai);
+            $room->user_id = $order->customer_id;
+            $room->mulai = $order->mulai;
+            $room->habis = date('Y-m-d', strtotime('+'.$order->durasi.'month', $month));
+            $room->save();
+        }
+
         CartManager::cart_clean();
         if (auth('customer')->check()) {
             Toastr::success('Pembayaran berhasil.');

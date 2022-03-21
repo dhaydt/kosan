@@ -82,7 +82,7 @@ class Helpers
             'April',
             'Mei',
             'Juni',
-            'July',
+            'Juli',
             'Agustus',
             'September',
             'Oktober',
