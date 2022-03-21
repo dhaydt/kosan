@@ -154,6 +154,7 @@
         }
         .manual-nav.nav-manual .owl-carousel .owl-nav{
             right: -7px;
+            top: -57px;
         }
         .flash_deal_title {
         font-weight: 600;
