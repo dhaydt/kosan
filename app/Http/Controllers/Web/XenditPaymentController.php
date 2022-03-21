@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\CPU\CartManager;
 use App\CPU\Convert;
 use App\CPU\OrderManager;
+use function App\CPU\translate;
 use App\Http\Controllers\Controller;
 use App\Model\Detail_room;
 use App\Model\Order;
@@ -71,6 +72,8 @@ class XenditPaymentController extends Controller
         // dd($type);
         $value = $order['order_amount'];
         $tran = OrderManager::gen_unique_id();
+        $duration = '60';
+        // dd($duration);
 
         session()->put('transaction_ref', $tran);
         Xendit::setApiKey(config('xendit.apikey'));
@@ -98,14 +101,27 @@ class XenditPaymentController extends Controller
             'fixed_va' => true,
             'should_send_email' => true,
             'customer' => $user,
-            // 'invoice_duration' => $duration,
+            'invoice_duration' => $duration,
             'success_redirect_url' => env('APP_URL').'/xendit-payment/success/'.$order_id,
-            // 'failure_redirect_url' => env('APP_URL').'/xendit-payment/expired/'.$order_id,
+            'failure_redirect_url' => env('APP_URL').'/xendit-payment/expired/'.$order_id,
         ];
 
         $checkout_session = \Xendit\Invoice::create($params);
 
         return redirect()->away($checkout_session['invoice_url']);
+    }
+
+    public function expire($id)
+    {
+        $order = Order::where(['id' => $id])->first();
+        OrderManager::stock_update_on_order_status_change($order, 'canceled');
+        Order::where(['id' => $id])->update([
+                'order_status' => 'failed',
+        ]);
+
+        Toastr::warning(translate('order_expired_for_order_ID').': '.$id);
+
+        return redirect()->route('account-oder');
     }
 
     public function success($id)

@@ -126,6 +126,9 @@
                     @if ($order->order_status == 'canceled')
                     <span class="status text-danger">Booking dibatalkan</span>
                     @endif
+                    @if ($order->order_status == 'failed')
+                    <span class="status text-danger">Kadaluarsa</span>
+                    @endif
                     {{-- {{ dd($orders) }} --}}
                     @php($detail = json_decode($order->details[0]->product_details))
                     @php($district = strtolower($detail->kost->district))
