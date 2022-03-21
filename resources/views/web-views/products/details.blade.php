@@ -51,7 +51,9 @@
         .chatInputBox {
             width: 100%;
         }
-
+        .product-img{
+            height: 383px;
+        }
         .go-to-chatbox {
             width: 100%;
             text-align: center;
@@ -200,6 +202,9 @@
         }
 
         @media (max-width: 500px) {
+            .product-img{
+                height: 220px;
+            }
             .modal-dialog{
                 top:7%;
             }
@@ -291,10 +296,9 @@
                                 <div
                                     class="carousel-item h-100 {{$key==0?'active':''}}"
                                     id="image{{$key}}">
-                                    <img class="w-100"
+                                    <img class="w-100 product-img"
                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                         src="{{asset("storage/product/$photo")}}"
-                                        style="height: 383px;"
                                         alt="Product image" width="">
                                 </div>
                             @endforeach

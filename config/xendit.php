@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'apikey' => env('XENDIT_API_KEY', 'xnd_development_EjKwvpsxM2CTQgKnemfayZxvZs3QBbghv7yzyWH4Mf2uSYTCJh5parjD5Y9SmGs'),
+    'apikey' => env('XENDIT_API_KEY', 'xnd_development_di1DeSyy085HkAC0OLaQJghO5cXWsCIdA81GucCqUzXqllf3P6cgmBJnhdVU8'),
 ];
