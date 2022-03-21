@@ -270,7 +270,7 @@
         @if (!Route::is('shop-cart'))
         <!-- Toolbar-->
         <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
-          <div class="nav-list d-flex">
+          <div class="nav-list d-flex h-100">
               <div class="navbar-tool {{Session::get('direction') === " rtl" ? 'mr-3' : 'ml-3' }}">
                 <a class="nav-item-list" href="{{route('wishlists')}}">
                   <span class="nav-item">{{ \App\CPU\translate('favorite')}}</span>
@@ -286,11 +286,20 @@
                   <span class="nav-item">{{ \App\CPU\translate('chat')}}</span>
                 </a>
               </div>
-              <div class="navbar-tool {{Session::get('direction') === " rtl" ? 'mr-3' : 'ml-3' }}">
-                <a class="nav-item-list" href="{{route('wishlists')}}">
-                  <span class="nav-item">{{ \App\CPU\translate('lainnya')}}</span>
-                </a>
-              </div>
+              <div class="navbar-tool mr-4 ml-3">
+                <div class="dropdown h-100">
+                    <a class="nav-item-list" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                      <span class="nav-item">{{ \App\CPU\translate('lainnya')}}</span>
+                    </a>
+                    <i class="fa fa-caret-down"></i>
+                    <div class="dropdown-menu" style="top:15px;" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ route('account-oder') }}">Booking</a>
+                        <a class="dropdown-item" href="{{ route('wishlists') }}">Favorite</a>
+                        <a class="dropdown-item" href="{{ route('chat-with-seller') }}">Chat</a>
+                        <a class="dropdown-item" href="{{ route('user-account') }}">Profile</a>
+                      </div>
+                  </div>
+                </div>
           </div>
           {{-- <div id="cart_items">
             @include('layouts.front-end.partials.cart')
@@ -313,8 +322,8 @@
               </div>
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="{{route('account-oder')}}"> {{ \App\CPU\translate('my_order')}} </a>
-              <a class="dropdown-item" href="{{route('user-account')}}"> {{ \App\CPU\translate('my_profile')}}</a>
+              <a class="dropdown-item" href="{{route('account-oder')}}"> {{ \App\CPU\translate('Booking')}} </a>
+              <a class="dropdown-item" href="{{route('user-account')}}"> {{ \App\CPU\translate('Profile')}}</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{route('customer.auth.logout')}}">{{ \App\CPU\translate('logout')}}</a>
             </div>
