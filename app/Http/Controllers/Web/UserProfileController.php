@@ -47,6 +47,19 @@ class UserProfileController extends Controller
         }
     }
 
+    public function user_kost(Request $request)
+    {
+        $user = auth('customer')->user();
+        if (!$user) {
+            Toastr::info('Mohon login dulu!!!');
+
+            return redirect()->route('customer.auth.login');
+        }
+        $orders = Order::with('details', 'room')->where('customer_id', auth('customer')->id())->where('order_status', 'delivered')->orderBy('id', 'DESC')->get();
+
+        return view('web-views.users-profile.account-kost', compact('orders'));
+    }
+
     public function user_update(Request $request)
     {
         // dd($request);

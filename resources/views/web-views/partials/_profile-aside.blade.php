@@ -67,6 +67,17 @@
             <!-- Filter by price-->
             <div class="sidebarL">
                 <h3 class="widget-title btnF" style="font-weight: 700;">
+                    <a class="{{Request::is('account-kost*') ? 'active-menu' :''}}" href="{{route('account-kost') }} ">{{\App\CPU\translate('Kost')}}</a>
+                </h3>
+                <div class="divider-role"
+                     style="border: 1px solid whitesmoke; margin-bottom: 14px;  margin-top: -6px;">
+                </div>
+            </div>
+        </div>
+        <div class="pb-0" style="padding-top: 12px;">
+            <!-- Filter by price-->
+            <div class="sidebarL">
+                <h3 class="widget-title btnF" style="font-weight: 700;">
                     <a class="{{Request::is('account-oder*') || Request::is('account-order-details*') ? 'active-menu' :''}}" href="{{route('account-oder') }} ">{{\App\CPU\translate('booking')}}</a>
                 </h3>
                 <div class="divider-role"
@@ -172,6 +183,16 @@
 <div class="footer-booking-nav d-flex d-md-none px-2 pb-1 pt-2">
 <div class="container">
     <div class="row">
+        <div class="col-3 d-flex flex-column align-items-center">
+            <a class="{{Request::is('account-kost*') ? 'active-menu' :''}} d-flex flex-column align-items-center" href="{{route('account-kost') }} ">
+                <div class="book-icon-frame">
+                    <img src="{{ asset('assets/front-end/img/booking.png') }}" alt="" class="book-icon">
+                </div>
+                <span class="item-nav">
+                    {{\App\CPU\translate('Kost')}}
+                </span>
+            </a>
+        </div>
         <div class="col-3 d-flex flex-column align-items-center">
             <a class="{{Request::is('account-oder*') || Request::is('account-order-details*') ? 'active-menu' :''}} d-flex flex-column align-items-center" href="{{route('account-oder') }} ">
                 <div class="book-icon-frame">

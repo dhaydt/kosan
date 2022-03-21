@@ -277,7 +277,7 @@
                 </a>
               </div>
               <div class="navbar-tool {{Session::get('direction') === " rtl" ? 'mr-3' : 'ml-3' }}">
-                <a class="nav-item-list" href="{{route('wishlists')}}">
+                <a class="nav-item-list" href="{{route('account-kost')}}">
                   <span class="nav-item">{{ \App\CPU\translate('kost_saya')}}</span>
                 </a>
               </div>
