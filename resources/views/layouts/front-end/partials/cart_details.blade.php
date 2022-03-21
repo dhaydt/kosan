@@ -351,7 +351,7 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
             @endforeach
 
             @if( $cart->count() == 0)
-            <input type="hidden" id="counter" value="{{ $cart->count() }}">
+            {{-- <input type="hidden" id="counter" value="{{ $cart->count() }}"> --}}
             <div class="d-flex justify-content-center align-items-center">
                 <h4 class="text-danger text-capitalize">{{\App\CPU\translate('cart_empty')}}</h4>
             </div>
@@ -380,12 +380,12 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
 @push('script')
 <script src="{{asset('public/assets/back-end/js/spartan-multi-image-picker.js')}}"></script>
 <script>
-    $(documnet).ready(function(){
-        var cart = $('#counter').val();
-        if(cart == 0){
-            location.reload();
-        }
-    })
+    // $(documnet).ready(function(){
+    //     var cart = $('#counter').val();
+    //     if(cart == 0){
+    //         location.reload();
+    //     }
+    // })
 
     $(function () {
             $("#coba").spartanMultiImagePicker({
