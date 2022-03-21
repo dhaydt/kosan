@@ -1149,7 +1149,7 @@
                             <section class="booking-input-checkin booking-card__info-select-dat w-100">
                                 <div class="form-group">
                                     <label for="">Tanggal mulai</label>
-                                    <input name="start_date" id="start_date" type="date" placeholder="Tanggal mulai" class="start_date form-control">
+                                    <input onclick="checkuser()" name="start_date" id="start_date" type="date" placeholder="Tanggal mulai" class="start_date form-control">
                                 </div>
                             </section>
                         </div>
@@ -1232,6 +1232,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="user" name="user" value="{{ auth('customer')->id() }}">
     <div class="product-footer d-flex d-md-none">
         <div class="container">
             <div class="row">
@@ -1244,7 +1245,7 @@
                 </div>
                 <div class="col-4">
                     @if ($product->current_stock > 0)
-                    <button type="button" class="btn btn-success px-1 py-2 w-100" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-success px-1 py-2 w-100" onclick="show_date()">
                         Ajukan Sewa
                     </button>
                     @else
@@ -1290,6 +1291,21 @@
 
 @push('script')
     <script>
+        function show_date(){
+            var user = $('#user').val();
+            if(!user){
+                location.href = "{{route('customer.auth.login')}}";
+            }else{
+                $('#exampleModal').modal('show');
+            }
+        }
+        function checkuser(){
+            var user = $('#user').val();
+            if(!user){
+                location.href = "{{route('customer.auth.login')}}";
+            }
+        }
+
         function selectDate(){
             console.log('select date')
         }
