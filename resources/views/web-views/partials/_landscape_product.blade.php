@@ -23,6 +23,14 @@
 .product-card .card-body.inline_product_search{
     background-color: #f2f3f7;
 }
+.rc-price__additional-data{
+    justify-content: end;
+}
+@media(max-width: 600px){
+    .rc-price__additional-data{
+        justify-content: start;
+    }
+}
 </style>
 <div class="product-card search-card card {{$product['current_stock']==0?'stock-card':''}}"
     style="margin-bottom: 10px; box-shadow: none;">
@@ -79,7 +87,7 @@
                 <div class="kost-rc__price h-100">
                     <div class="rc-price mt-auto">
                         @if($product->discount > 0)
-                        <div class="rc-price__additional-data justify-content-end">
+                        <div class="rc-price__additional-data">
                             <div class="price-discount">
                                 <span class="rc-price__discount-icon" aria-hidden="true">{{
                                     \App\CPU\translate('Hemat')}}</span>
@@ -101,6 +109,16 @@
                         </div>
                         @endif
                         <div class="rc-price__section">
+                            <div class="rc-price__real d-flex d-md-none">
+                                <span class="rc-price__text bg-c-text bg-c-text--body-1 ">
+                                    {{\App\CPU\Helpers::currency_converter(
+                                        $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))
+                                        )}}
+                                </span>
+                                <span class="rc-price__type bg-c-text bg-c-text--body-2 ">
+                                    / Bulan
+                                </span>
+                            </div>
                             <div class="room-card_overview">
                                 <span class="d-inline-block font-size-sm text-body">
                                         @for($inc=0;$inc<1;$inc++)
@@ -111,7 +129,7 @@
                                         @endfor
                                 </span>
                             </div>
-                            <div class="rc-price__real">
+                            <div class="rc-price__real d-none d-md-flex">
                                 <span class="rc-price__text bg-c-text bg-c-text--body-1 ">
                                     {{\App\CPU\Helpers::currency_converter(
                                         $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))

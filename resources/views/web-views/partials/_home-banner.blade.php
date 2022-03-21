@@ -20,6 +20,9 @@
         .brand-slider .owl-stage-outer .owl-stage{
             margin-left: 0;
         }
+        .banner-card {
+            border-radius: 8px;
+        }
     }
 </style>
 
