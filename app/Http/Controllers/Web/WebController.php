@@ -327,7 +327,7 @@ class WebController extends Controller
 
     public function shop_cart()
     {
-        $cart = Cart::where('customer_id', auth('customer')->id())->get();
+        $cart = Cart::where('customer_id', auth('customer')->id())->orderby('id', 'DESC')->get();
         // if (auth('customer')->check() && count($cart) > 0) {
         if (count($cart) > 0) {
             // if (auth('customer')->user()->district == null) {
@@ -490,6 +490,10 @@ class WebController extends Controller
     public function product($slug)
     {
         $product = Product::active()->with(['reviews'])->where('slug', $slug)->first();
+        $auth = auth('customer')->id();
+        if ($auth) {
+            CartManager::cart_clean();
+        }
         if ($product != null) {
             $countOrder = OrderDetail::where('product_id', $product->id)->count();
             $countWishlist = Wishlist::where('product_id', $product->id)->count();
