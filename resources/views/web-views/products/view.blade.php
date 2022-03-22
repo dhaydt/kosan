@@ -213,7 +213,8 @@
 
         @media (max-width: 768px) {
             .headerTitle {
-                font-size: 23px;
+                font-size: 20px;
+                margin-top: 70px;
 
             }
 

@@ -142,12 +142,16 @@
     }
 
     @media (max-width: 600px) {
+        .selectLoc{
+            font-size: 12px;
+            color: {{ $web_config['primary_color'] }} !important;
+        }
         .kampus-body h5{
         font-size: 14px;
-    }
-    .kampus-body span {
-        font-size: 14px;
-    }
+        }
+        .kampus-body span {
+            font-size: 14px;
+        }
         .manual-nav.nav-manual .owl-carousel .owl-nav button {
             padding: 5px 9px !important;
             font-size: 13px;
@@ -670,7 +674,7 @@
             <span class="for-feature-title capitalize">{{strtolower($category['name'])}}</span>
         </div>
         <div class="d-flex col-md-10 col-8 justify-content-between">
-            <div class="d-flex float-right for-shoting-mobile">
+            <div class="float-right for-shoting-mobile d-flex">
                 <form id="{{ $category['id'] }}-form" action="{{ route('products') }}" method="GET">
                     <div class="form-inline flex-nowrap for-mobile">
                         <label class="opacity-75 text-nowrap {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}} for-shoting"
@@ -699,14 +703,27 @@
                     </div>
                 </form>
             </div>
-            <div>
+            <div class="d-none d-md-flex">
                 <a class="btn btn-sm viw-btn-a"
                 href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
                 {{ \App\CPU\translate('lihat_semua')}}
                 </a>
             </div>
+            <div class="d-flex d-md-none">
+                <div class="dropleft d-flex align-items-center">
+                    <a class="selectLoc" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                      Pilih lokasi
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">Semua</a>
+                      @foreach ($city as $c)
+                      <a class="dropdown-item" href="{{route('products',['city' => $c['id'], 'catId'=> $category['id'], 'data_from'=>$category['name'], 'type' => 'catHome','page'=>1])}}">{{ $c['name'] }}</a>
+                      @endforeach
+                    </div>
+                  </div>
             </div>
         </div>
+    </div>
 
     <div class="row mt-2 mb-3 w-100">
         @foreach(\App\CPU\CategoryManager::products($category['id']) as $key=>$product)
@@ -800,6 +817,9 @@
 
         function catSubmit(val){
             $('#'+val+'-form').submit()
+        }
+        function catSubmitMobile(val){
+            $('#'+val+'-form-mobile').submit()
         }
     </script>
 
