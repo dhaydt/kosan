@@ -24,7 +24,7 @@
     background-color: #f2f3f7;
 }
 .rc-price__additional-data{
-    justify-content: end;
+    justify-content: start;
 }
 @media(max-width: 600px){
     .rc-price__additional-data{
@@ -119,16 +119,6 @@
                                     / Bulan
                                 </span>
                             </div>
-                            <div class="room-card_overview">
-                                <span class="d-inline-block font-size-sm text-body">
-                                        @for($inc=0;$inc<1;$inc++)
-                                        @if($inc<$overallRating[0])
-                                        <i class="sr-star czi-star-filled active"></i>
-                                        <label class="badge-style rc-label bg-c-text--label-1 text-bold"></label>{{$product->reviews()->count()}}</label>
-                                        @endif
-                                        @endfor
-                                </span>
-                            </div>
                             <div class="rc-price__real d-none d-md-flex">
                                 <span class="rc-price__text bg-c-text bg-c-text--body-1 ">
                                     {{\App\CPU\Helpers::currency_converter(
@@ -137,6 +127,16 @@
                                 </span>
                                 <span class="rc-price__type bg-c-text bg-c-text--body-2 ">
                                     / Bulan
+                                </span>
+                            </div>
+                            <div class="room-card_overview">
+                                <span class="d-inline-block font-size-sm text-body">
+                                        @for($inc=0;$inc<1;$inc++)
+                                        @if($inc<$overallRating[0])
+                                        <i class="sr-star czi-star-filled active"></i>
+                                        <label class="badge-style rc-label bg-c-text--label-1 text-bold"></label>{{$product->reviews()->count()}}</label>
+                                        @endif
+                                        @endfor
                                 </span>
                             </div>
                         </div>

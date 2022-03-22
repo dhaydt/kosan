@@ -98,7 +98,7 @@
             color: #f1f1f1;
         }
         .price_landscape{
-            height: 48px;
+            height: 90px;
         }
 
         .sidepanel .closebtn {
@@ -143,6 +143,9 @@
         }
 
         @media (max-width: 500px) {
+            .price_landscape{
+                height: 48px;
+            }
             .card-body.inline_product_search{
                 width: 64%;
             }
