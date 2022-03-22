@@ -229,15 +229,16 @@
 @section('content')
     <!-- Page Title-->
     <div class="container rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row justify-content-center">
+            {{-- <div class="col-md-3">
                 <a class="openbtn-tab mt-5" onclick="openNav()">
                     <div style="font-size: 20px; font-weight: 600; " class="for-tab-display mt-5">
                         <i class="fa fa-filter"></i>
                         {{\App\CPU\translate('filter')}}
                     </div>
-                </a></div>
-            <div class="col-md-9">
+                </a>
+            </div> --}}
+            <div class="col-lg-9 col-md-12">
                 <div class="row">
                     <div class="col-md-6">
                         {{-- if need data from also --}}
@@ -248,13 +249,6 @@
                         </h1>
                     </div>
                     <div class="row col-md-6 for-display mx-0">
-
-                        {{-- <button class="d-none d-md-flex openbtn text-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}" onclick="openNav()">
-                            <div style="">
-                                <i class="fa fa-filter"></i>
-                                {{\App\CPU\translate('filter')}}
-                            </div>
-                        </button> --}}
 
                         <div class="d-flex flex-wrap float-right for-shoting-mobile">
                             <form id="search-form" action="{{ route('products') }}" method="GET">
@@ -289,9 +283,9 @@
     <!-- Page Content-->
     <div class="container pb-5 mb-2 mb-md-4 rtl"
          style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
-        <div class="row">
+        <div class="row justify-content-center">
             <!-- Sidebar-->
-            <aside
+            {{-- <aside
                 class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters {{Session::get('direction') === "rtl" ? 'pl-0' : 'pr-0'}}"
                 id="SearchParameters">
                 <!--Price Sidebar-->
@@ -686,10 +680,10 @@
                         </div>
                     </div>
                 </aside>
-            </div>
+            </div> --}}
 
             <!-- Content  -->
-            <section class="col-lg-9">
+            <section class="col-lg-9 col-md-12">
                 @if (count($products) > 0)
                     <div class="row" id="ajax-products">
                         @include('web-views.products._ajax-products',['products'=>$products])
