@@ -379,10 +379,12 @@
                             </button>
                         </div>
                         <div class="col-md-6">
-                            <a class="btn btn-success w-100 @if ($stock == 0)
-                                disabled
-                            @endif" type="button" data-toggle="modal" data-target="#exampleModal">
-                                {{ \App\CPU\Translate('Terima') }}
+                            <a class="btn w-100 @if ($stock == 0) disabled btn-danger @else btn-success @endif" type="button" data-toggle="modal" data-target="#exampleModal">
+                            @if ($stock == 0)
+                            {{ \App\CPU\Translate('Kamar_habis') }}
+                            @else
+                            {{ \App\CPU\Translate('Terima') }}
+                        @endif
                             </a>
                             {{-- <a onclick="order_status('processing')" class="btn btn-success w-100">
                                 {{ \App\CPU\Translate('Terima') }}
