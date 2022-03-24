@@ -5,6 +5,10 @@
     <!-- Custom styles for this page -->
     <link href="{{asset('public/assets/back-end')}}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+        .ktp img {
+            max-width: 300px;
+            height: auto;
+        }
         .sellerName {
             height: fit-content;
             margin-top: 10px;

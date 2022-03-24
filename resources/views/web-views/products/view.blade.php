@@ -234,14 +234,6 @@
     <!-- Page Title-->
     <div class="container rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
         <div class="row justify-content-center">
-            {{-- <div class="col-md-3">
-                <a class="openbtn-tab mt-5" onclick="openNav()">
-                    <div style="font-size: 20px; font-weight: 600; " class="for-tab-display mt-5">
-                        <i class="fa fa-filter"></i>
-                        {{\App\CPU\translate('filter')}}
-                    </div>
-                </a>
-            </div> --}}
             <div class="col-lg-9 col-md-12">
                 <div class="row">
                     <div class="col-md-6">
