@@ -178,24 +178,40 @@
                         <div class="price mt-3 col-md-9 px2">
                             <span class="price-card">{{\App\CPU\Helpers::currency_converter($order->order_amount)}} <span class="satuan">/bulan</span></span>
                         </div>
+                        @php($product = json_decode($order->details[0]->product_details))
+                        @php($fasilitas = json_decode($product->fasilitas_id))
                         <div class="col-md-9">
                             <div class="btn-fasilitas">
-                                <a href="javascript:" class="fasilitas capitalize text-success" data-toggle="modal" data-target="#exampleModal">
+                                <a href="javascript:" class="fasilitas capitalize text-success" data-toggle="modal" data-target="#exampleModal{{ $order->id }}">
                                     Lihat fasilitas
                                 </a>
                             </div>
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                            <div class="modal fade" id="exampleModal{{ $order->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="top: 30%;">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Fasilitas kamar</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     </div>
                                     <div class="modal-body">
-                                    ...
+                                        <div class="row justify-content-center">
+                                            @if ($fasilitas != [])
+                                            @foreach ($fasilitas as $f)
+                                            <div class="col-6 text-left capitalize">
+                                                <img onerror="this.src='{{asset('assets/front-end/img/bantal.png')}}'" class="mr-3" src="{{ asset('assets/front-end/img').'/'.strtolower($f).'.png' }}" alt="broken" style="height: 23px">
+                                                {{ App\CPU\Helpers::fasilitas($f) }}
+                                            </div>
+                                            @endforeach
+                                            @else
+                                            <div class="col-12 text-center">
+                                                tidak ada fasilitas di inputkan
+                                            </div>
+                                            @endif
+                                        </div>
+
                                     </div>
                                 </div>
                                 </div>
