@@ -67,6 +67,7 @@ class CartManager
     public static function get_cart_group_ids($request = null)
     {
         $user = Helpers::get_customer($request);
+        // dd($user);
         if ($user == 'offline') {
             if (session()->has('offline_cart') == false) {
                 session()->put('offline_cart', collect([]));

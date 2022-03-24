@@ -358,6 +358,10 @@
 
                         @if($order->order_status == 'processing')
                         <div class="col-12 d-flex justify-content-end">
+                            <button onclick="route_alert('{{ route('order-cancel',[$order->id]) }}','{{\App\CPU\translate('ingin_membatalkan_bookingan_ini ?')}}')" class="btn btn-outline-danger mr-2 capitalize">
+                                Batalkan booking
+                            </button>
+
                             <a href="{{ route('checkout-payment', ['order_id' => $order->id]) }}" class="btn btn-success">
                                 Bayar sekarang
                             </a>
