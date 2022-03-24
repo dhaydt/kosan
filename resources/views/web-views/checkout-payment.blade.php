@@ -409,8 +409,9 @@
                                 </span>
                             </div>
                         </div>
+                        @php($room = json_decode($order->details[0]->product_details))
                         <div class="col-4 img-div">
-                            <img class="w-100" src="{{ asset('assets/front-end/img/kos.jpg') }}"
+                            <img class="w-100" src="{{ asset('storage/product').'/'.json_decode($room->images)[0] }}"
                                 style="border-radius: 6px">
                         </div>
                     </div>
@@ -428,12 +429,13 @@
                         </div>
                     </div>
                 </div>
+                {{-- {{ dd($order) }} --}}
                 <div class="card-footer">
                     <span class="title-card capitalize d-block">
                         Informasi penyewa
                     </span>
                     <span class="content d-block mb-3" style="font-weight: 500;">
-                        Muhammad Hidayat
+                        {{ auth('customer')->user()->f_name.' '.auth('customer')->user()->l_name }}
                     </span>
                     <div class="row info-box">
                         <div class="col-1 text-center">
