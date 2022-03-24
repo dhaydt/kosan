@@ -330,14 +330,7 @@ class WebController extends Controller
         $cart = Cart::where('customer_id', auth('customer')->id())->orderby('id', 'DESC')->get();
         // if (auth('customer')->check() && count($cart) > 0) {
         if (count($cart) > 0) {
-            // if (auth('customer')->user()->district == null) {
-            //     // dd('no distrcit');
-            //     $country = DB::table('country')->get();
-
-            //     Toastr::warning(translate('Please fill your address first'));
-
-            //     return view('web-views.addAddress', compact('country'));
-            // }
+            // Order::
 
             $user = auth('customer')->id();
             // $address = ShippingAddress::where('customer_id', $user)->first();
@@ -499,8 +492,13 @@ class WebController extends Controller
             $countWishlist = Wishlist::where('product_id', $product->id)->count();
             $relatedProducts = Product::with(['reviews'])->active()->where('category_ids', $product->category_ids)->where('id', '!=', $product->id)->limit(12)->get();
             $deal_of_the_day = DealOfTheDay::where('product_id', $product->id)->where('status', 1)->first();
+            $img = json_decode($product->images);
+            $kos = json_decode(($product->kost->images));
+            foreach ($kos as $key => $val) {
+                array_push($img, $val);
+            }
 
-            return view('web-views.products.details', compact('product', 'countWishlist', 'countOrder', 'relatedProducts', 'deal_of_the_day'));
+            return view('web-views.products.details', compact('product', 'img', 'countWishlist', 'countOrder', 'relatedProducts', 'deal_of_the_day'));
         }
 
         Toastr::error(translate('not_found'));

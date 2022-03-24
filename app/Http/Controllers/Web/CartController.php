@@ -62,6 +62,7 @@ class CartController extends Controller
         if ($user == null) {
             return redirect()->route('customer.auth.login');
         }
+
         $cart = CartManager::add_to_cart($request);
         session()->forget('coupon_code');
         session()->forget('coupon_discount');

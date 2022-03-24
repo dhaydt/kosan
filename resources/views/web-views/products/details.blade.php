@@ -286,18 +286,19 @@
         <!-- General info tab-->
         <div class="row" style="direction: ltr">
             <!-- Product gallery-->
+
             <div class="col-lg-7 col-md-7 col-12">
                 <div class="cz-product-gallery">
                     <div class="cz-preview" id="cz-preview">
                         <div id="carouselExampleControls" data-interval="false" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
                             @if($product->images!=null)
-                            @foreach (json_decode($product->images) as $key => $photo)
+                            @foreach ($img as $key => $photo)
                                 <div
                                     class="carousel-item h-100 {{$key==0?'active':''}}"
                                     id="image{{$key}}">
                                     <img class="w-100 product-img"
-                                        onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                        onerror="this.src='{{asset('storage/kost').'/'.$photo}}'"
                                         src="{{asset("storage/product/$photo")}}"
                                         alt="Product image" width="">
                                 </div>

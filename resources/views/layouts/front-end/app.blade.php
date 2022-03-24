@@ -855,6 +855,7 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
 
     function addToCart(val) {
         var form_id = val;
+        // console.log('data',  $('#' + form_id).serializeArray())
         if (checkAddToCartValidity()) {
             $.ajaxSetup({
                 headers: {
