@@ -383,9 +383,20 @@
                             @endif" type="button" data-toggle="modal" data-target="#exampleModal">
                                 {{ \App\CPU\Translate('Terima') }}
                             </a>
-                            {{-- <a onclick="order_status('processing')" class="btn btn-success w-100">
-                                {{ \App\CPU\Translate('Terima') }}
-                            </a> --}}
+                        </div>
+
+                    </div>
+                </div>
+                @endif
+                @if ($order['order_status']=='processing')
+                <div class="card-footer d-flex justify-content-center">
+                    <div class="row w-100">
+                        {{-- {{ dd($order) }} --}}
+                        @php($room = $order->room[0]->id)
+                        <div class="col-md-12">
+                            <a onclick="cancel('canceled')" class="btn btn-danger w-100">
+                                {{ \App\CPU\Translate('Batalkan') }}
+                            </a>
                         </div>
 
                     </div>
@@ -473,6 +484,45 @@
                 confirmButtonColor: '#377dff',
                 cancelButtonColor: 'secondary',
                 confirmButtonText: '{{\App\CPU\translate('Ya, Terima_penyewa!')}}'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{route('seller.orders.status')}}",
+                        method: 'POST',
+                        data: {
+                            "id": '{{$order['id']}}',
+                            "order_status": value,
+                            'no_kamar': room
+                        },
+                        success: function (data) {
+                            if (data.success == 0) {
+                                toastr.success('{{\App\CPU\translate('Order is already delivered, You can not change it !!')}}');
+                                location.reload();
+                            } else {
+                                toastr.success('{{\App\CPU\translate('Status Change successfully !')}}');
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            })
+        }
+
+        function cancel(status) {
+            var value = status;
+            var room = $('#rooms').val()
+            Swal.fire({
+                title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_membatalkan?')}}',
+                // text: "{{\App\CPU\translate('Pastikan_anda_telah_melihat_profil_penyewa!')}}",
+                showCancelButton: true,
+                confirmButtonColor: '#377dff',
+                cancelButtonColor: 'secondary',
+                confirmButtonText: '{{\App\CPU\translate('Ya, Batalkan_bookingan!')}}'
             }).then((result) => {
                 if (result.value) {
                     $.ajaxSetup({

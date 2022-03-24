@@ -106,10 +106,21 @@ class OrderController extends Controller
             $rom = $kamar;
         }
 
-        $order->order_status = $request->order_status;
-        $order->roomDetail_id = $rom;
-        OrderManager::updateRoom($kamar, 0);
-        $order->save();
+        $status = $request->order_status;
+
+        if ($status == 'canceled') {
+            $order->order_status = $status;
+            $rom = $order->roomDetail_id;
+            if ($rom != null || $rom != 'ditempat') {
+                OrderManager::updateRoom($rom, 1);
+                $order->save();
+            }
+        } else {
+            $order->order_status = $status;
+            $order->roomDetail_id = $rom;
+            OrderManager::updateRoom($kamar, 0);
+            $order->save();
+        }
 
         if ($order->order_status == 'delivered') {
             return response()->json(['success' => 0, 'message' => 'order is already delivered.'], 200);
