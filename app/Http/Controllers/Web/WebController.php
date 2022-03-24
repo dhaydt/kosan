@@ -330,8 +330,19 @@ class WebController extends Controller
         $cart = Cart::where('customer_id', auth('customer')->id())->orderby('id', 'DESC')->get();
         // if (auth('customer')->check() && count($cart) > 0) {
         if (count($cart) > 0) {
-            // Order::
+            $order = Order::with('details')->where('customer_id', auth('customer')->id())->get();
+            $product_id = $cart[0]->product_id;
+            foreach ($order as $val) {
+                $ord = $val->details[0]->product_id;
+                if ($val->order_status != 'delivered' && $val->order_status != 'canceled' && $val->order_status != 'failed') {
+                    if ($product_id == $ord) {
+                        Toastr::warning('Selesaikan proses booking sebelumnya dulu');
 
+                        return redirect()->back();
+                    }
+                }
+            }
+            // dd($order, $cart);
             $user = auth('customer')->id();
             // $address = ShippingAddress::where('customer_id', $user)->first();
 
