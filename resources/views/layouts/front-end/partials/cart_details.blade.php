@@ -18,7 +18,7 @@
         text-transform: capitalize;
     }
 
-    .quantity {
+    .quantity, .penghuni {
         position: relative;
     }
 
@@ -32,7 +32,7 @@
         -moz-appearance: textfield;
     }
 
-    .quantity input {
+    .quantity input, .penghuni input {
         width: 60px;
         height: 28px;
         line-height: 1.65;
@@ -44,7 +44,7 @@
         border: none;
     }
 
-    .quantity input:focus {
+    .quantity input:focus, .penghuni input:focus {
         outline: 0;
     }
 
@@ -261,7 +261,7 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                             <div class="row mt-3">
                                 <div class="col-md-4" style="margin-left: 12px;">
                                     <div class="data-penyewa pl-2 d-flex-justify-content-center">
-                                        <div class="quantity">
+                                        <div class="penghuni">
                                             <input type="number" name="penyewa" min="1" max="9" step="1"
                                                 value="1">
                                         </div>
@@ -432,7 +432,8 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
         var rmrp = pure.replace(/[Rp.]/g, '');
         $('#totalPrice').text(rmrp)
         console.log(rmrp)
-    jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up" id="up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+        jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up" id="up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+        jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up" id="up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.penghuni input');
         jQuery('.quantity').each(function() {
         var spinner = jQuery(this),
             input = spinner.find('input[type="number"]'),
@@ -471,6 +472,48 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
             const val = rp.replace(/[\.]/g, '')* newVal
             var newPrice = number(val)
             $('#totalPrice').text(newPrice)
+            spinner.find("input").trigger("change");
+        });
+        });
+
+        jQuery('.penghuni').each(function() {
+        var spinner = jQuery(this),
+            input = spinner.find('input[type="number"]'),
+            btnUp = spinner.find('.quantity-up'),
+            btnDown = spinner.find('.quantity-down'),
+            min = input.attr('min'),
+            max = input.attr('max');
+
+        btnUp.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue >= max) {
+            var newVal = oldValue;
+            } else {
+            var newVal = oldValue + 1;
+            }
+            spinner.find("input").val(newVal);
+            // var price = $("#priceTotal").text()
+            // var rp = price.replace(/[^\d\.]/g, '')
+            // var val = rp.replace(/[\.]/g, '')* newVal
+            var newPrice = number(newVal)
+            // $('#totalPrice').text(newPrice)
+
+            spinner.find("input").trigger("change");
+        });
+
+        btnDown.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue <= min) {
+            var newVal = oldValue;
+            } else {
+            var newVal = oldValue - 1;
+            }
+            spinner.find("input").val(newVal);
+            // var price = $("#priceTotal").text()
+            // var rp = price.replace(/[^\d\.]/g, '')
+            // const val = rp.replace(/[\.]/g, '')* newVal
+            var newPrice = number(newVal)
+            // $('#totalPrice').text(newPrice)
             spinner.find("input").trigger("change");
         });
         });

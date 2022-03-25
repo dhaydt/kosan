@@ -374,7 +374,7 @@
                             kota = value
                             id = key
                         // // perhtikan dimana kita akan menampilkan data select nya, di sini saya memberi name select kota adalah kota_id
-                        $('select[name="district"]').append(`<option value="${kota}" id == dist ? 'selected' : ''>
+                        $('select[name="district"]').append(`<option value="${kota}">
                             ${kota}
                         </option>`);
 

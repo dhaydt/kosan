@@ -147,7 +147,7 @@
                                     <label class="input-label label-name mb-0"
                                         for="cat">{{\App\CPU\translate('Kecamatan')}}</label>
                                     <select class="form-control" id="district" name="district">
-                                        <option value="{{ $product->district }}" selected>{{ $product->district }}</option>
+                                        <option value="{{ $product->dis->id }}" selected>{{ $product->district }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -313,7 +313,7 @@
                     success:function(data){
                         console.log(data);
                         // jika tidak ada select dr provinsi maka select kota kososng / empty
-                        $('select[name="city"]').empty();
+                        // $('select[name="city"]').empty();
                         // // jika ada kita looping dengan each
                         $.each(data, function(key, value){
                             // console.log(key, value)

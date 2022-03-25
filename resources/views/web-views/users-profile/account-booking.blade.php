@@ -266,7 +266,7 @@
                                 </div>
                                 <div class="col-12 d-flex justify-content-between mt-3">
                                     <span class="field">Jumlah penyewa</span>
-                                    <span class="content">1</span>
+                                    <span class="content">{{ $order->jumlah_penyewa }} Orang</span>
                                 </div>
                                 <div class="col-12 d-flex justify-content-between mt-3">
                                     <span class="field">Durasi sewa</span>

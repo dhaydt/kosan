@@ -282,6 +282,7 @@ class WebController extends Controller
 
     public function checkout_complete(Request $request)
     {
+        // dd($request);
         $id = auth('customer')->user()->id;
         $user = User::find($id);
         $image = $request->file('ktp');
