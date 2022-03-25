@@ -1319,7 +1319,7 @@
         $(document).ready(function(){
             var h = $('#cz-preview').outerHeight()
             var tinggi = h/2;
-            var margin = tinggi + 20
+            var margin = tinggi - 5
             console.log('height',margin)
             $('.cz-thumblist').attr('style', 'min-height: 195px; height:' + margin + 'px')
         })

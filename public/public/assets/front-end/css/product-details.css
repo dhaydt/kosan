@@ -211,11 +211,11 @@ figure {
     margin-bottom: 10px;
 }
 
-.thumblist-frame .cz-thumblist:first-child img{
+.thumblist-frame .cz-thumblist:first-child a{
     border-radius: 0 10px 0 0;
 }
 
-.thumblist-frame .cz-thumblist:last-child img{
+.thumblist-frame .cz-thumblist:last-child a{
     border-radius: 0 0 10px 0;
 }
 
