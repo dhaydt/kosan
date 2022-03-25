@@ -44,6 +44,9 @@
 
     <link rel="stylesheet" href="{{asset('public/assets/front-end/css/product-details.css')}}"/>
     <style>
+        .carousel-item{
+            height: 400px !important;
+        }
         .msg-option {
             display: none;
         }
@@ -52,7 +55,7 @@
             width: 100%;
         }
         .product-img{
-            height: 383px;
+            /* height: 383px; */
         }
         .go-to-chatbox {
             width: 100%;
@@ -202,8 +205,11 @@
         }
 
         @media (max-width: 500px) {
+            .carousel-item{
+            height: 250px !important;
+            }
             .product-img{
-                height: 220px;
+                /* height: 220px; */
             }
             .modal-dialog{
                 top:7%;
