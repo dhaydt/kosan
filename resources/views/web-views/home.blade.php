@@ -681,6 +681,7 @@
                             for="sorting">
                             <span style="text-transform: lowercase;" class="{{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}">di</span>
                         </label>
+                        {{ $category['name'] }}
                         <form action="{{ route('products') }}" method="get">
                             <input type="hidden" value="{{ $category['name'] }}" name="data_from">
                             <input type="hidden" value="catHome" name="type">
@@ -717,6 +718,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">Semua</a>
                       @foreach ($city as $c)
+
                       <a class="dropdown-item" href="{{route('products',['city' => $c['id'], 'catId'=> $category['id'], 'data_from'=>$category['name'], 'type' => 'catHome','page'=>1])}}">{{ $c['name'] }}</a>
                       @endforeach
                     </div>

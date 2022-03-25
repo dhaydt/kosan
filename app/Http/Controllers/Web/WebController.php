@@ -520,6 +520,7 @@ class WebController extends Controller
     public function products(Request $request)
     {
         // dd($request);
+        // session()->forget('search_name');
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
         $porduct_data = Product::active()->with(['reviews', 'kost']);
@@ -591,6 +592,10 @@ class WebController extends Controller
                         array_push($product_ids, $product['id']);
                     }
                 }
+            }
+            $nama_category = Category::where('id', $request['id'])->first();
+            if ($nama_category) {
+                session()->put('cat_name', $nama_category->name);
             }
             $query = $porduct_data->whereIn('id', $product_ids);
         }
@@ -696,7 +701,23 @@ class WebController extends Controller
             $data['brand_name'] = Brand::find((int) $request['id'])->name;
         }
 
-        return view('web-views.products.view', compact('products', 'data'), $data);
+        $cities = Product::with('kost')->get()->pluck('kost.city', 'kost.city');
+        $city = [];
+        foreach ($cities as $c => $key) {
+            $id = City::where('name', $c)->first();
+            $str = ['kabupaten', 'kota '];
+            $rpl = ['Kab.', ''];
+            $low = strtolower($c);
+            $cit = str_replace($str, $rpl, $low);
+
+            $ci = [
+                'id' => $id->id,
+                'name' => $cit,
+            ];
+            array_push($city, $ci);
+        }
+
+        return view('web-views.products.view', compact('products', 'data', 'city'), $data);
     }
 
     public function viewWishlist()

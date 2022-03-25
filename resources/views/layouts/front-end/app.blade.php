@@ -872,10 +872,10 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
                     console.log(response);
                     if (response.status == 1) {
                         // updateNavCart();
-                        toastr.success(response.message, {
-                            CloseButton: true,
-                            ProgressBar: true
-                        });
+                        // toastr.success(response.message, {
+                        //     CloseButton: true,
+                        //     ProgressBar: true
+                        // });
                         $('.call-when-done').click();
                         return false;
                     } else if (response.status == 0) {
