@@ -327,7 +327,7 @@
 
                     </div>
                 </div>
-
+                {{-- {{ dd($product) }} --}}
                 <div class="details mt-md-4 mt-2">
                     @php($ganti = ['KABUPATEN', 'KOTA '])
                     @php($dg = ['Kab.', ''])
@@ -544,6 +544,24 @@
                                 </span>
                             </div>
                             @endforeach
+                        </div>
+                    </div>
+                    <!-- end fasilitas -->
+                    <hr class="my-4" style="padding-bottom: 10px">
+
+                    <!-- lokasi -->
+                    <div class="container">
+                        <div class="section-header">
+                            <h5 class="fasilitas">{{ App\CPU\translate('Lokasi') }}</h5>
+                        </div>
+                        <div class="card-header pb-1 section-head d-flex">
+                            <i class="fa fa-map-marker mr-2" style="font-size: 23px"></i>
+                            <span class="capitalize">
+                                {{ 'Kec. '.strToLower($product->kost->district).', '.strToLower($filter).', '.strtolower($product->kost->province) }}
+                            </span>
+                        </div>
+                        <div class="card-body mt-2 p-3 body-detail-product d-flex ml-4 capitalize" style="border: 1px solid #d5d5d5; border-radius: 5px;">
+                            {!! $product->kost->note_address !!}
                         </div>
                     </div>
                     <!-- end fasilitas -->
