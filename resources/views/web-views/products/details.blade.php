@@ -44,6 +44,12 @@
 
     <link rel="stylesheet" href="{{asset('public/assets/front-end/css/product-details.css')}}"/>
     <style>
+        .thumblist-frame .cz-thumblist:first-child a {
+            border-radius: 0 10px 0 0;
+        }
+        .thumblist-frame .cz-thumblist:last-child a {
+            border-radius: 0 0 10px 0;
+        }
         .carousel-item{
             height: 450px !important;
         }
