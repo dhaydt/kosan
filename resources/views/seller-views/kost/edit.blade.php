@@ -134,6 +134,7 @@
                                     </select>
                                 </div>
                             </div>
+                            {{-- {{ dd($product) }} --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {{-- {{ dd($product) }} --}}
@@ -149,7 +150,7 @@
                                     <label class="input-label label-name mb-0"
                                         for="cat">{{\App\CPU\translate('Kecamatan')}}</label>
                                     <select class="form-control" id="district" name="district">
-                                        <option value="{{ $product->district }}" selected>{{ $product->district }}</option>
+                                        <option value="{{ $product->dis->id }}" selected>{{ $product->district }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -291,7 +292,6 @@
         getProv($prov);
         var $city = $('select[name=city] option').filter(':selected').val()
         getCity($city)
-
     })
     $('#prov').on('change', function(){
         var $prov = $('select[name=province] option').filter(':selected').val()
@@ -366,14 +366,15 @@
                     success:function(data){
                         console.log(data);
                         // jika tidak ada select dr provinsi maka select kota kososng / empty
-                        $('select[name="district"]').empty();
+                        // $('select[name="district"]').empty();
+                        // var dist = $('select[name=district] option').filter(':selected').val()
                         // // jika ada kita looping dengan each
                         $.each(data, function(key, value){
                             // console.log(key, value)
                             kota = value
                             id = key
                         // // perhtikan dimana kita akan menampilkan data select nya, di sini saya memberi name select kota adalah kota_id
-                        $('select[name="district"]').append(`<option value="${kota}">
+                        $('select[name="district"]').append(`<option value="${kota}" id == dist ? 'selected' : ''>
                             ${kota}
                         </option>`);
 
