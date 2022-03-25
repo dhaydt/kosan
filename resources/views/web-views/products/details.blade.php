@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="{{asset('public/assets/front-end/css/product-details.css')}}"/>
     <style>
         .carousel-item{
-            height: 400px !important;
+            height: 450px !important;
         }
         .msg-option {
             display: none;
@@ -208,9 +208,9 @@
             .carousel-item{
             height: 250px !important;
             }
-            .product-img{
-                /* height: 220px; */
-            }
+            /* .product-img{
+                width: 100%;
+            } */
             .modal-dialog{
                 top:7%;
             }
@@ -1123,11 +1123,11 @@
                                         @foreach (array_slice(json_decode($product->images), 1, 2) as $key => $photo)
                                             <div class="cz-thumblist d-block">
                                                 <a class="mt-0 {{$key==0?'active':''}} d-flex align-items-center justify-content-center "
-                                                   href="#image{{$key}}">
+                                                   href="#image{{$key}}" style="overflow: hidden;">
                                                     <img
                                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                                         src="{{asset("storage/product/$photo")}}"
-                                                        class="w-100 h-100"
+                                                        class="w-100"
                                                         alt="Product thumb">
                                                 </a>
                                             </div>
@@ -1319,7 +1319,7 @@
         $(document).ready(function(){
             var h = $('#cz-preview').outerHeight()
             var tinggi = h/2;
-            var margin = tinggi - 5
+            var margin = tinggi + 20
             console.log('height',margin)
             $('.cz-thumblist').attr('style', 'min-height: 195px; height:' + margin + 'px')
         })
