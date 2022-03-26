@@ -135,13 +135,31 @@
                             <span class="status text-danger">Kadaluarsa oleh admin</span>
                             @endif
                         </div>
-                        <div class="col-8 d-flex justify-content-end">
+                        {{-- <div class="col-8 d-flex justify-content-end">
                             @php($date = Carbon\Carbon::now()->toDateTimeString())
                             @if($order->auto_cancel && $date < $order->auto_cancel)
                             <span class="mr-3">Otomatis batal dalam :</span>
-                            <div class="wrap-countdown mercado-countdown" data-expire="{{ Carbon\Carbon::parse($order->auto_cancel)->format('Y/m/d h:i:s') }}"></div>
+                            <input type="hidden" id="count" value="{{ $order->auto_cancel }}">
+                                <div id="clockdiv">
+                                <div>
+                                    <span class="days"></span>
+                                    <div class="smalltext">Days</div>
+                                </div>
+                                <div>
+                                    <span class="hours"></span>
+                                    <div class="smalltext">Hours</div>
+                                </div>
+                                <div>
+                                    <span class="minutes"></span>
+                                    <div class="smalltext">Minutes</div>
+                                </div>
+                                <div>
+                                    <span class="seconds"></span>
+                                    <div class="smalltext">Seconds</div>
+                                </div>
+                                </div>
                             @endif
-                        </div>
+                        </div> --}}
                     </div>
                     {{-- {{ dd($orders) }} --}}
                     @php($detail = json_decode($order->details[0]->product_details))
@@ -406,32 +424,53 @@
         }
     </script>
     <script>
-        (function($) {
+        var dead = $('#count').val()
+        function getTimeRemaining(endtime) {
+        var t = Date.parse(endtime) - Date.parse(new Date());
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+        }
 
-        var MERCADO_JS = {
-        init: function(){
-            this.mercado_countdown();
+        function initializeClock(id, endtime) {
+        var clock = document.getElementById(id);
+        var daysSpan = clock.querySelector('.days');
+        var hoursSpan = clock.querySelector('.hours');
+        var minutesSpan = clock.querySelector('.minutes');
+        var secondsSpan = clock.querySelector('.seconds');
 
-        },
-        mercado_countdown: function() {
-            if($(".mercado-countdown").length > 0){
-                    $(".mercado-countdown").each( function(index, el){
-                    var _this = $(this),
-                    _expire = _this.data('expire');
-                    _this.countdown(_expire, function(event) {
-                            $(this).html( event.strftime('<span><b>%D</b> H</span> <span><b>%-H</b> J</span> <span><b>%M</b> M</span> <span><b>%S</b> d</span>'));
-                        });
-                    });
+        function updateClock() {
+            var t = getTimeRemaining(endtime);
+
+            daysSpan.innerHTML = t.days;
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+            if (t.total <= 0) {
+            clearInterval(timeinterval);
             }
-        },
-
         }
 
-        window.onload = function () {
-            MERCADO_JS.init();
+        updateClock();
+        var timeinterval = setInterval(updateClock, 1000);
         }
-
-        })(window.Zepto || window.jQuery, window, document);
+        var now = new Date()
+        var de = new Date(dead)
+        console.log('now', new Date(now))
+        console.log('deadline', new Date(de))
+        console.log('sum', de.getTime() - now.getTime())
+        // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+        var deadline = new Date(Date.parse(new Date()) + (de.getTime() - now.getTime()));
+        initializeClock('clockdiv', deadline);
     </script>
     <script>
          $('#contact-seller').on('click', function (e) {
