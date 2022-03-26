@@ -165,9 +165,9 @@
                 </div>
 
                 <div class="card mt-2 rest-part">
+                    <small class="px-3 pt-2" style="color: red; font-size: 90%;">* {{\App\CPU\translate('Foto landscape untuk mendapatkan tampilan terbaik.')}}</small>
                     <div class="card-body">
                         <div class="row">
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name" class="label-name">{{\App\CPU\translate('Foto_bangunan_tampak_depan')}}</label>

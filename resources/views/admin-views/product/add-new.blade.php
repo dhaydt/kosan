@@ -110,8 +110,7 @@
                                 <div class="form-group">
                                     <label
                                         class="d-block text-dark label-name">{{\App\CPU\translate('Foto_kamar_dari_berbagai_sisi')}}
-                                        <small style="color: red">* ( {{\App\CPU\translate('ratio 1:1')}}
-                                            )</small></label>
+                                        <small style="color: red">* {{\App\CPU\translate('Foto landscape untuk mendapatkan tampilan terbaik.')}}</small></label>
                                     <small class="text-info">* {{\App\CPU\translate('Urutan foto kamar: Depan kamar -
                                         Dalam kamar - Kamar mandi dalam. (Boleh menambahkan foto kamar lain)')}}</small>
                                 </div>

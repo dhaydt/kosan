@@ -145,7 +145,7 @@
                 <!-- Image Property-->
                 <div class="card mt-2 rest-part">
                     <div class="card-header">
-                        <h4>{{\App\CPU\translate('Pasang_foto_terbaik_kos_Anda')}}</h4>
+                        <h4>{{\App\CPU\translate('Pasang_foto_terbaik_kos_Anda')}} <small class="px-1 pt-2" style="color: red; font-size: 90%;">* {{\App\CPU\translate('Foto landscape untuk mendapatkan tampilan terbaik.')}}</small></h4>
                     </div>
                     <div class="card-body">
                         <div class="row">

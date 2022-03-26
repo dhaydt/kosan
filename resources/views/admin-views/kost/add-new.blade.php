@@ -158,7 +158,7 @@
                                 <div class="form-group">
                                     <label class="input-label label-name mb-0"
                                         for="cat">{{\App\CPU\translate('Catatan_alamat')}}</label>
-                                    <small>Deskripsi patokan agar kos mudah ditemukan</small>
+                                    <small>Deskripsi patokan agar kos mudah ditemukan (nama jalan, nomor rumah)</small>
                                     <textarea class="form-group w-100" name="noteAddress" id="" cols="30"
                                         rows="3"></textarea>
                                 </div>
@@ -170,7 +170,8 @@
                 <!-- Image Property-->
                 <div class="card mt-2 rest-part">
                     <div class="card-header">
-                        <h4>{{\App\CPU\translate('Pasang_foto_terbaik_kos_Anda')}}</h4>
+                        <h4>{{\App\CPU\translate('Pasang_foto_terbaik_kos_Anda')}} <small class="px-1 pt-2" style="color: red; font-size: 90%;">* {{\App\CPU\translate('Foto landscape untuk mendapatkan tampilan terbaik.')}}</small></h4>
+
                     </div>
                     <div class="card-body">
                         <div class="row">

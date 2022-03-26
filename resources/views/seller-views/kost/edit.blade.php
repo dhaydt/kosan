@@ -168,6 +168,7 @@
                 </div>
 
                 <div class="card mt-2 rest-part">
+                    <small class="px-3 pt-2" style="color: red; font-size: 90%;">* {{\App\CPU\translate('Foto landscape untuk mendapatkan tampilan terbaik.')}}</small>
                     <div class="card-body">
                         <div class="row">
 
