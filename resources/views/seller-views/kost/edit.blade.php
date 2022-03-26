@@ -145,12 +145,13 @@
                                     </select>
                                 </div>
                             </div>
+                            {{-- {{ dd($product) }} --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="input-label label-name mb-0"
                                         for="cat">{{\App\CPU\translate('Kecamatan')}}</label>
                                     <select class="form-control" id="district" name="district">
-                                        <option value="{{ $product->dis->id }}" selected>{{ $product->district }}</option>
+                                        <option value="{{ $product->district }}" selected>{{ $product->district }}</option>
                                     </select>
                                 </div>
                             </div>
