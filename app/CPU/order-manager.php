@@ -15,6 +15,7 @@ use App\Model\Seller;
 use App\Model\SellerWallet;
 use App\Model\ShippingAddress;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -304,6 +305,7 @@ class OrderManager
 
         $cart_group_id = $data['cart_group_id'];
         $seller_data = Cart::where(['cart_group_id' => $cart_group_id])->first();
+        $minute = 5;
         // dd($seller_data);
         $or = [
             'id' => $order_id,
@@ -319,6 +321,7 @@ class OrderManager
             'customer_type' => 'customer',
             'payment_status' => $data['payment_status'],
             'order_status' => $data['order_status'],
+            'auto_cancel' => Carbon::now()->addMinute($minute),
             'payment_method' => $data['payment_method'],
             'transaction_ref' => $data['transaction_ref'],
             'order_group_id' => $data['order_group_id'],

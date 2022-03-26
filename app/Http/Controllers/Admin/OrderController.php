@@ -9,10 +9,27 @@ use App\Http\Controllers\Controller;
 use App\Model\Order;
 use App\Model\OrderTransaction;
 use App\Model\Seller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function checkStatus()
+    {
+        $order = Order::where('order_status', 'pending')->get();
+        $now = Carbon::now()->toDateTimeString();
+        $status = [];
+        foreach ($order as $o) {
+            $ex = $o->auto_cancel;
+            if ($ex < $now) {
+                $o->order_status = 'expired';
+                $o->save();
+            }
+        }
+
+        return $status;
+    }
+
     public function list(Request $request, $status)
     {
         $query_param = [];
@@ -103,7 +120,7 @@ class OrderController extends Controller
         }
         $status = $request->order_status;
 
-        if ($status == 'canceled') {
+        if ($status == 'canceled' || $status == 'expired') {
             $order->order_status = $status;
             $rom = $order->roomDetail_id;
             if ($rom != null || $rom != 'ditempat') {

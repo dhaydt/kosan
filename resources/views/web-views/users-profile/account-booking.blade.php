@@ -114,21 +114,35 @@
             @foreach ($orders as $order)
             <div class="card w-100 mt-4">
                 <div class="card-header">
-                    @if ($order->order_status == 'pending')
-                    <span class="status text-info">Tunggu Konfirmasi</span>
-                    @endif
-                    @if ($order->order_status == 'processing')
-                    <span class="status text-warning">Butuh Pembayaran</span>
-                    @endif
-                    @if ($order->order_status == 'delivered')
-                    <span class="status text-success">Terbayar</span>
-                    @endif
-                    @if ($order->order_status == 'canceled')
-                    <span class="status text-danger">Booking dibatalkan</span>
-                    @endif
-                    @if ($order->order_status == 'failed')
-                    <span class="status text-danger">Kadaluarsa</span>
-                    @endif
+                    <div class="row">
+                        <div class="col-4">
+                            @if ($order->order_status == 'pending')
+                            <span class="status text-info">Tunggu Konfirmasi</span>
+                            @endif
+                            @if ($order->order_status == 'processing')
+                            <span class="status text-warning">Butuh Pembayaran</span>
+                            @endif
+                            @if ($order->order_status == 'delivered')
+                            <span class="status text-success">Terbayar</span>
+                            @endif
+                            @if ($order->order_status == 'canceled')
+                            <span class="status text-danger">Booking dibatalkan</span>
+                            @endif
+                            @if ($order->order_status == 'failed')
+                            <span class="status text-danger">Kadaluarsa</span>
+                            @endif
+                            @if ($order->order_status == 'expired')
+                            <span class="status text-danger">Kadaluarsa oleh admin</span>
+                            @endif
+                        </div>
+                        <div class="col-8 d-flex justify-content-end">
+                            @php($date = Carbon\Carbon::now()->toDateTimeString())
+                            @if($order->auto_cancel && $date < $order->auto_cancel)
+                            <span class="mr-3">Otomatis batal dalam :</span>
+                            <div class="wrap-countdown mercado-countdown" data-expire="{{ Carbon\Carbon::parse($order->auto_cancel)->format('Y/m/d h:i:s') }}"></div>
+                            @endif
+                        </div>
+                    </div>
                     {{-- {{ dd($orders) }} --}}
                     @php($detail = json_decode($order->details[0]->product_details))
                     @php($district = strtolower($detail->kost->district))
@@ -378,6 +392,7 @@
 </div>
 @endsection
 @push('script')
+    <script src="{{ asset('js/countdown.min.js') }}"></script>
     <script>
         function lihat(val){
             $('#more_content' +  val).removeClass('d-none')
@@ -389,6 +404,34 @@
             $('#lengkap'+  val).removeClass('d-none')
             $('#sedikit'+  val).addClass('d-none')
         }
+    </script>
+    <script>
+        (function($) {
+
+        var MERCADO_JS = {
+        init: function(){
+            this.mercado_countdown();
+
+        },
+        mercado_countdown: function() {
+            if($(".mercado-countdown").length > 0){
+                    $(".mercado-countdown").each( function(index, el){
+                    var _this = $(this),
+                    _expire = _this.data('expire');
+                    _this.countdown(_expire, function(event) {
+                            $(this).html( event.strftime('<span><b>%D</b> Hari</span> <span><b>%-H</b> Jam</span> <span><b>%M</b> Menit</span> <span><b>%S</b> Detik</span>'));
+                        });
+                    });
+            }
+        },
+
+        }
+
+        window.onload = function () {
+            MERCADO_JS.init();
+        }
+
+        })(window.Zepto || window.jQuery, window, document);
     </script>
     <script>
          $('#contact-seller').on('click', function (e) {
