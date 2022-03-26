@@ -10,6 +10,17 @@
             margin: auto;
             text-align: center;
         }
+        .g-recaptcha{
+            margin: auto;
+        }
+        .captcha .text-danger{
+            text-align: center;
+        }
+
+        .captcha .text-danger strong{
+            font-weight: 400 !important;
+            margin-top: 8px !important;
+        }
     </style>
 @endpush
 @section('content')
@@ -46,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-12 d-flex justify-content-center">
+                                <div class="col-md-12 d-flex justify-content-center flex-column captcha">
                                     {!! NoCaptcha::display() !!}
                                     {!! NoCaptcha::renderJs() !!}
                                     @error('g-recaptcha-response')
