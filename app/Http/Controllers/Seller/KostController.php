@@ -60,8 +60,9 @@ class KostController extends Controller
         $rule = Rule::get();
         $fas = Fasilitas::where('tipe', 'umum')->get();
         $cat = Category::get();
+        $ptn = Kampus::get();
 
-        return view('seller-views.kost.add-new', compact('cat', 'fas', 'rule'));
+        return view('seller-views.kost.add-new', compact('ptn', 'cat', 'fas', 'rule'));
     }
 
     /**
@@ -111,6 +112,7 @@ class KostController extends Controller
         $kost->penghuni = $request['penghuni'];
         $kost->deskripsi = $request['description'];
         $kost->note = $request['note'];
+        $kost->ptn_id = $request['ptn'];
         $kost->aturan_id = json_encode($request['aturan']);
         $kost->address = $request['address'];
         $kost->images = json_encode($img);

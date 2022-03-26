@@ -5,7 +5,16 @@
 <link href="{{ asset('public/assets/select2/css/select2.min.css')}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
-
+<style>
+    .select2-container--default input.select2-search__field{
+        padding-left: 10px !important;
+    }
+    .select2-container--default .select2-selection--single span.select2-selection__rendered{
+        line-height: 36px;
+        font-size: 14px;
+        margin-left: 6px;
+    }
+</style>
 @section('content')
 <div class="content container-fluid">
     <nav aria-label="breadcrumb">
@@ -61,17 +70,32 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label label-name mb-0"
-                                    for="cat">{{\App\CPU\translate('Jenis_properti')}}</label>
-                                <small>Pilih jenis / kategori property anda</small>
-                                <select class="form-control" id="cat" name="category">
-                                    <option value="">-- Pilih jenis properti --</option>
-                                    @foreach ($cat as $c)
-                                    <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Jenis_properti')}}</label>
+                                        <small>Pilih jenis / kategori property anda</small>
+                                        <select class="form-control" id="cat" name="category">
+                                            <option value="">-- Pilih jenis properti --</option>
+                                            @foreach ($cat as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Dekat_dengan_perguruan_tinggi_apa')}} ?</label>
+                                        <small>Jika ada, property anda dekat dengan kampus apa? (optional)</small>
+                                        <select class="js-example-basic-single form-control" name="ptn" id="ptn">
+                                            <option value="">-- Pilih kampus terdekat --</option>
+                                            @foreach ($ptn as $p)
+                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <input type="hidden" name="lang[]" value="en">
                             <div class="form-group">
@@ -481,6 +505,9 @@
 <script src="{{ asset('public/assets/select2/js/select2.min.js')}}"></script>
 <script src="{{asset('public/assets/back-end/js/spartan-multi-image-picker.js')}}"></script>
 <script>
+    $(document).ready(function(){
+        $('.js-example-basic-single').select2();
+    })
     $('#prov').on('change', function(){
         var $prov = $('select[name=province] option').filter(':selected').val()
         jQuery.ajax({

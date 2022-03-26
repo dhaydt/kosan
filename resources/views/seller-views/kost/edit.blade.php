@@ -9,7 +9,14 @@
         max-height: 120px;
         overflow: hidden;
     }
-
+    .select2-container--default input.select2-search__field{
+        padding-left: 10px !important;
+    }
+    .select2-container--default .select2-selection--single span.select2-selection__rendered{
+        line-height: 36px;
+        font-size: 14px;
+        margin-left: 6px;
+    }
 </style>
 @endpush
 
@@ -88,12 +95,18 @@
                                         <label class="input-label label-name mb-0"
                                             for="cat">{{\App\CPU\translate('Dekat_dengan_perguruan_tinggi_apa')}} ?</label>
                                         <small>Jika ada, property anda dekat dengan kampus apa? (optional)</small>
-                                        <select class="form-control" id="ptn" name="ptn">
+                                        {{-- <select class="form-control" id="ptn" name="ptn">
                                             <option value="">-- Pilih kampus terdekat --</option>
                                             @foreach ($ptn as $p)
                                             <option value="{{ $p->id }}"{{ ($p->id == $product->ptn_id)? 'selected' : '' }}>{{ $p->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
+                                        <select class="js-example-basic-single form-control" name="ptn" id="ptn">
+                                            <option value="">-- Pilih kampus terdekat --</option>
+                                            @foreach ($ptn as $p)
+                                            <option value="{{ $p->id }}"{{ ($p->id == $product->ptn_id)? 'selected' : '' }}>{{ $p->name }}</option>
+                                            @endforeach
+                                          </select>
                                     </div>
                                 </div>
                             </div>
@@ -290,6 +303,7 @@
 <script src="{{asset('public/assets/back-end/js/spartan-multi-image-picker.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $('.js-example-basic-single').select2();
         var $prov = $('select[name=province] option').filter(':selected').val()
         getProv($prov);
         var $city = $('select[name=city] option').filter(':selected').val()
