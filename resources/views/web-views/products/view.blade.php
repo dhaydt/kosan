@@ -247,7 +247,7 @@
                     <div class="row col-md-6 for-display mx-0">
 
                         <div class="d-flex flex-wrap float-right for-shoting-mobile">
-                            {{-- <form id="search-form" action="{{ route('products') }}" method="GET">
+                            <form id="search-form" action="{{ route('products') }}" method="GET">
                                 <input hidden name="data_from" value="{{$data['data_from']}}">
                                 <div class="form-inline flex-nowrap pb-3 for-mobile">
                                     <label
@@ -268,7 +268,7 @@
                                             value="z-a">{{\App\CPU\translate('z_a')}} {{\App\CPU\translate('Order')}}</option>
                                     </select>
                                 </div>
-                            </form> --}}
+                            </form>
                             @php($id = app('request')->input('id'))
                             @php($name = session()->get('cat_name'))
                             {{-- {{ dd($name) }} --}}

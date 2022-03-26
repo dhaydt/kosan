@@ -737,6 +737,19 @@
                         </div>
                     </div>
                     <!-- end atiuran kos -->
+                    <hr class="my-4" style="padding-bottom: 10px">
+                    <div class="container">
+                        <div class="section-header">
+                            <h5 class="">
+                                {{ App\CPU\translate('additional_info') }}
+                            </h5>
+                        </div>
+                        <div class="row pt-2 specification">
+                            <div class="col-lg-12 col-md-12 pl-4">
+                                {!! $product->kost['deskripsi'] !!}
+                            </div>
+                        </div>
+                    </div>
                     <!-- overview section -->
                     <div class="kost-review container">
                         <div class="kost-review__divider">
@@ -870,19 +883,6 @@
             Hi kak, terimakasih banyak atas ulasan dan bintangnya, senang mendengar kakak nyaman singgah di sini :)
 
         </p></div></div></div></div></div></div> <div class="kost-review-modal-content__loading"><button type="button" class="bg-c-button bg-c-button--primary-naked bg-c-button--md bg-c-button--block"></button></div></div> <div class="modal-footer"><button type="button" class="btn btn-default">Close</button> <button type="button" class="btn btn-primary">Save changes</button></div></div></div></div> <div data-v-653cdb21="" fragment="127eff51545"><div data-v-653cdb21="" tabindex="-1" role="dialog" class="bg-c-modal bg-c-modal--backdrop bg-c-modal--button-block bg-c-modal--md bg-c-modal--popup"><!----></div></div><!--fragment#127eff51545#tail--> <div data-v-7e062822="" role="dialog" class="modal fade" id="modalDetailKostSwiperGallery"><div role="document" class="modal-dialog"><div class="modal-content"><div data-v-7e062822="" class="kost-gallery-modal-header"><span data-v-7e062822="" class="kost-gallery-modal-header__close"><svg data-v-7e062822="" role="img" class="bg-c-icon bg-c-icon--md"><title>close</title> <use href="#basic-close"></use></svg></span></div> <div data-v-7e062822="" class="kost-gallery-modal-content"><!----></div> <div class="modal-footer"><button type="button" class="btn btn-default">Close</button> <button type="button" class="btn btn-primary">Save changes</button></div></div></div></div></div></div>
-
-        <div class="container">
-            <div class="section-header">
-                <h5 class="">
-                    {{ App\CPU\translate('additional_info') }}
-                </h5>
-            </div>
-            <div class="row pt-2 specification">
-                <div class="col-lg-12 col-md-12 pl-4">
-                    {!! $product->kost['deskripsi'] !!}
-                </div>
-            </div>
-        </div>
 
 
                     <!-- <div class="container mt-4 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
