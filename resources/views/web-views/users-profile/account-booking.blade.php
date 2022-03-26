@@ -3,6 +3,15 @@
 
 @push('css_or_js')
 <style>
+    .auto-cancel{
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .datetime{
+        font-size: 14px;
+        font-weight: 700;
+        color: #ff4a4a;
+    }
     .msg-option {
             /* display: none; */
     }
@@ -115,7 +124,7 @@
             <div class="card w-100 mt-4">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-12 col-md-4">
                             @if ($order->order_status == 'pending')
                             <span class="status text-info">Tunggu Konfirmasi</span>
                             @endif
@@ -135,31 +144,32 @@
                             <span class="status text-danger">Kadaluarsa oleh admin</span>
                             @endif
                         </div>
-                        {{-- <div class="col-8 d-flex justify-content-end">
+                        <div class="col-12 col-md-8 d-flex justify-content-end">
                             @php($date = Carbon\Carbon::now()->toDateTimeString())
                             @if($order->auto_cancel && $date < $order->auto_cancel)
-                            <span class="mr-3">Otomatis batal dalam :</span>
-                            <input type="hidden" id="count" value="{{ $order->auto_cancel }}">
-                                <div id="clockdiv">
-                                <div>
-                                    <span class="days"></span>
-                                    <div class="smalltext">Days</div>
-                                </div>
-                                <div>
-                                    <span class="hours"></span>
-                                    <div class="smalltext">Hours</div>
-                                </div>
-                                <div>
-                                    <span class="minutes"></span>
-                                    <div class="smalltext">Minutes</div>
-                                </div>
-                                <div>
-                                    <span class="seconds"></span>
-                                    <div class="smalltext">Seconds</div>
-                                </div>
+                            <span class="mr-3 auto-cancel text-danger">Otomatis batal :</span>
+                            <input type="hidden" id="count{{ $order->id }}" value="{{ $order->auto_cancel }}">
+                            <input type="hidden" class="id" value="{{ $order->id }}">
+                                <div class="d-flex datetime" id="clockdiv{{ $order->id }}">
+                                    <div class="d-flex mr-1">
+                                        <span class="days"></span>
+                                        <div class="smalltext ml-1">Hari,</div>
+                                    </div>
+                                    <div class="d-flex mr-1">
+                                        <span class="hours"></span>
+                                        <div class="smalltext ml-1">:</div>
+                                    </div>
+                                    <div class="d-flex mr-1">
+                                        <span class="minutes"></span>
+                                        <div class="smalltext ml-1"> :</div>
+                                    </div>
+                                    <div class="d-flex mr-1">
+                                        <span class="seconds"></span>
+                                        {{-- <div class="smalltext">D</div> --}}
+                                    </div>
                                 </div>
                             @endif
-                        </div> --}}
+                        </div>
                     </div>
                     {{-- {{ dd($orders) }} --}}
                     @php($detail = json_decode($order->details[0]->product_details))
@@ -410,7 +420,6 @@
 </div>
 @endsection
 @push('script')
-    <script src="{{ asset('js/countdown.min.js') }}"></script>
     <script>
         function lihat(val){
             $('#more_content' +  val).removeClass('d-none')
@@ -424,7 +433,6 @@
         }
     </script>
     <script>
-        var dead = $('#count').val()
         function getTimeRemaining(endtime) {
         var t = Date.parse(endtime) - Date.parse(new Date());
         var seconds = Math.floor((t / 1000) % 60);
@@ -441,37 +449,57 @@
         }
 
         function initializeClock(id, endtime) {
-        var clock = document.getElementById(id);
-        var daysSpan = clock.querySelector('.days');
-        var hoursSpan = clock.querySelector('.hours');
-        var minutesSpan = clock.querySelector('.minutes');
-        var secondsSpan = clock.querySelector('.seconds');
+            var clock = document.getElementById(id);
+            var daysSpan = clock.querySelector('.days');
+            var hoursSpan = clock.querySelector('.hours');
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
 
-        function updateClock() {
-            var t = getTimeRemaining(endtime);
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
 
-            daysSpan.innerHTML = t.days;
-            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+                daysSpan.innerHTML = t.days;
+                hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
-            if (t.total <= 0) {
-            clearInterval(timeinterval);
+                if (t.total <= 0) {
+                clearInterval(timeinterval);
+                }
             }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
         }
 
-        updateClock();
-        var timeinterval = setInterval(updateClock, 1000);
-        }
-        var now = new Date()
-        var de = new Date(dead)
-        console.log('now', new Date(now))
-        console.log('deadline', new Date(de))
-        console.log('sum', de.getTime() - now.getTime())
+        // var now = new Date()
+        // var de = new Date(dead)
+        // console.log('now', new Date(now))
+        // console.log('deadline', new Date(de))
+        // console.log('sum', de.getTime() - now.getTime())
         // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-        var deadline = new Date(Date.parse(new Date()) + (de.getTime() - now.getTime()));
-        initializeClock('clockdiv', deadline);
+        // var deadline = new Date(Date.parse(new Date()) + (de.getTime() - now.getTime()));
+        function getTime(id){
+            var dated =  new Date($('#count' + id).val());
+            var now = new Date()
+            var deadline = new Date(Date.parse(new Date()) + (dated.getTime() - now.getTime()));
+            initializeClock('clockdiv' + id, deadline);
+        }
+
+        $(document).ready(function(){
+            var ids = $('input[class=id]');
+            var id = []
+            ids.each(function(){
+                var val = $(this).val();
+                // array.push(id, val)
+                console.log('id', val)
+                getTime(val);
+            })
+        })
+
+
     </script>
+
     <script>
          $('#contact-seller').on('click', function (e) {
             // $('#seller_details').css('height', '200px');
