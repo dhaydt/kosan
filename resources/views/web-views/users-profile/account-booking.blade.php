@@ -419,7 +419,7 @@
                     var _this = $(this),
                     _expire = _this.data('expire');
                     _this.countdown(_expire, function(event) {
-                            $(this).html( event.strftime('<span><b>%D</b> Hari</span> <span><b>%-H</b> Jam</span> <span><b>%M</b> Menit</span> <span><b>%S</b> Detik</span>'));
+                            $(this).html( event.strftime('<span><b>%D</b> H</span> <span><b>%-H</b> J</span> <span><b>%M</b> M</span> <span><b>%S</b> d</span>'));
                         });
                     });
             }
