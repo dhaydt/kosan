@@ -335,7 +335,7 @@ class WebController extends Controller
             $product_id = $cart[0]->product_id;
             foreach ($order as $val) {
                 $ord = $val->details[0]->product_id;
-                if ($val->order_status != 'delivered' && $val->order_status != 'canceled' && $val->order_status != 'failed') {
+                if ($val->order_status != 'delivered' && $val->order_status != 'canceled' && $val->order_status != 'failed' && $val->order_status != 'expired') {
                     if ($product_id == $ord) {
                         Toastr::warning('Selesaikan proses booking sebelumnya dulu');
 
