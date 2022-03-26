@@ -242,6 +242,7 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'A' => 
         array (
             'App\\' => 4,
+            'Anhskohbo\\NoCaptcha\\' => 20,
             'Amirami\\Localizator\\' => 20,
         ),
     );
@@ -702,6 +703,10 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Anhskohbo\\NoCaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/anhskohbo/no-captcha/src',
+        ),
         'Amirami\\Localizator\\' => 
         array (
             0 => __DIR__ . '/..' . '/amirami/localizator/src',
@@ -761,6 +766,10 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'Amirami\\Localizator\\Services\\Parser' => __DIR__ . '/..' . '/amirami/localizator/src/Services/Parser.php',
         'Amirami\\Localizator\\Services\\Writers\\DefaultWriter' => __DIR__ . '/..' . '/amirami/localizator/src/Services/Writers/DefaultWriter.php',
         'Amirami\\Localizator\\Services\\Writers\\JsonWriter' => __DIR__ . '/..' . '/amirami/localizator/src/Services/Writers/JsonWriter.php',
+        'Anhskohbo\\NoCaptcha\\Facades\\NoCaptcha' => __DIR__ . '/..' . '/anhskohbo/no-captcha/src/Facades/NoCaptcha.php',
+        'Anhskohbo\\NoCaptcha\\NoCaptcha' => __DIR__ . '/..' . '/anhskohbo/no-captcha/src/NoCaptcha.php',
+        'Anhskohbo\\NoCaptcha\\NoCaptchaServiceProvider' => __DIR__ . '/..' . '/anhskohbo/no-captcha/src/NoCaptchaServiceProvider.php',
+        'App\\Console\\Commands\\CancelCron' => __DIR__ . '/../..' . '/app/Console/Commands/CancelCron.php',
         'App\\Console\\Commands\\DatabaseRefresh' => __DIR__ . '/../..' . '/app/Console/Commands/DatabaseRefresh.php',
         'App\\Console\\Commands\\InstallablePackage' => __DIR__ . '/../..' . '/app/Console/Commands/InstallablePackage.php',
         'App\\Console\\Commands\\UpdatePackage' => __DIR__ . '/../..' . '/app/Console/Commands/UpdatePackage.php',

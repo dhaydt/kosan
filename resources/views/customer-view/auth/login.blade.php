@@ -45,6 +45,17 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-md-12 d-flex justify-content-center">
+                                    {!! NoCaptcha::display() !!}
+                                    {!! NoCaptcha::renderJs() !!}
+                                    @error('g-recaptcha-response')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="form-group d-flex flex-wrap justify-content-between">
 
                                 <div class="form-group">

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1d45564640fce1122670ca8186b6693e4d581646',
+        'reference' => '163fd1252535cb7fda0a5836012590a0f6dae4d4',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -18,6 +18,15 @@
             'aliases' => array(),
             'reference' => '51a0cc48dc927666cdc7837849b5dbf82d32b7cb',
             'dev_requirement' => true,
+        ),
+        'anhskohbo/no-captcha' => array(
+            'pretty_version' => '3.4.0',
+            'version' => '3.4.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../anhskohbo/no-captcha',
+            'aliases' => array(),
+            'reference' => 'e12233006da3063f5cf4ce959cae05a6676faedd',
+            'dev_requirement' => false,
         ),
         'barryvdh/laravel-debugbar' => array(
             'pretty_version' => 'v3.6.7',
@@ -484,7 +493,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1d45564640fce1122670ca8186b6693e4d581646',
+            'reference' => '163fd1252535cb7fda0a5836012590a0f6dae4d4',
             'dev_requirement' => false,
         ),
         'laravel/passport' => array(

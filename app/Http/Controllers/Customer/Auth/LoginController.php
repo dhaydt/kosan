@@ -58,6 +58,7 @@ class LoginController extends Controller
         $request->validate([
             'user_id' => 'required',
             'password' => 'required|min:8',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $remember = ($request['remember']) ? true : false;
