@@ -58,9 +58,9 @@ class LoginController extends Controller
         $request->validate([
             'user_id' => 'required',
             'password' => 'required|min:8',
-            'g-recaptcha-response' => 'required|captcha',
+            // 'g-recaptcha-response' => 'required|captcha',
         ], [
-            'g-recaptcha-response.required' => 'Please validate if you are not a robot',
+            // 'g-recaptcha-response.required' => 'Please validate if you are not a robot',
         ]);
 
         $remember = ($request['remember']) ? true : false;
@@ -116,7 +116,7 @@ class LoginController extends Controller
 
         Toastr::error('Credentials do not match or account has been suspended.');
 
-        return back()->withInput();
+        return redirect()->back()->withInput();
     }
 
     public function logout(Request $request)
