@@ -2,6 +2,17 @@
     .owl-carousel .owl-item img {
         max-height: 155px;
     }
+    .label-vendor-flash {
+        position: absolute;
+        background-color: {{ $web_config['primary_color'] }};
+        padding: 2px 8px 2px 10px;
+        top: 133px;
+        right: 0;
+        font-size:12px;
+        color: #fff !important;
+        letter-spacing: 1px;
+        border-radius: 10px 0 0 0;
+    }
     .discount-hed{
         margin-top: 0;
         right: 0;
@@ -43,6 +54,9 @@
         }
     }
     @media (max-width: 600px) {
+        .label-vendor-flash{
+            top: 130px
+        }
         .cz-countdown-days {
             color: white !important;
             background-color: #f15151;
@@ -224,6 +238,10 @@
                   <img class="w-100"
                     src="{{\App\CPU\ProductManager::product_image_path('product')}}/{{json_decode($deal->product['images'])[0]}}"
                     onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'" />
+
+                    @if ($deal->product->added_by == 'admin')
+                    <label class="label-vendor-flash capitalize">inRoom</label>
+                    @endif
                 </div>
 
                 <div class="card-body inline_product text-left px-3 pt-3 clickable" style="cursor: pointer;">
@@ -469,6 +487,9 @@
                                         <label class="label-kost flash-label text-white">{{ $deal->product->kost['name'] }}</label>
                                         <img crossorigin="anonymous" src="{{\App\CPU\ProductManager::product_image_path('product')}}/{{json_decode($deal->product['images'])[0]}}"
                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'" title="" alt="">
+                                        @if ($deal->product->added_by == 'admin')
+                                        <label class="label-vendor-flash capitalize">inRoom</label>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="css-974ipl">

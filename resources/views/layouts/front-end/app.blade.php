@@ -277,6 +277,17 @@
         html[dir="rtl"] .feature_header span {
             padding-left: 15px;
         }
+        .label-vendor {
+            position: absolute;
+            background-color: {{ $web_config['primary_color'] }};
+            padding: 2px 8px 2px 10px;
+            top: 147px;
+            right: 0;
+            font-size:12px;
+            color: #fff !important;
+            letter-spacing: 1px;
+            border-radius: 10px 0 0 0;
+        }
 
         @media (max-width: 768px ) {
             .btn-scroll-top.show {
@@ -370,6 +381,9 @@
         @media screen and (max-width: 500px) {
             .mobileshow {
                 display: block;
+            }
+            .label-vendor {
+                top: 108px;
             }
         }
 

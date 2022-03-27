@@ -34,6 +34,9 @@
                 </a>
             </div>
         </div>
+        @if ($product->added_by == 'admin')
+        <label class="label-vendor capitalize">inRoom</label>
+        @endif
 
         <div class="card-body single-product inline_product text-left p-3 clickable"
             style="cursor: pointer;">
