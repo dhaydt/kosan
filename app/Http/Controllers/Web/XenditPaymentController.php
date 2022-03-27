@@ -55,7 +55,7 @@ class XenditPaymentController extends Controller
     ];
 
         $virtual = \Xendit\VirtualAccounts::create($params);
-        dd($virtual);
+        // dd($virtual);
 
         return view('web-views.finish-payment', compact('virtual'));
 

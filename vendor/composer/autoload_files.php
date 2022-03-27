@@ -43,6 +43,7 @@ return array(
     'ed962a97bd972bc82007176b647d4e36' => $vendorDir . '/facade/ignition/src/helpers.php',
     'c379e2a4ec3735f6c4915556c8c81813' => $vendorDir . '/rap2hpoutre/fast-excel/src/functions/fastexcel.php',
     'bab4ed692c1fd3872849227e2a85791e' => $vendorDir . '/unicodeveloper/laravel-paystack/src/Support/helpers.php',
+    'c78728b4802e1a9e0e9e89908b46d100' => $vendorDir . '/captcha-com/laravel-captcha/src/Support/helpers.php',
     '37efcf4b38f2e77789b09da04b892bff' => $baseDir . '/app/CPU/helpers.php',
     '5db82252215435aaa9946688db025aa8' => $baseDir . '/app/CPU/image-manager.php',
     'e60e6e6a68ada0ecc9815aecb68a7235' => $baseDir . '/app/CPU/category-manager.php',

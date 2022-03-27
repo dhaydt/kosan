@@ -180,7 +180,7 @@ return [
         Laravelpkg\Laravelchk\LaravelchkServiceProvider::class,
         Amirami\Localizator\ServiceProvider::class,
         Laravolt\Indonesia\ServiceProvider::class,
-        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
     ],
 
     /*
@@ -233,6 +233,5 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Helper' => \App\CPU\Helpers::class,
         'Indonesia' => Laravolt\Indonesia\Facade::class,
-        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
     ],
 ];

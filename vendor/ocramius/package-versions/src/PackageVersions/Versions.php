@@ -23,10 +23,11 @@ final class Versions
      * @internal
      */
     public const VERSIONS          = array (
-  'anhskohbo/no-captcha' => '3.4.0@e12233006da3063f5cf4ce959cae05a6676faedd',
   'barryvdh/laravel-dompdf' => 'v0.8.7@30310e0a675462bf2aa9d448c8dcbf57fbcc517d',
   'box/spout' => 'v3.3.0@9bdb027d312b732515b884a341c0ad70372c6295',
   'brian2694/laravel-toastr' => '5.56@98137445f55d981f3587800349f1aa7b045d7974',
+  'captcha-com/captcha' => '4.2.5@4b8b642509bfc63d2f295dccf1c1b4d0e2266a15',
+  'captcha-com/laravel-captcha' => '4.2.11@e438e9c37ce7a6ce2c74422decc4e386e4a60e5e',
   'ckeditor/ckeditor' => '4.17.2@0a402ca86b1821418e90cef026910fc723a930a6',
   'defuse/php-encryption' => 'v2.3.1@77880488b9954b7884c25555c2a0ea9e7053f9d2',
   'doctrine/cache' => '2.1.1@331b4d5dbaeab3827976273e9356b3b453c300ce',
@@ -170,7 +171,7 @@ final class Versions
   'sebastian/version' => '2.0.1@99732be0ddb3361e16ad77b68ba41efc8e979019',
   'theseer/tokenizer' => '1.2.1@34a41e998c2183e22995f158c581e7b5e755ab9e',
   'webmozart/assert' => '1.10.0@6964c76c7804814a842473e0c8fd15bab0f18e25',
-  'laravel/laravel' => 'dev-main@a2fb6beb26bb2e1ec95530958c3036f92ab786b8',
+  'laravel/laravel' => 'dev-main@5657d3bd46e9631ed56bbdb61201d0c8a1a38fed',
 );
 
     private function __construct()

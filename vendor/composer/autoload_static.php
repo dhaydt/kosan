@@ -44,6 +44,7 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         'c379e2a4ec3735f6c4915556c8c81813' => __DIR__ . '/..' . '/rap2hpoutre/fast-excel/src/functions/fastexcel.php',
         'bab4ed692c1fd3872849227e2a85791e' => __DIR__ . '/..' . '/unicodeveloper/laravel-paystack/src/Support/helpers.php',
+        'c78728b4802e1a9e0e9e89908b46d100' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Support/helpers.php',
         '37efcf4b38f2e77789b09da04b892bff' => __DIR__ . '/../..' . '/app/CPU/helpers.php',
         '5db82252215435aaa9946688db025aa8' => __DIR__ . '/../..' . '/app/CPU/image-manager.php',
         'e60e6e6a68ada0ecc9815aecb68a7235' => __DIR__ . '/../..' . '/app/CPU/category-manager.php',
@@ -175,6 +176,7 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Socialite\\' => 18,
             'Laravel\\Passport\\' => 17,
+            'LaravelCaptcha\\' => 15,
         ),
         'J' => 
         array (
@@ -242,7 +244,6 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'A' => 
         array (
             'App\\' => 4,
-            'Anhskohbo\\NoCaptcha\\' => 20,
             'Amirami\\Localizator\\' => 20,
         ),
     );
@@ -555,6 +556,10 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
         ),
+        'LaravelCaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src',
+        ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-parallel-lint/php-console-highlighter/src',
@@ -703,10 +708,6 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
-        'Anhskohbo\\NoCaptcha\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/anhskohbo/no-captcha/src',
-        ),
         'Amirami\\Localizator\\' => 
         array (
             0 => __DIR__ . '/..' . '/amirami/localizator/src',
@@ -766,9 +767,6 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'Amirami\\Localizator\\Services\\Parser' => __DIR__ . '/..' . '/amirami/localizator/src/Services/Parser.php',
         'Amirami\\Localizator\\Services\\Writers\\DefaultWriter' => __DIR__ . '/..' . '/amirami/localizator/src/Services/Writers/DefaultWriter.php',
         'Amirami\\Localizator\\Services\\Writers\\JsonWriter' => __DIR__ . '/..' . '/amirami/localizator/src/Services/Writers/JsonWriter.php',
-        'Anhskohbo\\NoCaptcha\\Facades\\NoCaptcha' => __DIR__ . '/..' . '/anhskohbo/no-captcha/src/Facades/NoCaptcha.php',
-        'Anhskohbo\\NoCaptcha\\NoCaptcha' => __DIR__ . '/..' . '/anhskohbo/no-captcha/src/NoCaptcha.php',
-        'Anhskohbo\\NoCaptcha\\NoCaptchaServiceProvider' => __DIR__ . '/..' . '/anhskohbo/no-captcha/src/NoCaptchaServiceProvider.php',
         'App\\Console\\Commands\\CancelCron' => __DIR__ . '/../..' . '/app/Console/Commands/CancelCron.php',
         'App\\Console\\Commands\\DatabaseRefresh' => __DIR__ . '/../..' . '/app/Console/Commands/DatabaseRefresh.php',
         'App\\Console\\Commands\\InstallablePackage' => __DIR__ . '/../..' . '/app/Console/Commands/InstallablePackage.php',
@@ -3676,6 +3674,16 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/php-parallel-lint/php-console-color/src/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/php-parallel-lint/php-console-highlighter/src/Highlighter.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'LaravelCaptcha\\BotDetectCaptcha' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/BotDetectCaptcha.php',
+        'LaravelCaptcha\\BotDetectSimpleCaptcha' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/BotDetectSimpleCaptcha.php',
+        'LaravelCaptcha\\Controllers\\CaptchaHandlerController' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Controllers/CaptchaHandlerController.php',
+        'LaravelCaptcha\\Controllers\\SimpleCaptchaHandlerController' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Controllers/SimpleCaptchaHandlerController.php',
+        'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Providers/LaravelCaptchaServiceProvider.php',
+        'LaravelCaptcha\\Support\\LaravelInformation' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Support/LaravelInformation.php',
+        'LaravelCaptcha\\Support\\LibraryLoader' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Support/LibraryLoader.php',
+        'LaravelCaptcha\\Support\\Path' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Support/Path.php',
+        'LaravelCaptcha\\Support\\SimpleLibraryLoader' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Support/SimpleLibraryLoader.php',
+        'LaravelCaptcha\\Support\\UserCaptchaConfiguration' => __DIR__ . '/..' . '/captcha-com/laravel-captcha/src/Support/UserCaptchaConfiguration.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',

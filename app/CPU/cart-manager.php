@@ -40,7 +40,7 @@ class CartManager
                     'updated_at' => now(),
                 ];
             }
-            dd($cart);
+            // dd($cart);
             Cart::insert($storage);
             session()->put('offline_cart', collect([]));
         }
