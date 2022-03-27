@@ -305,7 +305,7 @@ class OrderManager
 
         $cart_group_id = $data['cart_group_id'];
         $seller_data = Cart::where(['cart_group_id' => $cart_group_id])->first();
-        $minute = 5;
+        $minute = 2880;
         // dd($seller_data);
         $or = [
             'id' => $order_id,
@@ -328,7 +328,7 @@ class OrderManager
             'discount_amount' => $discount,
             'discount_type' => $discount == 0 ? null : 'coupon_discount',
             'coupon_code' => $coupon_code,
-            'order_amount' => (CartManager::cart_grand_total($cart_group_id) - $discount) * $data['data']->durasi,
+            'order_amount' => (CartManager::cart_grand_total($cart_group_id) - $discount) * $data['data']->anchor,
             // 'shipping_address' => $address_id,
             // 'shipping_address_data' => ShippingAddress::find($address_id),
             // 'shipping_cost' => CartManager::get_shipping_cost($data['cart_group_id']),
@@ -336,6 +336,7 @@ class OrderManager
             'created_at' => now(),
             'updated_at' => now(),
         ];
+        // dd((CartManager::cart_grand_total($cart_group_id) - $discount) * $data['data']->anchor);
 
         $order_id = DB::table('orders')->insertGetId($or);
 
@@ -353,8 +354,8 @@ class OrderManager
                 'tax' => $c['tax'] * $c['quantity'],
                 'discount' => $c['discount'] * $c['quantity'],
                 'discount_type' => 'discount_on_product',
-                // 'variant' => $c['variant'],
-                // 'variation' => $c['variations'],
+                'variant' => $c['variant'],
+                'variation' => $c['variations'],
                 'delivery_status' => 'pending',
                 // 'shipping_method_id' => null,
                 'payment_status' => 'unpaid',
@@ -362,19 +363,19 @@ class OrderManager
                 'updated_at' => now(),
             ];
 
-            // if ($c['variant'] != null) {
-            //     $type = $c['variant'];
-            //     $var_store = [];
-            //     foreach (json_decode($product['variation'], true) as $var) {
-            //         if ($type == $var['type']) {
-            //             $var['qty'] -= $c['quantity'];
-            //         }
-            //         array_push($var_store, $var);
-            //     }
-            //     Product::where(['id' => $product['id']])->update([
-            //         'variation' => json_encode($var_store),
-            //     ]);
-            // }
+            if ($c['variant'] != null) {
+                $type = $c['variant'];
+                $var_store = [];
+                foreach (json_decode($product['variation'], true) as $var) {
+                    if ($type == $var['type']) {
+                        $var['qty'] -= $c['quantity'];
+                    }
+                    array_push($var_store, $var);
+                }
+                Product::where(['id' => $product['id']])->update([
+                    'variation' => json_encode($var_store),
+                ]);
+            }
 
             Product::where(['id' => $product['id']])->update([
                 // 'current_stock' => $product['current_stock'] - $c['quantity'],

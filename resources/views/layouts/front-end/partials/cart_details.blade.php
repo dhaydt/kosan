@@ -18,7 +18,7 @@
         text-transform: capitalize;
     }
 
-    .quantity, .penghuni {
+    .quantity, .penghuni, .quantitys {
         position: relative;
     }
 
@@ -328,14 +328,17 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
                             <div class="penyewa mb-3">
                                 <h3 class="title-section mb-1">Durasi kos</h3>
                             </div>
+
                             <div class="row mt-3">
                                 <div class="col-md-4" style="margin-left: 12px;">
                                     <div class="data-penyewa pl-2 d-flex-justify-content-center">
+                                        <span id="dur" class="d-none">{{ $cartItem->durasi }}</span>
                                         <div class="quantity">
-                                            <input type="number" name="durasi" min="1" max="999" step="1"
-                                                value="1">
+                                            <input type="number" name="durasi" min="{{ 1 * $cartItem->durasi }}" max="999" step="{{ 1 * $cartItem->durasi }}"
+                                                value="{{ $cartItem->durasi }}">
                                         </div>
-                                    </div>
+                                        <input type="hidden" name="anchor" value="1" id="anchor">
+                                        </div>
                                     <span style="margin-left: 40px">Bulan</span>
                                 </div>
                             </div>
@@ -442,17 +445,21 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
             min = input.attr('min'),
             max = input.attr('max');
 
+        var step = $('#dur').text();
         btnUp.click(function() {
             var oldValue = parseFloat(input.val());
+            var anc = $('#anchor').val();
             if (oldValue >= max) {
             var newVal = oldValue;
             } else {
-            var newVal = oldValue + 1;
+            var newVal = oldValue + parseFloat(step);
             }
             spinner.find("input").val(newVal);
+            var anc = parseFloat(anc) + 1;
+            $('#anchor').val(anc);
             var price = $("#priceTotal").text()
             var rp = price.replace(/[^\d\.]/g, '')
-            var val = rp.replace(/[\.]/g, '')* newVal
+            var val = parseFloat(rp.replace(/[\.]/g, '')) * anc
             var newPrice = number(val)
             $('#totalPrice').text(newPrice)
 
@@ -461,15 +468,18 @@ auth('customer')->id()])->get()->groupBy('cart_group_id'))
 
         btnDown.click(function() {
             var oldValue = parseFloat(input.val());
+            var anc = $('#anchor').val();
             if (oldValue <= min) {
             var newVal = oldValue;
             } else {
-            var newVal = oldValue - 1;
+            var newVal = oldValue - parseFloat(step);
             }
             spinner.find("input").val(newVal);
+            var anc = parseFloat(anc) - 1;
+            $('#anchor').val(anc);
             var price = $("#priceTotal").text()
             var rp = price.replace(/[^\d\.]/g, '')
-            const val = rp.replace(/[\.]/g, '')* newVal
+            const val = parseFloat(rp.replace(/[\.]/g, '')) * anc
             var newPrice = number(val)
             $('#totalPrice').text(newPrice)
             spinner.find("input").trigger("change");

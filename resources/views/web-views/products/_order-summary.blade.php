@@ -34,13 +34,13 @@
         @else
             {{-- <span>{{\App\CPU\translate('empty_cart')}}</span> --}}
         @endif
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between" id="cart-price">
             <span class="cart_title">{{\App\CPU\translate('Harga_sewa_perbulan')}}</span>
             <span class="cart_value">
                 {{\App\CPU\Helpers::currency_converter($product->unit_price)}}
             </span>
         </div>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between" id="cart-tax">
             <span class="cart_title">{{\App\CPU\translate('tax')}}</span>
             <span class="cart_value">
                 @php($tax = $product->unit_price * $product->tax/100)
@@ -53,7 +53,7 @@
                 {{\App\CPU\Helpers::currency_converter($total_shipping_cost)}}
             </span>
         </div> --}}
-        <div class="d-flex justify-content-between mt-2">
+        <div class="d-flex justify-content-between mt-2" id="cart-discount">
             <span class="cart_title">{{\App\CPU\translate('discount')}}</span>
             <span class="cart_value text-success">
                 - @if ($product->discount_type == 'percent')
@@ -86,7 +86,7 @@
             @php($coupon_dis=0)
         @endif
         <hr class="mt-2 mb-2">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between" id="cart-total">
             <span class="cart_title">{{\App\CPU\translate('total')}}</span>
             <span class="cart_value">
                 {{\App\CPU\Helpers::currency_converter(

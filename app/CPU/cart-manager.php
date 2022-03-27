@@ -23,6 +23,8 @@ class CartManager
                     'customer_id' => $user->id,
                     'cart_group_id' => isset($db_cart) ? $db_cart['cart_group_id'] : str_replace('offline', $user->id, $item['cart_group_id']),
                     'product_id' => $item['product_id'],
+                    'variations' => $item['variations'],
+                    'variant' => $item['variant'],
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
                     'tax' => $item['tax'],
@@ -38,6 +40,7 @@ class CartManager
                     'updated_at' => now(),
                 ];
             }
+            dd($cart);
             Cart::insert($storage);
             session()->put('offline_cart', collect([]));
         }
@@ -180,16 +183,16 @@ class CartManager
         }
 
         //Gets all the choice values of customer choice option and generate a string like Black-S-Cotton
-        // $choices = [];
-        // foreach (json_decode($product->choice_options) as $key => $choice) {
-        //     $choices[$choice->name] = $request[$choice->name];
-        //     $variations[$choice->title] = $request[$choice->name];
-        //     if ($str != null) {
-        //         $str .= '-' . str_replace(' ', '', $request[$choice->name]);
-        //     } else {
-        //         $str .= str_replace(' ', '', $request[$choice->name]);
-        //     }
-        // }
+        $choices = [];
+        foreach (json_decode($product->choice_options) as $key => $choice) {
+            $choices[$choice->name] = $request[$choice->name];
+            $variations[$choice->title] = $request[$choice->name];
+            if ($str != null) {
+                $str .= '-'.str_replace(' ', '', $request[$choice->name]);
+            } else {
+                $str .= str_replace(' ', '', $request[$choice->name]);
+            }
+        }
 
         if ($user == 'offline') {
             if (session()->has('offline_cart')) {
@@ -222,7 +225,7 @@ class CartManager
 
         // $cart['color'] = $request->has('color') ? $request['color'] : null;
         $cart['product_id'] = $product->id;
-        // $cart['choices'] = json_encode($choices);
+        $cart['choices'] = json_encode($choices);
 
         //chek if out of stock
         if ($product['current_stock'] < $request['quantity']) {
@@ -232,26 +235,27 @@ class CartManager
             ];
         }
 
-        // $cart['variations'] = json_encode($variations);
-        // $cart['variant'] = $str;
+        $cart['variations'] = json_encode($variations);
+        $cart['variant'] = $str;
+        $cart['durasi'] = $str;
 
         //Check the string and decreases quantity for the stock
-        // if ($str != null) {
-        //     $count = count(json_decode($product->variation));
-        //     for ($i = 0; $i < $count; ++$i) {
-        //         if (json_decode($product->variation)[$i]->type == $str) {
-        //             $price = json_decode($product->variation)[$i]->price;
-        //             if (json_decode($product->variation)[$i]->qty < $request['quantity']) {
-        //                 return [
-        //                     'status' => 0,
-        //                     'message' => translate('out_of_stock!'),
-        //                 ];
-        //             }
-        //         }
-        //     }
-        // } else {
-        $price = $product->unit_price;
-        // }
+        if ($str != null) {
+            $count = count(json_decode($product->variation));
+            for ($i = 0; $i < $count; ++$i) {
+                if (json_decode($product->variation)[$i]->type == $str) {
+                    $price = json_decode($product->variation)[$i]->price;
+                    if (json_decode($product->variation)[$i]->qty < $request['quantity']) {
+                        return [
+                            'status' => 0,
+                            'message' => translate('out_of_stock!'),
+                        ];
+                    }
+                }
+            }
+        } else {
+            $price = $product->unit_price;
+        }
 
         $tax = Helpers::tax_calculation($price, $product['tax'], 'percent');
 

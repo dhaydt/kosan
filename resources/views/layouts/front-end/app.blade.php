@@ -1061,12 +1061,13 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
         });
     }
 
-    $('#add-to-cart-form input').on('change', function () {
+    $('#add-to-cart-form input.var').on('change', function () {
+        // console.log('work')
         getVariantPrice();
     });
 
     function getVariantPrice() {
-        if ($('#add-to-cart-form input[name=quantity]').val() > 0 && checkAddToCartValidity()) {
+        if (checkAddToCartValidity()) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -1080,8 +1081,12 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
                     console.log(data)
                     $('#add-to-cart-form #chosen_price_div').removeClass('d-none');
                     $('#add-to-cart-form #chosen_price_div #chosen_price').html(data.price);
+                    $('#cart-price .cart_value').html(data.real);
                     $('#set-tax-amount').html(data.tax);
                     $('#set-discount-amount').html(data.discount);
+                    $('#cart-discount .cart_value').html(data.discount);
+                    $('#cart-tax .cart_value').html(data.tax);
+                    $('#cart-total .cart_value').html(data.price);
                     $('#available-quantity').html(data.quantity);
                     $('.cart-qty-field').attr('max', data.quantity);
                 }

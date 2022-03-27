@@ -16,12 +16,12 @@ class CartController extends Controller
     {
         $product = Product::find($request->id);
         $str = '';
-        $quantity = 0;
+        $quantity = 1;
         $price = 0;
 
-        if ($request->has('color')) {
-            $str = Color::where('code', $request['color'])->first()->name;
-        }
+        // if ($request->has('color')) {
+        //     $str = Color::where('code', $request['color'])->first()->name;
+        // }
 
         foreach (json_decode(Product::find($request->id)->choice_options) as $key => $choice) {
             if ($str != null) {
@@ -39,8 +39,10 @@ class CartController extends Controller
                     $discount = Helpers::get_product_discount($product, json_decode($product->variation)[$i]->price);
                     $price = json_decode($product->variation)[$i]->price - $discount + $tax;
                     $quantity = json_decode($product->variation)[$i]->qty;
+                    $real = json_decode($product->variation)[$i]->price;
                 }
             }
+            // dd($price, $discount);
         } else {
             $tax = Helpers::tax_calculation($product->unit_price, $product['tax'], $product['tax_type']);
             $discount = Helpers::get_product_discount($product, $product->unit_price);
@@ -49,7 +51,8 @@ class CartController extends Controller
         }
 
         return [
-            'price' => \App\CPU\Helpers::currency_converter($price * $request->quantity),
+            'price' => \App\CPU\Helpers::currency_converter($price),
+            'real' => \App\CPU\Helpers::currency_converter($real),
             'discount' => \App\CPU\Helpers::currency_converter($discount),
             'tax' => \App\CPU\Helpers::currency_converter($tax),
             'quantity' => $quantity,

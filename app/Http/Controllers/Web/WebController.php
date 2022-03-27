@@ -330,11 +330,13 @@ class WebController extends Controller
     public function shop_cart()
     {
         $cart = Cart::where('customer_id', auth('customer')->id())->orderby('id', 'DESC')->get();
+        // dd($cart);
         // if (auth('customer')->check() && count($cart) > 0) {
         if (count($cart) > 0) {
             $order = Order::with('details')->where('customer_id', auth('customer')->id())->get();
             $product_id = $cart[0]->product_id;
             foreach ($order as $val) {
+                // dd($val);
                 $ord = $val->details[0]->product_id;
                 if ($val->order_status != 'delivered' && $val->order_status != 'canceled' && $val->order_status != 'failed' && $val->order_status != 'expired') {
                     if ($product_id == $ord) {

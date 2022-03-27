@@ -144,6 +144,7 @@
                             <span class="status text-danger">Kadaluarsa oleh admin</span>
                             @endif
                         </div>
+                        @if ($order->order_status != 'canceled' || $order->order_status != 'failed' || $order->order_status != 'expired')
                         <div class="col-12 col-md-8 d-flex justify-content-end">
                             @php($date = Carbon\Carbon::now()->toDateTimeString())
                             @if($order->auto_cancel && $date < $order->auto_cancel)
@@ -170,6 +171,7 @@
                                 </div>
                             @endif
                         </div>
+                        @endif
                     </div>
                     {{-- {{ dd($orders) }} --}}
                     @php($detail = json_decode($order->details[0]->product_details))
@@ -206,23 +208,23 @@
                                     <span class="ml-2 dated">Tanggal masuk</span>
                                 </div>
                                 {{-- @php($add = 2)
-                                {{ date("Y-m-d", strtotime("+".$add."month", strtotime($order->mulai))) }} --}}
-                                @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
-                                <div class="ml-4 mt-1">
-                                    <span class="date-date">{{ App\CPU\Helpers::dateChange($date) }}</span>
+                                    {{ date("Y-m-d", strtotime("+".$add."month", strtotime($order->mulai))) }} --}}
+                                    @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
+                                    <div class="ml-4 mt-1">
+                                        <span class="date-date">{{ App\CPU\Helpers::dateChange($date) }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="more-content d-none" id="more_content{{ $order->id }}">
-                    <div class="row justify-content-center px-4 mb-4">
-                        <div class="price mt-3 col-md-9 px2">
-                            <span class="price-card">{{\App\CPU\Helpers::currency_converter($order->order_amount)}} <span class="satuan">/bulan</span></span>
-                        </div>
-                        @php($product = json_decode($order->details[0]->product_details))
-                        @php($fasilitas = json_decode($product->fasilitas_id))
-                        <div class="col-md-9">
+                    <div class="more-content d-none" id="more_content{{ $order->id }}">
+                        <div class="row justify-content-center px-4 mb-4">
+                            <div class="price mt-3 col-md-9 px2">
+                                <span class="price-card">{{\App\CPU\Helpers::currency_converter($order->order_amount)}} <span class="satuan">/bulan</span></span>
+                            </div>
+                            @php($product = json_decode($order->details[0]->product_details))
+                            @php($fasilitas = json_decode($product->fasilitas_id))
+                            <div class="col-md-9">
                             <div class="btn-fasilitas">
                                 <a href="javascript:" class="fasilitas capitalize text-success" data-toggle="modal" data-target="#exampleModal{{ $order->id }}">
                                     Lihat fasilitas
@@ -411,8 +413,8 @@
                         @endif
                     </div>
                     {{-- {{ dd($order->details[0]->product->kost->id) }} --}}
-
                 </div>
+
             </div>
             @endforeach
         </section>

@@ -1195,7 +1195,57 @@
                                 )}}
                             </h5>
                             <span class="booking-card__info-price-amount-unit">/ bulan</span>
+                        </span>
+                        @if($product->discount > 0)
+                            <strike class="text-danger ml-2" style="font-size: 10px;">
+                                {{\App\CPU\Helpers::currency_converter($product->unit_price)}}
+                            </strike>
+                        @endif
                         </div>
+
+                        @foreach (json_decode($product->choice_options) as $key => $choice)
+                            <div class="row flex-start mx-0">
+                                <div
+                                    class="product-description-label mt-2 {{Session::get('direction') === "rtl" ? 'pl-2' : 'pr-2'}}">{{ $choice->title }}
+                                    :
+                                </div>
+                                <div>
+                                    <ul class="list-inline checkbox-alphanumeric checkbox-alphanumeric--style-1 mb-2 mx-1 flex-start"
+                                        style="padding-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 0;">
+                                        @foreach ($choice->options as $key => $option)
+                                            <div>
+                                                <li class="for-mobile-capacity">
+                                                    <input class="var" type="radio"
+                                                        id="{{ $choice->name }}-{{ $option }}"
+                                                        name="{{ $choice->name }}" value="{{ $option }}"
+                                                        @if($key == 0) checked @endif >
+                                                    <label style="font-size: .6em"
+                                                        for="{{ $choice->name }}-{{ $option }}">{{ $option }}</label>
+                                                </li>
+                                            </div>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <div class="row flex-start no-gutters d-none mt-2" id="chosen_price_div">
+                            <div class="{{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}}">
+                                <div class="product-description-label">{{\App\CPU\translate('total_price')}}:</div>
+                            </div>
+                            <div>
+                                <div class="product-price for-total-price">
+                                    <strong id="chosen_price"></strong>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                @if($product['current_stock']<=0)
+                                    <h5 class="mt-3" style="color: red">{{\App\CPU\translate('out_of_stock')}}</h5>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="booking-card__info-select mt-3">
                             <section class="booking-input-checkin booking-card__info-select-dat w-100">
                                 <div class="form-group">
@@ -1375,10 +1425,11 @@
         })
 
         cartQuantityInitialize();
-        getVariantPrice();
-        $('#add-to-cart-form input').on('change', function () {
-            getVariantPrice();
-        });
+
+        // getVariantPrice();
+        // $('#add-to-cart-form input.val').on('change', function () {
+        //     getVariantPrice();
+        // });
 
         function showInstaImage(link) {
             $("#attachment-view").attr("src", link);
