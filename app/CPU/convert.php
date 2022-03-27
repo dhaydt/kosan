@@ -16,7 +16,7 @@ class Convert
         //     $rate = $default['exchange_rate'] / $usd;
         //     $value = floatval($amount) / floatval($rate);
         // } else {
-        $value = floatval($amount);
+        $value = $amount;
         // }
 
         return $value;
@@ -31,10 +31,10 @@ class Convert
         //     $rate = $default['exchange_rate'] / $usd;
         //     $value = floatval($amount) * floatval($rate);
         // } else {
-        $value = floatval($amount);
+        $value = $amount;
         // }
 
-        return round($value, 2);
+        return round($value, 0);
     }
 
     public static function bdtTousd($amount)

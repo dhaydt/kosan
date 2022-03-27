@@ -296,6 +296,24 @@
                                         placeholder="{{\App\CPU\translate('Harga_kamar')}}" name="unit_price"
                                         value="{{old('unit_price')}}" class="form-control" required>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="attributes" style="padding-bottom: 3px">
+                                        {{\App\CPU\translate('Attributes')}} :
+                                    </label>
+                                    <select
+                                        class="js-example-basic-multiple js-states js-example-responsive form-control"
+                                        name="choice_attributes[]" id="choice_attributes" multiple="multiple">
+                                        @foreach (\App\Model\Attribute::orderBy('name', 'asc')->get() as $key => $a)
+                                            <option value="{{ $a['id']}}">
+                                                {{$a['name']}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mt-2 mb-2">
+                                    <div class="customer_choice_options" id="customer_choice_options">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-4">
@@ -320,6 +338,7 @@
                                         <option value="percent">{{\App\CPU\translate('Percent')}}</option>
                                     </select>
                                 </div>
+                                <div class="sku_combination" id="sku_combination">
                             </div>
                         </div>
 
@@ -628,45 +647,45 @@
         });
 
 
-        // function update_sku() {
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
+        function update_sku() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        //     $.ajax({
-        //         type: "POST",
-        //         url: '{{route('seller.product.sku-combination')}}',
-        //         data: $('#product_form').serialize(),
-        //         success: function (data) {
-        //             $('#sku_combination').html(data.view);
-        //             $('#sku_combination').addClass('pt-4');
-        //             if (data.length > 1) {
-        //                 $('#quantity').hide();
-        //             } else {
-        //                 $('#quantity').show();
-        //             }
-        //         }
-        //     });
-        // };
+            $.ajax({
+                type: "POST",
+                url: '{{route('seller.product.sku-combination')}}',
+                data: $('#product_form').serialize(),
+                success: function (data) {
+                    $('#sku_combination').html(data.view);
+                    $('#sku_combination').addClass('pt-4');
+                    if (data.length > 1) {
+                        $('#quantity').hide();
+                    } else {
+                        $('#quantity').show();
+                    }
+                }
+            });
+        };
 
-        // $(document).ready(function () {
-        //     // color select select2
-        //     $('.color-var-select').select2({
-        //         templateResult: colorCodeSelect,
-        //         templateSelection: colorCodeSelect,
-        //         escapeMarkup: function (m) {
-        //             return m;
-        //         }
-        //     });
+        $(document).ready(function () {
+            // color select select2
+            $('.color-var-select').select2({
+                templateResult: colorCodeSelect,
+                templateSelection: colorCodeSelect,
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
 
-        //     function colorCodeSelect(state) {
-        //         var colorCode = $(state.element).val();
-        //         if (!colorCode) return state.text;
-        //         return "<span class='color-preview' style='background-color:" + colorCode + ";'></span>" + state.text;
-        //     }
-        // });
+            function colorCodeSelect(state) {
+                var colorCode = $(state.element).val();
+                if (!colorCode) return state.text;
+                return "<span class='color-preview' style='background-color:" + colorCode + ";'></span>" + state.text;
+            }
+        });
 </script>
 
 <script>

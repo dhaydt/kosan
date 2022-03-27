@@ -7,7 +7,11 @@
 <link href="{{ asset('public/assets/select2/css/select2.min.css')}}" rel="stylesheet">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
-
+<style>
+    .select2-container--default .custom-select.select2-selection--multiple, .select2-container--default .form-control.select2-selection--multiple{
+        height: 40px !important;
+    }
+</style>
 @section('content')
 <!-- Page Heading -->
 <div class="content container-fluid">
@@ -237,6 +241,31 @@
                                         placeholder="{{\App\CPU\translate('Harga_kamar')}}" name="unit_price"
                                         value="{{\App\CPU\Convert::default($product->unit_price)}}" class="form-control" required>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="attributes">
+                                        {{\App\CPU\translate('Attributes')}} :
+                                    </label>
+                                    <select
+                                        class="form-control js-select2-custom"
+                                        name="choice_attributes[]" id="choice_attributes" multiple="multiple">
+                                        @foreach (\App\Model\Attribute::orderBy('name', 'asc')->get() as $key => $a)
+                                            @if($product['attributes']!='null')
+                                                <option
+                                                    value="{{ $a['id']}}" {{in_array($a->id,json_decode($product['attributes'],true))?'selected':''}}>
+                                                    {{$a['name']}}
+                                                </option>
+                                            @else
+                                                <option value="{{ $a['id']}}">{{$a['name']}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12 mt-2 mb-2">
+                                    <div class="customer_choice_options" id="customer_choice_options">
+                                        @include('seller-views.product.partials._choices',['choice_no'=>json_decode($product['attributes']),'choice_options'=>json_decode($product['choice_options'],true)])
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-4">
@@ -260,6 +289,9 @@
                                         <option value="flat" {{$product['discount_type']=='flat'?'selected':''}}>{{\App\CPU\translate('Flat')}}</option>
                                         <option value="percent" {{$product['discount_type']=='percent'?'selected':''}}>{{\App\CPU\translate('Percent')}}</option>
                                     </select>
+                                </div>
+                                <div class="sku_combination pt-4" id="sku_combination">
+                                    @include('seller-views.product.partials._edit_sku_combinations',['combinations'=>json_decode($product['variation'],true)])
                                 </div>
                             </div>
                         </div>
@@ -549,7 +581,7 @@
 </script>
 
 <script>
-    function getRequest(route, id, type) {
+     function getRequest(route, id, type) {
             $.get({
                 url: route,
                 dataType: 'json',
@@ -583,7 +615,7 @@
             $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
         }
 
-        setTimeout(function () {
+        setInterval(function () {
             $('.call-update-sku').on('change', function () {
                 update_sku();
             });
@@ -591,6 +623,54 @@
 
         $('#colors-selector').on('change', function () {
             update_sku();
+        });
+
+        $('input[name="unit_price"]').on('keyup', function () {
+            update_sku();
+        });
+
+        function update_sku() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('seller.product.sku-combination')}}',
+                data: $('#product_form').serialize(),
+                success: function (data) {
+                    $('#sku_combination').html(data.view);
+                    if (data.length > 1) {
+                        $('#quantity').hide();
+                    } else {
+                        $('#quantity').show();
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            let category = $("#category_id").val();
+            let sub_category = $("#sub-category-select").attr("data-id");
+            let sub_sub_category = $("#sub-sub-category-select").attr("data-id");
+            getRequest('{{url('/')}}/seller/product/get-categories?parent_id=' + category + '&sub_category=' + sub_category, 'sub-category-select', 'select');
+            getRequest('{{url('/')}}/seller/product/get-categories?parent_id=' + sub_category + '&sub_category=' + sub_sub_category, 'sub-sub-category-select', 'select');
+            // color select select2
+            $('.color-var-select').select2({
+                templateResult: colorCodeSelect,
+                templateSelection: colorCodeSelect,
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            });
+
+            function colorCodeSelect(state) {
+                var colorCode = $(state.element).val();
+                if (!colorCode) return state.text;
+                return "<span class='color-preview' style='background-color:" + colorCode + ";'></span>" + state.text;
+            }
         });
 
 </script>

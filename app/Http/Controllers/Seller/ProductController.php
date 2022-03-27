@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Kost;
 use App\Model\Brand;
 use App\Model\Category;
+use App\Model\Color;
 use App\Model\DealOfTheDay;
 use App\Model\Detail_room;
 use App\Model\Fasilitas;
@@ -160,6 +161,7 @@ class ProductController extends Controller
         $product->user_id = $seller->id;
         $product->added_by = 'seller';
         $product->room_id = $rooms_id;
+        $product->fasilitas_id = json_encode($request->fasilitas);
         $product->type = $request->type;
         $product->kost_id = $request->kost_id;
         $product->slug = Str::slug($request->type, '-').'-'.Str::random(6);
@@ -189,34 +191,61 @@ class ProductController extends Controller
         //     $colors = [];
         //     $product->colors = json_encode($colors);
         // }
-        // $choice_options = [];
-        // if ($request->has('choice')) {
-        //     foreach ($request->choice_no as $key => $no) {
-        //         $str = 'choice_options_'.$no;
-        //         $item['name'] = 'choice_'.$no;
-        //         $item['title'] = $request->choice[$key];
-        //         $item['options'] = explode(',', implode('|', $request[$str]));
-        //         array_push($choice_options, $item);
-        //     }
-        // }
-        // $product->choice_options = json_encode($choice_options);
+        $choice_options = [];
+        if ($request->has('choice')) {
+            foreach ($request->choice_no as $key => $no) {
+                $str = 'choice_options_'.$no;
+                $item['name'] = 'choice_'.$no;
+                $item['title'] = $request->choice[$key];
+                $item['options'] = explode(',', implode('|', $request[$str]));
+                array_push($choice_options, $item);
+            }
+        }
+        $product->choice_options = json_encode($choice_options);
         //combinations start
-        // $options = [];
+        $options = [];
         // if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
         //     $colors_active = 1;
         //     array_push($options, $request->colors);
         // }
-        // if ($request->has('choice_no')) {
-        //     foreach ($request->choice_no as $key => $no) {
-        //         $name = 'choice_options_'.$no;
-        //         $my_str = implode('|', $request[$name]);
-        //         array_push($options, explode(',', $my_str));
-        //     }
-        // }
-        // //Generates the combinations of customer choice options
-        // $combinations = Helpers::combinations($options);
-        // $variations = [];
+        if ($request->has('choice_no')) {
+            foreach ($request->choice_no as $key => $no) {
+                $name = 'choice_options_'.$no;
+                $my_str = implode('|', $request[$name]);
+                array_push($options, explode(',', $my_str));
+            }
+        }
+        //Generates the combinations of customer choice options
+        $combinations = Helpers::combinations($options);
+        $variations = [];
         $stock_count = 0;
+        if (count($combinations[0]) > 0) {
+            foreach ($combinations as $key => $combination) {
+                $str = '';
+                foreach ($combination as $k => $item) {
+                    if ($k > 0) {
+                        $str .= '-'.str_replace(' ', '', $item);
+                    } else {
+                        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+                            $color_name = Color::where('code', $item)->first()->name;
+                            $str .= $color_name;
+                        } else {
+                            $str .= str_replace(' ', '', $item);
+                        }
+                    }
+                }
+                $item = [];
+                $item['type'] = $str;
+                $item['price'] = Convert::usd(abs($request['price_'.str_replace('.', '_', $str)]));
+                $item['sku'] = $request['sku_'.str_replace('.', '_', $str)];
+                $item['qty'] = abs($request['qty_'.str_replace('.', '_', $str)]);
+                array_push($variations, $item);
+                $stock_count += $item['qty'];
+            }
+        } else {
+            $stock_count = (int) $request['current_stock'];
+        }
+
         $stock_count = (int) $request['total'];
 
         if ($validator->errors()->count() > 0) {
@@ -224,14 +253,14 @@ class ProductController extends Controller
         }
 
         //combinations end
-        // $product->variation = json_encode($variations);
+        $product->variation = json_encode($variations);
         $product->unit_price = Convert::usd($request->unit_price);
         $product->purchase_price = Convert::usd($request->unit_price);
         $product->tax = $request->tax;
         $product->tax_type = $request->tax_type;
         $product->discount = $request->discount_type == 'flat' ? Convert::usd($request->discount) : $request->discount;
         $product->discount_type = $request->discount_type;
-        // $product->attributes = json_encode($request->choice_attributes);
+        $product->attributes = json_encode($request->choice_attributes);
         $product->current_stock = abs($stock_count);
         $product->total = $request['total'];
         $product->size = $request['size'];
@@ -343,7 +372,7 @@ class ProductController extends Controller
         }
 
         $unit_price = $request->unit_price;
-        $product_name = $request->name[array_search('en', $request->lang)];
+        $product_name = $request->name;
 
         if ($request->has('choice_no')) {
             foreach ($request->choice_no as $key => $no) {
@@ -411,6 +440,63 @@ class ProductController extends Controller
             $product->images = json_encode($product_images);
         }
 
+        $choice_options = [];
+        if ($request->has('choice')) {
+            foreach ($request->choice_no as $key => $no) {
+                $str = 'choice_options_'.$no;
+                $item['name'] = 'choice_'.$no;
+                $item['title'] = $request->choice[$key];
+                $item['options'] = explode(',', implode('|', $request[$str]));
+                array_push($choice_options, $item);
+            }
+        }
+        $product->choice_options = json_encode($choice_options);
+        $variations = [];
+        //combinations start
+        $options = [];
+        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+            $colors_active = 1;
+            array_push($options, $request->colors);
+        }
+        if ($request->has('choice_no')) {
+            foreach ($request->choice_no as $key => $no) {
+                $name = 'choice_options_'.$no;
+                $my_str = implode('|', $request[$name]);
+                array_push($options, explode(',', $my_str));
+            }
+        }
+
+        //Generates the combinations of customer choice options
+        $combinations = Helpers::combinations($options);
+        $variations = [];
+        $stock_count = 0;
+        if (count($combinations[0]) > 0) {
+            foreach ($combinations as $key => $combination) {
+                $str = '';
+                foreach ($combination as $k => $item) {
+                    if ($k > 0) {
+                        $str .= '-'.str_replace(' ', '', $item);
+                    } else {
+                        if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+                            $color_name = Color::where('code', $item)->first()->name;
+                            $str .= $color_name;
+                        } else {
+                            $str .= str_replace(' ', '', $item);
+                        }
+                    }
+                }
+                $item = [];
+                $item['type'] = $str;
+                $item['price'] = Convert::usd(abs($request['price_'.str_replace('.', '_', $str)]));
+                $item['sku'] = $request['sku_'.str_replace('.', '_', $str)];
+                $item['qty'] = abs($request['qty_'.str_replace('.', '_', $str)]);
+                array_push($variations, $item);
+                $stock_count += $item['qty'];
+            }
+        } else {
+            $stock_count = (int) $request['current_stock'];
+        }
+
         if ($validator->errors()->count() > 0) {
             return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
@@ -419,10 +505,12 @@ class ProductController extends Controller
                 ->withInput();
         }
 
+        $product->variation = json_encode($variations);
         $product->unit_price = Convert::usd($request->unit_price);
         $product->purchase_price = Convert::usd($request->unit_price);
         $product->tax = $request->tax;
         $product->tax_type = $request->tax_type;
+        $product->attributes = json_encode($request->choice_attributes);
         $product->discount = $request->discount_type == 'flat' ? Convert::usd($request->discount) : $request->discount;
         $product->discount_type = $request->discount_type;
 
