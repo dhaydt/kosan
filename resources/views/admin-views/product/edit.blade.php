@@ -237,6 +237,30 @@
                                         placeholder="{{\App\CPU\translate('Harga_kamar')}}" name="unit_price"
                                         value="{{\App\CPU\Convert::default($product->unit_price)}}" class="form-control" required>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="attributes" style="padding-bottom: 3px">
+                                        {{\App\CPU\translate('Attributes')}} :
+                                    </label>
+                                    <select
+                                        class="js-example-basic-multiple js-states js-example-responsive form-control"
+                                        name="choice_attributes[]" id="choice_attributes" multiple="multiple">
+                                        @foreach (\App\Model\Attribute::orderBy('name', 'asc')->get() as $key => $a)
+                                            @if($product['attributes']!='null')
+                                                <option
+                                                    value="{{ $a['id']}}" {{in_array($a->id,json_decode($product['attributes'],true))?'selected':''}}>
+                                                    {{$a['name']}}
+                                                </option>
+                                            @else
+                                                <option value="{{ $a['id']}}">{{$a['name']}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mt-2 mb-2">
+                                    <div class="customer_choice_options" id="customer_choice_options">
+                                        @include('admin-views.product.partials._choices',['choice_no'=>json_decode($product['attributes']),'choice_options'=>json_decode($product['choice_options'],true)])
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row pt-4">
@@ -260,6 +284,9 @@
                                         <option value="flat" {{$product['discount_type']=='flat'?'selected':''}}>{{\App\CPU\translate('Flat')}}</option>
                                         <option value="percent" {{$product['discount_type']=='percent'?'selected':''}}>{{\App\CPU\translate('Percent')}}</option>
                                     </select>
+                                </div>
+                                <div class="col-12 pt-4 sku_combination" id="sku_combination">
+                                    @include('admin-views.product.partials._edit_sku_combinations',['combinations'=>json_decode($product['variation'],true)])
                                 </div>
                             </div>
                         </div>
@@ -342,9 +369,6 @@
         }
     })
 
-    // $('#cus2').on('change', function(){
-    //     var h =
-    // })
     function addRoom(){
         var jumlah = $('#total').val()
         for(i = 0; i < jumlah; i++){

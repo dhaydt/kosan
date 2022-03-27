@@ -18,7 +18,7 @@ class BackEndHelper
         //     $rate = $default['exchange_rate'] / $usd;
         //     $value = floatval($amount) / floatval($rate);
         // } else {
-        $value = floatval($amount);
+        $value = $amount;
         // }
 
         return $value;
