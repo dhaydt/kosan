@@ -1,11 +1,23 @@
 @php($overallRating = \App\CPU\ProductManager::get_overall_rating($product->reviews))
 <style>
-    .search-card{
-        display: flex;
-        flex-direction: row;
-        height: 200px;
-        background-color: #f2f3f7;
-    }
+.ell{
+    /* width: 500px !important; */
+}
+.ell p {
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    font-size: 12px;
+}
+.search-card{
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+    background-color: #f2f3f7;
+}
 .img-box-search{
     background: #999;
     border-radius: 8px;
@@ -27,6 +39,10 @@
     justify-content: start;
 }
 @media(max-width: 600px){
+    .ell p {
+        -webkit-line-clamp: 2;
+        font-size: 10px;
+    }
     .rc-price__additional-data{
         justify-content: start;
     }
@@ -45,7 +61,7 @@
             </div>
         </div>
 
-        <div class="card-body inline_product_search text-left ml-3 p-0 clickable"
+        <div class="card-body d-flex flex-column justify-content-between inline_product_search text-left ml-3 p-0 clickable"
             style="cursor: pointer;">
             <div class="rating-show d-flex">
                 <div class="rc-overview__label bg-c-label capitalize">{{ $product->kost->penghuni }}</div>
@@ -72,13 +88,15 @@
             @php($fas = json_decode($product->fasilitas_id))
             @if (count($fas) > 0)
             <div class="kost-rc__facilities">
-                <div class="rc-facilities">
-                    @foreach ($fas as $f)
-                    <span>
-                        <span class="capitalize">{{ App\CPU\Helpers::fasilitas($f) }}</span>
-                        <span class="rc-facilities_divider">·</span>
-                    </span>
-                    @endforeach
+                <div class="ell">
+                    <p class="mb-0">
+                        @foreach ($fas as $f)
+                        <span>
+                            <span class="capitalize">{{ App\CPU\Helpers::fasilitas($f) }}</span>
+                            <span class="rc-facilities_divider">·</span>
+                        </span>
+                        @endforeach
+                    </p>
 
                 </div>
             </div>
