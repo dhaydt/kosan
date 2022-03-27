@@ -700,6 +700,7 @@
             left: 0 !important;
         }
     </style>
+    {!! NoCaptcha::renderJs() !!}
 </head>
 <!-- Body-->
 <body class="toolbar-enabled">

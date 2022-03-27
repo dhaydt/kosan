@@ -56,7 +56,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <div class="col-md-12 d-flex justify-content-center flex-column captcha">
                                     {!! NoCaptcha::display() !!}
                                     {!! NoCaptcha::renderJs() !!}
@@ -65,6 +65,17 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+                                </div>
+                            </div> --}}
+                            <!-- google recaptcha -->
+                            <div class="form-group row jusify-content-center w-100 {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                <div class="col-md-6">
+                                    {!! app('captcha')->display() !!}
+                                    @if ($errors->has('g-recaptcha-response'))
+                                        <span class="help-block text-danger">
+                                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group d-flex flex-wrap justify-content-between">
