@@ -55,7 +55,6 @@
     51 => 'Laravelpkg\\Laravelchk\\LaravelchkServiceProvider',
     52 => 'Amirami\\Localizator\\ServiceProvider',
     53 => 'Laravolt\\Indonesia\\ServiceProvider',
-    54 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
   ),
   'eager' => 
   array (
@@ -98,7 +97,6 @@
     36 => 'Laravelpkg\\Laravelchk\\LaravelchkServiceProvider',
     37 => 'Amirami\\Localizator\\ServiceProvider',
     38 => 'Laravolt\\Indonesia\\ServiceProvider',
-    39 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
   ),
   'deferred' => 
   array (

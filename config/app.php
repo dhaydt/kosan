@@ -180,7 +180,6 @@ return [
         Laravelpkg\Laravelchk\LaravelchkServiceProvider::class,
         Amirami\Localizator\ServiceProvider::class,
         Laravolt\Indonesia\ServiceProvider::class,
-        LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
     ],
 
     /*

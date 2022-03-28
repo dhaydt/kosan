@@ -49,8 +49,9 @@ class LoginController extends Controller
                 return redirect(session('keep_return_url'));
             }
         }
+        $sk = config('captcha.site_key');
 
-        return view('customer-view.auth.login');
+        return view('customer-view.auth.login', compact('sk'));
     }
 
     public function submit(Request $request)
@@ -58,7 +59,9 @@ class LoginController extends Controller
         $request->validate([
             'user_id' => 'required',
             'password' => 'required|min:8',
-            'CaptchaCode' => 'required|valid_captcha',
+            'g-recaptcha-response' => 'required',
+        ], [
+            'g-recaptcha-response.required' => 'Please validate if you are not a robot',
         ]);
 
         $remember = ($request['remember']) ? true : false;

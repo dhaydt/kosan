@@ -13,7 +13,6 @@
         "ext-zip": "*",
         "barryvdh/laravel-dompdf": "^0.8.6",
         "brian2694/laravel-toastr": "^5.54",
-        "captcha-com/laravel-captcha": "4.*",
         "ckeditor/ckeditor": "^4.15",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "^4.0",

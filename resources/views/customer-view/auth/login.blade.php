@@ -56,30 +56,28 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-12 d-flex justify-content-center flex-column align-items-center captcha">
-                                    {!! captcha_image_html('ContactCaptcha') !!}
-                                <input class="form-control" type="text" id="CaptchaCode" name="CaptchaCode" style="    margin-top: 3px;
-                                width: 35%;
-                                text-transform: uppercase;">
-                                @if ($errors->has('CaptchaCode'))
-                                    <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('CaptchaCode') }}</strong>
+                            {{-- <div class="form-group row">
+                                <div class="col-md-12 d-flex justify-content-center flex-column captcha">
+                                    {!! NoCaptcha::display() !!}
+                                    {!! NoCaptcha::renderJs() !!}
+                                    @error('g-recaptcha-response')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
                                     </span>
-                                @endif
+                                    @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- google recaptcha -->
-                            {{-- <div class="form-group row jusify-content-center w-100 {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
-                                <div class="col-md-6">
-                                    {!! app('captcha')->display() !!}
+                            <div class="form-group row jusify-content-center w-100 align-items-center {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                <div class="col-md-12 d-flex align-items-center">
+                                    <div class="g-recaptcha" data-sitekey="{{ $sk }}"></div>
                                     @if ($errors->has('g-recaptcha-response'))
                                         <span class="help-block text-danger">
                                             <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="form-group d-flex flex-wrap justify-content-between">
 
                                 <div class="form-group">
