@@ -45,6 +45,46 @@ class ProductController extends Controller
         return view('seller-views.product.add-new', compact('fas', 'kost'));
     }
 
+    public function add_room(Request $request)
+    {
+        // dd($request);
+        $check = Detail_room::where('room_id', $request->room_id)->where('name', $request->name)->first();
+        $status = $request->status;
+
+        if ($status == 1) {
+            $avai = 0;
+        } else {
+            $avai = 1;
+        }
+
+        if ($check) {
+            Toastr::warning('Nama kamar tidak boleh sama dengan kamar lain!');
+
+            return back();
+        }
+
+        $room = new Detail_room();
+        $room->room_id = $request->room_id;
+        $room->name = $request->name;
+        $room->available = $avai;
+        $room->save();
+
+        $update = Helpers::room_check($request->room_id);
+        Toastr::success('Kamar berhasil ditambahkan! Total kamar ada '.$update);
+
+        return redirect()->back();
+    }
+
+    public function del_room($id)
+    {
+        $room = Detail_room::where('id', $id)->first();
+        $room->delete();
+        $avai = Helpers::room_check($room->room_id);
+        Toastr::success('Kamar berhasil dihapus!! Sisa kamar = '.$avai);
+
+        return redirect()->back();
+    }
+
     public function status_update(Request $request)
     {
         if ($request['status'] == 0) {

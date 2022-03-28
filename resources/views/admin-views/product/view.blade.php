@@ -166,8 +166,7 @@
                             <th class="text-center">{{\App\CPU\translate('Name_Room')}}</th>
                             <th class="text-center">{{\App\CPU\translate('Available')}}
                                 {{\App\CPU\translate('status')}}</th>
-                            {{-- <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
-                            --}}
+                            <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,20 +184,16 @@
                                     <span class="slider round"></span>
                                 </label>
                             </td>
-                            {{-- <td class="text-center">
-                                <a class="btn btn-primary btn-sm" href="{{route('admin.product.edit',[$p['id']])}}">
-                                    <i class="tio-edit"></i>{{\App\CPU\translate('Edit')}}
-                                </a>
+                            <td class="text-center">
                                 <a class="btn btn-danger btn-sm" href="javascript:"
-                                    onclick="form_alert('product-{{$p['id']}}','{{\App\CPU\translate(" Want to delete
-                                    this item")}} ?')">
+                                    onclick="form_alert('product-{{$p['id']}}','{{\App\CPU\translate("Ingin menghapus kamar ini?")}} ?')">
                                     <i class="tio-add-to-trash"></i> {{\App\CPU\translate('Delete')}}
                                 </a>
-                                <form action="{{route('admin.product.delete',[$p['id']])}}" method="post"
+                                <form action="{{route('admin.product.del-room',[$p['id']])}}" method="post"
                                     id="product-{{$p['id']}}">
-                                    @csrf @method('delete')
+                                    @csrf
                                 </form>
-                            </td> --}}
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

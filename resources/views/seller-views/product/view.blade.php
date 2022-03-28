@@ -66,6 +66,39 @@
                 <div class="flex-start">
                     <h5>{{ \App\CPU\translate('Room')}} {{ \App\CPU\translate('Details')}}</h5>
                 </div>
+                <div class="add-new flex-end">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ \App\CPU\translate('Add_Rooms')}}</button>
+                </div>
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{ \App\CPU\translate('Tambah_kamar')}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ route('seller.product.add-room') }}" method="post">
+                            <div class="modal-body">
+                                @csrf
+                                <input type="hidden" name="room_id" value="{{ $rooms[0]->room_id }}">
+                                <div class="form-group">
+                                    <label for="name">Nama / Nomor kamar</label>
+                                    <input class="form-control" type="text" name="name">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="isi" type="checkbox" value="1" id="isi">
+                                    <label class="form-check-label" for="isi">Sudah Berpenghuni</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save room</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="card-body" style="padding: 0">
                 <div class="table-responsive">
@@ -78,8 +111,7 @@
                                 <th class="text-center">{{\App\CPU\translate('Name_Room')}}</th>
                                 <th class="text-center">{{\App\CPU\translate('Available')}}
                                     {{\App\CPU\translate('status')}}</th>
-                                {{-- <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
-                                --}}
+                                <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -97,20 +129,16 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </td>
-                                {{-- <td class="text-center">
-                                    <a class="btn btn-primary btn-sm" href="{{route('admin.product.edit',[$p['id']])}}">
-                                        <i class="tio-edit"></i>{{\App\CPU\translate('Edit')}}
-                                    </a>
+                                <td class="text-center">
                                     <a class="btn btn-danger btn-sm" href="javascript:"
-                                        onclick="form_alert('product-{{$p['id']}}','{{\App\CPU\translate(" Want to delete
-                                        this item")}} ?')">
+                                        onclick="form_alert('product-{{$p['id']}}','{{\App\CPU\translate("Ingin menghapus kamar ini?")}} ?')">
                                         <i class="tio-add-to-trash"></i> {{\App\CPU\translate('Delete')}}
                                     </a>
-                                    <form action="{{route('admin.product.delete',[$p['id']])}}" method="post"
+                                    <form action="{{route('seller.product.del-room',[$p['id']])}}" method="post"
                                         id="product-{{$p['id']}}">
-                                        @csrf @method('delete')
+                                        @csrf
                                     </form>
-                                </td> --}}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

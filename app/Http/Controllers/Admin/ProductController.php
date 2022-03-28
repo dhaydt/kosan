@@ -60,7 +60,17 @@ class ProductController extends BaseController
         $room->save();
 
         $update = Helpers::room_check($request->room_id);
-        Toastr::success('Kamar berhasil ditambahkan menjadi '.$update);
+        Toastr::success('Kamar berhasil ditambahkan! Total kamar ada '.$update);
+
+        return redirect()->back();
+    }
+
+    public function del_room($id)
+    {
+        $room = Detail_room::where('id', $id)->first();
+        $room->delete();
+        $avai = Helpers::room_check($room->room_id);
+        Toastr::success('Kamar berhasil dihapus!! Sisa kamar = '.$avai);
 
         return redirect()->back();
     }
