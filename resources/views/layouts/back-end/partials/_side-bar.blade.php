@@ -39,7 +39,7 @@
 
 <div id="sidebarMain" class="d-none">
     <aside style="background: #182c2f!important; text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};"
-           class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered  ">
+        class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered  ">
         <div class="navbar-vertical-container">
             <div class="navbar-vertical-footer-offset pb-0">
                 <div class="navbar-brand-wrapper justify-content-between side-logo">
@@ -47,9 +47,9 @@
                     @php($e_commerce_logo=\App\Model\BusinessSetting::where(['type'=>'company_web_logo'])->first()->value)
                     <a class="navbar-brand" href="{{route('home')}}" aria-label="Front">
                         <img style="max-height: 38px"
-                             onerror="this.src='{{asset('public/assets/back-end/img/900x400/img1.jpg')}}'"
-                             class="navbar-brand-logo-mini for-web-logo"
-                             src="{{asset("storage/company/$e_commerce_logo")}}" alt="Logo">
+                            onerror="this.src='{{asset('public/assets/back-end/img/900x400/img1.jpg')}}'"
+                            class="navbar-brand-logo-mini for-web-logo"
+                            src="{{asset("storage/company/$e_commerce_logo")}}" alt="Logo">
                     </a>
                     <!-- Navbar Vertical Toggle -->
                     <button type="button"
@@ -66,7 +66,7 @@
 
                         <li class="navbar-vertical-aside-has-menu {{Request::is('admin')?'show':''}}">
                             <a class="js-navbar-vertical-aside-menu-link nav-link"
-                               href="{{route('admin.dashboard.index')}}">
+                            href="{{route('admin.dashboard.index')}}">
                                 <i class="tio-home-vs-1-outlined nav-icon"></i>
                                 <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
                                     {{\App\CPU\translate('Dashboard')}}
@@ -285,6 +285,30 @@
                                         <a class="nav-link " href="{{route('admin.product.list',['seller', 'status'=>'2'])}}">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">{{\App\CPU\translate('Denied')}} {{\App\CPU\translate('Rooms')}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="navbar-vertical-aside-has-menu {{Request::is('') || Request::is('')?'active':''}}">
+                                <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
+                                   href="javascript:">
+                                    <i class="fa fa-bullhorn nav-icon"></i>
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                        {{\App\CPU\translate('Job')}} {{\App\CPU\translate('Vacancy')}}
+                                    </span>
+                                </a>
+                                <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
+                                    style="display: {{Request::is('admin/product/list/seller*') || Request::is('admin/property/list/seller*')?'block':''}}">
+                                    <li class="nav-item {{Request::is('admin/property/list/seller')?'active':''}}">
+                                        <a class="nav-link " href="{{route('admin.property.list',['seller', 'status'=>'0'])}}">
+                                            <span class="tio-circle nav-indicator-icon"></span>
+                                            <span class="text-truncate">{{\App\CPU\translate('InRoom')}} {{\App\CPU\translate('Jobs')}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item {{Request::is('admin/product/list/seller?status=0')?'active':''}}">
+                                        <a class="nav-link " href="{{route('admin.product.list',['seller', 'status'=>'0'])}}">
+                                            <span class="tio-circle nav-indicator-icon"></span>
+                                            <span class="text-truncate">{{\App\CPU\translate('Seller')}} {{\App\CPU\translate('Jobs')}}</span>
                                         </a>
                                     </li>
                                 </ul>

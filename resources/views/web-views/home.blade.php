@@ -47,7 +47,7 @@
         justify-content: space-between;
     }
     .label-kost{
-        background-color: {{ $web_config['primary_color'] }};
+        background-color: #24b400;
     }
     .feature_header span.capitalize{
         text-transform: capitalize;

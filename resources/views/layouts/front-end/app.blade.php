@@ -586,8 +586,8 @@
         }
 
         .bg-c-text--label-1{
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 500;
             line-height: 20px;
         }
 
@@ -637,20 +637,35 @@
         .capitalize {
             text-transform: capitalize;
         }
+        .rc-facilities p{
+            text-overflow: ellipsis;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
         .rc-overview__label {
-            font-size: 14px;
+            font-size: 12px;
             padding: 4px 8px;
+        }
+        .rc-info__address{
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: capitalize !important;
+            /* line-height: 20px; */
+            font-family: "Poppins", sans-serif
         }
 
         .bg-c-label {
             display: inline-block;
-            border-radius: 4px;
+            border-radius: 14px;
             white-space: nowrap;
             color: #404040;
             background-color: #fff;
             border-width: 0;
             box-shadow: inset 0 0 0 1px #dadada;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .room-card_overview{

@@ -209,6 +209,7 @@ return array(
     'App\\Model\\FlashDealProduct' => $baseDir . '/app/Model/FlashDealProduct.php',
     'App\\Model\\HelpTopic' => $baseDir . '/app/Model/HelpTopic.php',
     'App\\Model\\Identity' => $baseDir . '/app/Model/Identity.php',
+    'App\\Model\\Jobs' => $baseDir . '/app/Model/Jobs.php',
     'App\\Model\\Kampus' => $baseDir . '/app/Model/Kampus.php',
     'App\\Model\\Notification' => $baseDir . '/app/Model/Notification.php',
     'App\\Model\\Order' => $baseDir . '/app/Model/Order.php',

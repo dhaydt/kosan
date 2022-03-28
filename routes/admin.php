@@ -260,6 +260,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('bulk-export', 'ProductController@bulk_export_data')->name('bulk-export');
         });
 
+        Route::group(['prefix' => 'jobs', 'as' => 'jobs.', 'middleware' => ['module:product_management']], function () {
+            Route::get('create', 'JobController@create')->name('add-new');
+            Route::post('store', 'JobController@store')->name('store');
+            Route::get('edit/{id}', 'JobController@edit')->name('edit');
+            Route::post('update/{id}', 'JobController@update')->name('update');
+            Route::delete('delete/{id}', 'JobController@destroy')->name('delete');
+        });
+
         Route::group(['prefix' => 'property', 'as' => 'property.', 'middleware' => ['module:product_management']], function () {
             Route::get('list/{type}', 'KostAdminController@index')->name('list');
             Route::get('new-property', 'KostAdminController@create')->name('add-new');

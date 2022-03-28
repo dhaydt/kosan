@@ -273,26 +273,29 @@
                                 @php($city = strtolower($deal->product->kost['city']))
                                 @php($district = strtolower($deal->product->kost['district']))
                                 <span class="rc-info__name bg-c-text bg-c-text--body-4 capitalize">
-                                    {{ $deal->product->kost['name'] }} {{ $deal->product->type }} {{ $city }}
+                                    {{ $deal->product->kost['name'] }}
                                 </span>
-                                <span class="rc-info__location bg-c-text bg-c-text--body-3 capitalize">
-                                    {{ $district }}
+                                <span class="rc-info__location d-block bg-c-text bg-c-text--body-3 capitalize">
+                                    {{ $city }}
+                                </span>
+                                <span class="rc-info__address bg-c-text bg-c-text--body-3 capitalize">
+                                    {{ $deal->product->kost->note_address }}
                                 </span>
                             </div>
                     </div>
                     <div class="kost-rc__facilities">
                         @php($fas = json_decode($deal->product->fasilitas_id))
                         <div class="rc-facilities">
+                            <p>
                             @foreach ($fas as $f)
-                            <span>
                                 <span class="capitalize">{{ App\CPU\Helpers::fasilitas($f) }}</span>
                                 <span class="rc-facilities_divider">·</span>
-                            </span>
-                            @endforeach
+                                @endforeach
+                            </p>
                         </div>
                     </div>
                     <div class="kost-rc__price">
-                        <div class="rc-price">
+                        <div class="rc-price mt-2">
                             @if($deal->product->discount > 0)
                             <div class="rc-price__additional-data">
                                 <div class="price-discount">
@@ -386,26 +389,29 @@
                                     @php($city = strtolower($deal->product->kost['city']))
                                     @php($district = strtolower($deal->product->kost['district']))
                                     <span class="rc-info__name bg-c-text bg-c-text--body-4 capitalize">
-                                        {{ $deal->product->kost['name'] }} {{ $deal->product->type }} {{ $city }}
+                                        {{ $deal->product->kost['name'] }}
                                     </span>
                                     <span class="rc-info__location bg-c-text bg-c-text--body-3 capitalize">
-                                        {{ $district }}
+                                        {{ $city }}
+                                    </span>
+                                    <span class="rc-info__address bg-c-text bg-c-text--body-3 capitalize">
+                                        {{ $deal->product->kost->note_address }}
                                     </span>
                                 </div>
                         </div>
                         <div class="kost-rc__facilities">
                             @php($fas = json_decode($deal->product->fasilitas_id))
                             <div class="rc-facilities">
+                                <p>
                                 @foreach ($fas as $f)
-                                <span>
                                     <span class="capitalize">{{ App\CPU\Helpers::fasilitas($f) }}</span>
                                     <span class="rc-facilities_divider">·</span>
-                                </span>
-                                @endforeach
+                                    @endforeach
+                                </p>
                             </div>
                         </div>
                         <div class="kost-rc__price">
-                            <div class="rc-price">
+                            <div class="rc-price justify-content-end">
                                 @if($deal->product->discount > 0)
                                 <div class="rc-price__additional-data">
                                     <div class="price-discount">
@@ -506,7 +512,7 @@
                                             @endif
                                             @else
                                             <span class="stock-label ml-1 text-grey bg-c-text--label-1">
-                                                {{\App\CPU\translate('Kamar')}} {{\App\CPU\translate('Penuh')}}
+                                               {{\App\CPU\translate('Penuh')}}
                                             </span>
                                             @endif
 
@@ -523,11 +529,14 @@
                                         <div class="rc-info">
                                             @php($city = strtolower($deal->product->kost['city']))
                                             @php($district = strtolower($deal->product->kost['district']))
-                                            <span class="rc-info__name bg-c-text bg-c-text--body-4 ">
-                                                {{ $deal->product->kost['name'] }} {{ $deal->product->type }} {{ $city }}
+                                            <span class="rc-info__name bg-c-text bg-c-text--body-4 capitalize">
+                                                {{ $deal->product->kost['name'] }}
                                             </span>
-                                            <span class="rc-info__location bg-c-text bg-c-text--body-3 ">
-                                                {{ $district }}
+                                            <span class="rc-info__location d-block bg-c-text bg-c-text--body-3 capitalize">
+                                                {{ $city }}
+                                            </span>
+                                            <span class="rc-info__address bg-c-text bg-c-text--body-3 capitalize">
+                                                {{ $deal->product->kost->note_address }}
                                             </span>
                                         </div>
                                     </div>
@@ -535,17 +544,17 @@
                                         @php($fas = json_decode($deal->product->fasilitas_id))
                                         @if (count($fas) > 0)
                                         <div class="rc-facilities">
+                                            <p>
                                             @foreach ($fas as $f)
-                                            <span>
                                                 <span class="capitalize">{{ App\CPU\Helpers::fasilitas($f) }}</span>
                                                 <span class="rc-facilities_divider">·</span>
-                                            </span>
-                                            @endforeach
+                                                @endforeach
+                                            </p>
                                         </div>
                                         @endif
                                     </div>
                                     <div class="kost-rc__price pb-2">
-                                        <div class="rc-price">
+                                        <div class="rc-price justify-content-end">
                                             <div class="rc-price__additional-data">
                                                 <div class="price-discount">
                                                     <span class="rc-price__discount-icon" aria-hidden="true">{{

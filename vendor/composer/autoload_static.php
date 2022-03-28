@@ -947,6 +947,7 @@ class ComposerStaticInit5c810ba0d19412d72c885b40a9decbf5
         'App\\Model\\FlashDealProduct' => __DIR__ . '/../..' . '/app/Model/FlashDealProduct.php',
         'App\\Model\\HelpTopic' => __DIR__ . '/../..' . '/app/Model/HelpTopic.php',
         'App\\Model\\Identity' => __DIR__ . '/../..' . '/app/Model/Identity.php',
+        'App\\Model\\Jobs' => __DIR__ . '/../..' . '/app/Model/Jobs.php',
         'App\\Model\\Kampus' => __DIR__ . '/../..' . '/app/Model/Kampus.php',
         'App\\Model\\Notification' => __DIR__ . '/../..' . '/app/Model/Notification.php',
         'App\\Model\\Order' => __DIR__ . '/../..' . '/app/Model/Order.php',

@@ -122,7 +122,7 @@ span.stock-label {
 }
 
 .rc-info .rc-info__location {
-    color: #404040;
+    color: #6b6b6b;
     margin: 2px 0 0;
 }
 
@@ -136,7 +136,7 @@ span.stock-label {
 
 .bg-c-text--body-3 {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: capitalize !important;
     line-height: 20px;
     font-family: "Poppins", sans-serif;
@@ -154,7 +154,7 @@ span.stock-label {
     font-size: 12px;
     font-weight: 400;
     line-height: 18px;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
@@ -168,7 +168,7 @@ span.stock-label {
 .kost-rc__price {
     display: flex;
     flex: 1;
-    margin: 8px 0 0;
+    margin: 15px 0 0;
 }
 
 .rc-price {

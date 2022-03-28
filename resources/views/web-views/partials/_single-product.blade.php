@@ -13,7 +13,7 @@
     }
     .label-kost.single-label{
         left: 0;
-        background-color: {{ $web_config['primary_color'] }};
+        background-color: #24b400;
     }
     .product-card.card.single-card{
         border-radius: 10px;
@@ -38,7 +38,7 @@
         <label class="label-vendor capitalize">inRoom</label>
         @endif
 
-        <div class="card-body single-product inline_product text-left p-3 clickable"
+        <div class="card-body d-flex flex-column justify-content-between single-product inline_product text-left px-3 pt-2 clickable"
             style="cursor: pointer;">
             <div class="rating-show d-flex">
                 <div class="rc-overview__label bg-c-label capitalize">{{ $product->kost->penghuni }}</div>
@@ -67,10 +67,13 @@
                         @php($city = strtolower($product->kost['city']))
                         @php($district = strtolower($product->kost['district']))
                         <span class="rc-info__name bg-c-text bg-c-text--body-4 capitalize">
-                            {{ $product->kost['name'] }} {{ $product->type }} {{ $city }}
+                            {{ $product->kost['name'] }}
                         </span>
-                        <span class="rc-info__location bg-c-text bg-c-text--body-3 capitalize">
-                            {{ $district }}
+                        <span class="rc-info__location bg-c-text bg-c-text--body-3 d-block capitalize">
+                            {{ $city }}
+                        </span>
+                        <span class="rc-info__address bg-c-text bg-c-text--body-3 capitalize">
+                            {{ $product->kost->note_address }}
                         </span>
                     </div>
                 </a>
@@ -79,18 +82,18 @@
             @if (count($fas) > 0)
             <div class="kost-rc__facilities">
                 <div class="rc-facilities">
+                    <p class="lined mb-0">
                     @foreach ($fas as $f)
-                    <span>
                         <span class="capitalize">{{ App\CPU\Helpers::fasilitas($f) }}</span>
                         <span class="rc-facilities_divider">·</span>
-                    </span>
-                    @endforeach
+                        @endforeach
+                    </p>
                 </div>
             </div>
             @endif
 
             <div class="kost-rc__price">
-                <div class="rc-price">
+                <div class="rc-price justify-content-end">
                     @if($product->discount > 0)
                     <div class="rc-price__additional-data">
                         <div class="price-discount">
