@@ -39,6 +39,8 @@ class Helpers
         $product->total = count($rooms);
         $product->current_stock = count($current);
         $product->save();
+
+        return count($rooms);
     }
 
     public static function status($id)
