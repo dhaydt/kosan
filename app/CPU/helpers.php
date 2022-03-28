@@ -9,6 +9,7 @@ use App\Model\Category;
 use App\Model\Color;
 use App\Model\Coupon;
 use App\Model\Currency;
+use App\Model\Detail_room;
 use App\Model\Fasilitas;
 use App\Model\Order;
 use App\Model\Product;
@@ -25,6 +26,21 @@ use Laravolt\Indonesia\Models\Province;
 
 class Helpers
 {
+    public static function room_check($id)
+    {
+        $rooms = Detail_room::where('room_id', $id)->get();
+        $product = Product::where('room_id', $id)->first();
+        $current = [];
+        foreach ($rooms as $r) {
+            if ($r->available == 1) {
+                array_push($current, 1);
+            }
+        }
+        $product->total = count($rooms);
+        $product->current_stock = count($current);
+        $product->save();
+    }
+
     public static function status($id)
     {
         if ($id == 1) {

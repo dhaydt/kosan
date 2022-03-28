@@ -239,6 +239,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         });
         Route::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => ['module:product_management']], function () {
             Route::get('add-new', 'ProductController@add_new')->name('add-new');
+            Route::post('add-room', 'ProductController@add_room')->name('add-room');
             Route::post('store', 'ProductController@store')->name('store');
             Route::get('remove-image', 'ProductController@remove_image')->name('remove-image');
             Route::post('status-update', 'ProductController@status_update')->name('status-update');
@@ -261,6 +262,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         });
 
         Route::group(['prefix' => 'jobs', 'as' => 'jobs.', 'middleware' => ['module:product_management']], function () {
+            Route::get('list/{type}', 'JobController@index')->name('list');
             Route::get('create', 'JobController@create')->name('add-new');
             Route::post('store', 'JobController@store')->name('store');
             Route::get('edit/{id}', 'JobController@edit')->name('edit');

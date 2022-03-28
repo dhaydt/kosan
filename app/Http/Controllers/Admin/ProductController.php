@@ -35,6 +35,36 @@ class ProductController extends BaseController
         return view('admin-views.product.add-new', compact('kost', 'fas'));
     }
 
+    public function add_room(Request $request)
+    {
+        // dd($request);
+        $check = Detail_room::where('room_id', $request->room_id)->where('name', $request->name)->first();
+        $status = $request->status;
+
+        if ($status == 1) {
+            $avai = 0;
+        } else {
+            $avai = 1;
+        }
+
+        if ($check) {
+            Toastr::warning('Nama kamar tidak boleh sama dengan kamar lain!');
+
+            return back();
+        }
+
+        $room = new Detail_room();
+        $room->room_id = $request->room_id;
+        $room->name = $request->name;
+        $room->available = $avai;
+        $room->save();
+
+        $update = Helpers::room_check($request->room_id);
+        Toastr::success('Kamar berhasil ditambahkan menjadi '.$update);
+
+        return redirect()->back();
+    }
+
     public function featured_status(Request $request)
     {
         $product = Product::find($request->id);
@@ -139,18 +169,6 @@ class ProductController extends BaseController
         $category = [
             'id' => $kost->category_id,
             'position' => 1, ];
-        // if ($request->sub_category_id != null) {
-        //     array_push($category, [
-        //         'id' => $request->sub_category_id,
-        //         'position' => 2,
-        //     ]);
-        // }
-        // if ($request->sub_sub_category_id != null) {
-        //     array_push($category, [
-        //         'id' => $request->sub_sub_category_id,
-        //         'position' => 3,
-        //     ]);
-        // }
 
         $product->category_ids = json_encode($category);
         // $product->brand_id = $request->brand_id;
