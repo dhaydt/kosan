@@ -69,7 +69,7 @@
                             </div> --}}
                             <!-- google recaptcha -->
                             <div class="form-group row jusify-content-center w-100 align-items-center {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
-                                <div class="col-md-12 d-flex align-items-center">
+                                <div class="col-md-12 d-flex flex-column align-items-center">
                                     <div class="g-recaptcha" data-sitekey="{{ $sk }}"></div>
                                     @if ($errors->has('g-recaptcha-response'))
                                         <span class="help-block text-danger">
