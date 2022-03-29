@@ -242,5 +242,18 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
+        $product = Jobs::find($id);
+        if (!isset($product)) {
+            return back();
+        }
+
+        if (isset($product->logo)) {
+            ImageManager::delete('/jobs/'.$product->logo);
+        }
+
+        $product->delete();
+        Toastr::success('Pekerjaan berhasil dihapus!');
+
+        return back();
     }
 }
