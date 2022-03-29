@@ -144,7 +144,8 @@
                             <span class="status text-danger">Kadaluarsa oleh admin</span>
                             @endif
                         </div>
-                        @if ($order->order_status != 'canceled' || $order->order_status != 'failed' || $order->order_status != 'expired')
+                        {{-- {{ dd($order->order_status) }} --}}
+                        @if ($order->order_status != "canceled" && $order->order_status != 'failed' && $order->order_status != 'expired')
                         <div class="col-12 col-md-8 d-flex justify-content-end">
                             @php($date = Carbon\Carbon::now()->toDateTimeString())
                             @if($order->auto_cancel && $date < $order->auto_cancel)

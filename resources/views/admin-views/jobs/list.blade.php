@@ -62,10 +62,11 @@
                                 <tr>
                                     <th class="text-center">{{\App\CPU\translate('SL#')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Name')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate('Status')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Status_employe')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Description')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Sallary')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Expired_in')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('status')}}</th>
                                     <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
                                 </tr>
                                 </thead>
@@ -77,7 +78,7 @@
                                                 {{$p['name']}}
                                         </td>
                                         <td class="text-center capitalize">
-                                            {{ $p['status']  }}
+                                            {{ $p['status_employe']  }}
                                         </td>
                                         <td class="text-center capitalize">
                                             {{ $p['description']  }}
@@ -86,7 +87,16 @@
                                             {{ $p['gaji']  }}
                                         </td>
                                         <td class="text-center capitalize">
-                                            {{ $p['expire']  }}
+                                            @if (isset($p['expire']))
+                                            {{ Carbon\Carbon::parse($p['expire'])->format('d M, Y')  }}
+                                            @endif
+                                        </td>
+                                        <td class="text-center capitalize">
+                                            <label class="switch">
+                                                <input type="checkbox" class="status"
+                                                       id="{{$p['id']}}" {{$p->status == 1?'checked':''}}>
+                                                <span class="slider round"></span>
+                                            </label>
                                         </td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm"
@@ -148,7 +158,7 @@
                 }
             });
             $.ajax({
-                url: "{{route('seller.product.status-update')}}",
+                url: "{{route('admin.jobs.status-update')}}",
                 method: 'POST',
                 data: {
                     id: id,

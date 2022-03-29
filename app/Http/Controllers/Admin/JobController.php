@@ -54,6 +54,35 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function approve_status(Request $request)
+    {
+        $product = Jobs::find($request->id);
+        $product->request_status = 1;
+        $product->save();
+
+        return redirect()->route('admin.product.list', ['seller', 'status' => $product['request_status']]);
+    }
+
+    public function status_update(Request $request)
+    {
+        $product = Jobs::where(['id' => $request['id']])->first();
+        $success = 1;
+        if ($request['status'] == 1) {
+            if ($product->added_by == 'seller' && $product->request_status == 0) {
+                $success = 0;
+            } else {
+                $product->status = $request['status'];
+            }
+        } else {
+            $product->status = $request['status'];
+        }
+        $product->save();
+
+        return response()->json([
+            'success' => $success,
+        ], 200);
+    }
+
     public function create()
     {
         $rule = Rule::get();
@@ -116,7 +145,7 @@ class JobController extends Controller
         $kost->name = $request['name'];
         $kost->keahlian = $request['keahlian'];
         $kost->pendidikan = $request['pendidikan'];
-        $kost->status = $request['status'];
+        $kost->status_employe = $request['status'];
         $kost->description = $request['deskripsi'];
         $kost->gaji = $request['gaji'];
         $kost->hide_gaji = $request['hide'];
@@ -129,8 +158,8 @@ class JobController extends Controller
         $kost->hp_penanggung_jwb = $request['hp'];
         $kost->email_penanggung_jwb = $request['email'];
         $kost->expire = $request['expire'];
-        $kost->published = 0;
-        $kost->request_status = 0;
+        $kost->status = 0;
+        $kost->request_status = 1;
         if ($request->ajax()) {
             return response()->json([], 200);
         } else {
@@ -208,7 +237,7 @@ class JobController extends Controller
         $product->name = $request['name'];
         $product->keahlian = $request['keahlian'];
         $product->pendidikan = $request['pendidikan'];
-        $product->status = $request['status'];
+        $product->status_employe = $request['status'];
         $product->description = $request['deskripsi'];
         $product->gaji = $request['gaji'];
         $product->hide_gaji = $request['hide'];

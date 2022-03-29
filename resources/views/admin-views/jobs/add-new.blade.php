@@ -252,7 +252,7 @@
                                 <div class="form-group">
                                     <label class="input-label label-name mb-0"
                                         for="name">{{\App\CPU\translate('Lowongan_ditutup')}}</label>
-                                    <input type="date" name="expired" class="form-control" required>
+                                    <input type="date" name="expire" class="form-control" required>
                                 </div>
                             </div>
                         </div>

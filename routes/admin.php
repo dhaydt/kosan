@@ -265,6 +265,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::group(['prefix' => 'jobs', 'as' => 'jobs.', 'middleware' => ['module:product_management']], function () {
             Route::get('list/{type}', 'JobController@index')->name('list');
             Route::get('create', 'JobController@create')->name('add-new');
+            Route::get('approve-status', 'JobController@approve_status')->name('approve-status');
+            Route::post('status-update', 'JobController@status_update')->name('status-update');
             Route::post('store', 'JobController@store')->name('store');
             Route::get('edit/{id}', 'JobController@edit')->name('edit');
             Route::post('update/{id}', 'JobController@update')->name('update');

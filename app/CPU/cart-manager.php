@@ -236,8 +236,13 @@ class CartManager
         }
 
         $cart['variations'] = json_encode($variations);
+        if ($str) {
+            $dur = $str;
+        } else {
+            $dur = 1;
+        }
         $cart['variant'] = $str;
-        $cart['durasi'] = $str;
+        $cart['durasi'] = $dur;
 
         //Check the string and decreases quantity for the stock
         if ($str != null) {
