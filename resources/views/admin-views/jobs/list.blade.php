@@ -12,7 +12,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard.index')}}">{{\App\CPU\translate('Dashboard')}}</a>
                 </li>
-                <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('Property')}}</li>
+                <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('Jobs_Vacancy')}}</li>
 
             </ol>
         </nav>
@@ -38,16 +38,16 @@
                                             </div>
                                         </div>
                                         <input id="datatableSearch_" type="search" name="search" class="form-control"
-                                            placeholder="{{\App\CPU\translate('Search by Kost Name')}}" aria-label="Search orders" value="{{ $search }}" required>
+                                            placeholder="{{\App\CPU\translate('Search_by_Job_Name')}}" aria-label="Search orders" value="{{ $search }}" required>
                                         <button type="submit" class="btn btn-primary">{{\App\CPU\translate('search')}}</button>
                                     </div>
                                     <!-- End Search -->
                                 </form>
                             </div>
                             <div class="col-lg-4">
-                                <a href="{{route('admin.property.add-new')}}" class="btn btn-primary float-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}">
+                                <a href="{{route('admin.jobs.add-new')}}" class="btn btn-primary float-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}">
                                     <i class="tio-add-circle"></i>
-                                    <span class="text">{{\App\CPU\translate('New_property')}}</span>
+                                    <span class="text">{{\App\CPU\translate('New_job')}}</span>
                                 </a>
                             </div>
                         </div>
@@ -62,10 +62,10 @@
                                 <tr>
                                     <th class="text-center">{{\App\CPU\translate('SL#')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Name')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate('image')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate('Total_Rooms')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate('Nearest_collage')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate('address')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Status')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Description')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Sallary')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Expired_in')}}</th>
                                     <th style="width: 5px" class="text-center">{{\App\CPU\translate('Action')}}</th>
                                 </tr>
                                 </thead>
@@ -76,35 +76,28 @@
                                         <td class="text-center capitalize">
                                                 {{$p['name']}}
                                         </td>
-                                            @php($img = json_decode($p['images']))
-                                        <td class="text-center">
-                                            {{-- {{ dd($img->depan) }} --}}
-                                            <img class="avatar avatar-xxl avatar-4by3 {{Session::get('direction') === "rtl" ? 'ml-4' : 'mr-4'}}"
-                                            onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                            src="{{asset('storage/kost')}}/{{$img->depan}}"
-                                            alt="Image Description">
+                                        <td class="text-center capitalize">
+                                            {{ $p['status']  }}
                                         </td>
                                         <td class="text-center capitalize">
-                                            {{ count($p->rooms)  }}
+                                            {{ $p['description']  }}
                                         </td>
                                         <td class="text-center capitalize">
-                                            @if(isset($p->kampus->short))
-                                            {{ $p->kampus->short  }}
-                                            @endif
+                                            {{ $p['gaji']  }}
                                         </td>
                                         <td class="text-center capitalize">
-                                            {{ $p['district'].', '.$p['city'].' - '. $p['province']  }}
+                                            {{ $p['expire']  }}
                                         </td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm"
-                                               href="{{route('admin.property.edit',[$p['id']])}}">
+                                               href="{{route('admin.jobs.edit',[$p['id']])}}">
                                                 <i class="tio-edit"></i>{{\App\CPU\translate('Edit')}}
                                             </a>
                                             <a class="btn btn-danger btn-sm" href="javascript:"
                                                onclick="form_alert('product-{{$p['id']}}','{{\App\CPU\translate("Want to delete this item")}} ?')">
                                                <i class="tio-add-to-trash"></i> {{\App\CPU\translate('Delete')}}
                                             </a>
-                                            <form action="{{route('admin.property.delete',[$p['id']])}}"
+                                            <form action="{{route('admin.jobs.delete',[$p['id']])}}"
                                                   method="post" id="product-{{$p['id']}}">
                                                 @csrf @method('delete')
                                             </form>

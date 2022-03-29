@@ -6,6 +6,8 @@
 <style>
     .img-kos{
         max-width: 200px;
+        height: 125px;
+        overflow: hidden;
         margin: auto;
     }
 </style>
@@ -85,7 +87,7 @@
                                             </a></td>
                                         <td class="text-center">
                                             <div class="img-kos">
-                                                <img style="width: 100%" height="auto"
+                                                <img class="w-100"
                                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                                                         src="{{asset("storage/product/")}}/{{ json_decode($p->images)[0] }}"
                                                         alt="Product image">

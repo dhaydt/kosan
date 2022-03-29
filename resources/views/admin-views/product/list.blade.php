@@ -6,6 +6,8 @@
 <style>
     .img-kos{
         max-width: 200px;
+        height: 125px;
+        overflow: hidden;
         margin: auto;
     }
 </style>

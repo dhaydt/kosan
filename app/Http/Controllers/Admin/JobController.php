@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\CPU\Helpers;
 use App\CPU\ImageManager;
 use App\Http\Controllers\Controller;
-use App\Kost;
 use App\Model\Category;
 use App\Model\Fasilitas;
+use App\Model\Jobs;
 use App\Model\Kampus;
 use App\Model\Rule;
 use Brian2694\Toastr\Facades\Toastr;
@@ -28,9 +28,9 @@ class JobController extends Controller
         $query_param = [];
         $search = $request['search'];
         if ($type == 'in_house') {
-            $products = Kost::with(['kampus', 'rooms'])->where(['added_by' => 'admin']);
+            $products = Jobs::where(['added_by' => 'admin']);
         } else {
-            $products = Kost::with(['kampus', 'rooms'])->where('added_by', 'seller');
+            $products = Jobs::where('added_by', 'seller');
         }
 
         if ($request->has('search')) {
@@ -71,58 +71,74 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $auth = 0;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'penghuni' => 'required',
+            'company_name' => 'required',
             'province' => 'required',
             'city' => 'required',
             'district' => 'required',
+            'logo' => 'required',
+            'penempatan' => 'required',
+            'keahlian' => 'required',
+            'pendidikan' => 'required',
+            'status' => 'required',
+            'deskripsi' => 'required',
+            'gaji' => 'required',
+            'satuan' => 'required',
         ], [
             'name.required' => 'Nama kos diperlukan!',
-            'penghuni.required' => 'Jenis Penghuni diperlukan!',
+            'company_name.required' => 'Nama perusahaan diperlukan!',
             'province.required' => 'Mohon provinsi nya di isi!',
             'city.required' => 'Mohon kota nya di isi!',
             'district.required' => 'Mohon kecamatannya nya di isi!',
+            'deskripsi.required' => 'Mohon isi deskripsi pekerjaan!',
+            // 'noteAddress.required' => 'Mohon isi nama jalan!',
         ]);
 
         if ($validator->errors()->count() > 0) {
             return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
 
-        $img = [
-            'depan' => ImageManager::upload('kost/', 'png', $request->file('depan')),
-            'dalam' => ImageManager::upload('kost/', 'png', $request->file('dalam')),
-            'jalan' => ImageManager::upload('kost/', 'png', $request->file('jalan')),
-        ];
+        $img = ImageManager::upload('jobs/', 'png', $request->file('logo'));
         $prov = Province::where('id', $request['province'])->first();
         $city = City::where('id', $request['city'])->first();
 
-        $kost = new Kost();
+        $kost = new Jobs();
+        $kost->company_name = $request['company_name'];
         $kost->province = $prov->name;
         $kost->city = $city->name;
         $kost->district = $request['district'];
         $kost->note_address = $request['noteAddress'];
+        $kost->penempatan = $request['penempatan'];
+        $kost->onsite = $request['onsite'];
+        $kost->name = $request['name'];
+        $kost->keahlian = $request['keahlian'];
+        $kost->pendidikan = $request['pendidikan'];
+        $kost->status = $request['status'];
+        $kost->description = $request['deskripsi'];
+        $kost->gaji = $request['gaji'];
+        $kost->hide_gaji = $request['hide'];
+        $kost->satuan_gaji = $request['satuan'];
+        $kost->logo = $img;
         $kost->seller_id = $auth;
         $kost->added_by = 'admin';
-        $kost->category_id = $request['category'];
-        $kost->ptn_id = $request['ptn'];
-        $kost->name = $request['name'];
-        $kost->penghuni = $request['penghuni'];
-        $kost->deskripsi = $request['description'];
-        $kost->note = $request['note'];
-        $kost->aturan_id = json_encode($request['aturan']);
-        $kost->address = $request['address'];
-        $kost->images = json_encode($img);
-        $kost->fasilitas_id = json_encode($request['fasilitas']);
+
+        $kost->penanggung_jwb = $request['penanggung'];
+        $kost->hp_penanggung_jwb = $request['hp'];
+        $kost->email_penanggung_jwb = $request['email'];
+        $kost->expire = $request['expire'];
+        $kost->published = 0;
+        $kost->request_status = 0;
         if ($request->ajax()) {
             return response()->json([], 200);
         } else {
             $kost->save();
 
-            Toastr::success('Property berhasil ditambahkan!');
+            Toastr::success('Pekerjaan berhasil ditambahkan!');
 
-            return redirect()->route('admin.property.list', ['type' => 'in_house']);
+            return redirect()->route('admin.jobs.list', ['type' => 'in_house']);
         }
     }
 

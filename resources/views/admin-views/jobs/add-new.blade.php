@@ -22,7 +22,7 @@
             <li class="breadcrumb-item"><a
                     href="{{route('admin.dashboard.index')}}">{{\App\CPU\translate('Dashboard')}}</a></li>
             <li class="breadcrumb-item" aria-current="page"><a
-                    href="{{route('admin.property.list', ['type' => 'in_house'])}}">{{\App\CPU\translate('Property')}}</a>
+                    href="{{route('admin.jobs.list', ['type' => 'in_house'])}}">{{\App\CPU\translate('Jobs_Vacancy')}}</a>
             </li>
             <li class="breadcrumb-item">{{\App\CPU\translate('Add_new')}}</li>
         </ol>
@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <form class="product-form" action="" method="post" enctype="multipart/form-data"
+            <form class="product-form" action="{{route('admin.jobs.store')}}" method="post" enctype="multipart/form-data"
                 style="text-align: {{Session::get('direction') === " rtl" ? 'right' : 'left' }};" id="product_form">
                 @csrf
                 <div class="card">
@@ -42,7 +42,7 @@
                         @php($default_lang = 'en')
 
                         @php($default_lang = json_decode($language)[0])
-                        <h4>{{\App\CPU\translate('Info_Properti')}}</h4>
+                        <h4>{{\App\CPU\translate('Input_Lokasi_kerja')}}</h4>
                     </div>
 
                     <div class="card-body">
@@ -51,34 +51,99 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class="input-label label-name mb-0"
-                                            for="name">{{\App\CPU\translate('Apa_nama_kos_ini')}} ?</label>
-                                        <small>Saran: Kos (spasi) Nama Kos, Tanpa Nama Kecamatan dan Kota</small>
-                                        <input type="text" name="name" id="name" class="form-control"
+                                            for="name">{{\App\CPU\translate('Nama_tempat_usaha')}} / {{\App\CPU\translate('Nama_perusahaan')}}</label>
+                                        <input type="text" name="company_name" id="name" class="form-control"
                                             placeholder="Contoh : Kos Fulan" required>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
+                                        @php($prov = \App\CPU\Helpers::province())
                                         <label class="input-label label-name mb-0"
-                                            for="tipe">{{\App\CPU\translate('Disewakan
-                                            untuk putra/ putri')}} ?</label>
-                                        <small>Menerima penyewa putra/ putri/ campur</small>
-                                        <select class="form-control" id="tipe" name="penghuni">
-                                            <option value="campur">Campur</option>
-                                            <option value="putra">Putra</option>
-                                            <option value="putri">Putri</option>
+                                            for="cat">{{\App\CPU\translate('Provinsi')}}</label>
+                                        <select class="form-control" id="prov" name="province">
+                                            <option value="">-- Pilih provinsi --</option>
+                                            @foreach ($prov as $key => $val)
+                                            <option value="{{ $key }}">{{ $val }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="input-label label-name mb-0"
-                                            for="cat">{{\App\CPU\translate('Jenis_properti')}}</label>
-                                        <small>Pilih jenis property anda</small>
-                                        <select class="form-control" id="cat" name="category">
-                                            <option value="">-- Pilih jenis properti --</option>
+                                            for="cat">{{\App\CPU\translate('Kabupaten_/_Kota')}}</label>
+                                        <select class="form-control" id="city" name="city">
+                                            <option value="">-- Pilih kota --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Kecamatan')}}</label>
+                                        <select class="form-control" id="district" name="district">
+                                            <option value="">-- Pilih kecamatan --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Catatan_alamat')}} <small>(nama jalan, nomor kantor/usaha)</small></label>
+                                        <textarea class="form-control w-100" name="noteAddress" id="" cols="30"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Lokasi_penempatan_kerja')}} <small>(Alamat penempatan)</small></label>
+                                        <textarea class="form-control w-100" name="penempatan" id="" cols="30"
+                                            rows="3"></textarea>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" name="onsite" type="checkbox" value="0">
+                                            Kandidat harus bersedia ditempatkan di sini
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-column align-items-center">
+                                    <div class="form-group mb-1">
+                                        <label
+                                            class="d-block label-name">{{\App\CPU\translate('Logo_perusahaan')}}</label>
+                                    </div>
+                                    <div style="max-width:200px;">
+                                        <div class="row" id="depan"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info pekerjaan -->
+                <div class="card mt-2 rest-part">
+                    <div class="card-header">
+                        <h4>{{\App\CPU\translate('Input_info_pekerjaan')}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="name">{{\App\CPU\translate('Nama_pekerjaan')}}</label>
+                                        <input type="text" name="name" id="name" class="form-control"
+                                            placeholder="Contoh : Penjaga toko" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Spesialisasi_pekerjaan')}}</label>
+                                        <select class="form-control" id="cat" name="keahlian">
+                                            <option value="">-- Pilih jenis keahlian --</option>
                                             @foreach ($cat as $c)
                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
                                             @endforeach
@@ -87,409 +152,70 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="input-label label-name mb-0"
-                                            for="cat">{{\App\CPU\translate('Dekat_dengan_perguruan_tinggi_apa')}} ?</label>
-                                        <small>Jika ada, property anda dekat dengan kampus apa? (optional)</small>
-                                        <select class="js-example-basic-single form-control" name="ptn" id="ptn">
-                                            <option value="">-- Pilih kampus terdekat --</option>
-                                            @foreach ($ptn as $p)
-                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
-                                            @endforeach
+                                        <label class="input-label label-name"
+                                            for="cat">{{\App\CPU\translate('Pendidikan_minimal')}}</label>
+                                        <select class="js-example-basic-single form-control" name="pendidikan" id="ptn">
+                                            <option value="">-- Pilih pendidikan --</option>
+                                            <option value="SD/MI">SD/MI</option>
+                                            <option value="SMP/MTs">SMP/MTs</option>
+                                            <option value="SMA/MA">SMA/MA</option>
+                                            <option value="D3">D3</option>
+                                            <option value="S1">S1</option>
+                                            <option value="S2">S2</option>
+                                            <option value="S3">S3</option>
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-
-                            <input type="hidden" name="lang[]" value="en">
-                            <div class="form-group">
-                                <label class="input-label label-name mb-0"
-                                    for="tipe">{{\App\CPU\translate('Deskripsi_kos')}}</label>
-                                <small>Ceritakan hal menarik tentang kos Anda.</small>
-                                <textarea name="description" class="editor textarea" cols="30" rows="10"
-                                    style="display: none" required>{{old('details')}}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label label-name mb-0"
-                                    for="tipe">{{\App\CPU\translate('Catatan_lainnya')}}</label>
-                                <small>Jika ada pemberitahuan yang ingin disampaikan.</small>
-                                <input type="text" name="note" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Address Property -->
-                <div class="card mt-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('Alamat_properti')}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @php($prov = \App\CPU\Helpers::province())
-                                    <label class="input-label label-name mb-0"
-                                        for="cat">{{\App\CPU\translate('Provinsi')}}</label>
-                                    <select class="form-control" id="prov" name="province">
-                                        <option value="">-- Pilih provinsi --</option>
-                                        @foreach ($prov as $key => $val)
-                                        <option value="{{ $key }}">{{ $val }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="input-label label-name mb-0"
-                                        for="cat">{{\App\CPU\translate('Kabupaten_/_Kota')}}</label>
-                                    <select class="form-control" id="city" name="city">
-                                        <option value="">-- Pilih kota --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="input-label label-name mb-0"
-                                        for="cat">{{\App\CPU\translate('Kecamatan')}}</label>
-                                    <select class="form-control" id="district" name="district">
-                                        <option value="">-- Pilih kecamatan --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="input-label label-name mb-0"
-                                        for="cat">{{\App\CPU\translate('Catatan_alamat')}}</label>
-                                    <small>Deskripsi patokan agar kos mudah ditemukan (nama jalan, nomor rumah)</small>
-                                    <textarea class="form-group w-100" name="noteAddress" id="" cols="30"
-                                        rows="3"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Image Property-->
-                <div class="card mt-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('Pasang_foto_terbaik_kos_Anda')}} <small class="px-1 pt-2" style="color: red; font-size: 90%;">* {{\App\CPU\translate('Foto landscape untuk mendapatkan tampilan terbaik.')}}</small></h4>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group mb-1">
-                                    <label
-                                        class="d-block label-name">{{\App\CPU\translate('Foto_bangunan_tampak_depan')}}</label>
-                                    <small style="color: red">* {{\App\CPU\translate('Foto horizontal akan terlihat
-                                        lebih bagus sebagai foto utama kos Anda.')}}</small>
-                                </div>
-                                <div style="max-width:200px;">
-                                    <div class="row" id="depan"></div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group mb-1">
-                                    <label
-                                        class="d-block label-name">{{\App\CPU\translate('Foto_dalam_bangunan')}}</label>
-                                    <small style="color: red">* {{\App\CPU\translate('Perlihatkan suasana di dalam
-                                        dengan cahaya terang agar terlihat lebih jelas.')}}</small>
-                                </div>
-                                <div style="max-width:200px;">
-                                    <div class="row" id="dalam"></div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group mb-1">
-                                    <label
-                                        class="d-block label-name">{{\App\CPU\translate('Foto_tampak_dari_jalan')}}</label>
-                                    <small style="color: red">* {{\App\CPU\translate('Lewat foto ini, tunjukkan
-                                        lingkungan sekitar depan kos ke calon penyewa.')}}</small>
-                                </div>
-                                <div style="max-width:200px;">
-                                    <div class="row" id="jalan"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mt-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('Aturan')}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="input-label label-name mb-0"
-                                        for="tipe">{{\App\CPU\translate('Peraturan_kos')}}</label>
-                                    <small class="text-info">Kos Anda tertib atau santai? Silakan tentukan aturan kos di
-                                        sini.</small>
-                                    <div class="row">
-                                        @foreach ($rule as $r)
-                                        <div class="col-6 mb-2">
-                                            <div class="form-check" style="margin-left: 15px">
-                                                <input class="form-check-input" name="aturan[]" type="checkbox"
-                                                    value="{{ $r->id }}" id="flexCheckDefault">
-                                                <label class="form-check-label capitalize" for="flexCheckDefault">
-                                                    {{ $r->name }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mt-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('Fasilitas')}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="input-label label-name"
-                                        for="tipe">{{\App\CPU\translate('Fasilitas_umum')}}</label>
-                                    <div class="row">
-                                        @foreach ($fas as $f)
-                                        <div class="col-6 mb-2">
-                                            <div class="form-check" style="margin-left: 15px">
-                                                <input class="form-check-input" name="fasilitas[]" type="checkbox"
-                                                    value="{{ $f->id }}" id="flexCheckDefault">
-                                                <label class="form-check-label capitalize" for="flexCheckDefault">
-                                                    {{ $f->name }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @endforeach
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Status_pekerjaan')}}</label>
+                                        <select class="js-example-basic-single form-control" name="status" id="ptn">
+                                            <option value="">-- Pilih status pekerjaan --</option>
+                                            <option value="parttime">PartTime</option>
+                                            <option value="fulltime">FullTime</option>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{--
-                <div class="card mt-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('General_info')}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="name">{{\App\CPU\translate('Category')}}</label>
-                                    <select class="js-example-basic-multiple form-control" name="category_id"
-                                        onchange="getRequest('{{url('/')}}/seller/product/get-categories?parent_id='+this.value,'sub-category-select','select')"
-                                        required>
-                                        <option value="{{old('category_id')}}" selected disabled>
-                                            ---{{\App\CPU\translate('Select')}}---</option>
-                                        @foreach($cat as $c)
-                                        <option value="{{$c['id']}}" {{old('name')==$c['id']? 'selected' : '' }}>
-                                            {{$c['name']}}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="name">{{\App\CPU\translate('Sub_category')}}</label>
-                                    <select class="js-example-basic-multiple form-control" name="sub_category_id"
-                                        id="sub-category-select"
-                                        onchange="getRequest('{{url('/')}}/seller/product/get-categories?parent_id='+this.value,'sub-sub-category-select','select')">
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="name">{{\App\CPU\translate('Sub_sub_category')}}</label>
-                                    <select class="js-example-basic-multiple form-control" name="sub_sub_category_id"
-                                        id="sub-sub-category-select">
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="name">{{\App\CPU\translate('Brand')}}</label>
-                                    <select
-                                        class="js-example-basic-multiple js-states js-example-responsive form-control"
-                                        name="brand_id" required>
-                                        <option value="{{null}}" selected disabled>
-                                            ---{{\App\CPU\translate('Select')}}---</option>
-                                        @foreach($br as $b)
-                                        <option value="{{$b['id']}}">{{$b['name']}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="weight">{{\App\CPU\translate('Product_weight')}}</label>
-                                    <input type="number" class="form-control" name="weight" required
-                                        placeholder="in gram">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="name">{{\App\CPU\translate('Unit')}}</label>
-                                    <select class="js-example-basic-multiple form-control" name="unit">
-                                        @foreach(\App\CPU\Helpers::units() as $x)
-                                        <option value="{{$x}}" {{old('unit')==$x? 'selected' :''}}>{{$x}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mt-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('Variations')}}</h4>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="colors">
-                                        {{\App\CPU\translate('Colors')}} :
-                                    </label>
-                                    <label class="switch">
-                                        <input type="checkbox" class="status" name="colors_active"
-                                            value="{{old('colors_active')}}">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <select
-                                        class="js-example-basic-multiple js-states js-example-responsive form-control color-var-select"
-                                        name="colors[]" multiple="multiple" id="colors-selector" disabled>
-                                        @foreach (\App\Model\Color::orderBy('name', 'asc')->get() as $key => $color)
-                                        <option value="{{ $color->code }}">
-                                            {{$color['name']}}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="attributes" style="padding-bottom: 3px">
-                                        {{\App\CPU\translate('Attributes')}} :
-                                    </label>
-                                    <select
-                                        class="js-example-basic-multiple js-states js-example-responsive form-control"
-                                        name="choice_attributes[]" id="choice_attributes" multiple="multiple">
-                                        @foreach (\App\Model\Attribute::orderBy('name', 'asc')->get() as $key => $a)
-                                        <option value="{{ $a['id']}}">
-                                            {{$a['name']}}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12 mt-2 mb-2">
-                                    <div class="customer_choice_options" id="customer_choice_options">
-
+                                <div class="col-12">
+                                    <input type="hidden" name="lang[]" value="en">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="tipe">{{\App\CPU\translate('Deskripsi_pekerjaan')}}</label>
+                                        <small>Jelaskan lebih lengkap tentang pekerjaan & tanggung jawab</small>
+                                        <textarea class="form-control w-100" name="deskripsi" id="" cols="30"
+                                            rows="3"></textarea>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="name">{{\App\CPU\translate('Gaji')}}</label>
+                                        <input type="text" name="gaji" id="name" class="form-control"
+                                            placeholder="Contoh : Kos Fulan" required>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" name="hide" type="checkbox" value="0">
+                                            Jangan tampilkan gaji pada kandidat
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="input-label label-name mb-0"
+                                            for="cat">{{\App\CPU\translate('Satuan_gaji')}}</label>
+                                        <select class="js-example-basic-single form-control" name="satuan" id="ptn">
+                                            <option value="">-- per Harian / per Bulanan --</option>
+                                            <option value="harian">per Hari</option>
+                                            <option value="bulanan">per Bulan</option>
+                                            <option value="project">per Project</option>
+                                        </select>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="card mt-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('Product_price_&_stock')}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="control-label">{{\App\CPU\translate('Unit_price')}}</label>
-                                    <input type="number" min="0" value="0" step="0.01"
-                                        placeholder="{{\App\CPU\translate('Unit_price')}}" name="unit_price"
-                                        value="{{old('unit_price')}}" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label">{{\App\CPU\translate('Purchase_price')}}</label>
-                                    <input type="number" min="0" value="0" step="0.01"
-                                        placeholder="{{\App\CPU\translate('Purchase_price')}}" name="purchase_price"
-                                        value="{{old('purchase_price')}}" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <div class="row pt-4">
-                                <div class="col-md-6">
-                                    <label class="control-label">{{\App\CPU\translate('Tax')}}</label>
-                                    <label class="badge badge-info">{{\App\CPU\translate('Percent')}} ( % )</label>
-                                    <input type="number" min="0" value="0" step="0.01"
-                                        placeholder="{{\App\CPU\translate('Tax')}}" name="tax" value="{{old('tax')}}"
-                                        class="form-control">
-                                    <input name="tax_type" value="percent" style="display: none">
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label class="control-label">{{\App\CPU\translate('Discount')}}</label>
-                                    <input type="number" min="0" value="0" step="0.01"
-                                        placeholder="{{\App\CPU\translate('Discount')}}" name="discount"
-                                        value="{{old('discount')}}" class="form-control">
-                                </div>
-                                <div class="col-md-2" style="padding-top: 30px;">
-                                    <select class="form-control js-select2-custom" name="discount_type">
-                                        <option value="flat">{{\App\CPU\translate('Flat')}}</option>
-                                        <option value="percent">{{\App\CPU\translate('Percent')}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="sku_combination" id="sku_combination">
-
-                            </div>
-                            <div class="row pt-4">
-                                <div class="col-md-6" id="quantity">
-                                    <label class="control-label">{{\App\CPU\translate('total')}}
-                                        {{\App\CPU\translate('Quantity')}}</label>
-                                    <input type="number" min="0" value="0" step="1"
-                                        placeholder="{{\App\CPU\translate('Quantity')}}" name="current_stock"
-                                        value="{{old('current_stock')}}" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-                <div class="card mt-2 mb-2 rest-part">
-                    <div class="card-header">
-                        <h4>{{\App\CPU\translate('seo_section')}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 mb-4">
-                                <label class="control-label">{{\App\CPU\translate('Meta_title')}}</label>
-                                <input type="text" name="meta_title" placeholder="" class="form-control">
-                            </div>
-
-                            <div class="col-md-8 mb-4">
-                                <label class="control-label">{{\App\CPU\translate('Meta_description')}}</label>
-                                <textarea rows="10" type="text" name="meta_description" class="form-control"></textarea>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group mb-0">
-                                    <label>{{\App\CPU\translate('Meta_image')}}</label>
-                                </div>
-                                <div class="border border-dashed">
-                                    <div class="row" id="meta_img"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
-
 
                 <div class="card card-footer">
                     <div class="row">
@@ -584,45 +310,9 @@
                 });
         });
 
-
-
     $(function () {
-            $("#coba").spartanMultiImagePicker({
-                fieldName: 'images[]',
-                maxCount: 4,
-                rowHeight: 'auto',
-                groupClassName: 'col-6',
-                maxFileSize: '',
-                placeholderImage: {
-                    image: '{{asset('public/assets/back-end/img/400x400/img2.jpg')}}',
-                    width: '100%',
-                },
-                dropFileLabel: "Drop Here",
-                onAddRow: function (index, file) {
-
-                },
-                onRenderedPreview: function (index) {
-
-                },
-                onRemoveRow: function (index) {
-
-                },
-                onExtensionErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('Please only input png or jpg type file')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                },
-                onSizeErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('File size too big')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-            });
-
             $("#depan").spartanMultiImagePicker({
-                fieldName: 'depan',
+                fieldName: 'logo',
                 maxCount: 1,
                 rowHeight: 'auto',
                 groupClassName: 'col-12',
@@ -630,105 +320,6 @@
                 placeholderImage: {
                     image: '{{asset('public/assets/back-end/img/400x400/img2.jpg')}}',
                     width: '100%',
-                },
-                dropFileLabel: "Drop Here",
-                onAddRow: function (index, file) {
-
-                },
-                onRenderedPreview: function (index) {
-
-                },
-                onRemoveRow: function (index) {
-
-                },
-                onExtensionErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('Please only input png or jpg type file')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                },
-                onSizeErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('File size too big')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-            });$("#dalam").spartanMultiImagePicker({
-                fieldName: 'dalam',
-                maxCount: 1,
-                rowHeight: 'auto',
-                groupClassName: 'col-12',
-                maxFileSize: '',
-                placeholderImage: {
-                    image: '{{asset('public/assets/back-end/img/400x400/img2.jpg')}}',
-                    width: '100%',
-                },
-                dropFileLabel: "Drop Here",
-                onAddRow: function (index, file) {
-
-                },
-                onRenderedPreview: function (index) {
-
-                },
-                onRemoveRow: function (index) {
-
-                },
-                onExtensionErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('Please only input png or jpg type file')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                },
-                onSizeErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('File size too big')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-            });
-            $("#jalan").spartanMultiImagePicker({
-                fieldName: 'jalan',
-                maxCount: 1,
-                rowHeight: 'auto',
-                groupClassName: 'col-12',
-                maxFileSize: '',
-                placeholderImage: {
-                    image: '{{asset('public/assets/back-end/img/400x400/img2.jpg')}}',
-                    width: '100%',
-                },
-                dropFileLabel: "Drop Here",
-                onAddRow: function (index, file) {
-
-                },
-                onRenderedPreview: function (index) {
-
-                },
-                onRemoveRow: function (index) {
-
-                },
-                onExtensionErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('Please only input png or jpg type file')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                },
-                onSizeErr: function (index, file) {
-                    toastr.error('{{\App\CPU\translate('File size too big')}}', {
-                        CloseButton: true,
-                        ProgressBar: true
-                    });
-                }
-            });
-
-            $("#meta_img").spartanMultiImagePicker({
-                fieldName: 'meta_image',
-                maxCount: 1,
-                rowHeight: '280px',
-                groupClassName: 'col-12',
-                maxFileSize: '',
-                placeholderImage: {
-                    image: '{{asset('public/assets/back-end/img/400x400/img2.jpg')}}',
-                    width: '90%',
                 },
                 dropFileLabel: "Drop Here",
                 onAddRow: function (index, file) {
@@ -803,7 +394,7 @@
                     }
                 });
                 $.post({
-                    url: '{{route('admin.property.store')}}',
+                    url: '{{route('admin.jobs.store')}}',
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -817,7 +408,7 @@
                                 });
                             }
                         } else {
-                            toastr.success('{{\App\CPU\translate('Property updated successfully!')}}', {
+                            toastr.success('{{\App\CPU\translate('Pekerjaan_berhasil_disimpan!!')}}', {
                                 CloseButton: true,
                                 ProgressBar: true
                             });
