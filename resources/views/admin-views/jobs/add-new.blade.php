@@ -14,6 +14,9 @@
         font-size: 14px;
         margin-left: 6px;
     }
+    .label-name{
+        font-size: 14px !important;
+    }
 </style>
 @section('content')
 <div class="content container-fluid">
@@ -53,7 +56,7 @@
                                         <label class="input-label label-name mb-0"
                                             for="name">{{\App\CPU\translate('Nama_tempat_usaha')}} / {{\App\CPU\translate('Nama_perusahaan')}}</label>
                                         <input type="text" name="company_name" id="name" class="form-control"
-                                            placeholder="Contoh : Kos Fulan" required>
+                                            placeholder="Contoh : Laundry Cleanest" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -104,7 +107,7 @@
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" name="onsite" type="checkbox" value="0">
+                                            <input class="form-check-input" name="onsite" type="checkbox">
                                             Kandidat harus bersedia ditempatkan di sini
                                         </label>
                                     </div>
@@ -144,9 +147,12 @@
                                             for="cat">{{\App\CPU\translate('Spesialisasi_pekerjaan')}}</label>
                                         <select class="form-control" id="cat" name="keahlian">
                                             <option value="">-- Pilih jenis keahlian --</option>
-                                            @foreach ($cat as $c)
+                                            <option value="Informatika">Informatika</option>
+                                            <option value="Akutansi">Akutansi</option>
+                                            <option value="Desainer">Desainer</option>
+                                            {{-- @foreach ($cat as $c)
                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
@@ -191,12 +197,11 @@
                                     <div class="form-group">
                                         <label class="input-label label-name mb-0"
                                             for="name">{{\App\CPU\translate('Gaji')}}</label>
-                                        <input type="text" name="gaji" id="name" class="form-control"
-                                            placeholder="Contoh : Kos Fulan" required>
+                                        <input type="number" name="gaji" class="form-control" required>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" name="hide" type="checkbox" value="0">
+                                            <input class="form-check-input" name="hide" type="checkbox">
                                             Jangan tampilkan gaji pada kandidat
                                         </label>
                                     </div>
@@ -206,13 +211,50 @@
                                         <label class="input-label label-name mb-0"
                                             for="cat">{{\App\CPU\translate('Satuan_gaji')}}</label>
                                         <select class="js-example-basic-single form-control" name="satuan" id="ptn">
-                                            <option value="">-- per Harian / per Bulanan --</option>
+                                            <option value="">-- Pilih satuan gaji --</option>
                                             <option value="harian">per Hari</option>
                                             <option value="bulanan">per Bulan</option>
                                             <option value="project">per Project</option>
                                         </select>
                                     </div>
                                 </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-2 rest-part">
+                    <div class="card-header">
+                        <h4>{{\App\CPU\translate('Input_info_penanggung_jawab')}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="input-label label-name mb-0"
+                                        for="name">{{\App\CPU\translate('Nama_penanggung_jawab')}}</label>
+                                    <input type="text" name="penanggung" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="input-label label-name mb-0"
+                                        for="name">{{\App\CPU\translate('Nomor_telepon')}}</label>
+                                    <input type="number" name="hp" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="input-label label-name mb-0"
+                                        for="name">{{\App\CPU\translate('Email_penanggung_jawab')}}</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="input-label label-name mb-0"
+                                        for="name">{{\App\CPU\translate('Lowongan_ditutup')}}</label>
+                                    <input type="date" name="expired" class="form-control" required>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

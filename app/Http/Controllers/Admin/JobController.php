@@ -71,7 +71,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $auth = 0;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -162,6 +162,16 @@ class JobController extends Controller
      */
     public function edit($id)
     {
+        $product = Jobs::find($id);
+        $rules = Rule::get();
+        $fas = Fasilitas::where('tipe', 'umum')->get();
+        $cat = Category::get();
+        $ptn = Kampus::get();
+
+        $rule = json_decode($product->aturan_id);
+        $fasilitas = json_decode($product->fasilitas_id);
+
+        return view('admin-views.jobs.edit', compact('ptn', 'product', 'rule', 'fasilitas', 'rules', 'fas', 'cat'));
     }
 
     /**
@@ -173,6 +183,54 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ], [
+            'name.required' => 'Nama properti diperlukan!',
+        ]);
+
+        if ($validator->errors()->count() > 0) {
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+
+        $prov = Province::where('id', $request['province'])->first();
+        $city = City::where('id', $request['city'])->first();
+
+        $product = Jobs::find($id);
+        $product->company_name = $request['company_name'];
+        $product->province = $prov->name;
+        $product->city = $city->name;
+        $product->district = $request['district'];
+        $product->note_address = $request['noteAddress'];
+        $product->penempatan = $request['penempatan'];
+        $product->onsite = $request['onsite'];
+        $product->name = $request['name'];
+        $product->keahlian = $request['keahlian'];
+        $product->pendidikan = $request['pendidikan'];
+        $product->status = $request['status'];
+        $product->description = $request['deskripsi'];
+        $product->gaji = $request['gaji'];
+        $product->hide_gaji = $request['hide'];
+        $product->satuan_gaji = $request['satuan'];
+        // $product->logo = $img;
+        // $product->seller_id = $auth;
+        // $product->added_by = 'admin';
+
+        $product->penanggung_jwb = $request['penanggung'];
+        $product->hp_penanggung_jwb = $request['hp'];
+        $product->email_penanggung_jwb = $request['email'];
+        $product->expire = $request['expire'];
+
+        if ($request->ajax()) {
+            return response()->json([], 200);
+        } else {
+            $product->logo = $request->file('logo') ? ImageManager::update('jobs/', $product->logo, 'png', $request->file('logo')) : $product->logo;
+            $product->save();
+            Toastr::success('Pekerjaan berhasil diupdate.');
+
+            return redirect()->route('admin.jobs.list', ['type' => 'in_house']);
+        }
     }
 
     /**
