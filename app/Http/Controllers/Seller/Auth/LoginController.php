@@ -18,14 +18,19 @@ class LoginController extends Controller
 
     public function login()
     {
-        return view('seller-views.auth.login');
+        $sk = config('captcha.site_key');
+
+        return view('seller-views.auth.login', compact('sk'));
     }
 
     public function submit(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'g-recaptcha-response' => 'required',
+        ], [
+            'g-recaptcha-response.required' => 'Please validate if you are not a robot',
         ]);
 
         $se = Seller::where(['email' => $request['email']])->first(['status']);
@@ -45,11 +50,12 @@ class LoginController extends Controller
                     'updated_at' => now(),
                 ]);
             }
+
             return redirect()->route('seller.dashboard.index');
-        }elseif (isset($se) && $se['status'] == 'pending'){
+        } elseif (isset($se) && $se['status'] == 'pending') {
             return redirect()->back()->withInput($request->only('email', 'remember'))
                 ->withErrors(['Your account is not approved yet.']);
-        }elseif (isset($se) && $se['status'] == 'suspended'){
+        } elseif (isset($se) && $se['status'] == 'suspended') {
             return redirect()->back()->withInput($request->only('email', 'remember'))
                 ->withErrors(['Your account has been suspended!.']);
         }

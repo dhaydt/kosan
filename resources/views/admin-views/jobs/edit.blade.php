@@ -541,10 +541,10 @@
                             });
                         }
                     } else {
-                        toastr.success('{{\App\CPU\translate('kamar_berhassil_di_update!')}}', {
-                            CloseButton: true,
-                            ProgressBar: true
-                        });
+                        // toastr.success('{{\App\CPU\translate('kamar_berhassil_di_update!')}}', {
+                        //     CloseButton: true,
+                        //     ProgressBar: true
+                        // });
                         $('#product_form').submit();
                     }
                 }

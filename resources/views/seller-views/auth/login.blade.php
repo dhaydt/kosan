@@ -18,6 +18,17 @@
     <!-- CSS Front Template -->
     <link rel="stylesheet" href="{{asset('public/assets/back-end')}}/css/theme.minc619.css?v=1.0">
     <link rel="stylesheet" href="{{asset('public/assets/back-end')}}/css/toastr.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        .captcha .text-danger{
+            text-align: center;
+        }
+
+        .captcha .text-danger strong{
+            font-weight: 400 !important;
+            margin-top: 8px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -110,7 +121,6 @@
                                 </div>
                             </div>
                             <!-- End Form Group -->
-
                             <!-- Checkbox -->
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
@@ -122,7 +132,16 @@
                                 </div>
                             </div>
                             <!-- End Checkbox -->
-
+                            <div class="form-group row jusify-content-center w-100 align-items-center {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                <div class="col-md-12 d-flex flex-column align-items-center">
+                                    <div class="g-recaptcha" data-sitekey="{{ $sk }}"></div>
+                                    @if ($errors->has('g-recaptcha-response'))
+                                        <span class="help-block text-danger">
+                                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-lg btn-block btn-primary">{{\App\CPU\translate('sign_in')}}</button>
                         </form>
                         <h5 class="mt-2">don't have account ? <a href="{{ route('shop.apply') }}">Register now!</a></h5>
