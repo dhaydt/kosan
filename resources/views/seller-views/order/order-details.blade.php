@@ -347,6 +347,14 @@
                             {{str_replace('_',' ',$order['order_status'])}}
                             </span>
                         @endif
+                        <span class="alasan">
+                            @if ($order['alasan_admin'] != 'NULL')
+                                {{ $order['alasan_admin'] }}
+                            @endif
+                            @if ($order->alasan_user != 'NULL')
+                                {{ $order->alasan_user }}
+                            @endif
+                        </span>
                     </div>
                     <!-- End Header -->
 
@@ -373,7 +381,7 @@
                 <div class="card-footer d-flex justify-content-center">
                     <div class="row w-100">
                         <div class="col-md-6">
-                            <button class="btn btn-outline-secondary w-100">
+                            <button class="btn btn-outline-secondary w-100" data-toggle="modal" data-target="#tolak">
                                 {{ \App\CPU\Translate('Tolak') }}
                             </button>
                         </div>
@@ -404,7 +412,30 @@
                 @endif
                 </div>
                 <!-- End Card -->
-                <!-- Modal -->
+                <!-- Modal tolak-->
+                <div class="modal fade" id="tolak" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pilih alasan penolakan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <select id="alasan" class="custom-select custom-select-lg mb-3" name="alasan">
+                                <option value="">-- Pilih alasan penolakan --</option>
+                                <option value="Sudah dibooking">Sudah dibooking</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button onclick="tolak()" class="btn btn-primary">Tolak</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- Modal terima-->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                     <div class="modal-content">
@@ -473,6 +504,49 @@
                 }
             })
         });
+
+        function tolak(){
+            var alasan = $('#alasan').val();
+            if(alasan == ''){
+                toastr.warning('{{\App\CPU\translate('Mohon pilih alasan penolakan')}}!!');
+            }else{
+                Swal.fire({
+                title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_menolak')}}?',
+                // text: "{{\App\CPU\translate('Pastikan_anda_telah_melihat_profil_penyewa')}}!",
+                showCancelButton: true,
+                confirmButtonColor: '#377dff',
+                cancelButtonColor: 'danger',
+                confirmButtonText: '{{\App\CPU\translate('Tolak')}}!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{route('seller.orders.status')}}",
+                        method: 'POST',
+                        data: {
+                            "id": '{{$order['id']}}',
+                            "order_status": 'cancelled',
+                            'alasan': alasan
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            if (data.success == 0) {
+                                toastr.success('{{\App\CPU\translate('Booking sudah dibayar')}} !!');
+                                location.reload();
+                            } else {
+                                toastr.success('{{\App\CPU\translate('Booking berhasil ditolak')}}!');
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            })
+            }
+        }
 
         function order_status(status) {
             var value = status;

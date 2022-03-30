@@ -99,6 +99,14 @@ class OrderController extends Controller
             return response()->json([]);
         }
 
+        if ($request->alasan) {
+            $order->order_status = 'canceled';
+            $order->alasan_admin = $request->alasan;
+            $order->save();
+
+            return response()->json($request->order_status);
+        }
+
         $kamar = $request->no_kamar;
         if (strpos($kamar, 'id') !== false) {
             $rom = 'ditempat';
@@ -112,13 +120,15 @@ class OrderController extends Controller
             $order->order_status = $status;
             $rom = $order->roomDetail_id;
             if ($rom != null || $rom != 'ditempat') {
-                OrderManager::updateRoom($rom, 1);
+                $uid = '';
+                OrderManager::updateRoom($rom, 1, $uid);
                 $order->save();
             }
         } else {
             $order->order_status = $status;
             $order->roomDetail_id = $rom;
-            OrderManager::updateRoom($kamar, 0);
+            $uid = $order->customer_id;
+            OrderManager::updateRoom($kamar, 0, $uid);
             $order->save();
         }
 
