@@ -84,7 +84,7 @@
                                             {{ $p['company_name']  }}
                                         </td>
                                         <td class="text-center capitalize">
-                                            {{ $p['gaji']  }}
+                                            {{ \App\CPU\Helpers::currency_converter($p['gaji'])  }}
                                         </td>
                                         <td class="text-center capitalize">
                                             @if (isset($p['expire']))
