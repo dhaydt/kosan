@@ -126,7 +126,7 @@
                 <span class="stock-label ml-1 text-danger bg-c-text--label-1">
                     {{\App\CPU\translate('Buka_sampai : ')}}
                 </span>
-                <span class="text-grey deadline">{{ Carbon\Carbon::parse($product->expire)->format('3 M, Y') }}</span>
+                <span class="text-grey deadline">{{ Carbon\Carbon::parse($product->expire)->format('d M, Y') }}</span>
             </div>
         </div>
 

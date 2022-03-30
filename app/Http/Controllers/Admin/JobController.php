@@ -124,7 +124,7 @@ class JobController extends Controller
             'city.required' => 'Mohon kota nya di isi!',
             'district.required' => 'Mohon kecamatannya nya di isi!',
             'deskripsi.required' => 'Mohon isi deskripsi pekerjaan!',
-            // 'noteAddress.required' => 'Mohon isi nama jalan!',
+            'status.required' => 'Mohon isi status pekerjaan!',
         ]);
 
         if ($validator->errors()->count() > 0) {
