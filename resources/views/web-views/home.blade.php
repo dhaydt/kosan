@@ -360,14 +360,24 @@
                     <div class="category_div p-0" style="height: 132px; width: 100%;">
                         <a href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
                             <img style="vertical-align: middle; height: 88px"
-                                 onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                 src="{{asset("storage/category/$category->icon")}}"
-                                 alt="{{$category->name}}">
-                                     <p class="text-center small mt-2"
+                                onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                src="{{asset("storage/category/$category->icon")}}"
+                                alt="{{$category->name}}">
+                                    <p class="text-center small mt-2"
                                         style="">{{Str::limit($category->name, 17)}}</p>
                         </a>
                     </div>
                 @endforeach
+                <div class="category_div p-0" style="height: 132px; width: 100%;">
+                    <a href="{{ route('jobs') }}">
+                        <img style="vertical-align: middle; height: 88px"
+                            onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                            src="{{ asset('assets/front-end/img/job.jpg') }}"
+                            alt="loker">
+                                <p class="text-center small mt-2"
+                                    style="">Loker</p>
+                    </a>
+                </div>
             </div>
         </div>
     </section>

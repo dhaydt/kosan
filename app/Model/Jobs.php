@@ -17,4 +17,11 @@ class Jobs extends Model
     {
         return $this->belongsTo(District::class, 'district', 'name');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where(['status' => 1])->orWhere(function ($query) {
+            $query->where(['added_by' => 'admin', 'status' => 1]);
+        });
+    }
 }

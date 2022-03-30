@@ -19,6 +19,7 @@ use App\Model\DealOfTheDay;
 use App\Model\FlashDeal;
 use App\Model\FlashDealProduct;
 use App\Model\HelpTopic;
+use App\Model\Jobs;
 use App\Model\Kampus;
 use App\Model\Order;
 use App\Model\OrderDetail;
@@ -722,6 +723,209 @@ class WebController extends Controller
         }
 
         return view('web-views.products.view', compact('products', 'data', 'city'), $data);
+    }
+
+    public function jobs(Request $request)
+    {
+        // dd($request);
+        // session()->forget('search_name');
+        $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
+
+        $porduct_data = Jobs::active();
+        $catId = $request['catId'];
+
+        if ($request['type'] == 'catHome') {
+            $cit = City::where('id', $request['city'])->first()->name;
+            $products = $porduct_data->whereHas('kost', function ($q) use ($catId, $cit) {
+                $q->where('category_id', '=', $catId)->where('city', '=', $cit);
+            })->get();
+            $product_ids = [];
+            foreach ($products as $product) {
+                // dd(json_decode($product['category_ids'], true));
+                foreach (json_decode($product['category_ids'], true) as $category) {
+                    array_push($product_ids, $product['id']);
+                }
+            }
+            session()->put('search_name', $request['data_from'].' '.$cit);
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
+        if ($request['data-from'] == 'collage') {
+            $city = $request['collage_id'];
+            $collage = Kampus::where('id', $city)->first()->name;
+
+            $details = Product::with('kost')->whereHas('kost', function ($q) use ($city) {
+                $q->where('ptn_id', '=', $city);
+            })->get();
+            // dd($details);
+            $product_ids = [];
+            foreach ($details as $detail) {
+                array_push($product_ids, $detail['id']);
+            }
+            // $kota = ['KOTA ', 'KABUPATEN'];
+            // $rpl = ['', 'Kab.'];
+
+            // $cit = str_replace($kota, $rpl, $city_name);
+            session()->put('search_name', $collage);
+            // dd($details);
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
+        if ($request['data-from'] == 'city-filter') {
+            $city = City::where('id', $request['city_id'])->first();
+            $city_name = $city->name;
+            $details = Product::with('kost')->whereHas('kost', function ($q) use ($city_name) {
+                $q->where('city', '=', $city_name);
+            })->get();
+            $product_ids = [];
+            foreach ($details as $detail) {
+                array_push($product_ids, $detail['id']);
+            }
+            $kota = ['KOTA ', 'KABUPATEN'];
+            $rpl = ['', 'Kab.'];
+
+            $cit = str_replace($kota, $rpl, $city_name);
+            session()->put('search_name', $cit);
+            // dd($details);
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
+        if ($request['data_from'] == 'category') {
+            $products = $porduct_data->get();
+            $product_ids = [];
+            foreach ($products as $product) {
+                // dd(json_decode($product['category_ids'], true));
+                foreach (json_decode($product['category_ids'], true) as $category) {
+                    if ($category == $request['id']) {
+                        array_push($product_ids, $product['id']);
+                    }
+                }
+            }
+            $nama_category = Category::where('id', $request['id'])->first();
+            if ($nama_category) {
+                session()->put('cat_name', $nama_category->name);
+            }
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
+        if ($request['data_from'] == 'brand') {
+            $query = $porduct_data->where('brand_id', $request['id']);
+        }
+
+        if ($request['data_from'] == 'latest') {
+            $query = $porduct_data->orderBy('id', 'DESC');
+        }
+
+        if ($request['data_from'] == 'top-rated') {
+            $reviews = Review::select('product_id', DB::raw('AVG(rating) as count'))
+                ->groupBy('product_id')
+                ->orderBy('count', 'desc')->get();
+            $product_ids = [];
+            foreach ($reviews as $review) {
+                array_push($product_ids, $review['product_id']);
+            }
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
+        if ($request['data_from'] == 'best-selling') {
+            $details = OrderDetail::with('product')
+                ->select('product_id', DB::raw('COUNT(product_id) as count'))
+                ->groupBy('product_id')
+                ->orderBy('count', 'desc')
+                ->get();
+            $product_ids = [];
+            foreach ($details as $detail) {
+                array_push($product_ids, $detail['product_id']);
+            }
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
+        if ($request['data_from'] == 'most-favorite') {
+            $details = Wishlist::with('product')
+                ->select('product_id', DB::raw('COUNT(product_id) as count'))
+                ->groupBy('product_id')
+                ->orderBy('count', 'desc')
+                ->get();
+            $product_ids = [];
+            foreach ($details as $detail) {
+                array_push($product_ids, $detail['product_id']);
+            }
+            $query = $porduct_data->whereIn('id', $product_ids);
+        }
+
+        if ($request['data_from'] == 'featured') {
+            $query = Product::with(['reviews'])->active()->where('featured', 1);
+        }
+
+        if ($request['data_from'] == 'search') {
+            $key = explode(' ', $request['name']);
+            $query = $porduct_data->where(function ($q) use ($key) {
+                foreach ($key as $value) {
+                    $q->orWhere('name', 'like', "%{$value}%");
+                }
+            });
+        }
+
+        if ($request['sort_by'] == 'latest') {
+            $fetched = $query->latest();
+        } elseif ($request['sort_by'] == 'low-high') {
+            $fetched = $query->orderBy('unit_price', 'ASC');
+        } elseif ($request['sort_by'] == 'high-low') {
+            $fetched = $query->orderBy('unit_price', 'DESC');
+        } elseif ($request['sort_by'] == 'a-z') {
+            $fetched = $query->orderBy('name', 'ASC');
+        } elseif ($request['sort_by'] == 'z-a') {
+            $fetched = $query->orderBy('name', 'DESC');
+        } else {
+            $fetched = $porduct_data;
+        }
+
+        if ($request['min_price'] != null || $request['max_price'] != null) {
+            $fetched = $fetched->whereBetween('unit_price', [Helpers::convert_currency_to_usd($request['min_price']), Helpers::convert_currency_to_usd($request['max_price'])]);
+        }
+
+        $data = [
+            'id' => $request['id'],
+            'name' => $request['name'],
+            'data_from' => $request['data_from'],
+            'sort_by' => $request['sort_by'],
+            'page_no' => $request['page'],
+            'min_price' => $request['min_price'],
+            'max_price' => $request['max_price'],
+        ];
+
+        $products = $fetched->paginate(20)->appends($data);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'view' => view('web-views.jobs._ajax-products', compact('products'))->render(),
+            ], 200);
+        }
+        if ($request['data_from'] == 'category') {
+            $name = Category::find((int) $request['id'])->name;
+            session()->put('search_name', $name);
+        }
+        if ($request['data_from'] == 'brand') {
+            $data['brand_name'] = Brand::find((int) $request['id'])->name;
+        }
+
+        $cities = Product::with('kost')->get()->pluck('kost.city', 'kost.city');
+        $city = [];
+        foreach ($cities as $c => $key) {
+            $id = City::where('name', $c)->first();
+            $str = ['kabupaten', 'kota '];
+            $rpl = ['Kab.', ''];
+            $low = strtolower($c);
+            $cit = str_replace($str, $rpl, $low);
+
+            $ci = [
+                'id' => $id->id,
+                'name' => $cit,
+            ];
+            array_push($city, $ci);
+        }
+
+        return view('web-views.jobs.view', compact('products', 'data', 'city'), $data);
     }
 
     public function viewWishlist()

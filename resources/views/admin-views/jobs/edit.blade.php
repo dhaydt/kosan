@@ -211,8 +211,8 @@
                                             for="cat">{{\App\CPU\translate('Satuan_gaji')}}</label>
                                         <select class="js-example-basic-single form-control" name="satuan" id="ptn">
                                             <option value="">-- Pilih satuan gaji --</option>
-                                            <option value="harian" {{ $product->satuan_gaji == 'harian' ? 'Selected': '' }}>per Hari</option>
-                                            <option value="bulanan" {{ $product->satuan_gaji == 'bulanan' ? 'Selected': '' }}>per Bulan</option>
+                                            <option value="hari" {{ $product->satuan_gaji == 'hari' ? 'Selected': '' }}>per Hari</option>
+                                            <option value="bulan" {{ $product->satuan_gaji == 'bulan' ? 'Selected': '' }}>per Bulan</option>
                                             <option value="project" {{ $product->satuan_gaji == 'project' ? 'Selected': '' }}>per Project</option>
                                         </select>
                                     </div>
