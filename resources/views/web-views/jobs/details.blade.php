@@ -121,7 +121,6 @@
                                 <label class="study">
                                     Min. {{ $product->pendidikan }}
                                 </label>
-                                <span class="tanggung d-block">Tanggung jawab pekerjaan :</span>
                                 <div class="description">
                                     {{ $product->description }}
                                 </div>
