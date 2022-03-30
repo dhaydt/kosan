@@ -13,6 +13,7 @@ use App\Model\Rule;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\Province;
 
@@ -242,6 +243,7 @@ class JobController extends Controller
         $product->gaji = $request['gaji'];
         $product->hide_gaji = $request['hide'];
         $product->satuan_gaji = $request['satuan'];
+        $product->slug = Str::slug($request['name'], '-').'-'.Str::random(6);
         // $product->logo = $img;
         // $product->seller_id = $auth;
         // $product->added_by = 'admin';

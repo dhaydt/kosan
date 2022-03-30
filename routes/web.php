@@ -65,6 +65,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], funct
     Route::get('/product/{slug}', 'WebController@product')->name('product');
     Route::get('products', 'WebController@products')->name('products');
     Route::get('jobs', 'WebController@jobs')->name('jobs');
+    Route::get('job/{slug}', 'WebController@job')->name('job');
     Route::get('orderDetails', 'WebController@orderdetails')->name('orderdetails');
 
     //Chat with seller from product details

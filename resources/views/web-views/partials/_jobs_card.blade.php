@@ -18,6 +18,12 @@
     height: 200px;
     background-color: transparent;
 }
+.card-loker{
+    margin-bottom: 10px;
+    box-shadow: none;
+    border-radius: 7px;
+    overflow: hidden;
+}
 .img-box-search{
     background: #999;
     border-radius: 8px;
@@ -56,7 +62,22 @@
 }
 .job-name{
     font-size: 15px;
+    font-weight: 400;
+    color: #23c005;
+}
+.deadline{
+    font-size: 12px;
     font-weight: 600;
+}
+.rc-info__location{
+    color: #848484;
+    font-size: 12px;
+    font-weight: 500;
+}
+.gaji{
+    font-size: 13px;
+    font-weight: 500;
+    color: #23c005;
 }
 @media(max-width: 600px){
     .ell p {
@@ -68,112 +89,46 @@
     }
 }
 </style>
-<div class="product-card search-card card {{$product['current_stock']==0?'stock-card':''}}"
-    style="margin-bottom: 10px; box-shadow: none;">
+<div class="product-card card-loker search-card card {{$product['current_stock']==0?'stock-card':''}}">
     <label class="label-kost text-white text-uppercase" style="background-color: {{ $web_config['primary_color'] }};">{{ $product->status_employe }}</label>
 
-        <div class="card-header px-3 pt-3 inline_product clickable p-0 pb-3 d-flex flex-row" style="cursor: pointer;">
+        <div class="card-header px-3 pt-3 inline_product clickable p-0 pb-1 d-flex flex-row" style="cursor: pointer;">
             <div class="d-flex align-items-center justify-content-center d-block img-box-search">
-                <a href="{{route('product',$product->id)}}" class="h-100 w-100">
+                <a href="{{route('job',$product->slug)}}" class="h-100 w-100">
                     <img
                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
                         src="{{ asset('storage/jobs').'/'.$p['logo'] }}"
                         >
                 </a>
             </div>
-            <div class="job-name ml-2 capitalize text-left text-success">
+            <div class="job-name ml-2 capitalize text-left">
                 {{ $product->name }}
             </div>
         </div>
 
-        <div class="card-body d-flex flex-column justify-content-between inline_product_search text-left px-3 p-0 clickable"
+        <div class="card-body inline_product_search text-left px-3 pb-3 p-0 clickable"
         style="cursor: pointer;">
-        <div class="rating-show d-flex">
-            @if ($product->hide_gaji == '1')
-            <div class="rc-overview__label bg-c-label capitalize">{{ \App\CPU\Helpers::currency_converter($product->gaji) }} /{{ $product->satuan_gaji }}</div>
-            @endif
-            {{-- <div class="rc-overview__label bg-c-label capitalize">{{ \App\CPU\Helpers::currency_converter($product->gaji) }}</div> --}}
-            @if ($product->current_stock <= 3)
-            <span class="stock-label ml-1 text-danger bg-c-text--label-1">
-                {{\App\CPU\translate('Buka_sampai : ')}} {{ Carbon\Carbon::parse($product->expire)->format('3 M, Y') }}
-            </span>
-            @endif
-        </div>
-        <div class="kost-rc__info">
-            <a href="{{route('product',$product->id)}}">
+        <div class="kost-rc__info d-flex flex-column justify-content-between h-100">
+            <a href="{{route('job',$product->slug)}}">
                 <div class="rc-info">
                     @php($city = strtolower($product->city))
                     @php($district = strtolower($product->district))
                     <span class="rc-info__name bg-c-text bg-c-text--body-4 capitalize">
-                        {{ $product->name }} - {{ $product->company_name }}
-                    </span>
-                    <span class="rc-info__location bg-c-text bg-c-text--body-3 capitalize">
-                        {{ $district, $city }}
+                        {{ $product->company_name }}
                     </span>
                 </div>
             </a>
+            <span class="rc-info__location capitalize">
+                {{ $district }}, {{ $city }}
+            </span>
+            <span class="gaji">{{ \App\CPU\Helpers::currency_converter($product->gaji) }} / {{ $product->satuan_gaji }}</span>
+            <div class="row d-flex justify-content-between">
+                <span class="stock-label ml-1 text-danger bg-c-text--label-1">
+                    {{\App\CPU\translate('Buka_sampai : ')}}
+                </span>
+                <span class="text-grey deadline">{{ Carbon\Carbon::parse($product->expire)->format('3 M, Y') }}</span>
+            </div>
         </div>
-        @php($fas = json_decode($product->fasilitas_id))
-        <div class="kost-rc__facilities">
-            <div class="ell">
-                <p class="mb-0">
-                    <span>
-                        {{-- <span class="capitalize">{{ App\CPU\Helpers::fasilitas($f) }}</span> --}}
-                        <span class="rc-facilities_divider">·</span>
-                    </span>
-                </p>
 
-            </div>
-        </div>
-        {{-- <div class="price_landscape d-flex">
-            <div class="kost-rc__price h-100">
-                <div class="rc-price mt-auto">
-                    @if($product->discount > 0)
-                    <div class="rc-price__additional-data">
-                        <div class="price-discount">
-                            <span class="rc-price__discount-icon" aria-hidden="true">{{
-                                \App\CPU\translate('Hemat')}}</span>
-                            <span class="rc-price__additional-discount bg-c-text bg-c-text--label-1 ">
-                                @if ($product->discount_type == 'percent')
-                                {{round($product->discount,2)}}%
-                                @elseif($product->discount_type =='flat')
-                                {{\App\CPU\Helpers::currency_converter($product->discount)}}
-                                @endif
-                            </span>
-                        </div>
-                        <span class="rc-price__additional-discount-price bg-c-text bg-c-text--label-2 ">
-                            @if($product->discount > 0)
-                                <strike style="font-size: 12px!important;color: grey!important;">
-                                    {{\App\CPU\Helpers::currency_converter($product->unit_price)}}
-                                </strike><br>
-                            @endif
-                        </span>
-                    </div>
-                    @endif
-                    <div class="rc-price__section">
-                        <div class="rc-price__real d-flex d-md-none">
-                            <span class="rc-price__text bg-c-text bg-c-text--body-1 ">
-                                {{\App\CPU\Helpers::currency_converter(
-                                    $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))
-                                    )}}
-                            </span>
-                            <span class="rc-price__type bg-c-text bg-c-text--body-2 ">
-                                / Bulan
-                            </span>
-                        </div>
-                        <div class="rc-price__real d-none d-md-flex">
-                            <span class="rc-price__text bg-c-text bg-c-text--body-1 ">
-                                {{\App\CPU\Helpers::currency_converter(
-                                    $product->unit_price-(\App\CPU\Helpers::get_product_discount($product,$product->unit_price))
-                                    )}}
-                            </span>
-                            <span class="rc-price__type bg-c-text bg-c-text--body-2 ">
-                                / Bulan
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
 </div>

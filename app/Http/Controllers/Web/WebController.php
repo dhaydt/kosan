@@ -522,6 +522,22 @@ class WebController extends Controller
         return back();
     }
 
+    public function job($slug)
+    {
+        $product = Jobs::active()->where('slug', $slug)->first();
+        $auth = auth('customer')->id();
+        if ($auth) {
+            CartManager::cart_clean();
+        }
+        if ($product != null) {
+            return view('web-views.jobs.details', compact('product'));
+        }
+
+        Toastr::error(translate('not_found'));
+
+        return back();
+    }
+
     public function products(Request $request)
     {
         // dd($request);
