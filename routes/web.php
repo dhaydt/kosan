@@ -100,6 +100,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], funct
 
     Route::get('account-tickets', 'UserProfileController@account_tickets')->name('account-tickets');
     Route::get('order-cancel/{id}', 'UserProfileController@order_cancel')->name('order-cancel');
+    Route::post('order-cancel-user', 'UserProfileController@order_cancel_user')->name('order-cancel-user');
     Route::post('ticket-submit', 'UserProfileController@ticket_submit')->name('ticket-submit');
 
     //ktp

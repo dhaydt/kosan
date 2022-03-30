@@ -91,6 +91,10 @@
     .chatInputBox{
         border-radius: 7px;
     }
+    .alasan{
+        font-weight: 600;
+        color: #8c8c8c;
+    }
     @media(max-width: 500px){
         .margin-auto{
             margin-top: 50px !important;
@@ -172,6 +176,15 @@
                                 </div>
                             @endif
                         </div>
+                        @endif
+                        @if ($order->alasan_admin)
+                            <div class="col col-md-8 text-right">
+                                <span class="alasan">{{ $order->alasan_admin }}</span>
+                            </div>
+                        @elseif($order->alasan_user)
+                            <div class="col col-md-8 text-right">
+                                <span class="alasan">{{ $order->alasan_user }}</span>
+                            </div>
                         @endif
                     </div>
                     {{-- {{ dd($orders) }} --}}
@@ -322,10 +335,35 @@
                     </div>
                     @if ($order->order_status == 'pending')
                     <div class="col-12 d-flex justify-content-end mb-4 pr-3">
-                        <button onclick="route_alert('{{ route('order-cancel',[$order->id]) }}','{{\App\CPU\translate('ingin_membatalkan_bookingan_ini ?')}}')" class="btn btn-outline-success capitalize">
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#batalkan{{ $order->id }}">
                             Batalkan booking
                         </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="batalkan{{ $order->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Pilih alasan pembatalan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <select id="alasan{{ $order->id }}" class="custom-select custom-select-lg mb-3" name="alasan">
+                                        <option value="">-- Pilih alasan pembatalan --</option>
+                                        <option value="Sudah menemukan kamar lain">Sudah menemukan kamar lain</option>
+                                        <option value="Ingin merubah bookingan">Ingin merubah bookingan</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="batalkan({{ $order->id }})">Batalkan</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
+                    <!-- modal batalkan -->
                     @endif
                 </div>
                 <div class="col-12 text-center mb-2">
@@ -474,19 +512,54 @@
             updateClock();
             var timeinterval = setInterval(updateClock, 1000);
         }
-
-        // var now = new Date()
-        // var de = new Date(dead)
-        // console.log('now', new Date(now))
-        // console.log('deadline', new Date(de))
-        // console.log('sum', de.getTime() - now.getTime())
-        // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-        // var deadline = new Date(Date.parse(new Date()) + (de.getTime() - now.getTime()));
         function getTime(id){
             var dated =  new Date($('#count' + id).val());
             var now = new Date()
             var deadline = new Date(Date.parse(new Date()) + (dated.getTime() - now.getTime()));
             initializeClock('clockdiv' + id, deadline);
+        }
+
+        function batalkan(val){
+            var alasan = $('#alasan' + val).val();
+            if(alasan == ''){
+                toastr.warning('{{\App\CPU\translate('Mohon pilih alasan pembatalan')}}!!');
+            }else{
+                Swal.fire({
+                title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_membatalkan')}}?',
+                // text: "{{\App\CPU\translate('Pastikan_anda_telah_melihat_profil_penyewa')}}!",
+                showCancelButton: true,
+                confirmButtonColor: '#377dff',
+                cancelButtonColor: 'danger',
+                confirmButtonText: '{{\App\CPU\translate('Batalkan')}}!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{route('order-cancel-user')}}",
+                        method: 'POST',
+                        data: {
+                            "id": val,
+                            "order_status": 'canceled',
+                            'alasan': alasan
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            if (data.success == 0) {
+                                toastr.success('{{\App\CPU\translate('Booking sudah dibayar')}} !!');
+                                location.reload();
+                            } else {
+                                toastr.success('{{\App\CPU\translate('Booking berhasil ditolak')}}!');
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            })
+            }
         }
 
         $(document).ready(function(){

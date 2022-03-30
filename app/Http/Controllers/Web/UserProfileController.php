@@ -539,6 +539,32 @@ class UserProfileController extends Controller
         return back();
     }
 
+    public function order_cancel_user(Request $request)
+    {
+        $id = $request['id'];
+        $order = Order::where(['id' => $id])->first();
+        if ($order['payment_method'] == 'cash_on_delivery' && $order['order_status'] == 'pending' || $order['order_status'] == 'processing') {
+            $alasan = $request['alasan'];
+            if (isset($alasan)) {
+                $alasan = $request['alasan'];
+            } else {
+                $alasan = 'NULL';
+            }
+            OrderManager::stock_update_on_order_status_change($order, 'canceled');
+            Order::where(['id' => $id])->update([
+                'order_status' => 'canceled',
+                'alasan_user' => $alasan,
+            ]);
+            Toastr::success(translate('successfully_canceled'));
+
+            return back();
+        }
+        // dd($order);
+        Toastr::error(translate('status_not_changable_now'));
+
+        return back();
+    }
+
     public function generate_invoice($id)
     {
         $order = Order::with('seller')->with('shipping')->where('id', $id)->first();

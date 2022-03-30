@@ -112,6 +112,14 @@ class OrderController extends Controller
         } catch (\Exception $e) {
         }
 
+        if ($request->alasan) {
+            $order->order_status = 'canceled';
+            $order->alasan_admin = $request->alasan;
+            $order->save();
+
+            return response()->json($request->order_status);
+        }
+
         $kamar = $request->no_kamar;
         if (strpos($kamar, 'id') !== false) {
             $rom = 'ditempat';
