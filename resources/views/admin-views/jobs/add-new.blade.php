@@ -189,8 +189,10 @@
                                         <label class="input-label label-name mb-0"
                                             for="tipe">{{\App\CPU\translate('Deskripsi_pekerjaan')}}</label>
                                         <small>Jelaskan lebih lengkap tentang pekerjaan & tanggung jawab</small>
-                                        <textarea class="form-control w-100" name="deskripsi" id="" cols="30"
-                                            rows="3"></textarea>
+                                        {{-- <textarea class="form-control w-100" name="deskripsi" id="" cols="30"
+                                            rows="3"></textarea> --}}
+                                        <textarea name="deskripsi" class="editor textarea" cols="30"
+                                                rows="10" required>{{old('details')}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-6">

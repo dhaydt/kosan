@@ -177,8 +177,8 @@
                                             for="cat">{{\App\CPU\translate('Status_pekerjaan')}}</label>
                                         <select class="js-example-basic-single form-control" name="status" id="ptn">
                                             <option value="">-- Pilih status pekerjaan --</option>
-                                            <option value="parttime" {{ $product->status == 'parttime' ? 'Selected': '' }}>PartTime</option>
-                                            <option value="fulltime" {{ $product->status == 'fulltime' ? 'Selected': '' }}>FullTime</option>
+                                            <option value="parttime" {{ $product->status_employe == 'parttime' ? 'Selected': '' }}>PartTime</option>
+                                            <option value="fulltime" {{ $product->status_employe == 'fulltime' ? 'Selected': '' }}>FullTime</option>
                                         </select>
                                     </div>
                                 </div>
@@ -188,8 +188,8 @@
                                         <label class="input-label label-name mb-0"
                                             for="tipe">{{\App\CPU\translate('Deskripsi_pekerjaan')}}</label>
                                         <small>Jelaskan lebih lengkap tentang pekerjaan & tanggung jawab</small>
-                                        <textarea class="form-control w-100" name="deskripsi" id="" cols="30"
-                                            rows="3">{{ $product->description }}</textarea>
+                                        <textarea name="deskripsi" class="editor textarea" cols="30"
+                                                rows="10" required>{{ $product->description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-6">

@@ -118,7 +118,7 @@ class JobController extends Controller
             'gaji' => 'required',
             'satuan' => 'required',
         ], [
-            'name.required' => 'Nama kos diperlukan!',
+            'name.required' => 'Nama pekerjaan diperlukan!',
             'company_name.required' => 'Nama perusahaan diperlukan!',
             'province.required' => 'Mohon provinsi nya di isi!',
             'city.required' => 'Mohon kota nya di isi!',
@@ -216,8 +216,25 @@ class JobController extends Controller
         // dd($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'company_name' => 'required',
+            'province' => 'required',
+            'city' => 'required',
+            'district' => 'required',
+            'penempatan' => 'required',
+            'keahlian' => 'required',
+            'pendidikan' => 'required',
+            'status' => 'required',
+            'deskripsi' => 'required',
+            'gaji' => 'required',
+            'satuan' => 'required',
         ], [
-            'name.required' => 'Nama properti diperlukan!',
+            'name.required' => 'Nama pekerjaan diperlukan!',
+            'company_name.required' => 'Nama perusahaan diperlukan!',
+            'province.required' => 'Mohon provinsi nya di isi!',
+            'city.required' => 'Mohon kota nya di isi!',
+            'district.required' => 'Mohon kecamatannya nya di isi!',
+            'deskripsi.required' => 'Mohon isi deskripsi pekerjaan!',
+            'status.required' => 'Mohon isi status pekerjaan!',
         ]);
 
         if ($validator->errors()->count() > 0) {

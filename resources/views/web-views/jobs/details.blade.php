@@ -122,7 +122,7 @@
                                     Min. {{ $product->pendidikan }}
                                 </label>
                                 <div class="description">
-                                    {{ $product->description }}
+                                    {!! $product->description !!}
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                                         </div>
                                     </div>
                                     <hr class="pb-2 mt-2">
-                                    <label class="penanggung">Penanggung Jawab :</label>
+                                    <label class="penanggung d-block">Penanggung Jawab :</label>
                                     <span class="capitalize">
                                         {{ $product->penanggung_jwb }} (<strong>{{ $product->hp_penanggung_jwb }}</strong>)
                                     </span>
