@@ -89,19 +89,21 @@ class OrderManager
         if ($status == 'returned' || $status == 'failed' || $status == 'canceled') {
             $id = $order->roomDetail_id;
             // dd($id);
-            if ($id == 'ditempat') {
-                $product = json_decode($order->details[0]->product_details);
-                $room_id = $product->room_id;
-                $room = Detail_room::where('room_id', $room_id)->where('user_id', 'booked')->first();
-                $room->available = 1;
-                $room->save();
+            if ($id != null) {
+                if ($id == 'ditempat') {
+                    $product = json_decode($order->details[0]->product_details);
+                    $room_id = $product->room_id;
+                    $room = Detail_room::where('room_id', $room_id)->where('user_id', 'booked')->first();
+                    $room->available = 1;
+                    $room->save();
+                }
+                if ($id != 'ditempat') {
+                    $room = Detail_room::where('id', $id)->first();
+                    $room->available = 1;
+                    $room->save();
+                }
+                Helpers::room_check($room->room_id);
             }
-            if ($id != 'ditempat') {
-                $room = Detail_room::where('id', $id)->first();
-                $room->available = 1;
-                $room->save();
-            }
-            Helpers::room_check($room->room_id);
         } else {
             foreach ($order->details as $detail) {
                 if ($detail['is_stock_decreased'] == 0) {
