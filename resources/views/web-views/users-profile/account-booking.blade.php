@@ -441,13 +441,39 @@
 
                         @if($order->order_status == 'processing')
                         <div class="col-12 d-flex justify-content-end">
-                            <button onclick="route_alert('{{ route('order-cancel',[$order->id]) }}','{{\App\CPU\translate('ingin_membatalkan_bookingan_ini ?')}}')" class="btn btn-outline-danger mr-2 capitalize">
-                                Batalkan booking
+                            <button type="button" class="mr-2 btn btn-outline-danger" data-toggle="modal" data-target="#batalkanCancel{{ $order->id }}">
+                                Cancel Booking
                             </button>
-
                             <a href="{{ route('checkout-payment', ['order_id' => $order->id]) }}" class="btn btn-success">
                                 Bayar sekarang
                             </a>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end mb-4 pr-3">
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="batalkanCancel{{ $order->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Pilih alasan pembatalan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select id="alasanCancel{{ $order->id }}" class="custom-select custom-select-lg mb-3" name="alasan">
+                                            <option value="">-- Pilih alasan pembatalan --</option>
+                                            <option value="Sudah menemukan kamar lain">Sudah menemukan kamar lain</option>
+                                            <option value="Ingin merubah bookingan">Ingin merubah bookingan</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" onclick="cancel({{ $order->id }})">Batalkan</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                         </div>
                         @endif
                     </div>
@@ -540,6 +566,49 @@
                     });
                     $.ajax({
                         url: "{{route('order-cancel-user')}}",
+                        method: 'POST',
+                        data: {
+                            "id": val,
+                            "order_status": 'canceled',
+                            'alasan': alasan
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            if (data.success == 0) {
+                                toastr.success('{{\App\CPU\translate('Booking sudah dibayar')}} !!');
+                                location.reload();
+                            } else {
+                                toastr.success('{{\App\CPU\translate('Booking berhasil ditolak')}}!');
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            })
+            }
+        }
+
+        function cancel(val){
+            var alasan = $('#alasanCancel' + val).val();
+            if(alasan == ''){
+                toastr.warning('{{\App\CPU\translate('Mohon pilih alasan pembatalan')}}!!');
+            }else{
+                Swal.fire({
+                title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_membatalkan')}}?',
+                // text: "{{\App\CPU\translate('Pastikan_anda_telah_melihat_profil_penyewa')}}!",
+                showCancelButton: true,
+                confirmButtonColor: '#377dff',
+                cancelButtonColor: 'danger',
+                confirmButtonText: '{{\App\CPU\translate('Batalkan')}}!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{route('order-cancel')}}",
                         method: 'POST',
                         data: {
                             "id": val,
