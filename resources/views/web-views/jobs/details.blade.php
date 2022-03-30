@@ -106,8 +106,8 @@
                 <div class="row pb-4">
                     <div class="col-md-8">
                         <div class="job-title">
-                            <h1>
-                                {{ $product->name }} at {{ $product->company_name }}
+                            <h1 class="capitalize">
+                                Lowongan kerja {{ $product->name }} at {{ $product->company_name }}
                             </h1>
                         </div>
                         <label class="status-employe text-uppercase">

@@ -163,7 +163,7 @@
                                             <option value="">-- Pilih pendidikan --</option>
                                             <option value="SD/MI" {{ $product->pendidikan == 'SD/MI' ? 'Selected': '' }}>SD/MI</option>
                                             <option value="SMP/MTs" {{ $product->pendidikan == 'SMP/MTs' ? 'Selected': '' }}>SMP/MTs</option>
-                                            <option value="SMA/MA" {{ $product->pendidikan == 'SMA/MA' ? 'Selected': '' }}>SMA/MA</option>
+                                            <option value="SMA/MA/SMK" {{ $product->pendidikan == 'SMA/MA/SMK' ? 'Selected': '' }}>SMA/MA/SMK</option>
                                             <option value="D3" {{ $product->pendidikan == 'D3' ? 'Selected': '' }}>D3</option>
                                             <option value="S1" {{ $product->pendidikan == 'S1' ? 'Selected': '' }}>S1</option>
                                             <option value="S2" {{ $product->pendidikan == 'S2' ? 'Selected': '' }}>S2</option>

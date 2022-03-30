@@ -164,7 +164,7 @@
                                             <option value="">-- Pilih pendidikan --</option>
                                             <option value="SD/MI">SD/MI</option>
                                             <option value="SMP/MTs">SMP/MTs</option>
-                                            <option value="SMA/MA">SMA/MA</option>
+                                            <option value="SMA/MA/SMK">SMA/MA/SMK</option>
                                             <option value="D3">D3</option>
                                             <option value="S1">S1</option>
                                             <option value="S2">S2</option>

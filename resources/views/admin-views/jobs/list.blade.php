@@ -63,7 +63,7 @@
                                     <th class="text-center">{{\App\CPU\translate('SL#')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Name')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Status_employe')}}</th>
-                                    <th class="text-center">{{\App\CPU\translate('Description')}}</th>
+                                    <th class="text-center">{{\App\CPU\translate('Company')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Sallary')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('Expired_in')}}</th>
                                     <th class="text-center">{{\App\CPU\translate('status')}}</th>
@@ -81,7 +81,7 @@
                                             {{ $p['status_employe']  }}
                                         </td>
                                         <td class="text-center capitalize">
-                                            {{ $p['description']  }}
+                                            {{ $p['company_name']  }}
                                         </td>
                                         <td class="text-center capitalize">
                                             {{ $p['gaji']  }}
