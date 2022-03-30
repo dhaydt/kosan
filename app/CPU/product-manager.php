@@ -103,11 +103,9 @@ class ProductManager
 
     public static function search_products($name, $limit = 10, $offset = 1)
     {
-        $key = explode(' ', $name);
-        $paginator = Product::active()->with(['rating'])->where(function ($q) use ($key) {
-            foreach ($key as $value) {
-                $q->orWhere('name', 'like', "%{$value}%");
-            }
+        $key = $name;
+        $paginator = Product::active()->with(['rating'])->whereHas('kost', function ($q) use ($key) {
+            $q->where('name', 'like', "%{$key}%");
         })->paginate($limit, ['*'], 'page', $offset);
 
         return [

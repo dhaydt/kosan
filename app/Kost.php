@@ -29,4 +29,9 @@ class Kost extends Model
     {
         return $this->belongsTo(Kampus::class, 'ptn_id');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

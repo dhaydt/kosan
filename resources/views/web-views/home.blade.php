@@ -305,8 +305,8 @@
         </div>
         <div class="input-group-overlay d-none d-md-block" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left' }}">
             <form action="{{route('products')}}" type="submit" class="search_form">
-                <input class="px-5 form-control appended-form-control search-bar-input" type="text" autocomplete="off"
-                    placeholder="{{\App\CPU\translate('search')}}" name="name"
+                <input class="px-5 form-control appended-form-control search-bar-input" id="search-bar" type="text" autocomplete="off"
+                    placeholder="{{\App\CPU\translate('Masukan nama Lokasi / Area / Alamat')}}" name="name"
                     style="border: 2px solid #c9c9c9; border-radius: 50px; border-top-right-radius: 50px !important; border-bottom-right-radius: 50px !important;">
                 <button disabled class="input-group-append-overlay search-icon"
                     style="border-radius: {{Session::get('direction') === " rtl" ? '0px 50px 50px 0px; left: unset; right: 0' : '50px 0px 0px 50px; right: unset; left: 0'}};">
@@ -815,7 +815,7 @@
         {!! $article['value'] !!}
     </div>
 </section>
-  @endsection
+@endsection
 
   @push('script')
   {{-- Owl Carousel --}}

@@ -1205,7 +1205,8 @@ src="{{asset('public/assets/front-end')}}/vendor/bs-custom-file-input/dist/bs-cu
 
     jQuery(".search-bar-input").keyup(function () {
         $(".search-card").css("display", "block");
-        let name = $(".search-bar-input").val();
+        let name = $("#search-bar").val();
+        console.log('name', name)
         if (name.length > 0) {
             $.get({
                 url: '{{url('/')}}/searched-products',

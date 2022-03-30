@@ -238,6 +238,8 @@ class WebController extends Controller
             $products = $result['products'];
         }
 
+        // dd($result);
+
         return response()->json([
             'result' => view('web-views.partials._search-result', compact('products'))->render(),
         ]);
@@ -671,12 +673,28 @@ class WebController extends Controller
         }
 
         if ($request['data_from'] == 'search') {
-            $key = explode(' ', $request['name']);
-            $query = $porduct_data->where(function ($q) use ($key) {
-                foreach ($key as $value) {
-                    $q->orWhere('name', 'like', "%{$value}%");
-                }
+            $key = $request['name'];
+            $query = $porduct_data->whereHas('kost', function ($q) use ($key) {
+                $q->where('name', 'like', "%{$key}%");
+                // foreach ($key as $value) {
+                // }
             });
+            $products = $query->get();
+            $data = [
+                'id' => $request['id'],
+                'name' => $request['name'],
+                'data_from' => $request['data_from'],
+                'sort_by' => $request['sort_by'],
+                'page_no' => $request['page'],
+                'min_price' => $request['min_price'],
+                'max_price' => $request['max_price'],
+            ];
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'view' => view('web-views.products._ajax-products', compact('products'))->render(),
+                ], 200);
+            }
         }
 
         if ($request['sort_by'] == 'latest') {
