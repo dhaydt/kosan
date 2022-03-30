@@ -132,13 +132,17 @@ class OrderController extends Controller
             $order->order_status = $status;
             $rom = $order->roomDetail_id;
             if ($rom != null || $rom != 'ditempat') {
-                OrderManager::updateRoom($rom, 1);
+                $uid = '';
+                OrderManager::updateRoom($rom, 1, $uid);
                 $order->save();
             }
         } else {
+            // dd($order);
             $order->order_status = $status;
             $order->roomDetail_id = $rom;
-            OrderManager::updateRoom($kamar, 0);
+            $uid = $order->customer_id;
+            // dd($rom);
+            OrderManager::updateRoom($kamar, 0, $uid);
             $order->save();
         }
 

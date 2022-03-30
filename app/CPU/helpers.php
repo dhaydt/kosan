@@ -28,6 +28,7 @@ class Helpers
 {
     public static function room_check($id)
     {
+        // dd($id);
         $rooms = Detail_room::where('room_id', $id)->get();
         $product = Product::where('room_id', $id)->first();
         $current = [];

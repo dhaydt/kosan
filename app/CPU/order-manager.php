@@ -52,38 +52,31 @@ class OrderManager
         ];
     }
 
-    public static function updateRoom($id, $status)
+    public static function updateRoom($id, $status, $uid)
     {
         $success = 1;
+        // dd($id);
         if (strpos($id, 'id') !== false) {
             $int = str_replace('id', '', $id);
             $product = Product::where('room_id', $int)->first();
             $room = Detail_room::where('room_id', $product['room_id'])->where('available', 1)->first();
             $stock = $product['current_stock'];
             $room->user_id = 'booked';
-            if ($status == 0) {
-                $product->current_stock = $stock - 1;
-            } else {
-                $product->current_stock = $stock + 1;
-            }
             $room->available = $status;
             $product->save();
             $room->save();
+
+            Helpers::room_check($room->room_id);
         } else {
             $room = Detail_room::where(['id' => $id])->first();
             $product = Product::where('room_id', $room->room_id)->first();
 
-            $stock = $product['current_stock'];
-            if ($status == 0) {
-                $product->current_stock = $stock - 1;
-            } else {
-                $product->current_stock = $stock + 1;
-            }
-
+            $room->user_id = $uid;
             $room->available = $status;
-
             $product->save();
             $room->save();
+
+            Helpers::room_check($room->room_id);
         }
 
         return response()->json([
@@ -94,27 +87,21 @@ class OrderManager
     public static function stock_update_on_order_status_change($order, $status)
     {
         if ($status == 'returned' || $status == 'failed' || $status == 'canceled') {
-            foreach ($order->details as $detail) {
-                if ($detail['is_stock_decreased'] == 1) {
-                    $product = Product::find($detail['product_id']);
-                    // $type = $detail['variant'];
-                    // $var_store = [];
-                    // foreach (json_decode($product['variation'], true) as $var) {
-                    //     if ($type == $var['type']) {
-                    //         $var['qty'] += $detail['qty'];
-                    //     }
-                    //     array_push($var_store, $var);
-                    // }
-                    // dd($product);
-                    Product::where(['id' => $product['id']])->update([
-                        // 'variation' => json_encode($var_store),
-                        // 'current_stock' => (int) $product['current_stock'] + 1,
-                    ]);
-                    OrderDetail::where(['id' => $detail['id']])->update([
-                        'is_stock_decreased' => 0,
-                    ]);
-                }
+            $id = $order->roomDetail_id;
+            // dd($id);
+            if ($id == 'ditempat') {
+                $product = json_decode($order->details[0]->product_details);
+                $room_id = $product->room_id;
+                $room = Detail_room::where('room_id', $room_id)->where('user_id', 'booked')->first();
+                $room->available = 1;
+                $room->save();
             }
+            if ($id != 'ditempat') {
+                $room = Detail_room::where('id', $id)->first();
+                $room->available = 1;
+                $room->save();
+            }
+            Helpers::room_check($room->room_id);
         } else {
             foreach ($order->details as $detail) {
                 if ($detail['is_stock_decreased'] == 0) {
