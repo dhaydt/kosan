@@ -38,6 +38,10 @@
 .rc-price__additional-data{
     justify-content: start;
 }
+label.label-vendor {
+    top: 179px;
+    border-radius: 10px 0 8px 0;
+}
 @media(max-width: 600px){
     .ell p {
         -webkit-line-clamp: 2;
@@ -50,15 +54,18 @@
 </style>
 <div class="product-card search-card card {{$product['current_stock']==0?'stock-card':''}}"
     style="margin-bottom: 10px; box-shadow: none;">
-    <label class="label-kost text-white" style="background-color: {{ $web_config['primary_color'] }};">{{ $product->kost['name'] }}</label>
+    <label class="label-kost text-white" style="background-color: #24b400;">{{ $product->kost['name'] }}</label>
 
-        <div class="card-header inline_product clickable p-0 pb-1" style="cursor: pointer;">
+        <div class="card-header inline_product clickable p-0 pb-1" style="cursor: pointer; position:relative; overflow:hidden;">
             <div class="d-flex align-items-center justify-content-center d-block img-box-search">
                 <a href="{{route('product',$product->slug)}}" class="h-100 w-100">
                     <img src="{{\App\CPU\ProductManager::product_image_path('product')}}/{{json_decode($product['images'])[0]}}"
                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'">
                 </a>
             </div>
+            @if ($product->added_by == 'admin')
+            <label class="label-vendor capitalize">inRoom</label>
+            @endif
         </div>
 
         <div class="card-body d-flex flex-column justify-content-between inline_product_search text-left ml-3 p-0 clickable"
@@ -77,10 +84,13 @@
                         @php($city = strtolower($product->kost['city']))
                         @php($district = strtolower($product->kost['district']))
                         <span class="rc-info__name bg-c-text bg-c-text--body-4 capitalize">
-                            {{ $product->kost['name'] }} {{ $product->type }} {{ $city }}
+                            {{ $product->kost['name'] }}
                         </span>
-                        <span class="rc-info__location bg-c-text bg-c-text--body-3 capitalize">
-                            {{ $district }}
+                        <span class="rc-info__location bg-c-text bg-c-text--body-3 d-block capitalize">
+                            {{ $city }}
+                        </span>
+                        <span class="rc-info__address bg-c-text bg-c-text--body-3 capitalize">
+                            {{ $product->kost->note_address }}
                         </span>
                     </div>
                 </a>
