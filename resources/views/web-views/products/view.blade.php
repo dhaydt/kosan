@@ -554,7 +554,7 @@
                                 <div class="input-group-overlay input-group-sm mb-1">
                                     <input style="background: aliceblue;"
                                            class="cz-filter-search form-control form-control-sm appended-form-control"
-                                           type="number" value="0" min="0" max="1000000" id="min_price">
+                                           type="number" value="0" min="0" max="1000000" id="min">
                                     <div class="input-group-append-overlay">
                                     <span style="color: #3498db;" class="input-group-text">
                                         {{\App\CPU\currency_symbol()}}
@@ -567,7 +567,7 @@
                                 <div class="input-group-overlay input-group-sm mb-2">
                                     <input style="background: aliceblue;" value="100" min="100" max="1000000"
                                            class="cz-filter-search form-control form-control-sm appended-form-control"
-                                           type="number" id="max_price">
+                                           type="number" id="max">
                                     <div class="input-group-append-overlay">
                                         <span style="color: #3498db;" class="input-group-text">
                                             {{\App\CPU\currency_symbol()}}
@@ -577,7 +577,7 @@
 
                                 <div class="input-group-overlay input-group-sm mb-2">
                                     <button class="btn btn-primary btn-block"
-                                            onclick="searchByPrice()">
+                                            onclick="searchPrice()">
                                         <span>{{\App\CPU\translate('search')}}</span>
                                     </button>
                                 </div>
@@ -745,6 +745,34 @@
             });
         }
 
+        function searchPrice() {
+            let min = $('#min').val();
+            let max = $('#max').val();
+            $.get({
+                url: '{{url('/')}}/products',
+                data: {
+                    id: '{{$data['id']}}',
+                    name: '{{$data['name']}}',
+                    data_from: '{{$data['data_from']}}',
+                    sort_by: '{{$data['sort_by']}}',
+                    min_price: min,
+                    max_price: max,
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#loading').show();
+                },
+                success: function (response) {
+                    $('#ajax-products').html(response.view);
+                    $('#paginator-ajax').html(response.paginator);
+                },
+                complete: function () {
+                    closeNav()
+                    $('#loading').hide();
+                },
+            });
+        }
+
         function searchByPrice() {
             let min = $('#min_price').val();
             let max = $('#max_price').val();
@@ -767,7 +795,6 @@
                     $('#paginator-ajax').html(response.paginator);
                 },
                 complete: function () {
-                    closeNav()
                     $('#loading').hide();
                 },
             });
