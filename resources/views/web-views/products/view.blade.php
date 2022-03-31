@@ -104,7 +104,7 @@
         .sidepanel .closebtn {
             position: absolute;
             top: 0;
-        {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 25 px;
+        {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 25px;
             font-size: 36px;
         }
 
@@ -244,8 +244,14 @@
                             <label>( {{$products->total()}} {{\App\CPU\translate('rooms_found')}} )</label>
                         </h1>
                     </div>
-                    <div class="row col-md-6 for-display mx-0">
+                    <div class="row col-md-6 col-12 for-display mx-0">
 
+                        <button class="openbtn text-left" onclick="openNav()">
+                            <div style="margin-bottom: 16%;">
+                                <i class="fa fa-filter"></i>
+                                Filter
+                            </div>
+                        </button>
                         <div class="d-flex flex-wrap float-right for-shoting-mobile">
                             <form id="search-form" action="{{ route('products') }}" method="GET">
                                 <input hidden name="data_from" value="{{$data['data_from']}}">
@@ -292,11 +298,11 @@
          style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
         <div class="row justify-content-center">
             <!-- Sidebar-->
-            {{-- <aside
+            <aside
                 class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters {{Session::get('direction') === "rtl" ? 'pl-0' : 'pr-0'}}"
                 id="SearchParameters">
                 <!--Price Sidebar-->
-                <div class="cz-sidebar rounded-lg box-shadow-lg" id="shop-sidebar" style="margin-bottom: -10px;">
+                {{-- <div class="cz-sidebar rounded-lg box-shadow-lg" id="shop-sidebar" style="margin-bottom: -10px;">
                     <div class="cz-sidebar-header box-shadow-sm">
                         <button class="close {{Session::get('direction') === "rtl" ? 'mr-auto' : 'ml-auto'}}"
                                 type="button" data-dismiss="sidebar" aria-label="Close"><span
@@ -329,7 +335,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!--Price Sidebar-->
                 <div class="cz-sidebar rounded-lg box-shadow-lg" id="shop-sidebar" style="margin-bottom: -10px;">
@@ -384,7 +390,7 @@
                     </div>
                 </div>
                 <!-- Brand Sidebar-->
-                <div class="cz-sidebar rounded-lg box-shadow-lg" id="shop-sidebar" style="margin-bottom: 11px;">
+                {{-- <div class="cz-sidebar rounded-lg box-shadow-lg" id="shop-sidebar" style="margin-bottom: 11px;">
                     <div class="cz-sidebar-header box-shadow-sm">
                         <button class="close {{Session::get('direction') === "rtl" ? 'mr-auto' : 'ml-auto'}}"
                                 type="button" data-dismiss="sidebar" aria-label="Close"><span
@@ -432,9 +438,9 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <!-- Categories & Color & Size Sidebar-->
-                <div class="cz-sidebar rounded-lg box-shadow-lg" id="shop-sidebar">
+                <div class="cz-sidebar rounded-lg box-shadow-lg d-none" id="shop-sidebar">
                     <div class="cz-sidebar-header box-shadow-sm">
                         <button class="close {{Session::get('direction') === "rtl" ? 'mr-auto' : 'ml-auto'}}"
                                 type="button" data-dismiss="sidebar" aria-label="Close"><span
@@ -507,7 +513,7 @@
             <div id="mySidepanel" class="sidepanel">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
                 <aside class="" style="padding-right: 5%;padding-left: 5%;">
-                    <div class="" id="shop-sidebar" style="margin-bottom: -10px;">
+                    {{-- <div class="" id="shop-sidebar" style="margin-bottom: -10px;">
                         <div class=" box-shadow-sm">
 
                         </div>
@@ -533,7 +539,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!--Price Sidebar-->
                     <div class="" id="shop-sidebar" style="margin-bottom: -10px;">
                         <div class=" box-shadow-sm">
@@ -580,7 +586,7 @@
                         </div>
                     </div>
                     <!-- Brand Sidebar-->
-                    <div class="" id="shop-sidebar" style="margin-bottom: 11px;">
+                    {{-- <div class="" id="shop-sidebar" style="margin-bottom: 11px;">
 
                         <div class="">
                             <!-- Filter by Brand-->
@@ -620,9 +626,9 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- Categories & Color & Size Sidebar (mobile) -->
-                    <div class="" id="shop-sidebar">
+                    <div class="d-none" id="shop-sidebar">
                         <div class="">
                             <!-- Categories-->
                             <div class="widget widget-categories mb-4 pb-4 border-bottom">
@@ -687,7 +693,7 @@
                         </div>
                     </div>
                 </aside>
-            </div> --}}
+            </div>
 
             <!-- Content  -->
             <section class="col-lg-9 col-md-12">
@@ -761,6 +767,7 @@
                     $('#paginator-ajax').html(response.paginator);
                 },
                 complete: function () {
+                    closeNav()
                     $('#loading').hide();
                 },
             });
