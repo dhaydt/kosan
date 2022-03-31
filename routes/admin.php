@@ -376,6 +376,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('list/{status}', 'OrderController@list')->name('list');
             Route::get('details/{id}', 'OrderController@details')->name('details');
             Route::post('status', 'OrderController@status')->name('status');
+            Route::post('manual', 'OrderController@manual_upload')->name('manual-payment');
             Route::post('payment-status', 'OrderController@payment_status')->name('payment-status');
             Route::post('productStatus', 'OrderController@productStatus')->name('productStatus');
             Route::get('generate-invoice/{id}', 'OrderController@generate_invoice')->name('generate-invoice');
