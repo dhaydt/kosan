@@ -49,6 +49,10 @@ Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], funct
         Route::get('/expired/{id}', 'XenditPaymentController@expire')->name('xenditExpire');
     });
 
+    Route::group(['prefix' => 'apply', 'as' => 'apply.'], function () {
+        Route::post('apply', 'LokerController@store')->name('apply');
+    });
+
     Route::get('search-shop', 'WebController@search_shop')->name('search-shop');
 
     Route::get('categories', 'WebController@all_categories')->name('categories');

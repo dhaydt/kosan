@@ -127,7 +127,7 @@
                         @if ($order->order_status == 'pending')
                         <div class="col-md-6 mt-2 text-right">
                             <a class="text-body mr-3 btn btn-outline-secondary"
-                               href='javascript:' data-toggle="modal" data-target="#upload">
+                            href='javascript:' data-toggle="modal" data-target="#upload">
                                 <i class="tio-print mr-1"></i> Upload Bukti Transfer
                             </a>
                         </div>

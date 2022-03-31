@@ -169,10 +169,11 @@
                                     <span class="capitalize">
                                         {{ $product->penanggung_jwb }} (<strong>{{ $product->hp_penanggung_jwb }}</strong>)
                                     </span>
+                                    <input type="hidden" id="auth" value="{{ auth('customer')->id() }}">
 
                                 </div>
                                 <div class="sewa mt-3">
-                                    <button class="btn btn-outline-success text-uppercase w-100" type="button" onclick="apply_now()">
+                                    <button class="btn btn-outline-success text-uppercase w-100" onclick="check()" type="button">
                                         Lamar sekarang
                                     </button>
                                 </div>
@@ -184,5 +185,21 @@
                     </div>
                 </div>
             </div>
+            @if (auth('customer')->id())
+            @include('web-views.jobs.apply')
+            @endif
         </div>
 @endsection
+@push('script')
+    <script>
+        function check(){
+            var user = $('#auth').val();
+            if(!user){
+                location.href = "{{route('customer.auth.login')}}";
+            }else{
+                $('#apply').modal('show')
+            }
+
+        }
+    </script>
+@endpush

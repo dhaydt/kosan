@@ -141,7 +141,7 @@ class OrderController extends Controller
             OrderManager::updateRoom($kamar, 0, $uid);
             $order->save();
 
-            Toastr::success('Bukti transfer berhhasil di upload');
+            Toastr::success('Bukti transfer berhasil di upload');
 
             return redirect()->back();
         }

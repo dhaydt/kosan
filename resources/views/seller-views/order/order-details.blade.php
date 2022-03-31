@@ -123,12 +123,78 @@
                             </span>
                         @endif
                     </div>
-
-                    <div class="col-md-6 mt-2">
-                        <a class="text-body" target="_blank"
-                           href={{route('seller.orders.generate-invoice',[$order->id])}}>
-                            <i class="tio-print"></i> {{\App\CPU\translate('Print invoice')}}
-                        </a>
+                    <div class="row">
+                        <div class="col-md-6 mt-2">
+                            <a class="text-body" target="_blank"
+                               href={{route('seller.orders.generate-invoice',[$order->id])}}>
+                                <i class="tio-print"></i> {{\App\CPU\translate('Print invoice')}}
+                            </a>
+                        </div>
+                        @if ($order->order_status == 'pending')
+                        <div class="col-md-6 mt-2 text-right">
+                            <a class="text-body mr-3 btn btn-outline-secondary"
+                            href='javascript:' data-toggle="modal" data-target="#upload">
+                                <i class="tio-print mr-1"></i> Upload Bukti Transfer
+                            </a>
+                        </div>
+                        @endif
+                         <!-- Modal -->
+                         <div class="modal fade" id="upload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Upload bukti transfer manual</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <form action="{{ route('seller.orders.manual-payment') }}" method="POST" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    @csrf
+                                    @php($rooms = $order->details[0]->product->room)
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="hidden" name="id" value="{{ $order->id }}">
+                                            <input type="hidden" name="order_status" value="delivered">
+                                            <select id="rooms" class="custom-select custom-select-lg mb-3" name="no_kamar">
+                                                <option value="">Pilih nomor kamar</option>
+                                                <option value="id{{ $rooms[0]->room_id }}">Pilih ditempat</option>
+                                                @foreach ($rooms as $r)
+                                                @if ($r->available == 1)
+                                                <option value="{{ $r->id }}">{{ $r->name }}</option>
+                                                @endif
+                                                @endforeach
+                                            </select>
+                                            <label for="name">{{ \App\CPU\translate('Pilih bukti transfer')}}</label>
+                                            <br>
+                                            <div class="custom-file" style="text-align: left">
+                                                <input type="file" name="image" id="mbimageFileUploader"
+                                                    class="custom-file-input"
+                                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                                <label class="custom-file-label"
+                                                    for="mbimageFileUploader">{{\App\CPU\translate('choose')}} {{\App\CPU\translate('file')}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <center>
+                                                <img
+                                                    style="max-width: 250px;border: 1px solid; border-radius: 10px; max-height:200px;"
+                                                    id="mbImageviewer"
+                                                    onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                                    src="{{asset('storage/struk'.'/'.$order->struk)}}"
+                                                    alt="banner image"/>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row d-none">
@@ -481,6 +547,22 @@
 @endsection
 @push('script')
     <script>
+        function mbimagereadURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#mbImageviewer').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#mbimageFileUploader").change(function () {
+            mbimagereadURL(this);
+        });
+
         $(document).on('change', '.payment_status', function () {
             var id = $(this).attr("data-id");
             var value = $(this).val();

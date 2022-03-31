@@ -71,6 +71,7 @@ Route::group(['namespace' => 'Seller', 'prefix' => 'seller', 'as' => 'seller.'],
         Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
             Route::get('list/{status}', 'OrderController@list')->name('list');
             Route::get('details/{id}', 'OrderController@details')->name('details');
+            Route::post('manual', 'OrderController@manual_upload')->name('manual-payment');
             Route::get('generate-invoice/{id}', 'OrderController@generate_invoice')->name('generate-invoice');
             Route::post('status', 'OrderController@status')->name('status');
             Route::post('productStatus', 'OrderController@productStatus')->name('productStatus');

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Seller;
 
 use App\CPU\Helpers;
+use App\CPU\ImageManager;
 use App\CPU\OrderManager;
 use function App\CPU\translate;
 use App\Http\Controllers\Controller;
 use App\Model\Order;
 use App\Model\Seller;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -36,6 +38,60 @@ class OrderController extends Controller
         $orders = $orders->latest()->paginate(Helpers::pagination_limit())->appends($query_param);
 
         return view('seller-views.order.list', compact('orders', 'search'));
+    }
+
+    public function manual_upload(Request $request)
+    {
+        if ($request->no_kamar == null) {
+            Toastr::warning('Mohon pilih no kamar yang akan ditempati!');
+
+            return redirect()->back();
+        }
+        // dd($request);
+        if ($request->file('image') != null) {
+            $order = Order::find($request->id);
+            $fcm_token = $order->customer->cm_firebase_token;
+            $value = Helpers::order_status_update_message($request->order_status);
+            try {
+                if ($value) {
+                    $data = [
+                        'title' => translate('Order'),
+                        'description' => $value,
+                        'order_id' => $order['id'],
+                        'image' => '',
+                    ];
+                    Helpers::send_push_notif_to_device($fcm_token, $data);
+                }
+            } catch (\Exception $e) {
+            }
+
+            $kamar = $request->no_kamar;
+            if (strpos($kamar, 'id') !== false) {
+                $rom = 'ditempat';
+            } else {
+                $rom = $kamar;
+            }
+            $status = $request->order_status;
+
+            $img = $request->file('image');
+            $struk = ImageManager::upload('struk/', 'png', $img);
+            $order->struk = $struk;
+
+            $order->order_status = $status;
+            $order->payment_status = 'paid';
+            $order->roomDetail_id = $rom;
+            $uid = $order->customer_id;
+            // dd($rom);
+            OrderManager::updateRoom($kamar, 0, $uid);
+            $order->save();
+
+            Toastr::success('Bukti transfer berhasil di upload');
+
+            return redirect()->back();
+        }
+        Toastr::warning('Mohon pilih bukti transfer!!!!');
+
+        return redirect()->back();
     }
 
     public function details($id)
