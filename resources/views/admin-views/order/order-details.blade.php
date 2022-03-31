@@ -294,6 +294,15 @@
                         </div>
                         <hr>
                         <div class="col-12 py-3">
+                            <i class="fa fa-sticky-note mb-3" aria-hidden="true" style="    font-size: 27px;
+                            color: #000;"></i>
+                            <h5 style="capitalize">Catatan tambahan:</h5>
+                            <span style="font-weight: 700;" class="capitalize">
+                                {{ $order->catatan_tambahan }}
+                            </span>
+                        </div>
+                        <hr>
+                        <div class="col-12 py-3">
                             <img src="{{ asset('assets/back-end/img/user.png') }}" alt="" style="height: 30px;" class="mb-3">
                             <h5 style="capitalize">Profil Penyewa:</h5>
                             <span class="capitalize d-block pb-3">
