@@ -156,7 +156,7 @@
                                         <div class="col-md-6">
                                             <input type="hidden" name="id" value="{{ $order->id }}">
                                             <input type="hidden" name="order_status" value="delivered">
-                                            <select id="rooms" class="custom-select custom-select-lg mb-3" name="no_kamar">
+                                            <select id="roomsd" class="custom-select custom-select-lg mb-3" name="no_kamar">
                                                 <option value="">Pilih nomor kamar</option>
                                                 <option value="id{{ $rooms[0]->room_id }}">Pilih ditempat</option>
                                                 @foreach ($rooms as $r)
@@ -641,7 +641,13 @@
 
         function order_status(status) {
             var value = status;
-            var room = $('#rooms').val()
+            var room = $('#rooms').val();
+            var roomd = $('#roomsd').val()
+            if(room){
+                var room = room;
+            }else{
+                var room = roomd;
+            }
             Swal.fire({
                 title: '{{\App\CPU\translate('Apa_anda_yakin_ingin_menerima?')}}',
                 text: "{{\App\CPU\translate('Pastikan_anda_telah_melihat_profil_penyewa!')}}",

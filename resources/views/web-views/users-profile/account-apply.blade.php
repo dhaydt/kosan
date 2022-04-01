@@ -129,27 +129,27 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            @if ($order->order_status == 'pending')
+                            @if ($order->job_status == 'pending')
                             <span class="status text-info">Tunggu Konfirmasi</span>
                             @endif
-                            @if ($order->order_status == 'processing')
+                            @if ($order->job_status == 'processing')
                             <span class="status text-warning">Butuh Pembayaran</span>
                             @endif
-                            @if ($order->order_status == 'delivered')
+                            @if ($order->job_status == 'delivered')
                             <span class="status text-success">Terbayar</span>
                             @endif
-                            @if ($order->order_status == 'canceled')
+                            @if ($order->job_status == 'canceled')
                             <span class="status text-danger">Booking dibatalkan</span>
                             @endif
-                            @if ($order->order_status == 'failed')
+                            @if ($order->job_status == 'failed')
                             <span class="status text-danger">Kadaluarsa</span>
                             @endif
-                            @if ($order->order_status == 'expired')
+                            @if ($order->job_status == 'expired')
                             <span class="status text-danger">Kadaluarsa oleh admin</span>
                             @endif
                         </div>
                         {{-- {{ dd($order->order_status) }} --}}
-                        @if ($order->order_status != "canceled" && $order->order_status != 'failed' && $order->order_status != 'expired' && $order->order_status != 'delivered')
+                        {{-- @if ($order->job_status != "canceled" && $order->job_status != 'failed' && $order->job_status != 'expired' && $order->job_status != 'delivered')
                         <div class="col-12 col-md-8 d-flex justify-content-end">
                             @php($date = Carbon\Carbon::now()->toDateTimeString())
                             @if($order->auto_cancel && $date < $order->auto_cancel)
@@ -171,12 +171,11 @@
                                     </div>
                                     <div class="d-flex mr-1">
                                         <span class="seconds"></span>
-                                        {{-- <div class="smalltext">D</div> --}}
                                     </div>
                                 </div>
                             @endif
                         </div>
-                        @endif
+                        @endif --}}
                         @if ($order->alasan_admin)
                             <div class="col col-md-8 text-right">
                                 <span class="alasan">{{ $order->alasan_admin }}</span>
@@ -188,9 +187,9 @@
                         @endif
                     </div>
                     {{-- {{ dd($orders) }} --}}
-                    @php($detail = json_decode($order->details[0]->product_details))
+                    {{-- @php($detail = json_decode($order->details[0]->product_details))
                     @php($district = strtolower($detail->kost->district))
-                    @php($city = strtolower($detail->kost->city))
+                    @php($city = strtolower($detail->kost->city)) --}}
                 </div>
                 <hr class="line">
                 <div class="card-body">
@@ -198,12 +197,11 @@
                         <div class="booking-frame">
                             <img class="img-booking mr-3"
                             onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                            src="{{asset('storage/product')}}/{{json_decode($detail->images)[0]}}" alt="">
+                            src="{{asset('storage/jobs'.'/'.$order->logo)}} alt="">
                         </div>
                         <div class="kost-detail d-flex flex-column">
-                            <span class="title-kost capitalize">{{ $detail->kost->name }} {{ $detail->type }} {{ $district }} {{ $city }}</span>
-                            <div class="status mt-1">
-                                {{-- {{ dd($order) }} --}}
+                            <span class="title-kost capitalize">Pekerjaan di {{ $order->company_name }} sebagai {{ $order->name }}</span>
+                            {{-- <div class="status mt-1">
                                 <img src="{{ asset('assets/front-end/img/room.png') }}" class="img-kos" alt="">
                                 <span class="capitalize room-info ml-2">
                                     @if ($order->roomDetail_id == NULL)
@@ -215,14 +213,13 @@
                                     @endif
 
                                 </span>
-                            </div>
+                            </div> --}}
+                            {{-- {{ dd($order) }} --}}
                             <div class="date row mt-1">
                                 <div class="col-12">
                                     <img src="{{ asset('assets/front-end/img/date.png') }}" style="height: 15px" alt="">
                                     <span class="ml-2 dated">Tanggal masuk</span>
                                 </div>
-                                {{-- @php($add = 2)
-                                    {{ date("Y-m-d", strtotime("+".$add."month", strtotime($order->mulai))) }} --}}
                                     @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
                                     <div class="ml-4 mt-1">
                                         <span class="date-date">{{ App\CPU\Helpers::dateChange($date) }}</span>
@@ -236,8 +233,8 @@
                             <div class="price mt-3 col-md-9 px2">
                                 <span class="price-card">{{\App\CPU\Helpers::currency_converter($order->order_amount)}} <span class="satuan">/bulan</span></span>
                             </div>
-                            @php($product = json_decode($order->details[0]->product_details))
-                            @php($fasilitas = json_decode($product->fasilitas_id))
+                            @php($product = $order->job)
+                            @php($fasilitas = [])
                             <div class="col-md-9">
                             <div class="btn-fasilitas">
                                 <a href="javascript:" class="fasilitas capitalize text-success" data-toggle="modal" data-target="#exampleModal{{ $order->id }}">

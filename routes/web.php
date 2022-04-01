@@ -51,6 +51,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['maintenance_mode']], funct
 
     Route::group(['prefix' => 'apply', 'as' => 'apply.'], function () {
         Route::post('apply', 'LokerController@store')->name('apply');
+        Route::get('apply-job', 'LokerController@order')->name('job-order');
     });
 
     Route::get('search-shop', 'WebController@search_shop')->name('search-shop');

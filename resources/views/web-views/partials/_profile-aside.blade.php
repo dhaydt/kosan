@@ -85,21 +85,23 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="pb-0">
+
+        <div class="pb-0" style="padding-top: 12px;">
+            <!-- Filter by price-->
             <div class="sidebarL">
                 <h3 class="widget-title btnF" style="font-weight: 700;">
-                    <a class="{{Request::is('track-order*')?'active-menu':''}}" href="{{route('track-order.index') }} ">{{\App\CPU\translate('track_your_order')}}</a>
+                    <a class="{{Request::is('job-order*') ? 'active-menu' :''}}" href="{{route('apply.job-order') }} ">{{\App\CPU\translate('Job_vacancy')}}</a>
                 </h3>
                 <div class="divider-role"
                      style="border: 1px solid whitesmoke; margin-bottom: 14px;  margin-top: -6px;">
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="pb-0">
             <!-- Filter by price-->
             <div class="sidebarL">
                 <h3 class="widget-title btnF " style="font-weight: 700;">
-                    <a class="{{Request::is('wishlists*')?'active-menu':''}}" href="{{route('wishlists')}}"> {{\App\CPU\translate('favorite')}}  </a></h3>
+                    <a class="{{Request::is('wishlists*') ? 'active-menu':''}}" href="{{route('wishlists')}}"> {{\App\CPU\translate('favorites')}}  </a></h3>
                 <div class="divider-role"
                      style="border: 1px solid whitesmoke; margin-bottom: 14px;  margin-top: -6px;">
                 </div>
@@ -200,6 +202,16 @@
                 </div>
                 <span class="item-nav">
                     {{\App\CPU\translate('booking')}}
+                </span>
+            </a>
+        </div>
+        <div class="col-3 d-flex flex-column align-items-center">
+            <a class="{{Request::is('job-order*') ? 'active-menu' :''}} d-flex flex-column align-items-center" href="{{route('apply.job-order') }} ">
+                <div class="book-icon-frame">
+                    <img src="{{ asset('assets/front-end/img/booking.png') }}" alt="" class="book-icon">
+                </div>
+                <span class="item-nav">
+                    {{\App\CPU\translate('Job_vacancy')}}
                 </span>
             </a>
         </div>

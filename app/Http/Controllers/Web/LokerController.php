@@ -20,6 +20,18 @@ class LokerController extends Controller
         $job = Jobs::where('id', $id)->first();
     }
 
+    public function order()
+    {
+        $check = Auth('customer')->user();
+        if (!$check) {
+            return redirect()->route('customer.auth.login');
+        }
+        $orders = Apply::with('job')->where('customer_id', auth('customer')->id())->orderBy('id', 'DESC')->get();
+        // dd($orders);
+
+        return view('web-views.users-profile.account-apply', compact('orders'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
