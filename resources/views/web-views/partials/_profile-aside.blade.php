@@ -185,17 +185,17 @@
 <div class="footer-booking-nav d-flex d-md-none px-2 pb-1 pt-2">
 <div class="container">
     <div class="row">
-        <div class="col-3 d-flex flex-column align-items-center">
+        <div class="col-2 d-flex flex-column align-items-center">
             <a class="{{Request::is('account-kost*') ? 'active-menu' :''}} d-flex flex-column align-items-center" href="{{route('account-kost') }} ">
                 <div class="book-icon-frame">
-                    <img src="{{ asset('assets/front-end/img/booking.png') }}" alt="" class="book-icon">
+                    <img src="{{ asset('assets/front-end/img/home.png') }}" alt="" class="book-icon">
                 </div>
                 <span class="item-nav">
                     {{\App\CPU\translate('Kost')}}
                 </span>
             </a>
         </div>
-        <div class="col-3 d-flex flex-column align-items-center">
+        <div class="col-2 d-flex flex-column align-items-center">
             <a class="{{Request::is('account-oder*') || Request::is('account-order-details*') ? 'active-menu' :''}} d-flex flex-column align-items-center" href="{{route('account-oder') }} ">
                 <div class="book-icon-frame">
                     <img src="{{ asset('assets/front-end/img/booking.png') }}" alt="" class="book-icon">
@@ -205,17 +205,17 @@
                 </span>
             </a>
         </div>
-        <div class="col-3 d-flex flex-column align-items-center">
-            <a class="{{Request::is('job-order*') ? 'active-menu' :''}} d-flex flex-column align-items-center" href="{{route('apply.job-order') }} ">
+        <div class="col-2 d-flex flex-column align-items-center">
+            <a class="{{ Request::is('apply.job-order*')  ? 'active-menu' :''}} d-flex flex-column align-items-center" href="{{route('apply.job-order') }} ">
                 <div class="book-icon-frame">
-                    <img src="{{ asset('assets/front-end/img/booking.png') }}" alt="" class="book-icon">
+                    <img src="{{ asset('assets/front-end/img/apply.png') }}" alt="" class="book-icon">
                 </div>
                 <span class="item-nav">
-                    {{\App\CPU\translate('Job_vacancy')}}
+                    {{\App\CPU\translate('Applied')}}
                 </span>
             </a>
         </div>
-        <div class="col-3 d-flex flex-column align-items-center">
+        <div class="col-2 d-flex flex-column align-items-center">
             <a class="{{Request::is('wishlists*')?'active-menu':''}} d-flex flex-column align-items-center" href="{{route('wishlists')}}">
             <div class="book-icon-frame">
                 <img src="{{ asset('assets/front-end/img/fav.png') }}" alt="" class="book-icon">
@@ -225,7 +225,7 @@
             </span>
             </a>
         </div>
-        <div class="col-3 d-flex flex-column align-items-center">
+        <div class="col-2 d-flex flex-column align-items-center">
             <a class="{{Request::is('chat*')?'active-menu':''}} d-flex flex-column align-items-center" href="{{route('chat-with-seller')}}">
                 <div class="book-icon-frame">
                     <img src="{{ asset('assets/front-end/img/chat.png') }}" alt="" class="book-icon">
@@ -235,7 +235,7 @@
                 </span>
             </a>
         </div>
-        <div class="col-3 d-flex flex-column align-items-center">
+        <div class="col-2 d-flex flex-column align-items-center">
             <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-transform: capitalize">
                 <div class="book-icon-frame">
                     <img src="{{ asset('assets/front-end/img/other.png') }}" alt="" class="book-icon">

@@ -271,6 +271,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('edit/{id}', 'JobController@edit')->name('edit');
             Route::post('update/{id}', 'JobController@update')->name('update');
             Route::delete('delete/{id}', 'JobController@destroy')->name('delete');
+            Route::get('applied', 'JobController@applied')->name('applied');
+
+            Route::get('details/{order_id}', 'JobController@details_applied')->name('details');
+            Route::post('apply_status', 'JobController@apply_status')->name('apply_status');
         });
 
         Route::group(['prefix' => 'property', 'as' => 'property.', 'middleware' => ['module:product_management']], function () {

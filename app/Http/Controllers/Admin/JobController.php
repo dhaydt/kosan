@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\CPU\Helpers;
 use App\CPU\ImageManager;
 use App\Http\Controllers\Controller;
+use App\Model\Apply;
 use App\Model\Category;
 use App\Model\Fasilitas;
 use App\Model\Jobs;
@@ -50,6 +51,18 @@ class JobController extends Controller
         return view('admin-views.jobs.list', compact('products', 'search'));
     }
 
+    public function details_applied($id)
+    {
+        $order = Apply::with('job', 'customer')->where(['id' => $id])->first();
+        if ($order->job_status == 'applied') {
+            $order->job_status = 'viewed';
+            $order->save();
+        }
+        $order = Apply::with('job', 'customer')->where(['id' => $id])->first();
+
+        return view('admin-views.jobs.job-details', compact('order'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -62,6 +75,95 @@ class JobController extends Controller
         $product->save();
 
         return redirect()->route('admin.product.list', ['seller', 'status' => $product['request_status']]);
+    }
+
+    public function applied(Request $request)
+    {
+        $query_param = [];
+        $search = $request['search'];
+        // if (session()->has('show_inhouse_orders') && session('show_inhouse_orders') == 1) {
+        //     $query = Order::whereHas('details', function ($query) {
+        //         $query->whereHas('product', function ($query) {
+        //             $query->where('added_by', 'admin');
+        //         });
+        //     })->with(['customer', 'details']);
+
+        //     if ($status != 'all') {
+        //         $orders = $query->where(['order_status' => $status]);
+        //     } else {
+        //         $orders = $query;
+        //     }
+
+        //     if ($request->has('search')) {
+        //         $key = explode(' ', $request['search']);
+        //         $orders = $orders->where(function ($q) use ($key) {
+        //             foreach ($key as $value) {
+        //                 $q->orWhere('id', 'like', "%{$value}%")
+        //                     ->orWhere('order_status', 'like', "%{$value}%")
+        //                     ->orWhere('transaction_ref', 'like', "%{$value}%");
+        //             }
+        //         });
+        //         $query_param = ['search' => $request['search']];
+        //     }
+        // } else {
+        //     if ($status != 'all') {
+        //         $orders = Order::with(['customer', 'details'])->where(['order_status' => $status]);
+        //     } else {
+        //         $orders = Order::with(['customer', 'details']);
+        //     }
+
+        //     if ($request->has('search')) {
+        //         $key = explode(' ', $request['search']);
+        //         $orders = $orders->where(function ($q) use ($key) {
+        //             foreach ($key as $value) {
+        //                 $q->orWhere('id', 'like', "%{$value}%")
+        //                     ->orWhere('order_status', 'like', "%{$value}%")
+        //                     ->orWhere('transaction_ref', 'like', "%{$value}%");
+        //             }
+        //         });
+        //         $query_param = ['search' => $request['search']];
+        //     }
+        // }
+        $orders = Apply::with('job')->orderBy('id', 'DESC');
+
+        $orders = $orders->latest()->paginate(Helpers::pagination_limit())->appends($query_param);
+
+        return view('admin-views.jobs.apply', compact('orders', 'search'));
+    }
+
+    public function apply_status(Request $request)
+    {
+        $order = Apply::where('id', $request->id)->first();
+        // dd($order);
+        // $fcm_token = $order->customer->cm_firebase_token;
+        // $value = Helpers::order_status_update_message($request->order_status);
+        // try {
+        //     if ($value) {
+        //         $data = [
+        //             'title' => translate('Order'),
+        //             'description' => $value,
+        //             'order_id' => $order['id'],
+        //             'image' => '',
+        //         ];
+        //         Helpers::send_push_notif_to_device($fcm_token, $data);
+        //     }
+        // } catch (\Exception $e) {
+        // }
+
+        $order->job_status = $request->order_status;
+        // OrderManager::stock_update_on_order_status_change($order, $request->order_status);
+        $order->save();
+        // $transaction = OrderTransaction::where(['order_id' => $order['id']])->first();
+        // if (isset($transaction) && $transaction['status'] == 'disburse') {
+        //     return response()->json($request->order_status);
+        // }
+
+        // if ($request->order_status == 'delivered' && $order['seller_id'] != null) {
+        //     OrderManager::wallet_manage_on_order_status_change($order, 'admin');
+        // }
+        Toastr::success('Kandidat berhasil diterima');
+
+        return redirect()->back();
     }
 
     public function status_update(Request $request)

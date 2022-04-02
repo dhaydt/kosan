@@ -294,6 +294,7 @@
                     <i class="fa fa-caret-down"></i>
                     <div class="dropdown-menu" style="top:15px;" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('account-oder') }}">Booking</a>
+                        <a class="dropdown-item" href="{{ route('apply.job-order') }}">Applied</a>
                         <a class="dropdown-item" href="{{ route('wishlists') }}">Favorite</a>
                         <a class="dropdown-item" href="{{ route('chat-with-seller') }}">Chat</a>
                         <a class="dropdown-item" href="{{ route('user-account') }}">Profile</a>

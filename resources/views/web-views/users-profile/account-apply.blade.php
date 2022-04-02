@@ -129,20 +129,20 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            @if ($order->job_status == 'pending')
-                            <span class="status text-info">Tunggu Konfirmasi</span>
+                            @if ($order->job_status == 'applied')
+                            <span class="status text-info">Lamaran terkirim</span>
                             @endif
-                            @if ($order->job_status == 'processing')
-                            <span class="status text-warning">Butuh Pembayaran</span>
+                            @if ($order->job_status == 'viewed')
+                            <span class="status text-warning">Sedang diperiksa</span>
                             @endif
-                            @if ($order->job_status == 'delivered')
-                            <span class="status text-success">Terbayar</span>
+                            @if ($order->job_status == 'terima')
+                            <span class="status text-success">Diterima</span>
                             @endif
                             @if ($order->job_status == 'canceled')
                             <span class="status text-danger">Booking dibatalkan</span>
                             @endif
-                            @if ($order->job_status == 'failed')
-                            <span class="status text-danger">Kadaluarsa</span>
+                            @if ($order->job_status == 'tolak')
+                            <span class="status text-danger">Ditolak</span>
                             @endif
                             @if ($order->job_status == 'expired')
                             <span class="status text-danger">Kadaluarsa oleh admin</span>
@@ -197,32 +197,28 @@
                         <div class="booking-frame">
                             <img class="img-booking mr-3"
                             onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                            src="{{asset('storage/jobs'.'/'.$order->logo)}} alt="">
+                            src="{{asset('storage/jobs'.'/'.$order->job->logo)}}" alt="">
                         </div>
                         <div class="kost-detail d-flex flex-column">
-                            <span class="title-kost capitalize">Pekerjaan di {{ $order->company_name }} sebagai {{ $order->name }}</span>
-                            {{-- <div class="status mt-1">
-                                <img src="{{ asset('assets/front-end/img/room.png') }}" class="img-kos" alt="">
+                            <span class="title-kost capitalize">{{ $order->job->name }}</span>
+                            <div class="status mt-1">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
                                 <span class="capitalize room-info ml-2">
-                                    @if ($order->roomDetail_id == NULL)
-                                    Kamar belum dikonfirmasi
-                                    @elseif ($order->roomDetail_id == 'ditempat')
-                                    Dipilih ditempat
-                                    @else
-                                    Kamar {{ $order->room[0]->name }}
-                                    @endif
+                                   {{ $order->job->status_employe }}
 
                                 </span>
-                            </div> --}}
+                            </div>
                             {{-- {{ dd($order) }} --}}
                             <div class="date row mt-1">
-                                <div class="col-12">
-                                    <img src="{{ asset('assets/front-end/img/date.png') }}" style="height: 15px" alt="">
-                                    <span class="ml-2 dated">Tanggal masuk</span>
+                                <div class="col-12 text-uppercase">
+                                    {{-- <img src="{{ asset('assets/front-end/img/date.png') }}" style="height: 15px" alt=""> --}}
+                                    <span class="ml-2 dated">{{ $order->job->company_name }}</span>
                                 </div>
-                                    @php($date = Carbon\Carbon::parse($order->mulai)->isoFormat('dddd, D MMMM Y'))
-                                    <div class="ml-4 mt-1">
-                                        <span class="date-date">{{ App\CPU\Helpers::dateChange($date) }}</span>
+                                @php($district = strtolower($order->job->district))
+                                @php($city = strtolower($order->job->city))
+                                @php($prov = strtolower($order->job->province))
+                                    <div class="ml-4 mt-1 capitalize">
+                                        <span class="date-date">{{ $district }}, {{ $city }} - {{ $prov }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -231,16 +227,16 @@
                     <div class="more-content d-none" id="more_content{{ $order->id }}">
                         <div class="row justify-content-center px-4 mb-4">
                             <div class="price mt-3 col-md-9 px2">
-                                <span class="price-card">{{\App\CPU\Helpers::currency_converter($order->order_amount)}} <span class="satuan">/bulan</span></span>
+                                <span class="price-card">{{\App\CPU\Helpers::currency_converter($order->job->gaji)}} <span class="satuan">/bulan</span></span>
                             </div>
                             @php($product = $order->job)
                             @php($fasilitas = [])
                             <div class="col-md-9">
-                            <div class="btn-fasilitas">
+                            {{-- <div class="btn-fasilitas">
                                 <a href="javascript:" class="fasilitas capitalize text-success" data-toggle="modal" data-target="#exampleModal{{ $order->id }}">
                                     Lihat fasilitas
                                 </a>
-                            </div>
+                            </div> --}}
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ $order->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" style="top: 30%;">
@@ -306,7 +302,7 @@
                             </div>
                         </div>
                         @endif
-                        <div class="col-md-12 data-penyewa p-3 mt-3">
+                        {{-- <div class="col-md-12 data-penyewa p-3 mt-3">
                             <span class="title-kost capitalize">
                                 detail booking
                             </span>
@@ -328,7 +324,7 @@
                                     <span class="content">{{ $order->durasi }} bulan</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     @if ($order->order_status == 'pending')
                     <div class="col-12 d-flex justify-content-end mb-4 pr-3">
@@ -363,7 +359,7 @@
                     <!-- modal batalkan -->
                     @endif
                 </div>
-                <div class="col-12 text-center mb-2">
+                {{-- <div class="col-12 text-center mb-2">
                     <a href="javascript:" id="lengkap{{ $order->id }}" class="see-more text-success" onclick="lihat({{ $order->id }})">
                         Lihat selengkapnya
                         <i class="fa fa-chevron-down ml-2"></i>
@@ -372,7 +368,7 @@
                         Lihat lebih sedikit
                         <i class="fa fa-chevron-up ml-2"></i>
                     </a>
-                </div>
+                </div> --}}
                 <div class="card-footer">
                     <div class="row">
                         @if ($order->seller_is != 'admin')

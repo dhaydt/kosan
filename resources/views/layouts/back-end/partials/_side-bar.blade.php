@@ -78,7 +78,7 @@
 
                         @if(\App\CPU\Helpers::module_permission_check('order_management'))
                             <li class="nav-item {{Request::is('admin/orders*')?'scroll-here':''}}">
-                                <small class="nav-subtitle" title="">{{\App\CPU\translate('Booking_management')}}</small>
+                                <small class="nav-subtitle" title="">{{\App\CPU\translate('Jobs_vacancy')}}</small>
                                 <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                             </li>
                             <!-- Order -->
@@ -200,6 +200,14 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/jobs/applied*')?'active':''}}">
+                                <a class="js-navbar-vertical-aside-menu-link nav-link"
+                                   href="{{route('admin.jobs.applied')}}">
+                                   <i class="fa fa-graduation-cap nav-icon" aria-hidden="true"></i>
+                                    <span class="text-truncate">{{\App\CPU\translate('Applied_vacancy')}}</span>
+                                </a>
+                            </li>
                         @endif
                     <!--order management ends-->
 
@@ -289,24 +297,24 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="navbar-vertical-aside-has-menu {{Request::is('') || Request::is('')?'active':''}}">
+                            <li class="navbar-vertical-aside-has-menu {{Request::is('admin/jobs*') ?'active':''}}">
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                    href="javascript:">
                                     <i class="fa fa-bullhorn nav-icon"></i>
                                     <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                        {{\App\CPU\translate('Job')}} {{\App\CPU\translate('Vacancy')}}
+                                        {{\App\CPU\translate('Jobs')}} {{\App\CPU\translate('Vacancy')}}
                                     </span>
                                 </a>
                                 <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
-                                    style="display: {{(Request::is('admin/product/list/in_house') || (Request::is('admin/property/list/in_house')) || (Request::is('admin/property/edit-property/*')) || Request::is('admin/product/edit/*') || Request::is('admin/product/bulk-import'))?'block':''}}">
-                                    <li class="nav-item {{Request::is('admin/property/list/in_house') || (Request::is('admin/property/edit-property/*')) ?'active':''}}">
+                                    style="display: {{ Request::is('admin/jobs/list/in_house') ? 'block':'' }}">
+                                    <li class="nav-item {{Request::is('admin/jobs/list/in_house') ?'active':''}}">
                                         <a class="nav-link " href="{{route('admin.jobs.list',['in_house', ''])}}">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">{{\App\CPU\translate('InRoom_jobs')}}</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item {{Request::is('admin/product/list/in_house') || Request::is('admin/product/edit/*') ?'active':''}}">
-                                        <a class="nav-link " href="{{route('admin.jobs.list',['in_house', ''])}}">
+                                    <li class="nav-item {{Request::is('admin/jobs/list/seller') || Request::is('admin/jobs/edit/*') ?'active':''}}">
+                                        <a class="nav-link " href="{{route('admin.jobs.list',['seller', ''])}}">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span class="text-truncate">{{\App\CPU\translate('Seller_jobs')}}</span>
                                         </a>
