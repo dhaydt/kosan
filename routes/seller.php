@@ -68,6 +68,21 @@ Route::group(['namespace' => 'Seller', 'prefix' => 'seller', 'as' => 'seller.'],
             Route::get('bulk-export', 'ProductController@bulk_export_data')->name('bulk-export');
         });
 
+        Route::group(['prefix' => 'jobs', 'as' => 'jobs.'], function () {
+            Route::get('list', 'JobController@index')->name('list');
+            Route::get('create', 'JobController@create')->name('add-new');
+            Route::get('approve-status', 'JobController@approve_status')->name('approve-status');
+            Route::post('status-update', 'JobController@status_update')->name('status-update');
+            Route::post('store', 'JobController@store')->name('store');
+            Route::get('edit/{id}', 'JobController@edit')->name('edit');
+            Route::post('update/{id}', 'JobController@update')->name('update');
+            Route::delete('delete/{id}', 'JobController@destroy')->name('delete');
+            Route::get('applied', 'JobController@applied')->name('applied');
+
+            Route::get('details/{order_id}', 'JobController@details_applied')->name('details');
+            Route::post('apply_status', 'JobController@apply_status')->name('apply_status');
+        });
+
         Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
             Route::get('list/{status}', 'OrderController@list')->name('list');
             Route::get('details/{id}', 'OrderController@details')->name('details');

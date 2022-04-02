@@ -1,4 +1,4 @@
-@extends('layouts.back-end.app')
+@extends('layouts.back-end.app-seller')
 
 @section('title', \App\CPU\translate('Applied_job'))
 
@@ -69,14 +69,14 @@
                             <!-- End Search -->
                         </form>
                     </div>
-                    <div>
+                    {{-- <div>
                         <label> {{\App\CPU\translate('inhouse_booking_only')}} : </label>
                         <label class="switch ml-3">
                             <input type="checkbox" class="status"
                                    onclick="filter_order()" {{session()->has('show_inhouse_bookings') && session('show_inhouse_bookings')==1?'checked':''}}>
                             <span class="slider round"></span>
                         </label>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- End Row -->
             </div>
@@ -111,7 +111,7 @@
                                 {{$orders->firstItem()+$key}}
                             </td>
                             <td class="table-column-pl-0 text-center">
-                                <a href="{{route('admin.jobs.details',['order_id'=>$order['id']])}}">{{$order['id']}}</a>
+                                <a href="{{route('seller.jobs.details',['order_id'=>$order['id']])}}">{{$order['id']}}</a>
                             </td>
                             <td class="text-center">{{ $order->name }}</td>
                             <td class="text-center">{{ $order->job->name }}</td>
@@ -162,10 +162,10 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item"
-                                           href="{{route('admin.orders.details',['id'=>$order['id']])}}"><i
+                                           href="{{route('seller.orders.details',['id'=>$order['id']])}}"><i
                                                 class="tio-visible"></i> {{\App\CPU\translate('view')}}</a>
                                         <a class="dropdown-item" target="_blank"
-                                           href="{{route('admin.orders.generate-invoice',[$order['id']])}}"><i
+                                           href="{{route('seller.orders.generate-invoice',[$order['id']])}}"><i
                                                 class="tio-download"></i> {{\App\CPU\translate('invoice')}}</a>
                                     </div>
                                 </div>

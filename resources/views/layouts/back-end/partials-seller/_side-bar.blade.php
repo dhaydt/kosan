@@ -172,6 +172,46 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="navbar-vertical-aside-has-menu {{Request::is('seller/jobs/applied*')?'active':''}}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link"
+                               href="{{route('seller.jobs.applied')}}">
+                               <i class="fa fa-graduation-cap nav-icon" aria-hidden="true"></i>
+                                <span class="text-truncate">{{\App\CPU\translate('Applied_job')}}</span>
+                            </a>
+                        </li>
+
+                        <li class="navbar-vertical-aside-has-menu {{Request::is('seller/jobs*')?'active':''}}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link"
+                               href="{{route('seller.jobs.list')}}">
+                               <i class="fa fa-bullhorn nav-icon"></i>
+                                <span class="text-truncate">{{\App\CPU\translate('Jobs_vacancy')}}</span>
+                            </a>
+                        </li>
+                        {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('seller/jobs*') ?'active':''}}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
+                               href="javascript:">
+                                <i class="fa fa-bullhorn nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    {{\App\CPU\translate('Jobs')}} {{\App\CPU\translate('Vacancy')}}
+                                </span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
+                                style="display: {{ Request::is('seller/jobs/list/in_house') ? 'block':'' }}">
+                                <li class="nav-item {{Request::is('seller/jobs/list/in_house') ?'active':''}}">
+                                    <a class="nav-link " href="{{route('seller.jobs.list',['in_house', ''])}}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{\App\CPU\translate('InRoom_jobs')}}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{Request::is('seller/jobs/list/seller') || Request::is('seller/jobs/edit/*') ?'active':''}}">
+                                    <a class="nav-link " href="{{route('seller.jobs.list',['seller', ''])}}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{\App\CPU\translate('Seller_jobs')}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> --}}
                         <!-- End Pages -->
 
                         <li class="nav-item">

@@ -13,6 +13,11 @@ class Jobs extends Model
         return $this->belongsTo(City::class, 'city', 'name');
     }
 
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class, 'seller_id');
+    }
+
     public function dis()
     {
         return $this->belongsTo(District::class, 'district', 'name');
