@@ -180,14 +180,6 @@
                                 <span class="text-truncate">{{\App\CPU\translate('Applied_job')}}</span>
                             </a>
                         </li>
-
-                        <li class="navbar-vertical-aside-has-menu {{Request::is('seller/jobs*')?'active':''}}">
-                            <a class="js-navbar-vertical-aside-menu-link nav-link"
-                               href="{{route('seller.jobs.list')}}">
-                               <i class="fa fa-bullhorn nav-icon"></i>
-                                <span class="text-truncate">{{\App\CPU\translate('Jobs_vacancy')}}</span>
-                            </a>
-                        </li>
                         {{-- <li class="navbar-vertical-aside-has-menu {{Request::is('seller/jobs*') ?'active':''}}">
                             <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                href="javascript:">
@@ -236,6 +228,14 @@
                                 <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
                                     {{\App\CPU\translate('my_rooms')}}
                                 </span>
+                            </a>
+                        </li>
+
+                        <li class="navbar-vertical-aside-has-menu {{Request::is('seller/jobs*')?'active':''}}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link"
+                               href="{{route('seller.jobs.list')}}">
+                               <i class="fa fa-bullhorn nav-icon"></i>
+                                <span class="text-truncate">{{\App\CPU\translate('Jobs_vacancy')}}</span>
                             </a>
                         </li>
 
