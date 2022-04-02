@@ -126,15 +126,15 @@
                                               style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('Lamaran_masuk')}}
                                       </span>
 
-                                @elseif($order['job_status']=='processing' || $order['order_status']=='out_for_delivery')
+                                @elseif($order['job_status']=='viewed' || $order['order_status']=='out_for_delivery')
                                     <span class="badge badge-soft-warning ml-2 ml-sm-3">
                                         <span class="legend-indicator bg-warning"
-                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('wait_for_payment')}}
+                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('dilihat')}}
                                       </span>
                                 @elseif($order['job_status']=='terima')
                                     <span class="badge badge-soft-success ml-2 ml-sm-3">
                                         <span class="legend-indicator bg-success"
-                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('Diterima')}}
+                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('diterima')}}
                                       </span>
                                 @elseif($order['job_status']=='tolak')
                                     <span class="badge badge-danger ml-2 ml-sm-3">
