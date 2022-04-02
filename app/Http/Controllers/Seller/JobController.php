@@ -251,6 +251,7 @@ class JobController extends Controller
         $kost->expire = $request['expire'];
         $kost->status = 0;
         $kost->request_status = 1;
+        $kost->slug = Str::slug($request['name'], '-').'-'.Str::random(6);
         if ($request->ajax()) {
             return response()->json([], 200);
         } else {
@@ -350,7 +351,6 @@ class JobController extends Controller
         $product->gaji = $request['gaji'];
         $product->hide_gaji = $request['hide'];
         $product->satuan_gaji = $request['satuan'];
-        $product->slug = Str::slug($request['name'], '-').'-'.Str::random(6);
         // $product->logo = $img;
         // $product->seller_id = $auth;
         // $product->added_by = 'seller';
