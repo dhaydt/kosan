@@ -67,6 +67,7 @@ class LokerController extends Controller
         $apply->experience = $request->experience;
         $apply->penghasilan = $request->penghasilan;
         $apply->gaji = $request->gaji;
+        $apply->job_status = 'applied';
         $apply->onsite = $on;
         $apply->save();
         Toastr::success('Lamaran anda berhasil dikirim, mohon tunggu info selanjutnya..');
