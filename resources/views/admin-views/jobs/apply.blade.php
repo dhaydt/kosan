@@ -131,10 +131,10 @@
                                         <span class="legend-indicator bg-warning"
                                               style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('wait_for_payment')}}
                                       </span>
-                                @elseif($order['job_status']=='confirmed')
+                                @elseif($order['job_status']=='terima')
                                     <span class="badge badge-soft-success ml-2 ml-sm-3">
                                         <span class="legend-indicator bg-success"
-                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate($order['order_status'])}}
+                                              style="{{Session::get('direction') === "rtl" ? 'margin-right: 0;margin-left: .4375rem;' : 'margin-left: 0;margin-right: .4375rem;'}}"></span>{{\App\CPU\translate('Diterima'])}}
                                       </span>
                                 @elseif($order['job_status']=='failed')
                                     <span class="badge badge-danger ml-2 ml-sm-3">
