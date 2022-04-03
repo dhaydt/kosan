@@ -137,6 +137,10 @@
                                                 penghasilan yang anda harapkan</small>)</label>
                                         <input type="number" class="form-control" name="gaji"></input>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="address">Upload Curriculum Vitae (<small class="text-danger">Tipe file .pdf</small>)</label>
+                                        <input type="file" class="form-control" name="cv" accept="application/pdf"></input>
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="address" class="d-block mb-2">Saya bersedia ditempatkan di:</label>

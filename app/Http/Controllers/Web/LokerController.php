@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\CPU\ImageManager;
 use App\Http\Controllers\Controller;
 use App\Model\Apply;
 use App\Model\Jobs;
@@ -49,11 +50,41 @@ class LokerController extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'pendidikan' => 'required',
+            'keahlian' => 'required',
+            'penghasilan' => 'required',
+            'gaji' => 'required',
+            // 'onsite' => 'required',
+        ],
+            [
+                'name.required' => 'Mohon masukan nama kandidat',
+                'email.required' => 'Mohon masukan email kandidat',
+                'phone.required' => 'Mohon masukan telepon kandidat',
+                'address.required' => 'Mohon masukan alamat kandidat',
+                'pendidikan.required' => 'Mohon masukan pendidikan kandidat',
+                'keahlian.required' => 'Mohon masukan keahlian kandidat',
+                'penghasilan.required' => 'Mohon masukan penghasilan sebelumnya',
+                'gaji.required' => 'Mohon masukan gaji yang diinginkan',
+            ]);
+
         $on = 0;
         if ($request->onsite == 'on') {
             $on = 1;
         } else {
             $on = 0;
+        }
+        $pdf = $request->file('cv');
+        if (!$pdf) {
+            Toastr::warning('Mohon upload CV anda!!');
+
+            return redirect()->back();
+        } else {
+            $cvName = ImageManager::upload('cv/', 'pdf', $pdf);
         }
         $apply = new Apply();
         $apply->name = $request->name;
@@ -68,6 +99,7 @@ class LokerController extends Controller
         $apply->penghasilan = $request->penghasilan;
         $apply->gaji = $request->gaji;
         $apply->job_status = 'applied';
+        $apply->cv = $cvName;
         $apply->onsite = $on;
         $apply->save();
         Toastr::success('Lamaran anda berhasil dikirim, mohon tunggu info selanjutnya..');
