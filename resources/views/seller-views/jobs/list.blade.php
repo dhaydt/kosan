@@ -1,6 +1,6 @@
 @extends('layouts.back-end.app-seller')
 
-@section('title',\App\CPU\translate('Job_List'))
+@section('title',\App\CPU\translate('Jobs_List'))
 
 @push('css_or_js')
 
