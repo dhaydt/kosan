@@ -12,7 +12,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('seller.dashboard.index')}}">{{\App\CPU\translate('Dashboard')}}</a>
                 </li>
-                <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('Jobs_Vacancy')}}</li>
+                <li class="breadcrumb-item" aria-current="page">{{\App\CPU\translate('Lowongan_kerja')}}</li>
 
             </ol>
         </nav>
