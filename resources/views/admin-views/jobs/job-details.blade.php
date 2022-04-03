@@ -205,7 +205,7 @@
                                                 {{ $detail->status_employe }}
                                             </span>
                                         </div>
-                                        <span class="price">{{\App\CPU\Helpers::currency_converter($detail->gaji)}}  <span class="month">/Bulan</span></span>
+                                        <span class="price">{{\App\CPU\Helpers::currency_converter($detail->gaji)}}<span class="month">/Bulan</span></span>
                                     </div>
                                     <div class="col-md-4">
                                         <img onerror="this.src='{{asset('assets/back-end/img/400x400/img2.jpg')}}'"
@@ -245,38 +245,116 @@
                         </div> --}}
                         <hr>
                         <div class="col-12 py-3">
-                            <img src="{{ asset('assets/back-end/img/keyhand.png') }}" alt="" style="height: 30px;" class="mb-3">
-                            <h5 style="capitalize">Pendidikan:</h5>
-                            <span class="text-uppercase" style="font-weight: 700;">
-                                {{ $order->pendidikan }}
-                            </span>
+                            <i class="fa fa-graduation-cap" style="font-size: 30px; color: #000;" class="mb-3"></i>
+                            <h5 style="capitalize">Kompetensi kandidat:</h5>
+                            <div class="row ml-1 my-2">
+                                <div class="col-6">
+                                    <span>Pendidikan terakhir :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="text-uppercase" style="font-weight: 700;">
+                                        {{ $order->pendidikan }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Keahlian :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="capitalize" style="font-weight: 700;">
+                                        {{ $order->keahlian }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Pengalaman kerja :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="capitalize" style="font-weight: 5Psi00;">
+                                        {{ $order->experience }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Penghasilan terakhir :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="capitalize" style="font-weight: 700;">
+                                        {{\App\CPU\Helpers::currency_converter($order->penghasilan)}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Gaji yang diharapkan :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="capitalize" style="font-size: 18px;font-weight: 700;">
+                                        {{\App\CPU\Helpers::currency_converter($order->gaji)}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Curriculum vitae :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <a class="capitalize" href="{{ asset('storage/cv'.'/'.$order->cv) }}" target="_blank" style="font-weight: 500;">
+                                        <i class="fa fa-eye"></i> Lihat
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <div class="col-12 py-3">
                             <i class="fa fa-sticky-note mb-3" aria-hidden="true" style="    font-size: 27px;
                             color: #000;"></i>
-                            <h5 style="capitalize">Pengalaman:</h5>
-                            <span style="font-weight: 700;" class="capitalize">
-                                {{ $order->experience }}
-                            </span>
+                            <h5 style="capitalize">Data diri kandidat:</h5>
+                            <div class="row ml-1 my-2">
+                                <div class="col-6">
+                                    <span>Nama :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="text-uppercase" style="font-weight: 700;">
+                                        {{ $order->name }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Phone :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="capitalize" style="font-weight: 700;">
+                                        {{ $order->phone }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Email :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="capitalize" style="font-weight: 700;">
+                                        {{ $order->email }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row ml-1 mb-2">
+                                <div class="col-6">
+                                    <span>Alamat :</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="capitalize" style="font-weight: 700;">
+                                        {{ $order->address }}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <hr>
-                        <div class="col-12 py-3">
-                            <img src="{{ asset('assets/back-end/img/user.png') }}" alt="" style="height: 30px;" class="mb-3">
-                            <h5 style="capitalize">Profil Penyewa:</h5>
-                            <span class="capitalize d-block pb-3">
-                                {{ $sewa->kelamin }}
-                            </span>
-                            <span class="capitalize d-block pb-3">
-                                {{ $sewa->status_pernikahan }}
-                            </span>
-                            {{-- <span class="capitalize d-block pb-3">
-                                {{ $sewa->pekerjaan }} - {{ $sewa->kampus ? $sewa->kampus : $sewa->tempat_kerja }}
-                            </span> --}}
-                            <span class="capitalize">
-                                {{ $sewa->email }}
-                            </span>
-                        </div>
                     </div>
                     <!-- End Body -->
                 </div>
@@ -323,9 +401,9 @@
 
                     <!-- Body -->
                     <div class="card-body">
-                        <h3 class="">
-                            {{\App\CPU\translate('Nama')}} {{\App\CPU\translate('Pelamar')}}:
-                        </h3>
+                        <h5 class="">
+                            {{\App\CPU\translate('Nama')}} {{\App\CPU\translate('Kandidat')}}:
+                        </h5>
                         <div class="subtitle">
                             {{ $order->customer->f_name }} {{ $order->customer->l_name }}
                         </div>
