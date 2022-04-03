@@ -205,7 +205,7 @@
                                 <a class="js-navbar-vertical-aside-menu-link nav-link"
                                    href="{{route('admin.jobs.applied')}}">
                                    <i class="fa fa-graduation-cap nav-icon" aria-hidden="true"></i>
-                                    <span class="text-truncate">{{\App\CPU\translate('Applied_vacancy')}}</span>
+                                    <span class="text-truncate">{{\App\CPU\translate('Applied_job')}}</span>
                                 </a>
                             </li>
                         @endif
